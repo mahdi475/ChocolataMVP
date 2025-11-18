@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+  padding: var(--spacing-2xl);
+}
+
+.error {
+  padding: var(--spacing-md);
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--color-error);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+}
+

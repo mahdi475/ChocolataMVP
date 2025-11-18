@@ -1,0 +1,24 @@
+{
+  "catalog": {
+    "title": "Product Catalog",
+    "empty": "No products available"
+  },
+  "card": {
+    "title": "Product",
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock",
+    "inStock": "in stock"
+  },
+  "form": {
+    "name": "Product Name",
+    "description": "Description",
+    "price": "Price",
+    "stock": "Stock",
+    "category": "Category",
+    "imageUrl": "Image URL",
+    "imageUrlHelper": "Enter a URL to an image",
+    "create": "Create Product",
+    "update": "Update Product"
+  }
+}
+

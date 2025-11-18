@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+}
+
+.error {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--color-error);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-md);
+  font-size: 0.875rem;
+}
+

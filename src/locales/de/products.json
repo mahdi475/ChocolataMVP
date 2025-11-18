@@ -1,0 +1,24 @@
+{
+  "catalog": {
+    "title": "Produktkatalog",
+    "empty": "Keine Produkte verfügbar"
+  },
+  "card": {
+    "title": "Produkt",
+    "addToCart": "In den Warenkorb",
+    "outOfStock": "Nicht vorrätig",
+    "inStock": "auf Lager"
+  },
+  "form": {
+    "name": "Produktname",
+    "description": "Beschreibung",
+    "price": "Preis",
+    "stock": "Lagerbestand",
+    "category": "Kategorie",
+    "imageUrl": "Bild-URL",
+    "imageUrlHelper": "Geben Sie eine URL zu einem Bild ein",
+    "create": "Produkt erstellen",
+    "update": "Produkt aktualisieren"
+  }
+}
+
