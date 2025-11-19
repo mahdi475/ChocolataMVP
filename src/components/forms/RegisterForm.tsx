@@ -73,8 +73,26 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
 
       console.log('✅ Auth user created:', authData.user.id);
 
-      // Step 2: Create user record in public.users table
-      console.log('💾 Creating user record in database...');
+      // Step 2: The database trigger should automatically create the user record
+      // Wait a moment for the trigger to execute, then verify
+      console.log('⏳ Waiting for database trigger to create user record...');
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Try to verify user was created (this might fail due to RLS if session not established)
+      // If trigger is set up, user should exist. If not, we'll get an error on manual insert
+      console.log('💾 Attempting to create/verify user record...');
+      
+      // Ensure we have a session before insert (needed for RLS policies)
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.log('⏳ Session not yet established, waiting...');
+        // Wait a bit more for session to establish
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
+      // Try to insert user record
+      // If trigger already created it, we'll get a duplicate key error (which is fine)
+      // If trigger didn't create it, this will create it (if RLS allows)
       const { error: userError } = await supabase
         .from('users')
         .insert({
@@ -85,13 +103,19 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
         });
 
       if (userError) {
-        console.error('❌ Failed to create user record:', userError);
-        
-        if (userError.message.includes('relation "public.users" does not exist')) {
-          throw new Error('Database tables not set up. Please run the SQL setup in Supabase first.');
+        // If it's a duplicate key error, the trigger already created it (success!)
+        if (userError.code === '23505' || userError.message.includes('duplicate key') || userError.message.includes('already exists')) {
+          console.log('✅ User record already exists (created by database trigger)');
+        } else if (userError.message.includes('relation "public.users" does not exist')) {
+          throw new Error('Database tables not set up. Please run supabase-setup.sql in Supabase SQL editor.');
+        } else if (userError.message.includes('new row violates row-level security policy') || userError.message.includes('RLS')) {
+          throw new Error('Database trigger not set up or RLS policy blocking insert. Please run fix-users-policy-v2.sql in Supabase SQL editor to set up the automatic user creation trigger.');
+        } else {
+          console.error('❌ Failed to create user record:', userError);
+          throw new Error(`Failed to create user profile: ${userError.message}`);
         }
-        
-        throw new Error(`Failed to create user profile: ${userError.message}`);
+      } else {
+        console.log('✅ User record created successfully');
       }
 
       console.log('✅ Registration completely successful!', {

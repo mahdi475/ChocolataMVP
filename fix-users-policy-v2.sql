@@ -1,18 +1,31 @@
--- Drop existing policies
-DROP POLICY IF EXISTS "Users can insert own data" ON public.users;
-DROP POLICY IF EXISTS "Users can read own data" ON public.users;
-DROP POLICY IF EXISTS "Users can update own data" ON public.users;
+-- Drop ALL existing policies on users table (including any from previous runs)
+-- Using a DO block to drop all policies dynamically in case names don't match exactly
+DO $$
+DECLARE
+    r RECORD;
+BEGIN
+    -- Drop all existing policies on the users table using pg_policy system catalog
+    FOR r IN (
+        SELECT pol.polname as policyname
+        FROM pg_policy pol
+        JOIN pg_class pc ON pol.polrelid = pc.oid
+        JOIN pg_namespace pn ON pc.relnamespace = pn.oid
+        WHERE pc.relname = 'users' AND pn.nspname = 'public'
+    ) LOOP
+        EXECUTE format('DROP POLICY IF EXISTS %I ON public.users', r.policyname);
+    END LOOP;
+END $$;
 
 -- Create a more permissive policy for insertion during registration
 -- This allows insertion when the user is being created
 CREATE POLICY "Enable insert during registration" ON public.users
   FOR INSERT WITH CHECK (true);
 
--- Keep the existing read policy
+-- Recreate the read policy
 CREATE POLICY "Users can read own data" ON public.users
   FOR SELECT USING (auth.uid() = id);
 
--- Keep the existing update policy  
+-- Recreate the update policy  
 CREATE POLICY "Users can update own data" ON public.users
   FOR UPDATE USING (auth.uid() = id);
 
@@ -21,13 +34,15 @@ CREATE POLICY "Users can update own data" ON public.users
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
+  -- Insert user profile, ignoring if it already exists (idempotent)
   INSERT INTO public.users (id, email, full_name, role)
   VALUES (
     NEW.id,
     NEW.email,
     COALESCE(NEW.raw_user_meta_data->>'full_name', ''),
     COALESCE(NEW.raw_user_meta_data->>'role', 'buyer')
-  );
+  )
+  ON CONFLICT (id) DO NOTHING;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
