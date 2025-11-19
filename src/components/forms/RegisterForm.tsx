@@ -42,7 +42,16 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const { error: authError } = await supabase.auth.signUp({
+      console.log('🔍 Starting registration process...');
+      console.log('📝 Registration data:', { 
+        email: data.email, 
+        fullName: data.fullName, 
+        role: data.role 
+      });
+      
+      // Step 1: Create auth user
+      console.log('🔐 Creating Supabase auth user...');
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -53,14 +62,63 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
         },
       });
 
-      if (authError) throw authError;
+      if (authError) {
+        console.error('❌ Auth registration failed:', authError.message);
+        throw authError;
+      }
 
-      // The user profile is now automatically created by the database trigger
-      // No need to manually insert into the users table
+      if (!authData.user) {
+        throw new Error('No user data received from Supabase auth');
+      }
+
+      console.log('✅ Auth user created:', authData.user.id);
+
+      // Step 2: Create user record in public.users table
+      console.log('💾 Creating user record in database...');
+      const { error: userError } = await supabase
+        .from('users')
+        .insert({
+          id: authData.user.id,
+          email: data.email,
+          full_name: data.fullName,
+          role: data.role,
+        });
+
+      if (userError) {
+        console.error('❌ Failed to create user record:', userError);
+        
+        if (userError.message.includes('relation "public.users" does not exist')) {
+          throw new Error('Database tables not set up. Please run the SQL setup in Supabase first.');
+        }
+        
+        throw new Error(`Failed to create user profile: ${userError.message}`);
+      }
+
+      console.log('✅ Registration completely successful!', {
+        email: authData.user.email,
+        role: data.role,
+        userId: authData.user.id
+      });
       
+      // Registration successful
       onSuccess?.();
+      
     } catch (error: any) {
-      onError?.(error.message || 'Registration failed');
+      console.error('❌ Registration error:', error);
+      const errorMessage = error.message || 'Registration failed. Please try again.';
+      
+      // Show user-friendly error messages
+      if (errorMessage.includes('Database tables not set up')) {
+        onError?.('Database not set up. Please run the SQL setup in Supabase first.');
+      } else if (errorMessage.includes('User already registered')) {
+        onError?.('This email is already registered. Try logging in instead.');
+      } else if (errorMessage.includes('Invalid email')) {
+        onError?.('Please enter a valid email address.');
+      } else if (errorMessage.includes('Password should be at least')) {
+        onError?.('Password must be at least 6 characters long.');
+      } else {
+        onError?.(errorMessage);
+      }
     }
   };
 

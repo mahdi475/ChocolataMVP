@@ -37,6 +37,16 @@
   accent-color: var(--color-primary);
 }
 
+.helperText {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: var(--border-radius-sm);
+  border-left: 3px solid var(--color-success);
+}
+
 .submitButton {
   margin-top: var(--spacing-sm);
 }
