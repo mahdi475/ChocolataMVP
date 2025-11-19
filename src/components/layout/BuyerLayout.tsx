@@ -11,15 +11,29 @@ interface BuyerLayoutProps {
 }
 
 const BuyerLayout = ({ children }: BuyerLayoutProps) => {
-  const { user, handleLogout } = useAuth();
+  const { user, role, handleLogout } = useAuth();
   const navigate = useNavigate();
   const cartItems = useSelector((state: RootState) => state.cart.items);
+
+  const getHomeUrl = () => {
+    switch (role) {
+      case 'seller': return '/seller/dashboard';
+      case 'admin': return '/admin/dashboard';
+      case 'buyer':
+      default: return '/catalog';
+    }
+  };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <Link to="/" className={styles.logo}>
+        <Link to={getHomeUrl()} className={styles.logo}>
           🍫 Chocolata
+          {role && (
+            <span className={`${styles.roleBadge} ${styles[`role${role.charAt(0).toUpperCase() + role.slice(1)}`]}`}>
+              {role.toUpperCase()}
+            </span>
+          )}
         </Link>
         <nav className={styles.nav}>
           <Link to="/catalog" className={styles.navLink}>
@@ -28,6 +42,11 @@ const BuyerLayout = ({ children }: BuyerLayoutProps) => {
           <Link to="/cart" className={styles.navLink}>
             Cart ({cartItems.length})
           </Link>
+          {user && (
+            <Link to="/orders" className={styles.navLink}>
+              Orders
+            </Link>
+          )}
           {user ? (
             <>
               <span className={styles.userEmail}>{user.email}</span>

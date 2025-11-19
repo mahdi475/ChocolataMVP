@@ -2,7 +2,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
+import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import styles from './ProductForm.module.css';
@@ -30,6 +32,7 @@ interface ProductFormProps {
 
 const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) => {
   const { t } = useTranslation('products');
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -56,13 +59,25 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           .update(productData)
           .eq('id', initialValues.id);
         if (error) throw error;
+        dispatch(addNotification({
+          type: 'success',
+          message: 'Product updated successfully!',
+        }));
       } else {
         const { error } = await supabase.from('products').insert(productData);
         if (error) throw error;
+        dispatch(addNotification({
+          type: 'success',
+          message: 'Product created successfully!',
+        }));
       }
 
       onSuccess?.();
     } catch (error: any) {
+      dispatch(addNotification({
+        type: 'error',
+        message: error.message || 'Failed to save product',
+      }));
       onError?.(error.message || 'Failed to save product');
     }
   };

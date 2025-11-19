@@ -35,8 +35,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const loading = useSelector((state: RootState) => state.auth.loading);
 
   useEffect(() => {
+    console.log('🔄 AuthContext useEffect starting...');
+    
+    const applyRoleFromMetadata = (user: User | null) => {
+      const metaRole = user?.user_metadata?.role as 'buyer' | 'seller' | 'admin' | undefined;
+      if (metaRole) {
+        console.log('📝 Setting role from metadata:', metaRole);
+        dispatch(setRole(metaRole));
+      }
+    };
+
     const fetchUserRole = async (userId: string) => {
       try {
+        console.log('🔍 Fetching user role for:', userId);
         const { data, error } = await supabase
           .from('users')
           .select('role')
@@ -44,22 +55,53 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           .single();
 
         if (error) throw error;
-        dispatch(setRole(data?.role || 'buyer'));
+        if (data?.role) {
+          console.log('✅ Role fetched from DB:', data.role);
+          dispatch(setRole(data.role));
+        }
       } catch (error) {
-        console.error('Error fetching user role:', error);
-        dispatch(setRole('buyer'));
+        console.error('❌ Error fetching user role:', error);
+      }
+    };
+
+    const hydrateSession = (session: { user: User } | null) => {
+      console.log('💧 Hydrating session:', session ? 'user exists' : 'no user');
+      
+      if (session?.user) {
+        console.log('👤 Setting user and role');
+        dispatch(setUser(session.user));
+        applyRoleFromMetadata(session.user);
+        // Always set loading to false so UI can proceed
+        dispatch(setLoading(false));
+        // Fetch the canonical role in the background so UI doesn't hang
+        fetchUserRole(session.user.id);
+      } else {
+        console.log('👻 No user, clearing state and setting loading false');
+        dispatch(logout());
+        dispatch(setLoading(false));
       }
     };
 
     const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session?.user) {
-        dispatch(setUser(session.user));
-        await fetchUserRole(session.user.id);
-      } else {
+      console.log('🔍 Getting initial session...');
+      try {
+        // Add timeout to prevent hanging
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
+        );
+        
+        const {
+          data: { session },
+        } = await Promise.race([sessionPromise, timeoutPromise]) as any;
+        
+        console.log('📊 Initial session result:', session ? 'found' : 'none');
+        hydrateSession(session);
+      } catch (error) {
+        console.error('❌ Error getting session:', error);
+        console.log('🔄 Falling back to no session');
         dispatch(setLoading(false));
+        hydrateSession(null);
       }
     };
 
@@ -67,28 +109,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session?.user) {
-        dispatch(setUser(session.user));
-        await fetchUserRole(session.user.id);
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('🔔 Auth state change:', event);
+      if (event === 'SIGNED_IN') {
+        hydrateSession(session);
       } else if (event === 'SIGNED_OUT') {
         dispatch(logout());
-        // Navigate only if we're in a router context
-        if (window.location.pathname !== '/login') {
-          navigate('/login');
-        }
       }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    dispatch(logout());
-    navigate('/login');
+    try {
+      await supabase.auth.signOut();
+      dispatch(logout());
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (

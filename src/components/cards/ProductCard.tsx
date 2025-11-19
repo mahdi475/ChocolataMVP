@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addItem } from '../../store/slices/cartSlice';
+import { addNotification } from '../../store/slices/notificationSlice';
 import type { CartItem } from '../../store/slices/cartSlice';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
@@ -16,6 +17,7 @@ export interface Product {
   image_url?: string;
   category?: string;
   stock?: number;
+  created_at?: string;
 }
 
 interface ProductCardProps {
@@ -36,6 +38,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
       imageUrl: product.image_url,
     };
     dispatch(addItem(cartItem));
+    dispatch(addNotification({
+      type: 'success',
+      message: `${product.name} added to cart!`,
+      duration: 3000,
+    }));
   };
 
   return (

@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import RoleRedirect from '../components/auth/RoleRedirect';
 import BuyerLayout from '../components/layout/BuyerLayout';
 import SellerDashboardShell from '../components/layout/SellerDashboardShell';
 import AdminShell from '../components/layout/AdminShell';
@@ -16,12 +17,14 @@ import ProductDetailPage from '../pages/buyer/ProductDetailPage';
 import CartPage from '../pages/buyer/CartPage';
 import CheckoutPage from '../pages/buyer/CheckoutPage';
 import CheckoutConfirmationPage from '../pages/buyer/CheckoutConfirmationPage';
+import BuyerOrdersPage from '../pages/buyer/BuyerOrdersPage';
 
 // Seller pages
 import SellerDashboardPage from '../pages/seller/SellerDashboardPage';
 import SellerProductsPage from '../pages/seller/SellerProductsPage';
 import SellerProductEditPage from '../pages/seller/SellerProductEditPage';
 import SellerOrdersPage from '../pages/seller/SellerOrdersPage';
+import SellerVerificationPage from '../pages/seller/SellerVerificationPage';
 
 // Admin pages
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
@@ -37,18 +40,35 @@ const ProtectedRoute = ({
 }) => {
   const { user, role, loading } = useAuth();
 
+  console.log('🛡️ ProtectedRoute check:', { 
+    hasUser: !!user, 
+    userRole: role, 
+    requiredRole, 
+    loading 
+  });
+
   if (loading) {
+    console.log('🛡️ ProtectedRoute: Still loading...');
     return <LoadingSpinner />;
   }
 
   if (!user) {
+    console.log('🛡️ ProtectedRoute: No user, redirecting to login');
     return <Navigate to="/login" replace />;
   }
 
   if (requiredRole && role !== requiredRole) {
-    return <Navigate to="/" replace />;
+    // Redirect to appropriate dashboard based on actual role
+    const redirectUrl = role === 'seller' 
+      ? '/seller/dashboard' 
+      : role === 'admin' 
+      ? '/admin/dashboard' 
+      : '/catalog';
+    console.log('🛡️ ProtectedRoute: Wrong role! User is', role, 'but needs', requiredRole, '→ redirecting to', redirectUrl);
+    return <Navigate to={redirectUrl} replace />;
   }
 
+  console.log('🛡️ ProtectedRoute: Access granted!');
   return children;
 };
 
@@ -85,27 +105,31 @@ const AppRouter = () => {
       <Route
         path="/catalog"
         element={
-          <BuyerLayout>
-            <CatalogPage />
-          </BuyerLayout>
+          <ProtectedRoute requiredRole="buyer">
+            <BuyerLayout>
+              <CatalogPage />
+            </BuyerLayout>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/product/:id"
         element={
-          <BuyerLayout>
-            <ProductDetailPage />
-          </BuyerLayout>
+          <ProtectedRoute requiredRole="buyer">
+            <BuyerLayout>
+              <ProductDetailPage />
+            </BuyerLayout>
+          </ProtectedRoute>
         }
       />
       <Route
         path="/cart"
         element={
-          <BuyerLayout>
-            <ProtectedRoute>
+          <ProtectedRoute requiredRole="buyer">
+            <BuyerLayout>
               <CartPage />
-            </ProtectedRoute>
-          </BuyerLayout>
+            </BuyerLayout>
+          </ProtectedRoute>
         }
       />
       <Route
@@ -124,6 +148,16 @@ const AppRouter = () => {
           <BuyerLayout>
             <ProtectedRoute requiredRole="buyer">
               <CheckoutConfirmationPage />
+            </ProtectedRoute>
+          </BuyerLayout>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <BuyerLayout>
+            <ProtectedRoute requiredRole="buyer">
+              <BuyerOrdersPage />
             </ProtectedRoute>
           </BuyerLayout>
         }
@@ -176,6 +210,16 @@ const AppRouter = () => {
           <ProtectedRoute requiredRole="seller">
             <SellerDashboardShell>
               <SellerOrdersPage />
+            </SellerDashboardShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/seller/verification"
+        element={
+          <ProtectedRoute requiredRole="seller">
+            <SellerDashboardShell>
+              <SellerVerificationPage />
             </SellerDashboardShell>
           </ProtectedRoute>
         }

@@ -2,23 +2,55 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(135deg, #e8f5e8 0%, #ffffff 100%);
 }
 
 .header {
-  background-color: var(--color-background);
+  background: linear-gradient(90deg, #4CAF50, #45a049);
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md) var(--spacing-xl);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 10px rgba(76, 175, 80, 0.1);
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: white;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.roleBadge {
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-bold);
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.roleBuyer {
+  background: rgba(255, 255, 255, 0.9);
+  color: #45a049;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.roleSeller {
+  background: rgba(255, 255, 255, 0.9);
+  color: #f57c00;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.roleAdmin {
+  background: rgba(255, 255, 255, 0.9);
+  color: #7B1FA2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .nav {
@@ -28,19 +60,19 @@
 }
 
 .navLink {
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   font-weight: 500;
   transition: color var(--transition-base);
 }
 
 .navLink:hover {
-  color: var(--color-primary);
+  color: white;
 }
 
 .userEmail {
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .main {

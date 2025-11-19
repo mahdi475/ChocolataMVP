@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
+import { addNotification } from '../../store/slices/notificationSlice';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
@@ -19,6 +21,7 @@ interface SellerVerification {
 }
 
 const AdminSellersPage = () => {
+  const dispatch = useDispatch();
   const [verifications, setVerifications] = useState<SellerVerification[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -62,8 +65,15 @@ const AdminSellersPage = () => {
       setVerifications(
         verifications.map((v) => (v.id === id ? { ...v, status: 'approved' as const } : v)),
       );
+      dispatch(addNotification({
+        type: 'success',
+        message: 'Seller approved successfully!',
+      }));
     } catch (err: any) {
-      alert(err.message || 'Failed to approve seller');
+      dispatch(addNotification({
+        type: 'error',
+        message: err.message || 'Failed to approve seller',
+      }));
     }
   };
 
@@ -79,8 +89,15 @@ const AdminSellersPage = () => {
       setVerifications(
         verifications.map((v) => (v.id === id ? { ...v, status: 'rejected' as const } : v)),
       );
+      dispatch(addNotification({
+        type: 'info',
+        message: 'Seller rejected',
+      }));
     } catch (err: any) {
-      alert(err.message || 'Failed to reject seller');
+      dispatch(addNotification({
+        type: 'error',
+        message: err.message || 'Failed to reject seller',
+      }));
     }
   };
 

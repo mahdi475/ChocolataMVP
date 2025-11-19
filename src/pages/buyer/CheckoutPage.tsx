@@ -8,6 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
 import type { RootState } from '../../store';
 import { clearCart } from '../../store/slices/cartSlice';
+import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
@@ -82,11 +83,20 @@ const CheckoutPage = () => {
         const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
         if (itemsError) throw itemsError;
 
+        dispatch(addNotification({
+          type: 'success',
+          message: 'Order placed successfully!',
+        }));
         dispatch(clearCart());
         navigate(`/checkout/confirmation/${orderData.id}`);
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to place order');
+      const errorMsg = err.message || 'Failed to place order';
+      setError(errorMsg);
+      dispatch(addNotification({
+        type: 'error',
+        message: errorMsg,
+      }));
     } finally {
       setIsSubmitting(false);
     }

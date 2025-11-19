@@ -16,6 +16,7 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
     { path: '/seller/dashboard', label: 'Dashboard' },
     { path: '/seller/products', label: 'Products' },
     { path: '/seller/orders', label: 'Orders' },
+    { path: '/seller/verification', label: 'Verification' },
   ];
 
   return (
@@ -23,7 +24,8 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link to="/seller/dashboard" className={styles.logo}>
-            🍫 Chocolata Seller
+            🍫 Chocolata
+            <span className={styles.sellerBadge}>SELLER DASHBOARD</span>
           </Link>
         </div>
         <nav className={styles.sidebarNav}>

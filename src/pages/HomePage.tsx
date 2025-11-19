@@ -1,9 +1,37 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import FadeIn from '../components/animations/FadeIn';
 import Button from '../components/ui/Button';
 import styles from './HomePage.module.css';
 
 const HomePage = () => {
+  const { user, role } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect authenticated users to their appropriate dashboard
+  useEffect(() => {
+    if (user && role) {
+      console.log('🏠 Homepage: User is logged in with role:', role);
+      switch (role) {
+        case 'seller':
+          console.log('➡️ Homepage: Redirecting seller to dashboard');
+          navigate('/seller/dashboard', { replace: true });
+          break;
+        case 'admin':
+          console.log('➡️ Homepage: Redirecting admin to dashboard');
+          navigate('/admin/dashboard', { replace: true });
+          break;
+        case 'buyer':
+          console.log('➡️ Homepage: Buyer can stay on homepage or browse catalog');
+          // Buyers can stay on homepage or choose to browse catalog
+          break;
+        default:
+          console.log('🤷 Homepage: Unknown role, staying on homepage');
+          break;
+      }
+    }
+  }, [user, role, navigate]);
 
   return (
     <div className={styles.container}>

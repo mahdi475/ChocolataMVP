@@ -1,0 +1,215 @@
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-text);
+}
+
+.infoCard,
+.uploadCard,
+.successCard,
+.warningCard {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-xl);
+}
+
+.successCard {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-left: 4px solid var(--color-success);
+}
+
+.successCard h3 {
+  color: var(--color-success);
+  margin-bottom: var(--spacing-md);
+}
+
+.successCard p {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.warningCard {
+  background-color: rgba(255, 152, 0, 0.1);
+  border-left: 4px solid #ff9800;
+}
+
+.warningCard h3 {
+  color: #ff9800;
+  margin-bottom: var(--spacing-md);
+}
+
+.warningCard p {
+  color: var(--color-text-secondary);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+}
+
+.statusSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.label {
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 100px;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.statusPending {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+.statusApproved {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--color-success);
+}
+
+.statusRejected {
+  background-color: rgba(211, 47, 47, 0.2);
+  color: var(--color-error);
+}
+
+.adminNotes {
+  padding: var(--spacing-md);
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-md);
+  margin-top: var(--spacing-md);
+}
+
+.adminNotes p {
+  margin-top: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.documentLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.documentLink:hover {
+  text-decoration: underline;
+}
+
+.noVerification {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.instructions {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.requirements {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-lg) 0;
+}
+
+.requirements li {
+  padding: var(--spacing-xs) 0;
+  color: var(--color-text-secondary);
+  position: relative;
+  padding-left: var(--spacing-lg);
+}
+
+.requirements li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.uploadSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.fileInput {
+  padding: var(--spacing-md);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-base);
+}
+
+.fileInput:hover {
+  border-color: var(--color-primary);
+}
+
+.fileInput:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.selectedFile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-md);
+}
+
+.fileSize {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.uploadButton {
+  align-self: flex-start;
+}
+
+.error {
+  padding: var(--spacing-md);
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--color-error);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .statusRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .label {
+    min-width: auto;
+  }
+}

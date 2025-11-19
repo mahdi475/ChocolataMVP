@@ -5,7 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import i18n from './lib/i18n';
 import AppRouter from './routes/AppRouter';
 import LoadingSpinner from './components/ui/LoadingSpinner';
-import Toast from './components/ui/Toast';
+import ToastContainer from './components/ui/ToastContainer';
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
           <Suspense fallback={<LoadingSpinner />}>
             <AppRouter />
           </Suspense>
-          <Toast />
+          <ToastContainer />
         </AuthProvider>
       </BrowserRouter>
     </I18nextProvider>

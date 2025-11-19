@@ -42,7 +42,7 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      const { error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
