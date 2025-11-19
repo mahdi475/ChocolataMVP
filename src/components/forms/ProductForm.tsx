@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
 import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import ImageUpload from '../ui/ImageUpload';
 import styles from './ProductForm.module.css';
 
 const productSchema = z.object({
@@ -15,7 +17,7 @@ const productSchema = z.object({
   price: z.number().positive('Price must be positive'),
   category: z.string().min(1, 'Category is required'),
   stock: z.number().int().min(0, 'Stock must be a non-negative integer'),
-  image_url: z.string().url('Invalid URL').optional().or(z.literal('')),
+  // Removed image_url from schema since we handle file upload separately
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
@@ -33,6 +35,10 @@ interface ProductFormProps {
 const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) => {
   const { t } = useTranslation('products');
   const dispatch = useDispatch();
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(
+    initialValues?.image_url || null
+  );
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const {
     register,
     handleSubmit,
@@ -42,15 +48,56 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     defaultValues: initialValues,
   });
 
+  const handleImageUpload = async (file: File) => {
+    setImageFile(file);
+    
+    // Create a temporary preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setUploadedImageUrl(previewUrl);
+    
+    console.log('📷 Bild vald för uppladdning:', file.name, file.size);
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      let finalImageUrl = uploadedImageUrl;
+
+      // Upload image to Supabase Storage if a new file was selected
+      if (imageFile) {
+        console.log('📤 Laddar upp bild till Supabase Storage...');
+        
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('product-images')
+          .upload(fileName, imageFile);
+
+        if (uploadError) {
+          console.error('❌ Fel vid bilduppladdning:', uploadError);
+          // Continue without image for now, could be handled better
+          dispatch(addNotification({
+            type: 'warning',
+            message: 'Kunde inte ladda upp bilden, men produkten sparas ändå.',
+          }));
+        } else {
+          // Get public URL
+          const { data: { publicUrl } } = supabase.storage
+            .from('product-images')
+            .getPublicUrl(fileName);
+          
+          finalImageUrl = publicUrl;
+          console.log('✅ Bild uppladdad:', publicUrl);
+        }
+      }
+
       const productData = {
         ...data,
         seller_id: user.id,
-        image_url: data.image_url || null,
+        image_url: finalImageUrl,
       };
 
       if (initialValues?.id) {
@@ -119,13 +166,10 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         error={errors.category?.message}
         data-testid="product-category"
       />
-      <Input
-        {...register('image_url')}
-        type="url"
-        label={t('form.imageUrl')}
-        error={errors.image_url?.message}
-        helperText={t('form.imageUrlHelper')}
-        data-testid="product-image-url"
+      <ImageUpload
+        onImageUpload={handleImageUpload}
+        existingImage={uploadedImageUrl || undefined}
+        maxSize={5}
       />
       <Button type="submit" isLoading={isSubmitting} className={styles.submitButton} data-testid="product-submit">
         {initialValues?.id ? t('form.update') : t('form.create')}

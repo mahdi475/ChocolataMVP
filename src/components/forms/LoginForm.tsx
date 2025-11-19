@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
-import { setRole } from '../../store/slices/authSlice';
+import { setRole, setUser } from '../../store/slices/authSlice';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import styles from './LoginForm.module.css';
@@ -78,6 +78,19 @@ const LoginForm = ({ onSuccess, onError }: LoginFormProps) => {
       // Even if Supabase login fails, allow login for testing with mock role
       if (data.email && data.password) {
         console.log('🧪 Using mock login for testing with role:', data.role);
+        
+        // Create a mock user object for testing
+        const mockUser = {
+          id: 'mock-user-' + Date.now(),
+          email: data.email,
+          user_metadata: { role: data.role },
+          aud: 'authenticated',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        
+        // Set both user and role for mock authentication
+        dispatch(setUser(mockUser as any));
         dispatch(setRole(data.role));
         
         // Handle redirection for mock login too
