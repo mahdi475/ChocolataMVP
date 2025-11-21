@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-import RoleRedirect from '../components/auth/RoleRedirect';
 import BuyerLayout from '../components/layout/BuyerLayout';
 import SellerDashboardShell from '../components/layout/SellerDashboardShell';
 import AdminShell from '../components/layout/AdminShell';
@@ -18,6 +17,8 @@ import CartPage from '../pages/buyer/CartPage';
 import CheckoutPage from '../pages/buyer/CheckoutPage';
 import CheckoutConfirmationPage from '../pages/buyer/CheckoutConfirmationPage';
 import BuyerOrdersPage from '../pages/buyer/BuyerOrdersPage';
+import OrderDetailPage from '../pages/buyer/OrderDetailPage';
+import CustomerProfilePage from '../pages/buyer/CustomerProfilePage';
 
 // Seller pages
 import SellerDashboardPage from '../pages/seller/SellerDashboardPage';
@@ -106,31 +107,25 @@ const AppRouter = () => {
       <Route
         path="/catalog"
         element={
-          <ProtectedRoute requiredRole="buyer">
-            <BuyerLayout>
-              <CatalogPage />
-            </BuyerLayout>
-          </ProtectedRoute>
+          <BuyerLayout>
+            <CatalogPage />
+          </BuyerLayout>
         }
       />
       <Route
         path="/product/:id"
         element={
-          <ProtectedRoute requiredRole="buyer">
-            <BuyerLayout>
-              <ProductDetailPage />
-            </BuyerLayout>
-          </ProtectedRoute>
+          <BuyerLayout>
+            <ProductDetailPage />
+          </BuyerLayout>
         }
       />
       <Route
         path="/cart"
         element={
-          <ProtectedRoute requiredRole="buyer">
-            <BuyerLayout>
-              <CartPage />
-            </BuyerLayout>
-          </ProtectedRoute>
+          <BuyerLayout>
+            <CartPage />
+          </BuyerLayout>
         }
       />
       <Route
@@ -159,6 +154,26 @@ const AppRouter = () => {
           <BuyerLayout>
             <ProtectedRoute requiredRole="buyer">
               <BuyerOrdersPage />
+            </ProtectedRoute>
+          </BuyerLayout>
+        }
+      />
+      <Route
+        path="/orders/:id"
+        element={
+          <BuyerLayout>
+            <ProtectedRoute requiredRole="buyer">
+              <OrderDetailPage />
+            </ProtectedRoute>
+          </BuyerLayout>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <BuyerLayout>
+            <ProtectedRoute requiredRole="buyer">
+              <CustomerProfilePage />
             </ProtectedRoute>
           </BuyerLayout>
         }

@@ -13,9 +13,36 @@ interface CartState {
   items: CartItem[];
 }
 
-const initialState: CartState = {
-  items: [],
+export const CART_STORAGE_KEY = 'chocolata_cart_v1';
+
+const loadCartState = (): CartState => {
+  if (typeof window === 'undefined') {
+    return { items: [] };
+  }
+  try {
+    const stored = window.localStorage.getItem(CART_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored) as CartState;
+      if (Array.isArray(parsed.items)) {
+        return { items: parsed.items };
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to parse stored cart state:', error);
+  }
+  return { items: [] };
 };
+
+export const persistCartState = (state: CartState) => {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn('Failed to persist cart state:', error);
+  }
+};
+
+const initialState: CartState = loadCartState();
 
 const cartSlice = createSlice({
   name: 'cart',

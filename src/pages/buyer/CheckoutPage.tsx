@@ -47,6 +47,47 @@ const CheckoutPage = () => {
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  const validateStockBeforeCheckout = async () => {
+    const productIds = Array.from(new Set(cartItems.map((item) => item.productId)));
+    if (productIds.length === 0) {
+      setError('Your cart is empty');
+      return false;
+    }
+
+    const { data: liveProducts, error: stockFetchError } = await supabase
+      .from('products')
+      .select('id, stock, name')
+      .in('id', productIds);
+
+    if (stockFetchError) {
+      setError('Could not verify stock levels. Please try again.');
+      return false;
+    }
+
+    const productMap = new Map((liveProducts || []).map((product) => [product.id, product]));
+
+    for (const item of cartItems) {
+      const productInfo = productMap.get(item.productId);
+      if (!productInfo) {
+        setError('One of your selected products is no longer available. Please update your cart.');
+        return false;
+      }
+
+      const available = productInfo.stock ?? 0;
+      if (available <= 0) {
+        setError(`${productInfo.name} is sold out. Remove it from your cart to continue.`);
+        return false;
+      }
+
+      if (item.quantity > available) {
+        setError(`Only ${available} left of ${productInfo.name}. Update the quantity to continue.`);
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const onSubmit = async (data: CheckoutFormData) => {
     if (!user) {
       setError('You must be logged in to checkout');
@@ -57,6 +98,11 @@ const CheckoutPage = () => {
     setError(null);
 
     try {
+      const stockIsAvailable = await validateStockBeforeCheckout();
+      if (!stockIsAvailable) {
+        return;
+      }
+
       const { data: orderData, error: orderError } = await supabase
         .from('orders')
         .insert({
@@ -82,6 +128,14 @@ const CheckoutPage = () => {
 
         const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
         if (itemsError) throw itemsError;
+
+        for (const item of cartItems) {
+          const { error: decrementError } = await supabase.rpc('decrement_product_stock', {
+            p_product_id: item.productId,
+            p_quantity: item.quantity,
+          });
+          if (decrementError) throw decrementError;
+        }
 
         dispatch(addNotification({
           type: 'success',

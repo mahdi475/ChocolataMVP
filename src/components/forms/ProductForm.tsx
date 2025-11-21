@@ -24,6 +24,7 @@ type ProductFormData = z.infer<typeof productSchema>;
 
 export interface ProductFormValues extends ProductFormData {
   id?: string;
+  image_url?: string | null;
 }
 
 interface ProductFormProps {
@@ -72,7 +73,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}.${fileExt}`;
         
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('product-images')
           .upload(fileName, imageFile);
 

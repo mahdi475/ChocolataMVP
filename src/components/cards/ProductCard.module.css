@@ -19,6 +19,7 @@
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background-color: var(--color-surface);
+  position: relative;
 }
 
 .image {
@@ -88,5 +89,18 @@
 .addButton {
   margin: var(--spacing-md);
   margin-top: 0;
+}
+
+.soldOutBadge {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 

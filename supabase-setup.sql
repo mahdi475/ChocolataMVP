@@ -236,3 +236,14 @@ CREATE TRIGGER update_seller_verifications_updated_at
   BEFORE UPDATE ON public.seller_verifications
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
+
+CREATE OR REPLACE FUNCTION public.decrement_product_stock(p_product_id UUID, p_quantity INTEGER)
+RETURNS void AS $$
+BEGIN
+  UPDATE public.products
+  SET stock = GREATEST(COALESCE(stock, 0) - GREATEST(p_quantity, 0), 0)
+  WHERE id = p_product_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+GRANT EXECUTE ON FUNCTION public.decrement_product_stock(UUID, INTEGER) TO authenticated;

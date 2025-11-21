@@ -1,0 +1,241 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.orderLabel {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.statusPending {
+  background: rgba(237, 108, 2, 0.12);
+  color: #ed6c02;
+}
+
+.statusProcessing {
+  background: rgba(2, 136, 209, 0.12);
+  color: #0288d1;
+}
+
+.statusShipped {
+  background: rgba(40, 167, 69, 0.15);
+  color: #2e7d32;
+}
+
+.statusCompleted {
+  background: rgba(46, 125, 50, 0.18);
+  color: #2e7d32;
+}
+
+.statusCancelled {
+  background: rgba(211, 47, 47, 0.15);
+  color: #d32f2f;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.mainColumn,
+.sideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.sectionCard {
+  padding: var(--spacing-lg);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--spacing-md);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.sectionMeta {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.itemRow {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.itemRow:last-child {
+  border-bottom: none;
+}
+
+.itemImage {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--border-radius-md);
+}
+
+.itemPlaceholder {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.itemName {
+  font-weight: 600;
+}
+
+.itemMeta {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.itemPricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.itemPrice {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.itemSubtotal {
+  font-weight: 600;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.summaryTotal {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.infoBlock {
+  margin-bottom: var(--spacing-md);
+}
+
+.infoLabel {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.infoValue {
+  font-weight: 500;
+  display: block;
+}
+
+.emptyState {
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: var(--spacing-md) 0;
+}
+
+.errorCard {
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.errorMessage {
+  color: var(--color-text-secondary);
+  margin: var(--spacing-md) 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .itemRow {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .itemPricing {
+    align-items: flex-start;
+  }
+
+  .headerActions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

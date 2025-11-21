@@ -43,6 +43,11 @@ const BuyerLayout = ({ children }: BuyerLayoutProps) => {
             Cart ({cartItems.length})
           </Link>
           {user && (
+            <Link to="/profile" className={styles.navLink}>
+              Profile
+            </Link>
+          )}
+          {user && (
             <Link to="/orders" className={styles.navLink}>
               Orders
             </Link>

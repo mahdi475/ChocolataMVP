@@ -44,9 +44,7 @@ const CatalogPage = () => {
             price: 15.99,
             category: 'Dark Chocolate',
             stock: 50,
-            image_url: null,
-            is_active: true,
-            seller_id: '1',
+            image_url: undefined,
             created_at: new Date().toISOString()
           },
           {
@@ -56,9 +54,7 @@ const CatalogPage = () => {
             price: 24.99,
             category: 'Milk Chocolate',
             stock: 25,
-            image_url: null,
-            is_active: true,
-            seller_id: '1',
+            image_url: undefined,
             created_at: new Date().toISOString()
           },
           {
@@ -68,9 +64,7 @@ const CatalogPage = () => {
             price: 19.99,
             category: 'White Chocolate',
             stock: 30,
-            image_url: null,
-            is_active: true,
-            seller_id: '1',
+            image_url: undefined,
             created_at: new Date().toISOString()
           }
         ];

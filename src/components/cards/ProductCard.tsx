@@ -27,8 +27,11 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { t } = useTranslation('products');
   const dispatch = useDispatch();
+  const isSoldOut = product.stock !== undefined && product.stock <= 0;
 
   const handleAddToCart = () => {
+    if (isSoldOut) return;
+
     const cartItem: CartItem = {
       id: `${product.id}-${Date.now()}`,
       productId: product.id,
@@ -55,6 +58,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             ) : (
               <div className={styles.placeholder}>No Image</div>
             )}
+            {isSoldOut && (
+              <span className={styles.soldOutBadge}>{t('card.outOfStock', 'Slutsåld')}</span>
+            )}
           </div>
           <div className={styles.content}>
             <h3 className={styles.title}>{product.name}</h3>
@@ -68,8 +74,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   currency: 'SEK',
                 }).format(product.price)}
               </span>
-              {product.stock !== undefined && product.stock > 0 && (
-                <span className={styles.stock}>{product.stock} {t('card.inStock')}</span>
+              {product.stock !== undefined && (
+                <span className={styles.stock}>
+                  {product.stock > 0
+                    ? `${product.stock} ${t('card.inStock')}`
+                    : t('card.outOfStock', 'Slutsåld')}
+                </span>
               )}
             </div>
           </div>
@@ -77,10 +87,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Button
           onClick={handleAddToCart}
           className={styles.addButton}
-          disabled={product.stock === 0}
+          disabled={isSoldOut}
           data-testid={`add-to-cart-${product.id}`}
         >
-          {product.stock === 0 ? t('card.outOfStock') : t('card.addToCart')}
+          {isSoldOut ? t('card.outOfStock') : t('card.addToCart')}
         </Button>
       </Card>
     </FadeIn>

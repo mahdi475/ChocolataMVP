@@ -108,6 +108,9 @@ const CheckoutConfirmationPage = () => {
             </div>
           </div>
           <div className={styles.actions}>
+            <Link to={`/orders/${order.id}`}>
+              <Button variant="outline">View Order Details</Button>
+            </Link>
             <Link to="/catalog">
               <Button>Continue Shopping</Button>
             </Link>

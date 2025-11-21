@@ -50,6 +50,7 @@ const ProductDetailPage = () => {
 
   const handleAddToCart = () => {
     if (!product) return;
+    if (product.stock !== undefined && product.stock <= 0) return;
 
     const cartItem: CartItem = {
       id: `${product.id}-${Date.now()}`,
@@ -80,16 +81,29 @@ const ProductDetailPage = () => {
     );
   }
 
+  const isSoldOut = product.stock !== undefined && product.stock <= 0;
+  const stockClasses = [styles.stock];
+  if (isSoldOut) {
+    stockClasses.push(styles.stockSoldOut);
+  } else {
+    stockClasses.push(styles.stockAvailable);
+  }
+
   return (
     <div className={styles.container}>
       <FadeIn>
         <div className={styles.content}>
           <div className={styles.imageSection}>
-            {product.image_url ? (
-              <img src={product.image_url} alt={product.name} className={styles.image} />
-            ) : (
-              <div className={styles.placeholder}>No Image</div>
-            )}
+            <div className={styles.imageWrapper}>
+              {product.image_url ? (
+                <img src={product.image_url} alt={product.name} className={styles.image} />
+              ) : (
+                <div className={styles.placeholder}>No Image</div>
+              )}
+              {isSoldOut && (
+                <span className={styles.soldOutBadge}>{t('card.outOfStock')}</span>
+              )}
+            </div>
           </div>
           <div className={styles.detailsSection}>
             <Card>
@@ -100,8 +114,10 @@ const ProductDetailPage = () => {
                   <span className={styles.category}>Category: {product.category}</span>
                 )}
                 {product.stock !== undefined && (
-                  <span className={styles.stock}>
-                    {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                  <span className={stockClasses.join(' ')}>
+                    {isSoldOut
+                      ? t('card.outOfStock')
+                      : `${product.stock} ${t('card.inStock')}`}
                   </span>
                 )}
               </div>
@@ -115,10 +131,10 @@ const ProductDetailPage = () => {
                 onClick={handleAddToCart}
                 size="lg"
                 className={styles.addButton}
-                disabled={product.stock === 0}
+                disabled={isSoldOut}
                 data-testid={`add-to-cart-detail-${product.id}`}
               >
-                {product.stock === 0 ? t('card.outOfStock') : t('card.addToCart')}
+                {isSoldOut ? t('card.outOfStock') : t('card.addToCart')}
               </Button>
             </Card>
           </div>

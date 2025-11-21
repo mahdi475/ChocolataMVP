@@ -1,0 +1,241 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.subtitle {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.profileCard,
+.linksCard,
+.ordersCard {
+  padding: var(--spacing-lg);
+}
+
+.profileCard {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.profileInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.profileLabel {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.profileValue {
+  font-weight: 600;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.linksCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.linkItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color var(--transition-base);
+}
+
+.linkItem:hover {
+  background-color: var(--color-surface);
+}
+
+.linkTitle {
+  font-weight: 600;
+}
+
+.linkSubtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.linkChevron {
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.orderRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+}
+
+.orderId {
+  font-weight: 600;
+}
+
+.orderDate {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.orderAmount {
+  font-weight: 600;
+}
+
+.orderStatus {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.orderLink {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.orderLink:hover {
+  text-decoration: underline;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: var(--spacing-md) 0;
+}
+
+.errorCard {
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.errorMessage {
+  margin: var(--spacing-md) 0;
+  color: var(--color-text-secondary);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profileCard {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .profileInfo {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .orderRow {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+    text-align: left;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .headerActions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
