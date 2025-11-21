@@ -13,7 +13,7 @@ interface CartState {
   items: CartItem[];
 }
 
-export const CART_STORAGE_KEY = 'chocolata_cart_v1';
+export const CART_STORAGE_KEY = 'oompaloompa_cart_v1';
 
 const loadCartState = (): CartState => {
   if (typeof window === 'undefined') {

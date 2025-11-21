@@ -24,7 +24,7 @@ const AdminShell = ({ children }: AdminShellProps) => {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link to="/admin/dashboard" className={styles.logo}>
-            🍫 Chocolata
+            🍭 Oompaloompa
             <span className={styles.adminBadge}>ADMIN PANEL</span>
           </Link>
         </div>

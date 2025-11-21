@@ -47,11 +47,22 @@ const CheckoutPage = () => {
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const validateStockBeforeCheckout = async () => {
+  interface ProductStockInfo {
+    id: string;
+    stock: number | null;
+    name: string;
+  }
+
+  interface StockValidationResult {
+    valid: boolean;
+    productMap?: Map<string, ProductStockInfo>;
+  }
+
+  const validateStockBeforeCheckout = async (): Promise<StockValidationResult> => {
     const productIds = Array.from(new Set(cartItems.map((item) => item.productId)));
     if (productIds.length === 0) {
       setError('Your cart is empty');
-      return false;
+      return { valid: false };
     }
 
     const { data: liveProducts, error: stockFetchError } = await supabase
@@ -61,31 +72,33 @@ const CheckoutPage = () => {
 
     if (stockFetchError) {
       setError('Could not verify stock levels. Please try again.');
-      return false;
+      return { valid: false };
     }
 
-    const productMap = new Map((liveProducts || []).map((product) => [product.id, product]));
+    const productMap = new Map<string, ProductStockInfo>(
+      (liveProducts || []).map((product) => [product.id, product])
+    );
 
     for (const item of cartItems) {
       const productInfo = productMap.get(item.productId);
       if (!productInfo) {
         setError('One of your selected products is no longer available. Please update your cart.');
-        return false;
+        return { valid: false };
       }
 
       const available = productInfo.stock ?? 0;
       if (available <= 0) {
         setError(`${productInfo.name} is sold out. Remove it from your cart to continue.`);
-        return false;
+        return { valid: false };
       }
 
       if (item.quantity > available) {
         setError(`Only ${available} left of ${productInfo.name}. Update the quantity to continue.`);
-        return false;
+        return { valid: false };
       }
     }
 
-    return true;
+    return { valid: true, productMap };
   };
 
   const onSubmit = async (data: CheckoutFormData) => {
@@ -98,8 +111,8 @@ const CheckoutPage = () => {
     setError(null);
 
     try {
-      const stockIsAvailable = await validateStockBeforeCheckout();
-      if (!stockIsAvailable) {
+      const { valid: stockIsAvailable, productMap } = await validateStockBeforeCheckout();
+      if (!stockIsAvailable || !productMap) {
         return;
       }
 
@@ -134,7 +147,34 @@ const CheckoutPage = () => {
             p_product_id: item.productId,
             p_quantity: item.quantity,
           });
-          if (decrementError) throw decrementError;
+
+          if (decrementError) {
+            const missingFunction =
+              typeof decrementError.message === 'string' &&
+              decrementError.message.includes('function public.decrement_product_stock');
+
+            if (!missingFunction) {
+              throw decrementError;
+            }
+
+            const productInfo = productMap.get(item.productId);
+            if (!productInfo) {
+              throw new Error('Unable to adjust stock because product info is missing.');
+            }
+
+            const currentStock = productInfo.stock ?? 0;
+            const updatedStock = Math.max(currentStock - item.quantity, 0);
+            const { error: fallbackError } = await supabase
+              .from('products')
+              .update({ stock: updatedStock })
+              .eq('id', item.productId);
+
+            if (fallbackError) {
+              throw fallbackError;
+            }
+
+            productMap.set(item.productId, { ...productInfo, stock: updatedStock });
+          }
         }
 
         dispatch(addNotification({

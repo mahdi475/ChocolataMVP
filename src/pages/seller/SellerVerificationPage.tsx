@@ -179,7 +179,7 @@ const SellerVerificationPage = () => {
         {verification?.status === 'approved' && (
           <Card className={styles.successCard}>
             <h3>🎉 Your seller account is verified!</h3>
-            <p>You can now start selling products on Chocolata.</p>
+            <p>You can now start selling products on Oompaloompa.</p>
             <Button onClick={() => navigate('/seller/products')}>
               Go to My Products
             </Button>

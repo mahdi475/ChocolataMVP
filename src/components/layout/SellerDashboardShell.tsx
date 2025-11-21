@@ -24,7 +24,7 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link to="/seller/dashboard" className={styles.logo}>
-            🍫 Chocolata
+            🍭 Oompaloompa
             <span className={styles.sellerBadge}>SELLER DASHBOARD</span>
           </Link>
         </div>

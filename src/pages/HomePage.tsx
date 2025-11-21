@@ -37,7 +37,7 @@ const HomePage = () => {
     <div className={styles.container}>
       <FadeIn>
         <section className={styles.hero}>
-          <h1 className={styles.title}>🍫 Welcome to Chocolata</h1>
+          <h1 className={styles.title}>🍭 Welcome to Oompaloompa</h1>
           <p className={styles.subtitle}>
             Discover premium chocolate products from verified sellers
           </p>
