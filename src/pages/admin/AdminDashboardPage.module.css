@@ -18,6 +18,8 @@
 .statCard {
   text-align: center;
   padding: var(--spacing-xl);
+  border: 1px solid var(--color-border-strong, #e0d8ff);
+  background: linear-gradient(135deg, #ffffff, #fbf9ff);
 }
 
 .statValue {
@@ -31,5 +33,94 @@
   font-size: 1rem;
   color: var(--color-text-secondary);
   margin: 0;
+}
+
+.statusSection {
+  margin-top: var(--spacing-xxl);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sectionSubtext {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.statusCard {
+  border: 1px solid var(--color-border-strong, #e0d8ff);
+}
+
+.statusHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  border: 1px solid currentColor;
+}
+
+.pending {
+  color: #d97706;
+  background: #fff7ed;
+}
+
+.processing {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.shipped {
+  color: #0891b2;
+  background: #ecfeff;
+}
+
+.completed {
+  color: #15803d;
+  background: #ecfdf5;
+}
+
+.cancelled {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.statusValueSmall {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.statusLabelSmall {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
 }
 

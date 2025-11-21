@@ -11,6 +11,20 @@ CREATE TABLE IF NOT EXISTS public.users (
 
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.users u
+    WHERE u.id = auth.uid()
+      AND u.role = 'admin'
+  );
+$$;
+
 CREATE POLICY "Users can read own data" ON public.users
   FOR SELECT USING (auth.uid() = id);
 
@@ -19,6 +33,13 @@ CREATE POLICY "Users can insert own data" ON public.users
 
 CREATE POLICY "Users can update own data" ON public.users
   FOR UPDATE USING (auth.uid() = id);
+
+CREATE POLICY "Admins can read all users" ON public.users
+  FOR SELECT USING (public.is_admin());
+
+CREATE POLICY "Admins can manage users" ON public.users
+  FOR UPDATE USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 CREATE TABLE IF NOT EXISTS public.categories (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -61,6 +82,9 @@ CREATE POLICY "Active products are viewable by everyone" ON public.products
 
 CREATE POLICY "Sellers can read own products" ON public.products
   FOR SELECT USING (seller_id = auth.uid());
+
+CREATE POLICY "Admins can read all products" ON public.products
+  FOR SELECT USING (public.is_admin());
 
 CREATE POLICY "Sellers can insert own products" ON public.products
   FOR INSERT WITH CHECK (
@@ -134,6 +158,9 @@ CREATE POLICY "Users can insert own orders" ON public.orders
 CREATE POLICY "Sellers can read own orders" ON public.orders
   FOR SELECT USING (seller_id = auth.uid());
 
+CREATE POLICY "Admins can read all orders" ON public.orders
+  FOR SELECT USING (public.is_admin());
+
 CREATE TABLE IF NOT EXISTS public.order_items (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
@@ -168,6 +195,9 @@ CREATE POLICY "Sellers can read order items for own products" ON public.order_it
       WHERE products.id = order_items.product_id AND products.seller_id = auth.uid()
     )
   );
+
+CREATE POLICY "Admins can read all order items" ON public.order_items
+  FOR SELECT USING (public.is_admin());
 
 CREATE INDEX IF NOT EXISTS idx_products_seller_id ON public.products(seller_id);
 CREATE INDEX IF NOT EXISTS idx_products_category ON public.products(category);

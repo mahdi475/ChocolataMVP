@@ -30,6 +30,7 @@ import SellerVerificationPage from '../pages/seller/SellerVerificationPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import AdminSellersPage from '../pages/admin/AdminSellersPage';
 import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage';
+import AdminOrdersPage from '../pages/admin/AdminOrdersPage';
 
 const ProtectedRoute = ({
   children,
@@ -252,6 +253,16 @@ const AppRouter = () => {
           <ProtectedRoute requiredRole="admin">
             <AdminShell>
               <AdminCategoriesPage />
+            </AdminShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/orders"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <AdminShell>
+              <AdminOrdersPage />
             </AdminShell>
           </ProtectedRoute>
         }

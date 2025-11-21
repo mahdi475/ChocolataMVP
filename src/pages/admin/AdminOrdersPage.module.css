@@ -1,0 +1,184 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.refreshButton {
+  min-width: 120px;
+}
+
+.error {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-error);
+  border-radius: var(--border-radius-md);
+  background: rgba(244, 63, 94, 0.08);
+  color: var(--color-error);
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.statusCard {
+  border: 1px solid var(--color-border-strong, #e0d8ff);
+  padding: var(--spacing-lg);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+  border: 1px solid currentColor;
+}
+
+.pending {
+  color: #d97706;
+  background: #fff7ed;
+}
+
+.processing {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.shipped {
+  color: #0891b2;
+  background: #ecfeff;
+}
+
+.completed {
+  color: #15803d;
+  background: #ecfdf5;
+}
+
+.cancelled {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.statusValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: var(--spacing-md) 0 var(--spacing-xs);
+}
+
+.statusLabel {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.filterButton {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.filterButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.filterActive {
+  background: var(--color-primary-light, #f9f5ff);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.orderCard {
+  border: 1px solid var(--color-border-strong, #e0d8ff);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.orderId {
+  font-weight: 600;
+  margin: 0;
+}
+
+.orderDate {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.orderDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.label {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.value {
+  margin: 0.1rem 0;
+  font-weight: 600;
+}
+
+.subValue {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.emptyState {
+  text-align: center;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-secondary);
+}
