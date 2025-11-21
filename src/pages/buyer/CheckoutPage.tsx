@@ -143,10 +143,18 @@ const CheckoutPage = () => {
         if (itemsError) throw itemsError;
 
         for (const item of cartItems) {
-          const { error: decrementError } = await supabase.rpc('decrement_product_stock', {
-            p_product_id: item.productId,
-            p_quantity: item.quantity,
-          });
+          const productInfo = productMap.get(item.productId);
+          if (!productInfo) {
+            throw new Error('Unable to adjust stock because product info is missing.');
+          }
+
+          const { data: rpcResult, error: decrementError } = await supabase.rpc(
+            'decrement_product_stock',
+            {
+              p_product_id: item.productId,
+              p_quantity: item.quantity,
+            },
+          );
 
           if (decrementError) {
             const missingFunction =
@@ -157,24 +165,33 @@ const CheckoutPage = () => {
               throw decrementError;
             }
 
-            const productInfo = productMap.get(item.productId);
-            if (!productInfo) {
-              throw new Error('Unable to adjust stock because product info is missing.');
-            }
-
             const currentStock = productInfo.stock ?? 0;
             const updatedStock = Math.max(currentStock - item.quantity, 0);
-            const { error: fallbackError } = await supabase
+
+            const { data: fallbackData, error: fallbackError } = await supabase
               .from('products')
               .update({ stock: updatedStock })
-              .eq('id', item.productId);
+              .eq('id', item.productId)
+              .gte('stock', item.quantity)
+              .select('id')
+              .maybeSingle();
 
-            if (fallbackError) {
-              throw fallbackError;
+            if (fallbackError || !fallbackData) {
+              throw new Error(`${productInfo.name} just sold out before we could finish checkout.`);
             }
 
             productMap.set(item.productId, { ...productInfo, stock: updatedStock });
+            continue;
           }
+
+          if (!rpcResult) {
+            throw new Error(`${productInfo.name} just sold out before we could finish checkout.`);
+          }
+
+          productMap.set(item.productId, {
+            ...productInfo,
+            stock: Math.max((productInfo.stock ?? 0) - item.quantity, 0),
+          });
         }
 
         dispatch(addNotification({

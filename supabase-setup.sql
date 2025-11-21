@@ -238,12 +238,26 @@ CREATE TRIGGER update_seller_verifications_updated_at
   EXECUTE FUNCTION update_updated_at_column();
 
 CREATE OR REPLACE FUNCTION public.decrement_product_stock(p_product_id UUID, p_quantity INTEGER)
-RETURNS void AS $$
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  did_update BOOLEAN;
 BEGIN
+  IF p_quantity IS NULL OR p_quantity <= 0 THEN
+    RETURN TRUE;
+  END IF;
+
   UPDATE public.products
-  SET stock = GREATEST(COALESCE(stock, 0) - GREATEST(p_quantity, 0), 0)
-  WHERE id = p_product_id;
+  SET stock = GREATEST(COALESCE(stock, 0) - p_quantity, 0)
+  WHERE id = p_product_id
+    AND COALESCE(stock, 0) >= p_quantity
+  RETURNING TRUE INTO did_update;
+
+  RETURN COALESCE(did_update, FALSE);
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 GRANT EXECUTE ON FUNCTION public.decrement_product_stock(UUID, INTEGER) TO authenticated;
