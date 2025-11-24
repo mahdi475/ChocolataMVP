@@ -68,31 +68,29 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
 
       // Upload image to Supabase Storage if a new file was selected
       if (imageFile) {
-        console.log('📤 Laddar upp bild till Supabase Storage...');
-        
+        console.log('📤 Uploading image to Supabase Storage...');
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-        
+
         const { error: uploadError } = await supabase.storage
           .from('product-images')
           .upload(fileName, imageFile);
 
         if (uploadError) {
-          console.error('❌ Fel vid bilduppladdning:', uploadError);
-          // Continue without image for now, could be handled better
-          dispatch(addNotification({
-            type: 'warning',
-            message: 'Kunde inte ladda upp bilden, men produkten sparas ändå.',
-          }));
-        } else {
-          // Get public URL
-          const { data: { publicUrl } } = supabase.storage
-            .from('product-images')
-            .getPublicUrl(fileName);
-          
-          finalImageUrl = publicUrl;
-          console.log('✅ Bild uppladdad:', publicUrl);
+          console.error('❌ Image upload failed:', uploadError);
+          throw new Error('Image upload failed. Please try again.');
         }
+
+        const { data: urlData } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(fileName);
+
+        if (!urlData.publicUrl) {
+          throw new Error('Could not retrieve public URL for the uploaded image.');
+        }
+
+        finalImageUrl = urlData.publicUrl;
+        console.log('✅ Image uploaded successfully:', finalImageUrl);
       }
 
       const productData = {

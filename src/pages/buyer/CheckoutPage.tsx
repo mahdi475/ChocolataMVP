@@ -116,91 +116,27 @@ const CheckoutPage = () => {
         return;
       }
 
-      const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          user_id: user.id,
-          total_amount: total,
-          status: 'pending',
-          shipping_address: `${data.address}, ${data.city}, ${data.postalCode}, ${data.country}`,
-          shipping_name: data.fullName,
-          shipping_email: data.email,
-        })
-        .select()
-        .single();
-
-      if (orderError) throw orderError;
-
-      if (orderData) {
-        const orderItems = cartItems.map((item) => ({
-          order_id: orderData.id,
-          product_id: item.productId,
-          quantity: item.quantity,
-          price: item.price,
-        }));
-
-        const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
-        if (itemsError) throw itemsError;
-
-        for (const item of cartItems) {
-          const productInfo = productMap.get(item.productId);
-          if (!productInfo) {
-            throw new Error('Unable to adjust stock because product info is missing.');
-          }
-
-          const { data: rpcResult, error: decrementError } = await supabase.rpc(
-            'decrement_product_stock',
-            {
-              p_product_id: item.productId,
-              p_quantity: item.quantity,
-            },
-          );
-
-          if (decrementError) {
-            const missingFunction =
-              typeof decrementError.message === 'string' &&
-              decrementError.message.includes('function public.decrement_product_stock');
-
-            if (!missingFunction) {
-              throw decrementError;
-            }
-
-            const currentStock = productInfo.stock ?? 0;
-            const updatedStock = Math.max(currentStock - item.quantity, 0);
-
-            const { data: fallbackData, error: fallbackError } = await supabase
-              .from('products')
-              .update({ stock: updatedStock })
-              .eq('id', item.productId)
-              .gte('stock', item.quantity)
-              .select('id')
-              .maybeSingle();
-
-            if (fallbackError || !fallbackData) {
-              throw new Error(`${productInfo.name} just sold out before we could finish checkout.`);
-            }
-
-            productMap.set(item.productId, { ...productInfo, stock: updatedStock });
-            continue;
-          }
-
-          if (!rpcResult) {
-            throw new Error(`${productInfo.name} just sold out before we could finish checkout.`);
-          }
-
-          productMap.set(item.productId, {
-            ...productInfo,
-            stock: Math.max((productInfo.stock ?? 0) - item.quantity, 0),
-          });
+      const { data: newOrderId, error: createOrderError } = await supabase.rpc(
+        'create_order',
+        {
+          p_shipping_name: data.fullName,
+          p_shipping_address: `${data.address}, ${data.city}, ${data.postalCode}, ${data.country}`,
+          p_shipping_email: data.email,
+          p_items: cartItems.map(item => ({
+            product_id: item.productId,
+            quantity: item.quantity,
+          })),
         }
+      );
 
-        dispatch(addNotification({
-          type: 'success',
-          message: 'Order placed successfully!',
-        }));
-        dispatch(clearCart());
-        navigate(`/checkout/confirmation/${orderData.id}`);
-      }
+      if (createOrderError) throw createOrderError;
+
+      dispatch(addNotification({
+        type: 'success',
+        message: 'Order placed successfully!',
+      }));
+      dispatch(clearCart());
+      navigate(`/checkout/confirmation/${newOrderId}`);
     } catch (err: any) {
       const errorMsg = err.message || 'Failed to place order';
       setError(errorMsg);

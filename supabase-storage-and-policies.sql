@@ -3,15 +3,33 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('seller_documents', 'seller_documents', false)
 ON CONFLICT (id) DO NOTHING;
 
+-- Create a public bucket for product images.
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('product-images', 'product-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Policy: Allow sellers to upload to the 'product-images' bucket.
+CREATE POLICY "Allow seller product image uploads"
+ON storage.objects FOR INSERT
+TO authenticated
+WITH CHECK (
+  bucket_id = 'product-images'
+);
+
+-- Policy: Allow anyone to view product images.
+CREATE POLICY "Allow public read access to product images"
+ON storage.objects FOR SELECT
+USING (
+  bucket_id = 'product-images'
+);
+
 -- Policy: Allow sellers to upload documents for their own verification.
--- The user must be authenticated, and the file path must match their user ID.
 CREATE POLICY "Allow seller document uploads"
 ON storage.objects FOR INSERT
 TO authenticated
 WITH CHECK (
   bucket_id = 'seller_documents' AND
-  auth.uid() = (storage.foldername(name))[1]::uuid AND
-  (storage.foldername(name))[2] IS NULL -- Disallow subfolders
+  auth.uid() = (storage.foldername(name))[1]::uuid
 );
 
 -- Policy: Allow sellers to view their own uploaded documents.
@@ -29,5 +47,5 @@ ON storage.objects FOR SELECT
 TO authenticated
 USING (
   bucket_id = 'seller_documents' AND
-  public.is_admin() -- Assumes is_admin() function from your setup
+  public.is_admin()
 );

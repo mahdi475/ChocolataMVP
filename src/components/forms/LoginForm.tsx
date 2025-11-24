@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
-import { supabase } from '../../lib/supabaseClient';
+import { useAuth } from '../../contexts/AuthContext';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import styles from './LoginForm.module.css';
@@ -21,6 +21,7 @@ interface LoginFormProps {
 
 const LoginForm = ({ onSuccess, onError }: LoginFormProps) => {
   const { t } = useTranslation('auth');
+  const { handleLogin } = useAuth();
   const {
     register,
     handleSubmit,
@@ -30,31 +31,15 @@ const LoginForm = ({ onSuccess, onError }: LoginFormProps) => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    try {
-      console.log('🚪 Login attempt for:', data.email);
-      
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
+    const { error } = await handleLogin({
+      email: data.email,
+      password: data.password,
+    });
 
-      if (error) {
-        console.error('❌ Login failed:', error.message);
-        throw error;
-      }
-
-      if (!authData.user) {
-        throw new Error('No user data received');
-      }
-
-      console.log('✅ Login successful for:', authData.user.email);
-      
-      // The AuthContext will handle setting the user and role from the auth state change
+    if (error) {
+      onError?.(error.message);
+    } else {
       onSuccess?.();
-      
-    } catch (error: any) {
-      console.error('❌ Login error:', error);
-      onError?.(error.message || 'Login failed. Please check your credentials.');
     }
   };
 

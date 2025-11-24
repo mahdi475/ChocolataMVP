@@ -6,10 +6,18 @@ import { setUser, setRole, setLoading, logout } from '../store/slices/authSlice'
 import type { User } from '@supabase/supabase-js';
 import type { RootState } from '../store';
 
+import {
+  AuthError,
+  SignInWithPasswordCredentials,
+  SignUpWithPasswordCredentials,
+} from '@supabase/supabase-js';
+
 interface AuthContextType {
   user: User | null;
   role: 'buyer' | 'seller' | 'admin' | null;
   loading: boolean;
+  handleRegister: (credentials: SignUpWithPasswordCredentials) => Promise<{ error: AuthError | null }>;
+  handleLogin: (credentials: SignInWithPasswordCredentials) => Promise<{ error: AuthError | null }>;
   handleLogout: () => Promise<void>;
 }
 
@@ -35,93 +43,71 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const loading = useSelector((state: RootState) => state.auth.loading);
 
   useEffect(() => {
-    console.log('🔄 AuthContext useEffect starting...');
-    
-    const applyRoleFromMetadata = (user: User | null) => {
-      const metaRole = user?.user_metadata?.role as 'buyer' | 'seller' | 'admin' | undefined;
-      if (metaRole) {
-        console.log('📝 Setting role from metadata:', metaRole);
-        dispatch(setRole(metaRole));
-      }
-    };
+    console.log('--- DEBUG: AuthContext useEffect START ---');
+    dispatch(setLoading(true));
 
-    const fetchUserRole = async (userId: string) => {
+    const fetchUserRole = async (user: User) => {
+      console.log(`[Auth] Fetching role for user ${user.id}`);
       try {
-        console.log('🔍 Fetching user role for:', userId);
         const { data, error } = await supabase
           .from('users')
           .select('role')
-          .eq('id', userId)
+          .eq('id', user.id)
           .single();
 
-        if (error) throw error;
-        if (data?.role) {
-          console.log('✅ Role fetched from DB:', data.role);
-          dispatch(setRole(data.role));
+        if (error) {
+          throw new Error(`Failed to fetch role: ${error.message}`);
         }
+        
+        const role = data?.role || 'buyer';
+        console.log(`[Auth] Role fetched from DB: ${role}`);
+        dispatch(setRole(role));
       } catch (error) {
-        console.error('❌ Error fetching user role:', error);
+        console.error('[Auth] Error fetching user role:', error);
+        dispatch(setRole('buyer')); // Default to buyer on error
       }
     };
 
-    const hydrateSession = (session: { user: User } | null) => {
-      console.log('💧 Hydrating session:', session ? 'user exists' : 'no user');
-      
+    const handleSession = async (session: { user: User } | null) => {
       if (session?.user) {
-        console.log('👤 Setting user and role');
+        console.log('[Auth] Session found. User is logged in.');
         dispatch(setUser(session.user));
-        applyRoleFromMetadata(session.user);
-        // Always set loading to false so UI can proceed
-        dispatch(setLoading(false));
-        // Fetch the canonical role in the background so UI doesn't hang
-        fetchUserRole(session.user.id);
+        await fetchUserRole(session.user);
       } else {
-        console.log('👻 No user, clearing state and setting loading false');
-        dispatch(logout());
-        dispatch(setLoading(false));
-      }
-    };
-
-    const getSession = async () => {
-      console.log('🔍 Getting initial session...');
-      try {
-        // Add timeout to prevent hanging
-        const sessionPromise = supabase.auth.getSession();
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
-        );
-        
-        const {
-          data: { session },
-        } = await Promise.race([sessionPromise, timeoutPromise]) as any;
-        
-        console.log('📊 Initial session result:', session ? 'found' : 'none');
-        hydrateSession(session);
-      } catch (error) {
-        console.error('❌ Error getting session:', error);
-        console.log('🔄 Falling back to no session');
-        dispatch(setLoading(false));
-        hydrateSession(null);
-      }
-    };
-
-    getSession();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('🔔 Auth state change:', event);
-      if (event === 'SIGNED_IN') {
-        hydrateSession(session);
-      } else if (event === 'SIGNED_OUT') {
+        console.log('[Auth] No session found. User is logged out.');
         dispatch(logout());
       }
+      dispatch(setLoading(false));
+      console.log('--- DEBUG: AuthContext useEffect END (session handled) ---');
+    };
+    
+    // Check for initial session on component mount
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('[Auth] Initial getSession() completed.');
+      handleSession(session as any);
+    });
+
+    // Listen for auth state changes (login, logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log(`[Auth] onAuthStateChange event: ${event}`);
+      handleSession(session as any);
     });
 
     return () => {
+      console.log('[Auth] Unsubscribing from auth state changes.');
       subscription.unsubscribe();
     };
   }, [dispatch]);
+
+  const handleRegister = async (credentials: SignUpWithPasswordCredentials) => {
+    const { error } = await supabase.auth.signUp(credentials);
+    return { error };
+  };
+
+  const handleLogin = async (credentials: SignInWithPasswordCredentials) => {
+    const { error } = await supabase.auth.signInWithPassword(credentials);
+    return { error };
+  };
 
   const handleLogout = async () => {
     try {
@@ -134,7 +120,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, role, loading, handleLogout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        role,
+        loading,
+        handleRegister,
+        handleLogin,
+        handleLogout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
