@@ -1,37 +1,70 @@
 /* CSS Reset & Design Tokens */
 :root {
-  --color-primary: #8b4513;
-  --color-primary-dark: #654321;
-  --color-primary-light: #d2691e;
-  --color-secondary: #f4a460;
-  --color-background: #ffffff;
-  --color-surface: #fafafa;
-  --color-text: #1a1a1a;
-  --color-text-secondary: #666666;
-  --color-border: #e0e0e0;
+  /* Brand Colors (Oompaloompa inspired) */
+  --color-chocolate: #3e2723;
+  --color-chocolate-light: #5d3a2a;
+  --color-chocolate-dark: #2a1a14;
+  --color-gold: #d4af37;
+  --color-gold-dim: #c29a2f;
+  --color-cream: #f8f5f2;
+  --color-berry: #b3125d;
+
+  /* Semantic palette mapped to existing tokens (keep existing variable names for minimal refactors) */
+  --color-primary: var(--color-chocolate);
+  --color-primary-dark: var(--color-chocolate-dark);
+  --color-primary-light: var(--color-chocolate-light);
+  --color-secondary: var(--color-gold);
+  --color-background: var(--color-cream);
+  --color-surface: #ffffff;
+  --color-border: rgba(0,0,0,0.08);
+  --color-text: #2b1e18;
+  --color-text-secondary: #6a564d;
   --color-error: #d32f2f;
   --color-success: #2e7d32;
   --color-warning: #ed6c02;
   --color-info: #0288d1;
 
+  /* Typography */
+  --font-sans: 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.15;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.65;
+
+  /* Spacing Scale */
+  --spacing-3xs: 0.125rem;
+  --spacing-2xs: 0.2rem;
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
 
+  /* Radii */
   --border-radius-sm: 0.25rem;
-  --border-radius-md: 0.5rem;
-  --border-radius-lg: 1rem;
+  --border-radius-md: 0.6rem;
+  --border-radius-lg: 1.1rem;
+  --border-radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.18);
+  --shadow-focus: 0 0 0 3px rgba(212,175,55,0.35);
 
-  --transition-fast: 150ms ease;
-  --transition-base: 250ms ease;
-  --transition-slow: 350ms ease;
+  /* Motion */
+  --transition-fast: 140ms cubic-bezier(.4,0,.2,1);
+  --transition-base: 240ms cubic-bezier(.4,0,.2,1);
+  --transition-slow: 400ms cubic-bezier(.4,0,.2,1);
+  --ease-emphasized: cubic-bezier(.2,.8,.2,1);
 }
 
 * {
@@ -45,15 +78,50 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
   background-color: var(--color-background);
-  line-height: 1.6;
+  line-height: var(--line-height-base);
+  font-weight: var(--font-weight-regular);
 }
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-primary);
+  letter-spacing: .5px;
+}
+
+/* Headings scale */
+h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.3rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 0.95rem; }
+
+p { line-height: var(--line-height-relaxed); }
+
+a { color: var(--color-primary); text-decoration: none; transition: color var(--transition-fast); }
+a:hover { color: var(--color-secondary); }
+a:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: 4px; }
+
+button:focus-visible, [role="button"]:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Utility */
+.visually-hidden { position: absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+/* Scrollbar subtle theming */
+*::-webkit-scrollbar { width: 10px; }
+*::-webkit-scrollbar-track { background: var(--color-cream); }
+*::-webkit-scrollbar-thumb { background: var(--color-chocolate-light); border-radius: 6px; border: 2px solid var(--color-cream); }
+*::-webkit-scrollbar-thumb:hover { background: var(--color-chocolate); }
 
 @media (prefers-reduced-motion: reduce) {
   *,

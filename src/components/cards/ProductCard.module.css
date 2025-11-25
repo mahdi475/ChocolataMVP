@@ -4,6 +4,17 @@
   height: 100%;
   padding: 0;
   overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .link {
@@ -20,17 +31,18 @@
   overflow: hidden;
   background-color: var(--color-surface);
   position: relative;
+  isolation: isolate;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-base);
+  transition: transform 700ms ease;
 }
 
 .link:hover .image {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .placeholder {
@@ -49,6 +61,7 @@
   flex-direction: column;
   flex: 1;
   gap: var(--spacing-sm);
+  position: relative;
 }
 
 .title {
@@ -56,6 +69,11 @@
   font-weight: 600;
   margin: 0;
   color: var(--color-text);
+  transition: color var(--transition-fast);
+}
+
+.card:hover .title {
+  color: var(--color-secondary);
 }
 
 .description {
@@ -79,6 +97,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-primary);
+  font-family: serif;
 }
 
 .stock {
@@ -89,6 +108,7 @@
 .addButton {
   margin: var(--spacing-md);
   margin-top: 0;
+  border-radius: 999px;
 }
 
 .soldOutBadge {
@@ -97,10 +117,47 @@
   left: var(--spacing-sm);
   background: rgba(0, 0, 0, 0.75);
   color: #fff;
-  padding: 0.25rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  backdrop-filter: blur(2px);
 }
+
+.lowStockBadge {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: #b3125d;
+  color: #fff;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-md);
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.imageContainer:hover .hoverOverlay { opacity: 1; }
 

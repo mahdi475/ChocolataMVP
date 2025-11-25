@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import FadeIn from '../components/animations/FadeIn';
+import { motion } from 'framer-motion';
 import Button from '../components/ui/Button';
 import styles from './HomePage.module.css';
 
@@ -35,24 +35,31 @@ const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      <FadeIn>
-        <section className={styles.hero}>
-          <h1 className={styles.title}>🍭 Welcome to Oompaloompa</h1>
-          <p className={styles.subtitle}>
-            Discover premium chocolate products from verified sellers
-          </p>
-          <div className={styles.actions}>
-            <Link to="/catalog">
-              <Button size="lg">Browse Catalog</Button>
-            </Link>
-            <Link to="/register">
-              <Button variant="outline" size="lg">
-                Become a Seller
-              </Button>
-            </Link>
-          </div>
-        </section>
-      </FadeIn>
+      <motion.section
+        className={styles.hero}
+        initial={{ opacity: 0, scale: 0.92, y: 40 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 1.1, ease: 'easeOut' }}
+      >
+        <h2 className={styles.welcome}>WELCOME TO THE FACTORY</h2>
+        <h1 className={styles.title}>
+          <span className={styles.chocoIcon}>🍫</span> A World of <span className={styles.imagination}>Pure Imagination</span> & Flavor
+        </h1>
+        <p className={styles.subtitle}>
+          Discover artisan chocolates, rare sweets, and gourmet foods from independent creators worldwide. Collect stamps in your passport with every bite.
+        </p>
+        <blockquote className={styles.quote}>
+          "The suspense is terrible... I hope it'll last!"
+        </blockquote>
+        <div className={styles.actions}>
+          <Link to="/catalog">
+            <Button variant="gold" size="lg">Start Exploring</Button>
+          </Link>
+          <Link to="/catalog">
+            <Button variant="outline" size="lg">Surprise Me!</Button>
+          </Link>
+        </div>
+      </motion.section>
     </div>
   );
 };

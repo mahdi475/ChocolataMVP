@@ -1,35 +1,79 @@
 .container {
   width: 100%;
+  min-height: 100vh;
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(180deg, #f8eee4 0%, #f5e2d1 45%, #f9efe8 100%);
+}
+
+.panel {
+  margin: 0 auto;
+  max-width: 1180px;
+  background: var(--color-cream);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-3xl);
+  box-shadow: 0 25px 50px rgba(88, 47, 36, 0.18);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-xl);
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-xl);
-  color: var(--color-text);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-chocolate-dark);
+  font-family: var(--font-serif);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text-secondary);
+  max-width: 520px;
 }
 
 .orders {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .orderCard {
   padding: var(--spacing-lg);
+  border: 1px solid rgba(93, 58, 42, 0.14);
+  border-radius: var(--border-radius-lg);
+  background: linear-gradient(180deg, #ffffff 0%, #fff7ea 100%);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.orderCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 .orderHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: var(--spacing-md);
   margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(93, 58, 42, 0.1);
+  padding-bottom: var(--spacing-sm);
 }
 
 .orderId {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  margin: 0 0 var(--spacing-xs) 0;
+  margin: 0;
+  color: var(--color-chocolate-dark);
 }
 
 .orderDate {
@@ -39,37 +83,52 @@
 }
 
 .status {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  border: 1px solid currentColor;
 }
 
 .status.pending {
-  background-color: rgba(237, 108, 2, 0.1);
-  color: var(--color-warning);
+  color: #b45309;
+  background: #fff7ed;
+}
+
+.status.processing {
+  color: #92400e;
+  background: #fffaf0;
+}
+
+.status.shipped {
+  color: #047857;
+  background: #ecfdf5;
 }
 
 .status.completed {
-  background-color: rgba(46, 125, 50, 0.1);
-  color: var(--color-success);
+  color: #1d4ed8;
+  background: #eff6ff;
 }
 
 .status.cancelled {
-  background-color: rgba(211, 47, 47, 0.1);
-  color: var(--color-error);
+  color: #b91c1c;
+  background: #fef2f2;
 }
 
 .orderDetails {
   display: flex;
   justify-content: space-between;
-  padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-border);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .customer {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   color: var(--color-text-secondary);
   margin: 0;
 }
@@ -77,21 +136,58 @@
 .total {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-chocolate-dark);
   margin: 0;
 }
 
 .empty {
   text-align: center;
+  border: 1px dashed rgba(93, 58, 42, 0.25);
   color: var(--color-text-secondary);
-  padding: var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.92);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-lg);
+  font-size: 1.05rem;
 }
 
 .error {
   padding: var(--spacing-md);
-  background-color: rgba(211, 47, 47, 0.1);
+  background: rgba(244, 63, 94, 0.08);
   color: var(--color-error);
   border-radius: var(--border-radius-md);
   margin-bottom: var(--spacing-md);
+  border: 1px solid var(--color-error);
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: var(--spacing-2xl);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .orderDetails {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .panel {
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    margin: 0 var(--spacing-sm);
+  }
+
+  .orderCard {
+    padding: var(--spacing-md);
+  }
 }
 

@@ -14,12 +14,22 @@ const SellerProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       if (!user) return;
 
       try {
+        // Check verification status
+        const { data: verification } = await supabase
+          .from('seller_verifications')
+          .select('status')
+          .eq('user_id', user.id)
+          .single();
+
+        setIsVerified(verification?.status === 'approved');
+
         const { data, error: fetchError } = await supabase
           .from('products')
           .select('*')
@@ -61,55 +71,72 @@ const SellerProductsPage = () => {
   return (
     <div className={styles.container}>
       <FadeIn>
-        <div className={styles.header}>
-          <h1 className={styles.title}>My Products</h1>
-          <Link to="/seller/products/new">
-            <Button data-testid="create-product-button">Create Product</Button>
-          </Link>
-        </div>
-        {error && <div className={styles.error}>{error}</div>}
-        {products.length === 0 ? (
-          <Card>
-            <p className={styles.empty}>No products yet. Create your first product!</p>
-            <Link to="/seller/products/new">
-              <Button>Create Product</Button>
+        {!isVerified && (
+          <Card className={styles.warningCard}>
+            <h3>⚠️ Verification Required</h3>
+            <p>You need to be verified before you can create and sell products.</p>
+            <Link to="/seller/verification">
+              <Button>Go to Verification</Button>
             </Link>
           </Card>
-        ) : (
-          <div className={styles.grid}>
-            {products.map((product) => (
-              <Card key={product.id} className={styles.productCard}>
-                {product.image_url && (
-                  <img src={product.image_url} alt={product.name} className={styles.image} />
-                )}
-                <div className={styles.content}>
-                  <h3 className={styles.productName}>{product.name}</h3>
-                  <p className={styles.productPrice}>
-                    {new Intl.NumberFormat('sv-SE', {
-                      style: 'currency',
-                      currency: 'SEK',
-                    }).format(product.price)}
-                  </p>
-                  <div className={styles.actions}>
-                    <Link to={`/seller/products/${product.id}/edit`}>
-                      <Button variant="outline" size="sm">
-                        Edit
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(product.id)}
-                      data-testid={`delete-product-${product.id}`}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
         )}
+        <div className={styles.panel}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>My Products</h1>
+            <Link to="/seller/products/new">
+              <Button 
+                data-testid="create-product-button"
+                disabled={!isVerified}
+                title={!isVerified ? 'You must be verified to create products' : ''}
+              >
+                Create Product
+              </Button>
+            </Link>
+          </div>
+          {error && <div className={styles.error}>{error}</div>}
+          {products.length === 0 ? (
+            <div className={styles.emptyCard}>
+              <p className={styles.empty}>No products yet. Create your first product to start selling!</p>
+              <Link to="/seller/products/new">
+                <Button>Create Product</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className={styles.grid}>
+              {products.map((product) => (
+                <Card key={product.id} className={styles.productCard}>
+                  {product.image_url && (
+                    <img src={product.image_url} alt={product.name} className={styles.image} />
+                  )}
+                  <div className={styles.content}>
+                    <h3 className={styles.productName}>{product.name}</h3>
+                    <p className={styles.productPrice}>
+                      {new Intl.NumberFormat('sv-SE', {
+                        style: 'currency',
+                        currency: 'SEK',
+                      }).format(product.price)}
+                    </p>
+                    <div className={styles.actions}>
+                      <Link to={`/seller/products/${product.id}/edit`}>
+                        <Button variant="outline" size="sm">
+                          Edit
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(product.id)}
+                        data-testid={`delete-product-${product.id}`}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
       </FadeIn>
     </div>
   );

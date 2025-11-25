@@ -54,41 +54,51 @@ const SellerOrdersPage = () => {
   return (
     <div className={styles.container}>
       <FadeIn>
-        <h1 className={styles.title}>Orders</h1>
-        {error && <div className={styles.error}>{error}</div>}
-        {orders.length === 0 ? (
-          <Card>
-            <p className={styles.empty}>No orders yet</p>
-          </Card>
-        ) : (
-          <div className={styles.orders}>
-            {orders.map((order) => (
-              <Card key={order.id} className={styles.orderCard}>
-                <div className={styles.orderHeader}>
-                  <div>
-                    <h3 className={styles.orderId}>Order #{order.id.slice(0, 8)}</h3>
-                    <p className={styles.orderDate}>
-                      {new Date(order.created_at).toLocaleDateString()}
+        <div className={styles.panel}>
+          <div className={styles.header}>
+            <div>
+              <h1 className={styles.title}>Orders</h1>
+              <p className={styles.subtitle}>Track and manage your customer orders.</p>
+            </div>
+          </div>
+          {error && <div className={styles.error}>{error}</div>}
+          {orders.length === 0 ? (
+            <div className={styles.empty}>
+              <p>No orders yet. Once customers purchase your products, they'll appear here.</p>
+            </div>
+          ) : (
+            <div className={styles.orders}>
+              {orders.map((order) => (
+                <Card key={order.id} className={styles.orderCard}>
+                  <div className={styles.orderHeader}>
+                    <div>
+                      <h3 className={styles.orderId}>Order #{order.id.slice(0, 8).toUpperCase()}</h3>
+                      <p className={styles.orderDate}>
+                        {new Date(order.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </div>
+                    <span className={`${styles.status} ${styles[order.status]}`}>
+                      {order.status}
+                    </span>
+                  </div>
+                  <div className={styles.orderDetails}>
+                    <p className={styles.customer}>Customer: {order.shipping_name}</p>
+                    <p className={styles.total}>
+                      {new Intl.NumberFormat('sv-SE', {
+                        style: 'currency',
+                        currency: 'SEK',
+                      }).format(order.total_amount)}
                     </p>
                   </div>
-                  <span className={`${styles.status} ${styles[order.status]}`}>
-                    {order.status}
-                  </span>
-                </div>
-                <div className={styles.orderDetails}>
-                  <p className={styles.customer}>Customer: {order.shipping_name}</p>
-                  <p className={styles.total}>
-                    Total:{' '}
-                    {new Intl.NumberFormat('sv-SE', {
-                      style: 'currency',
-                      currency: 'SEK',
-                    }).format(order.total_amount)}
-                  </p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
       </FadeIn>
     </div>
   );

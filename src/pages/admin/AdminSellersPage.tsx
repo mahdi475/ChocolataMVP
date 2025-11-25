@@ -137,14 +137,26 @@ const AdminSellersPage = () => {
                 </div>
                 {verification.document_url && (
                   <div className={styles.document}>
-                    <a
-                      href={verification.document_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.documentLink}
-                    >
-                      View Document
-                    </a>
+                    <p style={{ fontWeight: 600, marginBottom: '8px', color: 'var(--color-chocolate-dark)' }}>
+                      Verification Document:
+                    </p>
+                    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                      <a
+                        href={verification.document_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.documentLink}
+                      >
+                        👁️ View Document
+                      </a>
+                      <a
+                        href={verification.document_url}
+                        download
+                        className={styles.documentLink}
+                      >
+                        ⬇️ Download
+                      </a>
+                    </div>
                   </div>
                 )}
                 <div className={styles.actions}>

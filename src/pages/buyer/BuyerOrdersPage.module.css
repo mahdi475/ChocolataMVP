@@ -1,18 +1,80 @@
 .container {
   width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #3b1f1d 0%, #4f2b25 45%, #5d3a2a 100%);
+  padding: var(--spacing-3xl) 0;
+}
+
+.panel {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  background: var(--color-cream);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-3xl);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.heroTag {
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-chocolate-dark);
+  letter-spacing: 0.05em;
+}
+
+.heroBadge {
+  background: var(--color-gold);
+  color: var(--color-chocolate-dark);
+  padding: 0.35rem 1rem;
+  border-radius: var(--border-radius-pill);
+  font-weight: var(--font-weight-bold);
+  font-size: 0.8rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.heroSubtitle {
+  color: var(--color-text-secondary);
 }
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-md);
   margin-bottom: var(--spacing-xl);
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--color-text);
+  font-size: clamp(2rem, 4vw, 2.4rem);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-chocolate-dark);
+  margin: 0;
 }
 
 .ordersList {
@@ -23,11 +85,16 @@
 
 .orderCard {
   padding: var(--spacing-lg);
-  transition: box-shadow var(--transition-base);
+  border: 1px solid var(--color-gold);
+  background: linear-gradient(135deg, var(--color-cream), #fffbe6);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
 }
 
 .orderCard:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.02) translateY(-2px);
 }
 
 .orderHeader {
@@ -36,7 +103,7 @@
   align-items: flex-start;
   margin-bottom: var(--spacing-md);
   padding-bottom: var(--spacing-md);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(62, 39, 35, 0.15);
 }
 
 .orderInfo {
@@ -46,14 +113,15 @@
 }
 
 .orderId {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
   margin: 0;
-  color: var(--color-text);
+  color: var(--color-gold);
 }
 
 .orderDate {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--color-text-secondary);
   margin: 0;
 }
@@ -61,34 +129,36 @@
 .statusBadge {
   display: inline-block;
   padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--border-radius-full);
-  font-size: 0.875rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.85rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
 }
 
 .statusPending {
-  background-color: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
+  background: rgba(255, 209, 102, 0.25);
+  color: #b45309;
 }
 
 .statusProcessing {
-  background-color: rgba(33, 150, 243, 0.2);
-  color: #2196f3;
+  background: rgba(252, 211, 77, 0.2);
+  color: #92400e;
 }
 
 .statusShipped {
-  background-color: rgba(156, 39, 176, 0.2);
-  color: #9c27b0;
+  background: rgba(16, 185, 129, 0.2);
+  color: #047857;
 }
 
 .statusCompleted {
-  background-color: rgba(76, 175, 80, 0.2);
-  color: var(--color-success);
+  background: rgba(22, 101, 52, 0.2);
+  color: #166534;
 }
 
 .statusCancelled {
-  background-color: rgba(211, 47, 47, 0.2);
-  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.2);
+  color: #b91c1c;
 }
 
 .orderDetails {
@@ -106,7 +176,7 @@
 
 .label {
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-chocolate-dark);
 }
 
 .value {
@@ -118,7 +188,7 @@
   display: flex;
   justify-content: flex-end;
   padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px dashed rgba(62, 39, 35, 0.3);
 }
 
 .emptyCard {
@@ -127,6 +197,9 @@
   align-items: center;
   padding: var(--spacing-2xl);
   text-align: center;
+  border: 2px dashed var(--color-gold);
+  background: var(--color-cream);
+  border-radius: var(--border-radius-lg);
 }
 
 .empty {
@@ -144,23 +217,26 @@
 }
 
 @media (max-width: 768px) {
+  .panel {
+    padding: var(--spacing-xl);
+  }
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .header {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-md);
   }
-
   .orderHeader {
     flex-direction: column;
     gap: var(--spacing-sm);
   }
-
   .detailRow {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-xs);
   }
-
   .value {
     text-align: left;
   }

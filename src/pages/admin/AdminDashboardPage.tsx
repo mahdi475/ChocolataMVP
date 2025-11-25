@@ -78,33 +78,43 @@ const AdminDashboardPage = () => {
     );
   }
 
+  const heroBadgeText = `${stats.totalOrders} total orders`;
+
   return (
     <div className={styles.container}>
       <FadeIn>
-        <h1 className={styles.title}>Admin Dashboard</h1>
-        <div className={styles.stats}>
-          <Card className={styles.statCard}>
-            <h3 className={styles.statValue}>{stats.totalUsers}</h3>
-            <p className={styles.statLabel}>Total Users</p>
-          </Card>
-          <Card className={styles.statCard}>
-            <h3 className={styles.statValue}>{stats.totalProducts}</h3>
-            <p className={styles.statLabel}>Total Products</p>
-          </Card>
-          <Card className={styles.statCard}>
-            <h3 className={styles.statValue}>{stats.totalOrders}</h3>
-            <p className={styles.statLabel}>Total Orders</p>
-          </Card>
-          <Card className={styles.statCard}>
-            <h3 className={styles.statValue}>{stats.pendingVerifications}</h3>
-            <p className={styles.statLabel}>Pending Verifications</p>
-          </Card>
-        </div>
+        <div className={styles.panel}>
+          <div className={styles.hero}>
+            <div className={styles.heroText}>
+              <p className={styles.heroTag}>Admin Panel</p>
+              <h1 className={`${styles.title} ${styles.heroTitle}`}>Admin HQ</h1>
+              <p className={styles.heroSubtitle}>Keep the chocolate supply chain smooth with friendly telemetry and rapid insights.</p>
+            </div>
+            <span className={styles.heroBadge}>{heroBadgeText}</span>
+          </div>
+          <div className={styles.stats}>
+            <Card className={styles.statCard}>
+              <h3 className={styles.statValue}>{stats.totalUsers}</h3>
+              <p className={styles.statLabel}>Total Users</p>
+            </Card>
+            <Card className={styles.statCard}>
+              <h3 className={styles.statValue}>{stats.totalProducts}</h3>
+              <p className={styles.statLabel}>Total Products</p>
+            </Card>
+            <Card className={styles.statCard}>
+              <h3 className={styles.statValue}>{stats.totalOrders}</h3>
+              <p className={styles.statLabel}>Total Orders</p>
+            </Card>
+            <Card className={styles.statCard}>
+              <h3 className={styles.statValue}>{stats.pendingVerifications}</h3>
+              <p className={styles.statLabel}>Pending Verifications</p>
+            </Card>
+          </div>
 
-        <div className={styles.statusSection}>
+          <div className={styles.statusSection}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Order status overview</h2>
-            <p className={styles.sectionSubtext}>Track bottlenecks and processing progress in realtime.</p>
+            <h2 className={styles.sectionTitle}>Order Status Overview</h2>
+            <p className={styles.sectionSubtext}>Track bottlenecks and progress in real time. 🍫</p>
           </div>
           <div className={styles.statusGrid}>
             {ORDER_STATUSES.map((status) => (
@@ -126,6 +136,7 @@ const AdminDashboardPage = () => {
                 </p>
               </Card>
             ))}
+          </div>
           </div>
         </div>
       </FadeIn>

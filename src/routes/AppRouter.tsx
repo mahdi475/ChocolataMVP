@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-import BuyerLayout from '../components/layout/BuyerLayout';
+import MainLayout from '../components/layout/MainLayout';
 import SellerDashboardShell from '../components/layout/SellerDashboardShell';
 import AdminShell from '../components/layout/AdminShell';
 
@@ -32,6 +32,8 @@ import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import AdminSellersPage from '../pages/admin/AdminSellersPage';
 import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage';
 import AdminOrdersPage from '../pages/admin/AdminOrdersPage';
+import AdminActivityPage from '../pages/admin/AdminActivityPage';
+import AdminProductsPage from '../pages/admin/AdminProductsPage';
 
 const ProtectedRoute = ({
   children,
@@ -80,103 +82,49 @@ const AppRouter = () => {
       {/* Public routes */}
       <Route
         path="/"
-        element={
-          <BuyerLayout>
-            <HomePage />
-          </BuyerLayout>
-        }
+        element={<MainLayout><HomePage /></MainLayout>}
       />
       <Route
         path="/login"
-        element={
-          <BuyerLayout>
-            <LoginPage />
-          </BuyerLayout>
-        }
+        element={<MainLayout><LoginPage /></MainLayout>}
       />
       <Route
         path="/register"
-        element={
-          <BuyerLayout>
-            <RegisterPage />
-          </BuyerLayout>
-        }
+        element={<MainLayout><RegisterPage /></MainLayout>}
       />
 
       {/* Buyer routes */}
       <Route
         path="/catalog"
-        element={
-          <BuyerLayout>
-            <CatalogPage />
-          </BuyerLayout>
-        }
+        element={<MainLayout><CatalogPage /></MainLayout>}
       />
       <Route
         path="/product/:id"
-        element={
-          <BuyerLayout>
-            <ProductDetailPage />
-          </BuyerLayout>
-        }
+        element={<MainLayout><ProductDetailPage /></MainLayout>}
       />
       <Route
         path="/cart"
-        element={
-          <BuyerLayout>
-            <CartPage />
-          </BuyerLayout>
-        }
+        element={<MainLayout><CartPage /></MainLayout>}
       />
       <Route
         path="/checkout"
-        element={
-          <BuyerLayout>
-            <ProtectedRoute requiredRole="buyer">
-              <CheckoutPage />
-            </ProtectedRoute>
-          </BuyerLayout>
-        }
+        element={<MainLayout><ProtectedRoute requiredRole="buyer"><CheckoutPage /></ProtectedRoute></MainLayout>}
       />
       <Route
         path="/checkout/confirmation/:id"
-        element={
-          <BuyerLayout>
-            <ProtectedRoute requiredRole="buyer">
-              <CheckoutConfirmationPage />
-            </ProtectedRoute>
-          </BuyerLayout>
-        }
+        element={<MainLayout><ProtectedRoute requiredRole="buyer"><CheckoutConfirmationPage /></ProtectedRoute></MainLayout>}
       />
       <Route
         path="/orders"
-        element={
-          <BuyerLayout>
-            <ProtectedRoute requiredRole="buyer">
-              <BuyerOrdersPage />
-            </ProtectedRoute>
-          </BuyerLayout>
-        }
+        element={<MainLayout><ProtectedRoute requiredRole="buyer"><BuyerOrdersPage /></ProtectedRoute></MainLayout>}
       />
       <Route
         path="/orders/:id"
-        element={
-          <BuyerLayout>
-            <ProtectedRoute requiredRole="buyer">
-              <OrderDetailPage />
-            </ProtectedRoute>
-          </BuyerLayout>
-        }
+        element={<MainLayout><ProtectedRoute requiredRole="buyer"><OrderDetailPage /></ProtectedRoute></MainLayout>}
       />
       <Route
         path="/profile"
-        element={
-          <BuyerLayout>
-            <ProtectedRoute requiredRole="buyer">
-              <CustomerProfilePage />
-            </ProtectedRoute>
-          </BuyerLayout>
-        }
+        element={<MainLayout><ProtectedRoute requiredRole="buyer"><CustomerProfilePage /></ProtectedRoute></MainLayout>}
       />
 
       {/* Seller routes */}
@@ -278,6 +226,26 @@ const AppRouter = () => {
           <ProtectedRoute requiredRole="admin">
             <AdminShell>
               <AdminOrdersPage />
+            </AdminShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/activity"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <AdminShell>
+              <AdminActivityPage />
+            </AdminShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/products"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <AdminShell>
+              <AdminProductsPage />
             </AdminShell>
           </ProtectedRoute>
         }

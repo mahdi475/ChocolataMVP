@@ -4,9 +4,10 @@
 
 .title {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: var(--spacing-xl);
-  color: var(--color-text);
+  color: var(--color-chocolate-dark);
+  font-family: var(--font-serif);
 }
 
 .verifications {
@@ -17,6 +18,8 @@
 
 .verificationCard {
   padding: var(--spacing-lg);
+  background: var(--color-cream);
+  border: 1px solid var(--color-gold);
 }
 
 .header {
@@ -27,6 +30,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0 0 var(--spacing-xs) 0;
+  color: var(--color-chocolate-dark);
 }
 
 .email {
@@ -51,10 +55,22 @@
   color: var(--color-primary);
   text-decoration: none;
   font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: white;
 }
 
 .documentLink:hover {
-  text-decoration: underline;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 .actions {

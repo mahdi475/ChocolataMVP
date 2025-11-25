@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import styles from './Button.module.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'gold';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
 }

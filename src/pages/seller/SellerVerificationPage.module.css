@@ -1,14 +1,30 @@
 .container {
   width: 100%;
-  max-width: 800px;
+  min-height: 100vh;
+  padding: var(--spacing-3xl) var(--spacing-md);
+  background: linear-gradient(180deg, #f8eee4 0%, #f5e2d1 45%, #f9efe8 100%);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.panel {
   margin: 0 auto;
+  max-width: 900px;
+  background: var(--color-cream);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-3xl);
+  box-shadow: 0 25px 50px rgba(88, 47, 36, 0.18);
+  margin-bottom: var(--spacing-3xl);
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
   margin-bottom: var(--spacing-xl);
-  color: var(--color-text);
+  color: var(--color-chocolate-dark);
+  font-family: var(--font-serif);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 .infoCard,
@@ -17,16 +33,21 @@
 .warningCard {
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-xl);
+  border: 1px solid rgba(93, 58, 42, 0.14);
+  border-radius: var(--border-radius-lg);
+  background: linear-gradient(180deg, #ffffff 0%, #fff7ea 100%);
+  box-shadow: var(--shadow-sm);
 }
 
 .successCard {
-  background-color: rgba(76, 175, 80, 0.1);
+  background: rgba(76, 175, 80, 0.08);
   border-left: 4px solid var(--color-success);
 }
 
 .successCard h3 {
   color: var(--color-success);
   margin-bottom: var(--spacing-md);
+  font-size: 1.2rem;
 }
 
 .successCard p {
@@ -35,13 +56,14 @@
 }
 
 .warningCard {
-  background-color: rgba(255, 152, 0, 0.1);
+  background: rgba(255, 152, 0, 0.08);
   border-left: 4px solid #ff9800;
 }
 
 .warningCard h3 {
   color: #ff9800;
   margin-bottom: var(--spacing-md);
+  font-size: 1.2rem;
 }
 
 .warningCard p {
@@ -52,7 +74,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: var(--spacing-lg);
-  color: var(--color-text);
+  color: var(--color-chocolate-dark);
 }
 
 .statusSection {
@@ -69,7 +91,7 @@
 
 .label {
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-chocolate-dark);
   min-width: 100px;
 }
 
@@ -113,10 +135,27 @@
   color: var(--color-primary);
   text-decoration: none;
   font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
 }
 
 .documentLink:hover {
-  text-decoration: underline;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.documentActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
 }
 
 .noVerification {
@@ -154,6 +193,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  padding-bottom: var(--spacing-xl);
 }
 
 .fileInput {
@@ -162,6 +202,7 @@
   border-radius: var(--border-radius-md);
   cursor: pointer;
   transition: border-color var(--transition-base);
+  background: white;
 }
 
 .fileInput:hover {
@@ -189,6 +230,8 @@
 
 .uploadButton {
   align-self: flex-start;
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
 }
 
 .error {
@@ -199,8 +242,19 @@
   margin-bottom: var(--spacing-md);
 }
 
+@media (max-width: 1024px) {
+  .panel {
+    padding: var(--spacing-2xl);
+  }
+}
+
 @media (max-width: 768px) {
   .container {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .panel {
+    padding: var(--spacing-xl);
     max-width: 100%;
   }
 
@@ -211,5 +265,24 @@
 
   .label {
     min-width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+
+  .panel {
+    padding: var(--spacing-lg);
+    margin: 0 var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .infoCard,
+  .uploadCard,
+  .successCard,
+  .warningCard {
+    padding: var(--spacing-lg);
   }
 }

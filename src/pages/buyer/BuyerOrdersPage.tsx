@@ -67,74 +67,87 @@ const BuyerOrdersPage = () => {
     );
   }
 
+  const heroBadgeText = orders.length === 0 ? 'Awaiting first delight' : `${orders.length} orders tracked`;
+
   return (
     <div className={styles.container}>
       <FadeIn>
-        <div className={styles.header}>
-          <h1 className={styles.title}>My Orders</h1>
-          <Link to="/catalog">
-            <Button variant="outline">Continue Shopping</Button>
-          </Link>
-        </div>
-
-        {error && <div className={styles.error}>{error}</div>}
-
-        {orders.length === 0 ? (
-          <Card className={styles.emptyCard}>
-            <p className={styles.empty}>You haven't placed any orders yet.</p>
-            <Link to="/catalog">
-              <Button>Browse Products</Button>
-            </Link>
-          </Card>
-        ) : (
-          <div className={styles.ordersList}>
-            {orders.map((order) => (
-              <Card key={order.id} className={styles.orderCard}>
-                <div className={styles.orderHeader}>
-                  <div className={styles.orderInfo}>
-                    <h3 className={styles.orderId}>Order #{order.id.slice(0, 8).toUpperCase()}</h3>
-                    <p className={styles.orderDate}>
-                      {new Date(order.created_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </p>
-                  </div>
-                  {getStatusBadge(order.status)}
-                </div>
-
-                <div className={styles.orderDetails}>
-                  <div className={styles.detailRow}>
-                    <span className={styles.label}>Total:</span>
-                    <span className={styles.value}>
-                      {new Intl.NumberFormat('sv-SE', {
-                        style: 'currency',
-                        currency: 'SEK',
-                      }).format(order.total_amount)}
-                    </span>
-                  </div>
-                  <div className={styles.detailRow}>
-                    <span className={styles.label}>Shipping to:</span>
-                    <span className={styles.value}>{order.shipping_name}</span>
-                  </div>
-                  <div className={styles.detailRow}>
-                    <span className={styles.label}>Address:</span>
-                    <span className={styles.value}>{order.shipping_address}</span>
-                  </div>
-                </div>
-
-                <div className={styles.orderActions}>
-                  <Link to={`/orders/${order.id}`}>
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            ))}
+        <div className={styles.panel}>
+          <div className={styles.hero}>
+            <div className={styles.heroText}>
+              <p className={styles.heroTag}>Orders</p>
+              <h2 className={styles.heroTitle}>My Chocolate Journey</h2>
+              <p className={styles.heroSubtitle}>Every order is a handcrafted celebration—track the shimmer from bean to bar.</p>
+            </div>
+            <span className={styles.heroBadge}>{heroBadgeText}</span>
           </div>
-        )}
+
+          <div className={styles.header}>
+            <h1 className={styles.title}>My Orders</h1>
+            <Link to="/catalog">
+              <Button variant="outline">Continue Shopping</Button>
+            </Link>
+          </div>
+
+          {error && <div className={styles.error}>{error}</div>}
+
+          {orders.length === 0 ? (
+            <Card className={styles.emptyCard}>
+              <p className={styles.empty}>You haven't placed any orders yet.</p>
+              <Link to="/catalog">
+                <Button>Browse Products</Button>
+              </Link>
+            </Card>
+          ) : (
+            <div className={styles.ordersList}>
+              {orders.map((order) => (
+                <Card key={order.id} className={styles.orderCard}>
+                  <div className={styles.orderHeader}>
+                    <div className={styles.orderInfo}>
+                      <h3 className={styles.orderId}>Order #{order.id.slice(0, 8).toUpperCase()}</h3>
+                      <p className={styles.orderDate}>
+                        {new Date(order.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </div>
+                    {getStatusBadge(order.status)}
+                  </div>
+
+                  <div className={styles.orderDetails}>
+                    <div className={styles.detailRow}>
+                      <span className={styles.label}>Total:</span>
+                      <span className={styles.value}>
+                        {new Intl.NumberFormat('sv-SE', {
+                          style: 'currency',
+                          currency: 'SEK',
+                        }).format(order.total_amount)}
+                      </span>
+                    </div>
+                    <div className={styles.detailRow}>
+                      <span className={styles.label}>Shipping to:</span>
+                      <span className={styles.value}>{order.shipping_name}</span>
+                    </div>
+                    <div className={styles.detailRow}>
+                      <span className={styles.label}>Address:</span>
+                      <span className={styles.value}>{order.shipping_address}</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.orderActions}>
+                    <Link to={`/orders/${order.id}`}>
+                      <Button variant="outline" size="sm">
+                        View Details
+                      </Button>
+                    </Link>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
       </FadeIn>
     </div>
   );

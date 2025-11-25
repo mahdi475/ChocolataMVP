@@ -16,7 +16,7 @@ interface SellerVerification {
   status: 'pending' | 'approved' | 'rejected';
   document_url?: string;
   admin_notes?: string;
-  submitted_at?: string;
+  created_at?: string;
   reviewed_at?: string;
 }
 
@@ -89,14 +89,19 @@ const SellerVerificationPage = () => {
       // Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
         .from('seller_docs')
-        .upload(filePath, selectedFile);
+        .upload(filePath, selectedFile, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
-      const { data: urlData } = supabase.storage
+      // Get signed URL (valid for 1 year)
+      const { data: urlData, error: urlError } = await supabase.storage
         .from('seller_docs')
-        .getPublicUrl(filePath);
+        .createSignedUrl(filePath, 31536000); // 1 year in seconds
+
+      if (urlError) throw urlError;
 
       // Create or update verification record
       if (verification) {
@@ -104,9 +109,8 @@ const SellerVerificationPage = () => {
         const { data, error: updateError } = await supabase
           .from('seller_verifications')
           .update({
-            document_url: urlData.publicUrl,
+            document_url: urlData.signedUrl,
             status: 'pending',
-            submitted_at: new Date().toISOString(),
           })
           .eq('id', verification.id)
           .select()
@@ -120,9 +124,8 @@ const SellerVerificationPage = () => {
           .from('seller_verifications')
           .insert({
             user_id: user.id,
-            document_url: urlData.publicUrl,
+            document_url: urlData.signedUrl,
             status: 'pending',
-            submitted_at: new Date().toISOString(),
           })
           .select()
           .single();
@@ -174,17 +177,18 @@ const SellerVerificationPage = () => {
   return (
     <div className={styles.container}>
       <FadeIn>
-        <h1 className={styles.title}>Seller Verification</h1>
+        <div className={styles.panel}>
+          <h1 className={styles.title}>Seller Verification</h1>
 
-        {verification?.status === 'approved' && (
-          <Card className={styles.successCard}>
-            <h3>🎉 Your seller account is verified!</h3>
-            <p>You can now start selling products on Oompaloompa.</p>
-            <Button onClick={() => navigate('/seller/products')}>
-              Go to My Products
-            </Button>
-          </Card>
-        )}
+          {verification?.status === 'approved' && (
+            <Card className={styles.successCard}>
+              <h3>🎉 Your seller account is verified!</h3>
+              <p>You can now start selling products on Oompaloompa.</p>
+              <Button onClick={() => navigate('/seller/products')}>
+                Go to My Products
+              </Button>
+            </Card>
+          )}
 
         <Card className={styles.infoCard}>
           <h2 className={styles.sectionTitle}>Verification Status</h2>
@@ -194,10 +198,10 @@ const SellerVerificationPage = () => {
                 <span className={styles.label}>Status:</span>
                 {getStatusBadge(verification.status)}
               </div>
-              {verification.submitted_at && (
+              {verification.created_at && (
                 <div className={styles.statusRow}>
                   <span className={styles.label}>Submitted:</span>
-                  <span>{new Date(verification.submitted_at).toLocaleDateString()}</span>
+                  <span>{new Date(verification.created_at).toLocaleDateString()}</span>
                 </div>
               )}
               {verification.reviewed_at && (
@@ -215,14 +219,23 @@ const SellerVerificationPage = () => {
               {verification.document_url && (
                 <div className={styles.statusRow}>
                   <span className={styles.label}>Document:</span>
-                  <a
-                    href={verification.document_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.documentLink}
-                  >
-                    View Uploaded Document
-                  </a>
+                  <div className={styles.documentActions}>
+                    <a
+                      href={verification.document_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.documentLink}
+                    >
+                      👁️ View Document
+                    </a>
+                    <a
+                      href={verification.document_url}
+                      download
+                      className={styles.documentLink}
+                    >
+                      ⬇️ Download
+                    </a>
+                  </div>
                 </div>
               )}
             </div>
@@ -288,6 +301,7 @@ const SellerVerificationPage = () => {
             </p>
           </Card>
         )}
+        </div>
       </FadeIn>
     </div>
   );

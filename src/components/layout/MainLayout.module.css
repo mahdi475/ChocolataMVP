@@ -1,0 +1,76 @@
+.root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(6px);
+}
+.brand {
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-serif);
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #fff;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+.brand:hover { color: var(--color-secondary); transform: rotate(-1deg) scale(1.02); }
+.links {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+.link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: .4px;
+  transition: color var(--transition-fast), opacity var(--transition-fast);
+  position: relative;
+}
+.link:hover { color: var(--color-secondary); }
+.link:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: 6px; }
+.spacer { flex: 1; }
+.cartBadge {
+  background: var(--color-secondary);
+  color: var(--color-text);
+  border-radius: var(--border-radius-sm);
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+.footer {
+  background: var(--color-primary-dark);
+  color: #f0f0f0;
+  padding: var(--spacing-lg) var(--spacing-lg);
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: auto;
+  letter-spacing: .5px;
+  border-top: 2px solid var(--color-gold);
+}
+.logoutBtn { background: transparent; border: none; color: #fff; cursor: pointer; font-size: 0.85rem; }
+.logoutBtn:hover { color: var(--color-secondary); }

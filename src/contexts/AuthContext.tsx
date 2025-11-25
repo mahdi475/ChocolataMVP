@@ -37,7 +37,6 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
   const role = useSelector((state: RootState) => state.auth.role);
   const loading = useSelector((state: RootState) => state.auth.loading);
@@ -113,7 +112,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       await supabase.auth.signOut();
       dispatch(logout());
-      navigate('/login');
+      window.location.href = '/login'; // Use window.location instead of navigate
     } catch (error) {
       console.error('Logout error:', error);
     }

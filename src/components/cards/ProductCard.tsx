@@ -6,8 +6,8 @@ import { addNotification } from '../../store/slices/notificationSlice';
 import type { CartItem } from '../../store/slices/cartSlice';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
-import FadeIn from '../animations/FadeIn';
 import styles from './ProductCard.module.css';
+import { motion } from 'framer-motion';
 
 export interface Product {
   id: string;
@@ -28,10 +28,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { t } = useTranslation('products');
   const dispatch = useDispatch();
   const isSoldOut = product.stock !== undefined && product.stock <= 0;
+  const isLowStock = !isSoldOut && product.stock !== undefined && product.stock > 0 && product.stock < 5;
 
   const handleAddToCart = () => {
     if (isSoldOut) return;
-
     const cartItem: CartItem = {
       id: `${product.id}-${Date.now()}`,
       productId: product.id,
@@ -49,7 +49,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <FadeIn>
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+    >
       <Card className={styles.card}>
         <Link to={`/product/${product.id}`} className={styles.link}>
           <div className={styles.imageContainer}>
@@ -60,6 +64,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
             )}
             {isSoldOut && (
               <span className={styles.soldOutBadge}>{t('card.outOfStock', 'Slutsåld')}</span>
+            )}
+            {isLowStock && (
+              <span className={styles.lowStockBadge}>{t('card.lowStock', 'Low Stock!')}</span>
+            )}
+            {product.description && (
+              <div className={styles.hoverOverlay}>{product.description}</div>
             )}
           </div>
           <div className={styles.content}>
@@ -89,11 +99,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className={styles.addButton}
           disabled={isSoldOut}
           data-testid={`add-to-cart-${product.id}`}
+          variant={isSoldOut ? 'outline' : 'primary'}
         >
           {isSoldOut ? t('card.outOfStock') : t('card.addToCart')}
         </Button>
       </Card>
-    </FadeIn>
+    </motion.div>
   );
 };
 
