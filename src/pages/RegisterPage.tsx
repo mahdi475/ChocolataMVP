@@ -1,41 +1,97 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import RegisterForm from '../components/forms/RegisterForm';
-import Card from '../components/ui/Card';
-import FadeIn from '../components/animations/FadeIn';
-import styles from './RegisterPage.module.css';
+import React from 'react';
 
-const RegisterPage = () => {
-  const { t } = useTranslation('auth');
-  const navigate = useNavigate();
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSuccess = () => {
-    // After successful registration, redirect to home page
-    // The AuthContext will handle role-based redirection from the HomePage
-    navigate('/');
-  };
-
-  const handleError = (errorMessage: string) => {
-    setError(errorMessage);
-  };
-
+const RegisterPage: React.FC = () => {
   return (
-    <div className={styles.container}>
-      <FadeIn>
-        <Card className={styles.card}>
-          <h1 className={styles.title}>{t('register.title')}</h1>
-          {error && <div className={styles.error}>{error}</div>}
-          <RegisterForm onSuccess={handleSuccess} onError={handleError} />
-          <p className={styles.footer}>
-            {t('register.hasAccount')}{' '}
-            <Link to="/login" className={styles.link}>
-              {t('register.loginLink')}
-            </Link>
-          </p>
-        </Card>
-      </FadeIn>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      padding: '20px'
+    }}>
+      <h1 style={{ marginBottom: '20px' }}>Skapa Konto</h1>
+      
+      <form style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
+        width: '100%',
+        maxWidth: '400px'
+      }}>
+        <input 
+          type="text" 
+          placeholder="Förnamn"
+          style={{
+            padding: '12px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+        />
+        <input 
+          type="text" 
+          placeholder="Efternamn"
+          style={{
+            padding: '12px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+        />
+        <input 
+          type="email" 
+          placeholder="E-post"
+          style={{
+            padding: '12px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+        />
+        <input 
+          type="password" 
+          placeholder="Lösenord"
+          style={{
+            padding: '12px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+        />
+        <input 
+          type="password" 
+          placeholder="Bekräfta lösenord"
+          style={{
+            padding: '12px',
+            border: '1px solid #ddd',
+            borderRadius: '5px',
+            fontSize: '16px'
+          }}
+        />
+        <button 
+          type="submit"
+          style={{
+            padding: '12px',
+            backgroundColor: '#28a745',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            fontSize: '16px',
+            cursor: 'pointer'
+          }}
+        >
+          Skapa Konto
+        </button>
+      </form>
+      
+      <div style={{ marginTop: '20px' }}>
+        <a href="/login" style={{ color: '#007bff' }}>Har du redan ett konto? Logga in</a>
+      </div>
+      
+      <div style={{ marginTop: '20px' }}>
+        <a href="/" style={{ color: '#007bff' }}>← Tillbaka till startsidan</a>
+      </div>
     </div>
   );
 };

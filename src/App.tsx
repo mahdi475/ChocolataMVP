@@ -7,6 +7,7 @@ import i18n from './lib/i18n';
 import AppRouter from './routes/AppRouter';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 import ToastContainer from './components/ui/ToastContainer';
+import CartSidebar from './components/checkout/CartSidebar';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <AppRouter />
             </Suspense>
             <ToastContainer />
+            <CartSidebar />
           </CartProvider>
         </AuthProvider>
       </BrowserRouter>

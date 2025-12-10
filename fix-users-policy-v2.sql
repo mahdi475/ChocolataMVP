@@ -16,20 +16,6 @@ BEGIN
     END LOOP;
 END $$;
 
-CREATE OR REPLACE FUNCTION public.is_admin()
-RETURNS BOOLEAN
-LANGUAGE sql
-SECURITY DEFINER
-SET search_path = public
-AS $$
-  SELECT EXISTS (
-    SELECT 1
-    FROM public.users u
-    WHERE u.id = auth.uid()
-      AND u.role = 'admin'
-  );
-$$;
-
 -- Create a more permissive policy for insertion during registration
 -- This allows insertion when the user is being created
 CREATE POLICY "Enable insert during registration" ON public.users
@@ -42,13 +28,6 @@ CREATE POLICY "Users can read own data" ON public.users
 -- Recreate the update policy  
 CREATE POLICY "Users can update own data" ON public.users
   FOR UPDATE USING (auth.uid() = id);
-
-CREATE POLICY "Admins can read all users" ON public.users
-  FOR SELECT USING (public.is_admin());
-
-CREATE POLICY "Admins can manage users" ON public.users
-  FOR UPDATE USING (public.is_admin())
-  WITH CHECK (public.is_admin());
 
 -- Create a database function to handle user profile creation
 -- This function will be called by a database trigger after auth.users is created

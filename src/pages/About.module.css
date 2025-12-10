@@ -1,0 +1,171 @@
+.container {
+  width: 100%;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.heroBackground {
+  position: absolute;
+  inset: 0;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(62, 39, 35, 0.5);
+  mix-blend-mode: multiply;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  max-width: 48rem;
+  padding: 0 var(--spacing-md);
+}
+
+.heroTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 7vw, 4.375rem);
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.heroSubtitle {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  color: rgba(248, 245, 242, 0.9);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Content Section */
+.content {
+  padding: var(--spacing-3xl) 0;
+  background: var(--color-background);
+}
+
+.contentContainer {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.storySection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+@media (min-width: 768px) {
+  .storySection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.storyText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.storyParagraph {
+  color: rgba(106, 86, 77, 0.6);
+  line-height: var(--line-height-relaxed);
+}
+
+.storyDecoration {
+  background: rgba(62, 39, 35, 0.05);
+  padding: var(--spacing-xl);
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.decorativeLetter {
+  font-family: var(--font-serif);
+  font-size: 9rem;
+  color: var(--color-gold);
+  opacity: 0.2;
+  font-style: italic;
+}
+
+.philosophySection {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-2xl);
+}
+
+.philosophyTitle {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.philosophyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .philosophyGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.philosophyCard {
+  text-align: center;
+}
+
+.philosophyIcon {
+  width: 4rem;
+  height: 4rem;
+  background: var(--color-primary);
+  color: var(--color-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto var(--spacing-md);
+}
+
+.philosophyCardTitle {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.philosophyCardText {
+  font-size: 0.875rem;
+  color: rgba(106, 86, 77, 0.6);
+}
+

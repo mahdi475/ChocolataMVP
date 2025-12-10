@@ -18,6 +18,7 @@ export interface Product {
   category?: string;
   stock?: number;
   created_at?: string;
+  seller_id?: string;
 }
 
 interface ProductCardProps {
@@ -58,10 +59,34 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Link to={`/product/${product.id}`} className={styles.link}>
           <div className={styles.imageContainer}>
             {product.image_url ? (
-              <img src={product.image_url} alt={product.name} className={styles.image} />
-            ) : (
-              <div className={styles.placeholder}>No Image</div>
+              <img 
+                src={product.image_url} 
+                alt={product.name} 
+                className={styles.image}
+                loading="lazy"
+                onError={(e) => {
+                  // Fallback to placeholder if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const placeholder = target.parentElement?.querySelector(`.${styles.placeholder}`) as HTMLElement;
+                  if (placeholder) {
+                    placeholder.style.display = 'flex';
+                  }
+                }}
+              />
+            ) : null}
+            {(!product.image_url || product.image_url === '') && (
+              <div className={styles.placeholder}>
+                <span>🍫</span>
+                <span>No Image</span>
+              </div>
             )}
+            <div className={styles.priceBadge}>
+              {new Intl.NumberFormat('sv-SE', {
+                style: 'currency',
+                currency: 'SEK',
+              }).format(product.price)}
+            </div>
             {isSoldOut && (
               <span className={styles.soldOutBadge}>{t('card.outOfStock', 'Slutsåld')}</span>
             )}

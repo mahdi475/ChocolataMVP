@@ -7,12 +7,14 @@ import AdminShell from '../components/layout/AdminShell';
 
 // Public pages
 import HomePage from '../pages/HomePage';
+import AboutPage from '../pages/About';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 
 // Buyer pages
 import CatalogPage from '../pages/buyer/CatalogPage';
 import ProductDetailPage from '../pages/buyer/ProductDetailPage';
+import SellerProfilePage from '../pages/buyer/SellerProfilePage';
 import CartPage from '../pages/buyer/CartPage';
 import CheckoutPage from '../pages/buyer/CheckoutPage';
 import CheckoutConfirmationPage from '../pages/buyer/CheckoutConfirmationPage';
@@ -92,6 +94,10 @@ const AppRouter = () => {
         path="/register"
         element={<MainLayout><RegisterPage /></MainLayout>}
       />
+      <Route
+        path="/about"
+        element={<MainLayout><AboutPage /></MainLayout>}
+      />
 
       {/* Buyer routes */}
       <Route
@@ -101,6 +107,10 @@ const AppRouter = () => {
       <Route
         path="/product/:id"
         element={<MainLayout><ProductDetailPage /></MainLayout>}
+      />
+      <Route
+        path="/seller/:id"
+        element={<MainLayout><SellerProfilePage /></MainLayout>}
       />
       <Route
         path="/cart"

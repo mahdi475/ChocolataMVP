@@ -1,0 +1,21 @@
+.badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--border-radius-sm);
+  line-height: 1;
+}
+
+.gold {
+  background-color: var(--color-gold);
+  color: var(--color-chocolate-dark);
+}
+
+.dark {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+

@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useMemo } from 'react';
+import { createContext, useContext, ReactNode, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem, updateQuantity, clearCart } from '../store/slices/cartSlice';
 import type { RootState } from '../store';
@@ -12,6 +12,8 @@ interface CartContextType {
   clear: () => void;
   total: number;
   count: number;
+  isCartOpen: boolean;
+  setIsCartOpen: (isOpen: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -25,6 +27,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.cart.items);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addToCart = (product: Omit<CartItem, 'id' | 'quantity'>) => {
     dispatch(addItem({ ...product, id: `${product.productId}-${Date.now()}`, quantity: 1 }));
@@ -40,7 +43,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [items]);
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, setQuantity, clear, total, count }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, setQuantity, clear, total, count, isCartOpen, setIsCartOpen }}>
       {children}
     </CartContext.Provider>
   );

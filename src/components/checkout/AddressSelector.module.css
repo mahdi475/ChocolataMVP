@@ -1,0 +1,98 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.addressList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.addressCard {
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 2px solid transparent;
+}
+
+.addressCard:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.addressCard.selected {
+  border-color: var(--color-primary);
+  background-color: rgba(139, 69, 19, 0.05);
+}
+
+.addressContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.addressHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.defaultBadge {
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+}
+
+.addressText {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.newAddress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.backButton {
+  align-self: flex-start;
+  margin-bottom: var(--spacing-xs);
+}
+
+.saveCheckbox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.saveCheckbox input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.saveButton {
+  align-self: flex-start;
+}
+
