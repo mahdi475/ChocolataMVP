@@ -302,7 +302,7 @@ const HomePage = () => {
             .eq('is_active', true)
             .order('created_at', { ascending: false })
             .limit(6),
-          supabase.from('categories').select('*').order('name', { ascending: true }),
+          supabase.from('categories').select('*').order('display_order', { ascending: true }).order('name', { ascending: true }),
         ]);
 
         if (productsResult.error) {

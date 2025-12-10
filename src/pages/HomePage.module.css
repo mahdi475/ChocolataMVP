@@ -68,6 +68,7 @@
   line-height: 1.1;
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
+  color: #ffffff;
   text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
