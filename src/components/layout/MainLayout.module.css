@@ -214,7 +214,7 @@
 .footer {
   background: var(--color-primary);
   color: rgba(240, 240, 240, 0.9);
-  padding: var(--spacing-3xl) var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md);
   margin-top: auto;
 }
 
@@ -223,7 +223,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--spacing-2xl);
+  gap: var(--spacing-xl);
 }
 
 @media (min-width: 768px) {
@@ -291,22 +291,30 @@
 
 .newsletterInput {
   flex: 1;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: rgba(62, 39, 35, 0.8);
-  border: none;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: rgba(62, 39, 35, 0.6);
+  border: 1px solid rgba(255, 215, 0, 0.3);
   color: #fff;
   border-radius: var(--border-radius-sm);
   font-size: 0.875rem;
   outline: none;
-  transition: box-shadow var(--transition-fast);
+  transition: all var(--transition-base);
+  min-width: 0;
 }
 
 .newsletterInput::placeholder {
-  color: rgba(106, 86, 77, 0.5);
+  color: rgba(248, 245, 242, 0.5);
+}
+
+.newsletterInput:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+  background: rgba(62, 39, 35, 0.7);
 }
 
 .newsletterInput:focus {
-  box-shadow: 0 0 0 1px var(--color-gold);
+  border-color: var(--color-gold);
+  background: rgba(62, 39, 35, 0.8);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
 }
 
 .newsletterButton {
@@ -314,14 +322,54 @@
   white-space: nowrap;
 }
 
-.footerBottom {
+.paymentMethods {
   max-width: 1280px;
-  margin: var(--spacing-2xl) auto 0;
-  padding-top: var(--spacing-xl);
+  margin: var(--spacing-lg) auto 0;
+  padding-top: var(--spacing-md);
   border-top: 1px solid rgba(62, 39, 35, 0.8);
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.paymentMethodsTitle {
+  font-weight: var(--font-weight-bold);
+  color: rgba(240, 240, 240, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.paymentLogos {
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-md);
+  align-items: center;
+  justify-content: center;
+}
+
+.paymentLogo {
+  height: 2rem;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+}
+
+.paymentLogo:hover {
+  opacity: 1;
+}
+
+.footerBottom {
+  max-width: 1280px;
+  margin: var(--spacing-md) auto 0;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(62, 39, 35, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
   align-items: center;
   font-size: 0.75rem;
   color: rgba(106, 86, 77, 0.4);

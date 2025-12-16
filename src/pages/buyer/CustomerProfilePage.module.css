@@ -1,5 +1,10 @@
 .container {
   width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-xl);
+  padding-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
 }
 
 .header {
@@ -8,7 +13,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .label {
@@ -39,8 +44,8 @@
 .grid {
   display: grid;
   grid-template-columns: 3fr 2fr;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
 }
 
 .profileCard,

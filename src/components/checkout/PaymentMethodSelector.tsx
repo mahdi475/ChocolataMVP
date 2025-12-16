@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Card from '../ui/Card';
 import styles from './PaymentMethodSelector.module.css';
+import visaLogo from '../../pages/assets/Version=Logo.jpg';
+import mastercardLogo from '../../pages/assets/Version=ID Check.jpg';
+import klarnaLogo from '../../pages/assets/Klarna.jpg';
+import paypalLogo from '../../pages/assets/Paypal.jpg';
 
 export type PaymentMethod = 'card' | 'klarna' | 'paypal';
 
@@ -10,24 +14,38 @@ interface PaymentMethodSelectorProps {
 }
 
 const PaymentMethodSelector = ({ value, onChange }: PaymentMethodSelectorProps) => {
-  const methods: { id: PaymentMethod; name: string; icon: string; description: string }[] = [
+  const methods: { 
+    id: PaymentMethod; 
+    name: string; 
+    icon: string | React.ReactNode; 
+    description: string;
+    isImage?: boolean;
+  }[] = [
     {
       id: 'card',
       name: 'Credit/Debit Card',
-      icon: '💳',
+      icon: (
+        <div className={styles.cardLogos}>
+          <img src={visaLogo} alt="Visa" className={styles.paymentLogo} />
+          <img src={mastercardLogo} alt="Mastercard" className={styles.paymentLogo} />
+        </div>
+      ),
       description: 'Visa, Mastercard, Amex',
+      isImage: true,
     },
     {
       id: 'klarna',
       name: 'Klarna',
-      icon: '🛒',
+      icon: <img src={klarnaLogo} alt="Klarna" className={styles.paymentLogo} />,
       description: 'Pay later or in installments',
+      isImage: true,
     },
     {
       id: 'paypal',
       name: 'PayPal',
-      icon: '🔵',
+      icon: <img src={paypalLogo} alt="PayPal" className={styles.paymentLogo} />,
       description: 'Pay with your PayPal account',
+      isImage: true,
     },
   ];
 
@@ -44,7 +62,7 @@ const PaymentMethodSelector = ({ value, onChange }: PaymentMethodSelectorProps) 
             onClick={() => onChange(method.id)}
           >
             <div className={styles.methodContent}>
-              <span className={styles.icon}>{method.icon}</span>
+              <div className={styles.icon}>{method.icon}</div>
               <div className={styles.methodInfo}>
                 <strong className={styles.methodName}>{method.name}</strong>
                 <span className={styles.methodDescription}>{method.description}</span>

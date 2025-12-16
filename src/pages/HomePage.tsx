@@ -10,6 +10,7 @@ import Badge from '../components/ui/Badge';
 import ProductCard, { type Product } from '../components/cards/ProductCard';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import styles from './HomePage.module.css';
+import spotlightImage from './assets/Gemini_Generated_Image_fi49w2fi49w2fi49.png';
 
 interface Category {
   id: string;
@@ -21,11 +22,6 @@ const Hero = () => {
   return (
     <section className={styles.hero}>
       <div className={styles.heroBackground}>
-        <img
-          src="https://images.unsplash.com/photo-1615486511484-92e5462d9971?auto=format&fit=crop&q=80&w=2500"
-          alt="Molten Chocolate"
-          className={styles.heroImage}
-        />
         <div className={styles.heroOverlay}></div>
       </div>
 
@@ -190,7 +186,7 @@ const SpotlightSection = () => {
           >
             <div className={styles.spotlightBorder}></div>
             <img
-              src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=1200"
+              src={spotlightImage}
               alt="Luxury Gift Set"
               className={styles.spotlightImage}
             />

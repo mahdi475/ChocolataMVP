@@ -8,6 +8,12 @@ import type { RootState } from '../../store';
 import styles from './MainLayout.module.css';
 import Button from '../ui/Button';
 import SearchOverlay from './SearchOverlay';
+import amazonPayLogo from '../../pages/assets/AmazonPay.jpg';
+import applePayLogo from '../../pages/assets/ApplePay.png';
+import klarnaLogo from '../../pages/assets/Klarna.jpg';
+import paypalLogo from '../../pages/assets/Paypal.jpg';
+import mastercardLogo from '../../pages/assets/Version=ID Check.jpg';
+import visaLogo from '../../pages/assets/Version=Logo.jpg';
 
 interface MainLayoutProps { children: ReactNode }
 
@@ -42,7 +48,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
           <div className={styles.desktopLinks}>
             <Link to="/catalog" className={styles.link}>Shop</Link>
-            <Link to="/catalog?category=gifts" className={styles.link}>Gifts</Link>
+            <Link to="/catalog?category=Gifts" className={styles.link}>Gifts</Link>
             <Link to="/about" className={styles.link}>Our Story</Link>
           </div>
 
@@ -101,7 +107,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <Link to="/catalog" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
               Shop Collection
             </Link>
-            <Link to="/catalog?category=gifts" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
+            <Link to="/catalog?category=Gifts" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
               Gifts
             </Link>
             <Link to="/about" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
@@ -160,6 +166,17 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               />
               <Button variant="gold" className={styles.newsletterButton}>Go</Button>
             </form>
+          </div>
+        </div>
+        <div className={styles.paymentMethods}>
+          <h4 className={styles.paymentMethodsTitle}>We Accept</h4>
+          <div className={styles.paymentLogos}>
+            <img src={amazonPayLogo} alt="Amazon Pay" className={styles.paymentLogo} />
+            <img src={applePayLogo} alt="Apple Pay" className={styles.paymentLogo} />
+            <img src={klarnaLogo} alt="Klarna" className={styles.paymentLogo} />
+            <img src={paypalLogo} alt="PayPal" className={styles.paymentLogo} />
+            <img src={mastercardLogo} alt="Mastercard ID Check" className={styles.paymentLogo} />
+            <img src={visaLogo} alt="Visa" className={styles.paymentLogo} />
           </div>
         </div>
         <div className={styles.footerBottom}>

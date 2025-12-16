@@ -1,6 +1,8 @@
 .container {
   width: 100%;
   padding: 0 var(--spacing-lg);
+  padding-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
 }
 
 .header {
@@ -189,6 +191,7 @@
   flex-direction: column;
   gap: var(--spacing-xl);
   position: relative;
+  margin-bottom: var(--spacing-md);
 }
 
 @media (min-width: 768px) {
