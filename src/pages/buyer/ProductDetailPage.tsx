@@ -38,6 +38,11 @@ const ProductDetailPage = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+  // Scroll to top when navigating to a product page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [id]);
+
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) {

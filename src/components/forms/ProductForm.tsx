@@ -7,15 +7,40 @@ import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
 import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../ui/Input';
+import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ImageUpload from '../ui/ImageUpload';
 import styles from './ProductForm.module.css';
+
+const COUNTRIES = [
+  { value: '', label: 'Select a country...' },
+  { value: 'Sweden', label: 'Sweden' },
+  { value: 'Belgium', label: 'Belgium' },
+  { value: 'Switzerland', label: 'Switzerland' },
+  { value: 'France', label: 'France' },
+  { value: 'Italy', label: 'Italy' },
+  { value: 'Germany', label: 'Germany' },
+  { value: 'UK', label: 'United Kingdom' },
+  { value: 'USA', label: 'United States' },
+  { value: 'Ecuador', label: 'Ecuador' },
+  { value: 'Ghana', label: 'Ghana' },
+  { value: 'Madagascar', label: 'Madagascar' },
+  { value: 'Venezuela', label: 'Venezuela' },
+  { value: 'Peru', label: 'Peru' },
+  { value: 'Dominican Republic', label: 'Dominican Republic' },
+  { value: 'Colombia', label: 'Colombia' },
+  { value: 'Brazil', label: 'Brazil' },
+  { value: 'Mexico', label: 'Mexico' },
+  { value: 'Costa Rica', label: 'Costa Rica' },
+  { value: 'Other', label: 'Other' },
+];
 
 const productSchema = z.object({
   name: z.string().min(1, 'Product name is required'),
   description: z.string().optional(),
   price: z.number().positive('Price must be positive'),
   category: z.string().min(1, 'Category is required'),
+  country: z.string().optional(),
   stock: z.number().int().min(0, 'Stock must be a non-negative integer'),
   // Removed image_url from schema since we handle file upload separately
 });
@@ -46,7 +71,10 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     formState: { errors, isSubmitting },
   } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
-    defaultValues: initialValues,
+    defaultValues: {
+      ...initialValues,
+      country: initialValues?.country || '',
+    },
   });
 
   const handleImageUpload = async (file: File) => {
@@ -97,6 +125,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         ...data,
         seller_id: user.id,
         image_url: finalImageUrl,
+        country: data.country && data.country.trim() !== '' ? data.country : null,
       };
 
       if (initialValues?.id) {
@@ -159,12 +188,21 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           data-testid="product-stock"
         />
       </div>
-      <Input
-        {...register('category')}
-        label={t('form.category')}
-        error={errors.category?.message}
-        data-testid="product-category"
-      />
+      <div className={styles.row}>
+        <Input
+          {...register('category')}
+          label={t('form.category')}
+          error={errors.category?.message}
+          data-testid="product-category"
+        />
+        <Select
+          {...register('country')}
+          label={t('form.country', 'Country')}
+          error={errors.country?.message}
+          options={COUNTRIES}
+          data-testid="product-country"
+        />
+      </div>
       <ImageUpload
         onImageUpload={handleImageUpload}
         existingImage={uploadedImageUrl || undefined}

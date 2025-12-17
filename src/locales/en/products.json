@@ -15,6 +15,7 @@
     "price": "Price",
     "stock": "Stock",
     "category": "Category",
+    "country": "Country",
     "imageUrl": "Image URL",
     "imageUrlHelper": "Enter a URL to an image",
     "create": "Create Product",

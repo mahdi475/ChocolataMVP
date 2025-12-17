@@ -236,6 +236,17 @@
   margin-bottom: var(--spacing-xl);
 }
 
+.countrySelect {
+  font-size: 0.875rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  min-height: auto;
+  height: auto;
+}
+
+.countrySelect :global(.wrapper) {
+  gap: var(--spacing-xs);
+}
+
 .filterPriceSection {
   margin-bottom: var(--spacing-xl);
 }

@@ -5,10 +5,34 @@ import { ChevronDown, SlidersHorizontal, X, Check, RotateCcw, ArrowUpDown } from
 import { supabase } from '../../lib/supabaseClient';
 import ProductCard, { type Product } from '../../components/cards/ProductCard';
 import Input from '../../components/ui/Input';
+import Select from '../../components/ui/Select';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
 import styles from './CatalogPage.module.css';
+
+const COUNTRIES = [
+  { value: '', label: 'All Countries' },
+  { value: 'Sweden', label: 'Sweden' },
+  { value: 'Belgium', label: 'Belgium' },
+  { value: 'Switzerland', label: 'Switzerland' },
+  { value: 'France', label: 'France' },
+  { value: 'Italy', label: 'Italy' },
+  { value: 'Germany', label: 'Germany' },
+  { value: 'UK', label: 'United Kingdom' },
+  { value: 'USA', label: 'United States' },
+  { value: 'Ecuador', label: 'Ecuador' },
+  { value: 'Ghana', label: 'Ghana' },
+  { value: 'Madagascar', label: 'Madagascar' },
+  { value: 'Venezuela', label: 'Venezuela' },
+  { value: 'Peru', label: 'Peru' },
+  { value: 'Dominican Republic', label: 'Dominican Republic' },
+  { value: 'Colombia', label: 'Colombia' },
+  { value: 'Brazil', label: 'Brazil' },
+  { value: 'Mexico', label: 'Mexico' },
+  { value: 'Costa Rica', label: 'Costa Rica' },
+  { value: 'Other', label: 'Other' },
+];
 
 interface Category {
   id: string;
@@ -40,6 +64,7 @@ const CatalogPage = () => {
   // Filter states - initialize from URL params
   const [searchQuery, setSearchQuery] = useState(() => searchParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState<string>(() => searchParams.get('category') || 'all');
+  const [selectedCountry, setSelectedCountry] = useState<string>(() => searchParams.get('country') || '');
   const [minPrice, setMinPrice] = useState<string>(() => searchParams.get('minPrice') || '');
   const [maxPrice, setMaxPrice] = useState<string>(() => searchParams.get('maxPrice') || '');
   const [sortBy, setSortBy] = useState<SortOption>(() => (searchParams.get('sort') as SortOption) || 'newest');
@@ -124,6 +149,11 @@ const CatalogPage = () => {
       result = result.filter((product) => product.category === selectedCategory);
     }
 
+    // Filter by specific country
+    if (selectedCountry) {
+      result = result.filter((product) => product.country === selectedCountry);
+    }
+
     if (minPrice) {
       const min = parseFloat(minPrice);
       result = result.filter((product) => product.price >= min);
@@ -150,22 +180,23 @@ const CatalogPage = () => {
     });
 
     setFilteredProducts(result);
-  }, [products, searchQuery, selectedCategory, minPrice, maxPrice, sortBy]);
+  }, [products, searchQuery, selectedCategory, selectedCountry, minPrice, maxPrice, sortBy]);
 
   useEffect(() => {
-    const hasFilters = searchQuery || selectedCategory !== 'all' || minPrice || maxPrice;
+    const hasFilters = searchQuery || selectedCategory !== 'all' || selectedCountry || minPrice || maxPrice;
     if (hasFilters && currentPage > 1) {
       const urlPage = searchParams.get('page');
       if (!urlPage || urlPage === '1') {
         setCurrentPage(1);
       }
     }
-  }, [searchQuery, selectedCategory, minPrice, maxPrice, currentPage, searchParams]);
+  }, [searchQuery, selectedCategory, selectedCountry, minPrice, maxPrice, currentPage, searchParams]);
 
   useEffect(() => {
     const params = new URLSearchParams();
     if (searchQuery) params.set('search', searchQuery);
     if (selectedCategory !== 'all') params.set('category', selectedCategory);
+    if (selectedCountry) params.set('country', selectedCountry);
     if (minPrice) params.set('minPrice', minPrice);
     if (maxPrice) params.set('maxPrice', maxPrice);
     if (sortBy !== 'newest') params.set('sort', sortBy);
@@ -174,7 +205,7 @@ const CatalogPage = () => {
     const newUrl = params.toString() ? `?${params.toString()}` : '';
     window.history.replaceState({}, '', `/catalog${newUrl}`);
     setSearchParams(params, { replace: true });
-  }, [searchQuery, selectedCategory, minPrice, maxPrice, sortBy, currentPage, setSearchParams]);
+  }, [searchQuery, selectedCategory, selectedCountry, minPrice, maxPrice, sortBy, currentPage, setSearchParams]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -184,6 +215,7 @@ const CatalogPage = () => {
   const handleClearFilters = () => {
     setSearchQuery('');
     setSelectedCategory('all');
+    setSelectedCountry('');
     setMinPrice('');
     setMaxPrice('');
     setSortBy('newest');
@@ -254,6 +286,18 @@ const CatalogPage = () => {
           </ul>
         </div>
 
+        <div className={styles.filterCategorySection}>
+          <h4 className={styles.filterSectionTitle}>Filter by Country</h4>
+          <Select
+            value={selectedCountry}
+            onChange={(e) => {
+              setSelectedCountry(e.target.value);
+            }}
+            options={COUNTRIES}
+            className={styles.countrySelect}
+          />
+        </div>
+
         <div className={styles.filterPriceSection}>
           <h4 className={styles.filterSectionTitle}>Price Range</h4>
           <div className={styles.priceInputs}>
@@ -305,7 +349,7 @@ const CatalogPage = () => {
     );
   }
 
-  const hasActiveFilters = searchQuery || selectedCategory !== 'all' || minPrice || maxPrice;
+  const hasActiveFilters = searchQuery || selectedCategory !== 'all' || selectedCountry || minPrice || maxPrice;
   const selectedCategoryName = categories.find((c) => c.name === selectedCategory)?.name || 'All Chocolates';
 
   return (

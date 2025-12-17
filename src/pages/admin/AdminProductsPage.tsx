@@ -8,6 +8,29 @@ import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
 import styles from './AdminProductsPage.module.css';
 
+const COUNTRIES = [
+  { value: '', label: 'Select a country...' },
+  { value: 'Sweden', label: 'Sweden' },
+  { value: 'Belgium', label: 'Belgium' },
+  { value: 'Switzerland', label: 'Switzerland' },
+  { value: 'France', label: 'France' },
+  { value: 'Italy', label: 'Italy' },
+  { value: 'Germany', label: 'Germany' },
+  { value: 'UK', label: 'United Kingdom' },
+  { value: 'USA', label: 'United States' },
+  { value: 'Ecuador', label: 'Ecuador' },
+  { value: 'Ghana', label: 'Ghana' },
+  { value: 'Madagascar', label: 'Madagascar' },
+  { value: 'Venezuela', label: 'Venezuela' },
+  { value: 'Peru', label: 'Peru' },
+  { value: 'Dominican Republic', label: 'Dominican Republic' },
+  { value: 'Colombia', label: 'Colombia' },
+  { value: 'Brazil', label: 'Brazil' },
+  { value: 'Mexico', label: 'Mexico' },
+  { value: 'Costa Rica', label: 'Costa Rica' },
+  { value: 'Other', label: 'Other' },
+];
+
 interface Product {
   id: string;
   name: string;
@@ -16,6 +39,7 @@ interface Product {
   stock: number;
   image_url?: string;
   category_id?: string;
+  country?: string;
   seller_id: string;
   created_at: string;
   seller?: {
@@ -38,6 +62,7 @@ const AdminProductsPage = () => {
     description: '',
     price: 0,
     stock: 0,
+    country: '',
   });
 
   useEffect(() => {
@@ -74,6 +99,7 @@ const AdminProductsPage = () => {
       description: product.description,
       price: product.price,
       stock: product.stock,
+      country: product.country || '',
     });
   };
 
@@ -88,6 +114,7 @@ const AdminProductsPage = () => {
           description: editForm.description,
           price: editForm.price,
           stock: editForm.stock,
+          country: editForm.country || null,
         })
         .eq('id', editingProduct.id);
 
@@ -315,6 +342,21 @@ const AdminProductsPage = () => {
                   min="0"
                 />
               </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>Country</label>
+              <select
+                value={editForm.country}
+                onChange={(e) => setEditForm({ ...editForm, country: e.target.value })}
+                className={styles.input}
+              >
+                {COUNTRIES.map((country) => (
+                  <option key={country.value} value={country.value}>
+                    {country.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className={styles.modalActions}>
