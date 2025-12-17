@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.homePage {
+  margin-top: calc(-1 * (var(--spacing-2xl) + 10px) + var(--spacing-md));
+}
+
 /* Hero Section */
 .hero {
   position: relative;
@@ -11,6 +15,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding-top: calc(var(--spacing-xs) + 4.5rem);
 }
 
 .heroBackground {

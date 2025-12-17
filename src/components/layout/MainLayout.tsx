@@ -14,6 +14,7 @@ import klarnaLogo from '../../pages/assets/Klarna.jpg';
 import paypalLogo from '../../pages/assets/Paypal.jpg';
 import mastercardLogo from '../../pages/assets/Version=ID Check.jpg';
 import visaLogo from '../../pages/assets/Version=Logo.jpg';
+import ompalompaLogo from '../../LogoAssets/OmpalompaLogo.png';
 
 interface MainLayoutProps { children: ReactNode }
 
@@ -42,8 +43,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.navbarContainer}>
           <Link to="/" className={styles.brand}>
-            <span className={styles.brandIcon}>C</span>
-            CHOCOLATA
+            <img src={ompalompaLogo} alt="Ompalompa" className={styles.logoImage} />
           </Link>
 
           <div className={styles.desktopLinks}>

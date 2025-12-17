@@ -328,7 +328,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.homePage}`}>
       <Hero />
       <CategorySection categories={categories} />
       <ProductGrid
