@@ -36,7 +36,7 @@ const ProductDetailPage = () => {
   const [relatedLoading, setRelatedLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   // Scroll to top when navigating to a product page
   useEffect(() => {
