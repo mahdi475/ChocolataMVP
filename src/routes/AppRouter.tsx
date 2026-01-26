@@ -10,6 +10,11 @@ import HomePage from '../pages/HomePage';
 import AboutPage from '../pages/About';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
+import ChocolatePassportPage from '../pages/ChocolatePassportPage';
+import SurpriseMePage from '../pages/SurpriseMePage';
+import CorporatePortalPage from '../pages/CorporatePortalPage';
+import SustainabilityPage from '../pages/SustainabilityPage';
+import DiscoverPage from '../pages/DiscoverPage';
 
 // Buyer pages
 import CatalogPage from '../pages/buyer/CatalogPage';
@@ -97,6 +102,26 @@ const AppRouter = () => {
       <Route
         path="/about"
         element={<MainLayout><AboutPage /></MainLayout>}
+      />
+      <Route
+        path="/chocolate-passport"
+        element={<MainLayout><ChocolatePassportPage /></MainLayout>}
+      />
+      <Route
+        path="/surprise-me"
+        element={<MainLayout><SurpriseMePage /></MainLayout>}
+      />
+      <Route
+        path="/corporate-portal"
+        element={<MainLayout><CorporatePortalPage /></MainLayout>}
+      />
+      <Route
+        path="/sustainability"
+        element={<MainLayout><SustainabilityPage /></MainLayout>}
+      />
+      <Route
+        path="/discover"
+        element={<MainLayout><DiscoverPage /></MainLayout>}
       />
 
       {/* Buyer routes */}

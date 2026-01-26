@@ -16,3 +16,4 @@ CREATE INDEX IF NOT EXISTS idx_products_country ON public.products(country) WHER
 -- ADD CONSTRAINT check_valid_country 
 -- CHECK (country IS NULL OR country IN ('Sweden', 'Belgium', 'Switzerland', 'France', 'Italy', 'Germany', 'UK', 'USA', 'Ecuador', 'Ghana', 'Madagascar', 'Venezuela', 'Peru', 'Dominican Republic', 'Other'));
 
+

@@ -1,0 +1,163 @@
+.section {
+  padding: var(--spacing-3xl) 0;
+  background: var(--color-background);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.decorativeIcon {
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
+.tagline {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+  }
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid rgba(62, 39, 35, 0.1);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-background);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.badgeOverlay {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  z-index: 10;
+}
+
+.masterBadge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.75rem;
+  flex-direction: row;
+}
+
+.badgeIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.decorativeOverlay {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  z-index: 10;
+}
+
+.decorativeStar,
+.decorativeShape {
+  font-size: 1.5rem;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.cardContent {
+  padding: var(--spacing-xl);
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.role {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.locationIcon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-gold);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}

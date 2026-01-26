@@ -9,6 +9,7 @@ import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import ProductCard, { type Product } from '../components/cards/ProductCard';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import ChocolatiersStories from '../components/sections/ChocolatiersStories';
 import styles from './HomePage.module.css';
 import spotlightImage from './assets/Gemini_Generated_Image_fi49w2fi49w2fi49.png';
 
@@ -331,12 +332,7 @@ const HomePage = () => {
     <div className={`${styles.container} ${styles.homePage}`}>
       <Hero />
       <CategorySection categories={categories} />
-      <ProductGrid
-        title="Trending Now"
-        products={featuredProducts}
-        linkText="View All Best Sellers"
-        linkTo="/catalog"
-      />
+      <ChocolatiersStories />
       <SpotlightSection />
       <ProductGrid
         title="Fresh from the Kitchen"
