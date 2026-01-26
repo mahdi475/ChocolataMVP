@@ -39,7 +39,7 @@ const AdminOrdersPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+  // const [editingOrder, setEditingOrder] = useState<Order | null>(null);
 
   const fetchOrders = useCallback(async () => {
     setLoading(true);

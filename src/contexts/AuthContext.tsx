@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 import { supabase } from '../lib/supabaseClient';
 import { setUser, setRole, setLoading, logout } from '../store/slices/authSlice';
 import type { User } from '@supabase/supabase-js';

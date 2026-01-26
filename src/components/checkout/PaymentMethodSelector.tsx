@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '../ui/Card';
 import styles from './PaymentMethodSelector.module.css';
 import visaLogo from '../../pages/assets/Version=Logo.jpg';

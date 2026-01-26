@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
 import Button from '../components/ui/Button';
-import Card from '../components/ui/Card';
+
 import Badge from '../components/ui/Badge';
 import ProductCard, { type Product } from '../components/cards/ProductCard';
 import LoadingSpinner from '../components/ui/LoadingSpinner';

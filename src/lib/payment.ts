@@ -12,10 +12,10 @@ export interface PaymentResult {
  * In production, this would integrate with Stripe, PayPal, or Klarna APIs
  */
 export async function processPayment(
-  amount: number,
-  currency: string = 'SEK',
-  paymentMethod: 'card' | 'klarna' | 'paypal',
-  paymentData?: Record<string, any>
+  // amount: number,
+  // currency: string = 'SEK',
+  // paymentMethod: 'card' | 'klarna' | 'paypal',
+  // paymentData?: Record<string, any>
 ): Promise<PaymentResult> {
   // Simulate API call delay
   await new Promise((resolve) => setTimeout(resolve, 1500));

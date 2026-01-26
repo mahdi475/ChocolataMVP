@@ -17,7 +17,7 @@ import AddressSelector, { type Address } from '../../components/checkout/Address
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+
 import FadeIn from '../../components/animations/FadeIn';
 import styles from './CheckoutPage.module.css';
 
@@ -185,7 +185,7 @@ const CheckoutPage = () => {
 
       // Step 2: Process payment
       setIsProcessingPayment(true);
-      const paymentResult = await processPayment(total, 'SEK', paymentMethod);
+      const paymentResult = await processPayment();
 
       if (!paymentResult.success) {
         setError(paymentResult.error || 'Payment processing failed. Please try again.');

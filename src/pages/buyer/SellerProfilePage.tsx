@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import ProductCard, { type Product } from '../../components/cards/ProductCard';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
@@ -18,7 +17,7 @@ interface Seller {
 const SellerProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { t } = useTranslation('products');
+  // const { t } = useTranslation('products');
   const [seller, setSeller] = useState<Seller | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);

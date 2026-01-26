@@ -1,10 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { ChevronDown, SlidersHorizontal, X, Check, RotateCcw, ArrowUpDown } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import ProductCard, { type Product } from '../../components/cards/ProductCard';
-import Input from '../../components/ui/Input';
+
 import Select from '../../components/ui/Select';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
@@ -49,12 +48,12 @@ const SORT_OPTIONS = [
 ];
 
 const CatalogPage = () => {
-  const { t } = useTranslation('products');
+  // const { t } = useTranslation('products');
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  // const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -120,7 +119,7 @@ const CatalogPage = () => {
             counts[product.category] = (counts[product.category] || 0) + 1;
           }
         });
-        setCategoryCounts(counts);
+        // setCategoryCounts(counts);
       } catch (err: any) {
         console.error('❌ Catalog fetch error:', err);
         setError(err.message || 'Failed to load products. Please try again later.');
@@ -227,15 +226,15 @@ const CatalogPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const updateParams = (key: string, value: string | null) => {
-    const newParams = new URLSearchParams(searchParams);
-    if (value) {
-      newParams.set(key, value);
-    } else {
-      newParams.delete(key);
-    }
-    setSearchParams(newParams);
-  };
+  // const updateParams = (key: string, value: string | null) => {
+  //   const newParams = new URLSearchParams(searchParams);
+  //   if (value) {
+  //     newParams.set(key, value);
+  //   } else {
+  //     newParams.delete(key);
+  //   }
+  //   setSearchParams(newParams);
+  // };
 
   const FilterContent = () => {
     const [localMin, setLocalMin] = useState(minPrice);
@@ -463,7 +462,7 @@ const CatalogPage = () => {
             ) : (
               <>
                 <div className={styles.grid}>
-                  {paginatedProducts.map((product, idx) => (
+                  {paginatedProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
