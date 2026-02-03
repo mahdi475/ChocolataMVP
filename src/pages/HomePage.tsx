@@ -260,7 +260,6 @@ const Newsletter = () => {
 const HomePage = () => {
   const { user, role } = useAuth();
   const navigate = useNavigate();
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [newProducts, setNewProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -307,8 +306,7 @@ const HomePage = () => {
         }
 
         const allProducts = productsResult.data || [];
-        setFeaturedProducts(allProducts.slice(0, 3));
-        setNewProducts(allProducts.slice(3, 6));
+        setNewProducts(allProducts.slice(0, 6));
         setCategories(categoriesResult.data || []);
       } catch (error) {
         console.error('Failed to load homepage data:', error);
