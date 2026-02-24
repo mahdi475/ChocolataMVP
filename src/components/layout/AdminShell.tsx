@@ -54,7 +54,7 @@ const AdminShell = ({ children }: AdminShellProps) => {
       <aside className={`${styles.sidebar} ${isMobileNavOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sidebarHeader}>
           <Link to="/admin/dashboard" className={styles.logo}>
-            🍭 Oompaloompa
+            🍭 Chokolata
             <span className={styles.adminBadge}>ADMIN PANEL</span>
           </Link>
         </div>

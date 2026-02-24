@@ -20,7 +20,7 @@
 
 ## Project Overview
 
-**Chocolata** (branded as **Oompaloompa**) is a global e-commerce platform for chocolate and gourmet food products. It enables small to large businesses to register, create storefronts, and sell products across Europe and globally.
+**Chokolata** is a global e-commerce platform for chocolate and gourmet food products. It enables small to large businesses to register, create storefronts, and sell products across Europe and globally.
 
 ### Key Objectives
 - ✅ Enable sellers to register and be verified
@@ -1185,7 +1185,7 @@ export const HomePage = () => {
 // locales/en/common.json
 {
   "homepage": {
-    "welcome": "Welcome to Oompaloompa",
+    "welcome": "Welcome to Chokolata",
     "browseCatalog": "Browse our catalog"
   }
 }

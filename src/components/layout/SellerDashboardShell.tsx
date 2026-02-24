@@ -52,7 +52,7 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
       <aside className={`${styles.sidebar} ${isMobileNavOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sidebarHeader}>
           <Link to="/seller/dashboard" className={styles.logo}>
-            🍭 Oompaloompa
+            🍭 Chokolata
             <span className={styles.sellerBadge}>SELLER DASHBOARD</span>
           </Link>
         </div>

@@ -1,8 +1,8 @@
-# Ultimate Roadmap: Chocolata MVP (Oompaloompa)
+# Ultimate Roadmap: Chocolata MVP
 
 ## Project Overview
 
-**Chocolata** (branded as **Oompaloompa**) is a global e-commerce platform for chocolate products and gourmet foods, enabling small to large businesses to register, create storefronts, and sell products across Europe and globally. The platform includes a verification system to ensure all sellers are legitimate businesses or registered individuals.
+**Chokolata** is a global e-commerce platform for chocolate products and gourmet foods, enabling small to large businesses to register, create storefronts, and sell products across Europe and globally. The platform includes a verification system to ensure all sellers are legitimate businesses or registered individuals.
 
 **Tech Stack:**
 - Frontend: React 18 + Vite + TypeScript + React Router

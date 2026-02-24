@@ -9,7 +9,7 @@ import styles from './MainLayout.module.css';
 import Button from '../ui/Button';
 import SearchOverlay from './SearchOverlay';
 import WhyWereDifferent from '../sections/WhyWereDifferent';
-import ompalompaLogo from '../../LogoAssets/OmpalompaLogo.png';
+import chokolatLogo from '../../LogoAssets/ChokolatLogo.png';
 
 interface MainLayoutProps { children: ReactNode }
 
@@ -50,7 +50,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.navbarContainer}>
           <Link to="/" className={styles.brand}>
-            <img src={ompalompaLogo} alt="Ompalompa" className={styles.logoImage} />
+            <img src={chokolatLogo} alt="Chokolata" className={styles.logoImage} />
           </Link>
 
           <div className={styles.desktopLinks}>
@@ -215,7 +215,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         {/* Bottom Section: Branding, Social Media, Copyright */}
         <div className={styles.footerBottom}>
           <div className={styles.footerBranding}>
-            <img src={ompalompaLogo} alt="Chocolata" className={styles.footerLogo} />
+            <img src={chokolatLogo} alt="Chokolata" className={styles.footerLogo} />
             <div className={styles.brandInfo}>
               <h3 className={styles.brandName}>CHOCOLATA</h3>
               <p className={styles.brandSlogan}>The Sweetest Spot on the Internet! 🌍✨</p>

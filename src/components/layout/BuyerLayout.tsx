@@ -28,7 +28,7 @@ const BuyerLayout = ({ children }: BuyerLayoutProps) => {
     <div className={styles.container}>
       <header className={styles.header}>
         <Link to={getHomeUrl()} className={styles.logo}>
-          🍭 Oompaloompa
+          🍭 Chokolata
           {role && (
             <span className={`${styles.roleBadge} ${styles[`role${role.charAt(0).toUpperCase() + role.slice(1)}`]}`}>
               {role.toUpperCase()}
@@ -68,7 +68,7 @@ const BuyerLayout = ({ children }: BuyerLayoutProps) => {
       </header>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
-        <p>&copy; 2024 Oompaloompa. All rights reserved.</p>
+        <p>&copy; 2024 Chokolata. All rights reserved.</p>
       </footer>
     </div>
   );
