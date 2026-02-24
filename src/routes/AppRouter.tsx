@@ -15,6 +15,8 @@ import SurpriseMePage from '../pages/SurpriseMePage';
 import CorporatePortalPage from '../pages/CorporatePortalPage';
 import SustainabilityPage from '../pages/SustainabilityPage';
 import DiscoverPage from '../pages/DiscoverPage';
+import ChocolatiersPage from '../pages/ChocolatiersPage';
+import CollectionsPage from '../pages/CollectionsPage';
 
 // Buyer pages
 import CatalogPage from '../pages/buyer/CatalogPage';
@@ -51,11 +53,11 @@ const ProtectedRoute = ({
 }) => {
   const { user, role, loading } = useAuth();
 
-  console.log('🛡️ ProtectedRoute check:', { 
-    hasUser: !!user, 
-    userRole: role, 
-    requiredRole, 
-    loading 
+  console.log('🛡️ ProtectedRoute check:', {
+    hasUser: !!user,
+    userRole: role,
+    requiredRole,
+    loading
   });
 
   if (loading) {
@@ -70,11 +72,11 @@ const ProtectedRoute = ({
 
   if (requiredRole && role !== requiredRole) {
     // Redirect to appropriate dashboard based on actual role
-    const redirectUrl = role === 'seller' 
-      ? '/seller/dashboard' 
-      : role === 'admin' 
-      ? '/admin/dashboard' 
-      : '/catalog';
+    const redirectUrl = role === 'seller'
+      ? '/seller/dashboard'
+      : role === 'admin'
+        ? '/admin/dashboard'
+        : '/catalog';
     console.log('🛡️ ProtectedRoute: Wrong role! User is', role, 'but needs', requiredRole, '→ redirecting to', redirectUrl);
     return <Navigate to={redirectUrl} replace />;
   }
@@ -122,6 +124,14 @@ const AppRouter = () => {
       <Route
         path="/discover"
         element={<MainLayout><DiscoverPage /></MainLayout>}
+      />
+      <Route
+        path="/chocolatiers"
+        element={<MainLayout><ChocolatiersPage /></MainLayout>}
+      />
+      <Route
+        path="/collections"
+        element={<MainLayout><CollectionsPage /></MainLayout>}
       />
 
       {/* Buyer routes */}

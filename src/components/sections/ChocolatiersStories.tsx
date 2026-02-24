@@ -29,6 +29,20 @@ const ChocolatiersStories = () => {
       description: 'Trained in the finest Swiss chocolate houses, Sophie combines innovation with tradition. Her award-winning creations have redefined luxury chocolate in Switzerland.',
       image: chocolatier2Image,
     },
+    {
+      name: 'Alessandro Moretti',
+      role: 'Gelato & Chocolate Artist',
+      location: 'Florence, Italy',
+      description: 'Alessandro blends classic Italian flavors with modern art design. His chocolate sculptures are as beautiful as they are delicious.',
+      image: 'https://images.unsplash.com/photo-1566554273541-37a9ca77b91f?q=80&w=2574&auto=format&fit=crop',
+    },
+    {
+      name: 'Elena Ivanova',
+      role: 'Cacao Purist',
+      location: 'St. Petersburg, Russia',
+      description: 'Elena focuses on single-origin beans, roasting them to perfection to highlight their unique terroir and flavor profiles.',
+      image: 'https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?q=80&w=2574&auto=format&fit=crop',
+    },
   ];
 
   return (

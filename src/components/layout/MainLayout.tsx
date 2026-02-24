@@ -55,10 +55,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
           <div className={styles.desktopLinks}>
             <Link to="/catalog" className={styles.link}>Shop</Link>
-            <span className={styles.linkDisabled}>Chocolatiers</span>
-            <span className={styles.linkDisabled}>Collections</span>
-            <span className={styles.linkDisabled}>Corporate Gifts</span>
-            <span className={styles.linkDisabled}>Sustainability</span>
+            <Link to="/chocolatiers" className={styles.link}>Chocolatiers</Link>
+            <Link to="/collections" className={styles.link}>Collections</Link>
+            <Link to="/corporate-portal" className={styles.link}>Corporate Gifts</Link>
+            <Link to="/sustainability" className={styles.link}>Sustainability</Link>
             <Link to="/about" className={styles.link}>About Us</Link>
           </div>
 
@@ -117,10 +117,18 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <Link to="/catalog" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
               Shop
             </Link>
-            <span className={styles.mobileLinkDisabled}>Chocolatiers</span>
-            <span className={styles.mobileLinkDisabled}>Collections</span>
-            <span className={styles.mobileLinkDisabled}>Corporate Gifts</span>
-            <span className={styles.mobileLinkDisabled}>Sustainability</span>
+            <Link to="/chocolatiers" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
+              Chocolatiers
+            </Link>
+            <Link to="/collections" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
+              Collections
+            </Link>
+            <Link to="/corporate-portal" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
+              Corporate Gifts
+            </Link>
+            <Link to="/sustainability" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
+              Sustainability
+            </Link>
             <Link to="/about" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
               About Us
             </Link>

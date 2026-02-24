@@ -53,20 +53,7 @@
 
 @media (min-width: 1024px) {
   .cardsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .cardsGrid > .card:nth-child(4),
-  .cardsGrid > .card:nth-child(5) {
-    grid-column: span 1;
-  }
-  
-  .cardsGrid > .card:nth-child(4) {
-    grid-column-start: 1;
-  }
-  
-  .cardsGrid > .card:nth-child(5) {
-    grid-column-start: 3;
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
