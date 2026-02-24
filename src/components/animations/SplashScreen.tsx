@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, Variants } from 'framer-motion';
-import chokolatLogo from '../../LogoAssets/ChokolatLogo.png';
+import chocolataLogo from '../../LogoAssets/ChokolatLogo.png';
 import styles from './SplashScreen.module.css';
 
 interface SplashScreenProps {
@@ -162,8 +162,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           animate={shouldExit ? "exit" : "enter"}
         >
           <img 
-            src={chokolatLogo} 
-            alt="Chokolata" 
+            src={chocolataLogo} 
+            alt="Chocolata" 
             className={styles.logoImage} 
           />
         </motion.div>
@@ -173,7 +173,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           initial="initial"
           animate={shouldExit ? "exit" : "enter"}
         >
-          <h1 className={styles.brandName}>CHOKOLATA</h1>
+          <h1 className={styles.brandName}>CHOCOLATA</h1>
           <p className={styles.tagline}>Artisanal Chocolate</p>
         </motion.div>
       </div>
