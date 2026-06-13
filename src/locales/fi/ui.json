@@ -1,9 +1,783 @@
 {
-  "language": { "selectorLabel": "Valitse kieli", "current": "Nykyinen kieli" },
-  "nav": { "shop": "Kauppa", "chocolatiers": "Suklaantekijat", "collections": "Kokoelmat", "corporateGifts": "Yrityslahjat", "sustainability": "Vastuullisuus", "about": "Meista", "loginRegister": "Kirjaudu / Rekisteroidy", "logout": "Kirjaudu ulos", "search": "Haku", "profile": "Kayttajaprofiili", "cart": "Ostoskori" },
-  "home": { "badge": "Palkittu kokoelma", "heroTitle": "Hienon suklaan", "heroAccent": "taide", "heroSubtitle": "Loyda kuratoitu markkinapaikka Euroopan parhaiden artesaanisuklaantekijoiden tuotteille. Eettisesti hankittu, mestarillisesti valmistettu.", "shopCollection": "Tutustu kokoelmaan", "ourStory": "Tarinamme", "exploreTitle": "Tutki maun mukaan", "exploreSubtitle": "Aloita suosituimmista suklaamatkoista belgialaisista praliineista single-origin levyihin.", "viewMore": "Nayta lisaa", "showLess": "Nayta vahemman", "freshTitle": "Tuoreena keittiosta", "shopNewArrivals": "Osta uutuuksia", "meetMakers": "Tapaa tekijat", "makersTitle": "Eurooppalaiset suklaantekijat jokaisen rasian takana", "makersSubtitle": "Valikoitu nosto samoista atelier-profiileista, joita voit tutkia koko tekijahakemistossa.", "featuredMaker": "Nostettu tekija", "viewProfile": "Nayta profiili", "browseAllMakers": "Selaa kaikkia suklaantekijoita" },
-  "shop": { "eyebrow": "Eurooppalainen artesaanimarkkina", "title": "Osta hienoa suklaata tekijan, alkuperan ja tilaisuuden mukaan.", "subtitle": "Loyda small-batch suklaalevyt, tryffelit, praliinit ja lahjarasiat itsenaisilta eurooppalaisilta suklaantekijoilta.", "products": "tuotetta", "collections": "kokoelmaa", "curatedMakers": "Kuratoidut tekijat", "liveCatalog": "Live-katalogi", "searchPlaceholder": "Hae tryffeleita, praliineja, vegaanilevyja...", "filters": "Suodattimet", "popular": "Suosituimmat", "newest": "Uusimmat", "priceLowHigh": "Hinta matala-korkea", "priceHighLow": "Hinta korkea-matala", "results": "tulosta", "result": "tulos", "clearAll": "Tyhjenna kaikki", "curateBox": "Kuratoi rasiasi", "curateHint": "Aloita laajasti ja tarkenna kasityon, maun ja tekijan mukaan.", "origin": "Alkupera", "originSummary": "Maa ja suklaantekija", "country": "Maa", "allCountries": "Kaikki maat", "maker": "Suklaantekija / maker", "allMakers": "Kaikki tekijat", "taste": "Maku", "tasteSummary": "Kategoria, tyyppi, maku", "category": "Kategoria", "allCategories": "Kaikki kategoriat", "chocolateType": "Suklaatyyppi", "flavorFillings": "Maut ja taytteet", "minimumCacao": "Vahintaan kaakao", "anyPercent": "Mika tahansa %", "lifestyle": "Elamantapa", "dietaryPreferences": "Ruokavaliotoiveet", "occasion": "Tilaisuus", "occasionSummary": "Lahjat ja hetket", "priceRating": "Hinta ja arvio", "priceRatingSummary": "Budjetti ja luottamus", "minimumRating": "Vahimmaisarvio", "anyRating": "Mika tahansa arvio", "ratingAbove": "{{rating}} tai yli", "advancedCraft": "Edistynyt kasityo", "advancedSummary": "Palkinnot, hankinta, harvinaisuus", "resetFilters": "Nollaa suodattimet", "showProducts": "Nayta {{count}} tuotetta", "emptyTitle": "Suklaita ei loytynyt", "emptyText": "Kokeile laajentaa maa-, hinta- tai kaakaosuodattimia." },
-  "chocolatiers": { "badge": "Tapaa tekijat", "titlePrefix": "Euroopan artesaanit,", "titleAccent": "yksi maanosa", "subtitle": "Brysselista Helsinkiin: tapaa small-batch suklaantekijat, jotka muovaavat eurooppalaisen craft-suklaan tulevaisuutta.", "searchPlaceholder": "Hae nimella, kaupungilla, maalla tai tagilla...", "filterByCountry": "Suodata maan mukaan:", "all": "Kaikki", "viewProfile": "Nayta profiili", "emptyTitle": "Suklaantekijoita ei loytynyt", "emptyText": "Kokeile muuttaa hakua tai maasuodatinta.", "clearFilters": "Tyhjenna suodattimet" },
-  "cart": { "title": "Ostoskorisi", "close": "Sulje ostoskori", "empty": "Ostoskorisi on tyhja.", "continueShopping": "Jatka ostoksia", "decrease": "Vahenna maara", "increase": "Lisaa maara", "remove": "Poista tuote", "subtotal": "Valisumma", "shippingNote": "Toimitus ja verot lasketaan kassalla.", "checkout": "Kassalle" },
-  "productCard": { "addToCart": "Lisaa koriin", "outOfStock": "Loppuunmyyty", "inStock": "varastossa", "lowStock": "Vahan jaljella" }
+  "language": {
+    "selectorLabel": "Valitse kieli",
+    "current": "Nykyinen kieli"
+  },
+  "nav": {
+    "homeAria": "Chocolata",
+    "toggleMenu": "Menu",
+    "shop": "Kauppa",
+    "chocolatiers": "Suklaantekijät",
+    "collections": "Kokoelmat",
+    "corporateGifts": "Yrityslahjat",
+    "sustainability": "Vastuullisuus",
+    "about": "Tietoa meistä",
+    "loginRegister": "Kirjaudu / Rekisteröidy",
+    "logout": "Kirjaudu ulos",
+    "search": "Hae",
+    "profile": "Käyttäjäprofiili",
+    "cart": "Ostoskori"
+  },
+  "home": {
+    "badge": "Palkittu kokoelma",
+    "heroTitle": "Hienon suklaan",
+    "heroAccent": "taide",
+    "heroSubtitle": "Tutustu kuratoituun markkinapaikkaan, jossa on maailman parhaita käsityösuklaan tekijöitä. Eettisesti hankittu, mestarillisesti valmistettu.",
+    "shopCollection": "Osta kokoelma",
+    "ourStory": "Tarinamme",
+    "exploreTitle": "Tutki maun mukaan",
+    "exploreSubtitle": "Aloita rakastetuimmista suklaamatkoista, belgialaisista praliineista single-origin-levyihin.",
+    "viewMore": "Näytä lisää",
+    "showLess": "Näytä vähemmän",
+    "freshTitle": "Tuoretta keittiöstä",
+    "shopNewArrivals": "Osta uutuuksia",
+    "meetMakers": "Tapaa tekijät",
+    "makersTitle": "Eurooppalaiset suklaantekijät jokaisen rasian takana",
+    "makersSubtitle": "Poiminta samoista atelier-profiileista, joita voit tutkia koko tekijähakemistossa.",
+    "featuredMaker": "Esitelty tekijä",
+    "viewProfile": "Näytä profiili",
+    "browseAllMakers": "Katso kaikki suklaantekijät",
+    "curatorsPick": "Kuraattorin valinta",
+    "spotlightTitle": "The Velvet",
+    "spotlightTitleSecond": "Kokoelma",
+    "spotlightText": "Eksklusiivinen valikoima tummimpia ja täyteläisimpiä single-origin-levyjämme käsin pyöriteltyjen tryffelien kanssa. Täydellinen lahja todelliselle suklaan ystävälle.",
+    "shopTheCollection": "Osta kokoelma",
+    "viewDetails": "Näytä tiedot",
+    "newsletterTitle": "Liity sisäpiiriin",
+    "newsletterSubtitle": "Saat varhaisen pääsyn rajoitettuihin julkaisuihin, suklaantekijöiden haastatteluihin ja makeisiin tarjouksiin.",
+    "newsletterPlaceholder": "Sähköpostiosoitteesi",
+    "newsletterSubmit": "Liity",
+    "spotlightImageAlt": "Ylellinen lahjarasia",
+    "viewChocolatierProfileAria": "Näytä suklaantekijän {{maker}} profiili"
+  },
+  "shop": {
+    "eyebrow": "European artisan marketplace",
+    "title": "Shop fine chocolate by maker, origin, and occasion.",
+    "subtitle": "Discover small-batch bars, truffles, pralines, and gift boxes from independent European chocolatiers.",
+    "products": "products",
+    "collections": "collections",
+    "curatedMakers": "Curated makers",
+    "liveCatalog": "Live catalog",
+    "searchPlaceholder": "Search truffles, pralines, vegan bars...",
+    "filters": "Suodattimet",
+    "closeFilters": "Sulje suodattimet",
+    "popular": "Popular",
+    "newest": "Newest",
+    "priceLowHigh": "Price low-high",
+    "priceHighLow": "Price high-low",
+    "results": "results",
+    "result": "result",
+    "clearAll": "Clear all",
+    "curateBox": "Curate your box",
+    "curateHint": "Start broad, then refine by craft, taste, and maker.",
+    "origin": "Origin",
+    "originSummary": "Country and chocolatier",
+    "country": "Country",
+    "allCountries": "All countries",
+    "maker": "Chocolatier / Maker",
+    "allMakers": "All makers",
+    "taste": "Taste",
+    "tasteSummary": "Category, type, flavor",
+    "category": "Category",
+    "allCategories": "All categories",
+    "chocolateType": "Chocolate Type",
+    "flavorFillings": "Flavor & Fillings",
+    "minimumCacao": "Minimum cacao",
+    "anyPercent": "Any %",
+    "lifestyle": "Lifestyle",
+    "dietaryPreferences": "Dietary preferences",
+    "occasion": "Occasion",
+    "occasionSummary": "Gifts and moments",
+    "priceRating": "Price & Rating",
+    "priceRatingSummary": "Budget and trust",
+    "minimumRating": "Minimum rating",
+    "anyRating": "Any rating",
+    "ratingAbove": "{{rating}} and above",
+    "advancedCraft": "Advanced craft",
+    "advancedSummary": "Awards, sourcing, rarity",
+    "minSek": "Min SEK",
+    "maxSek": "Max SEK",
+    "resetFilters": "Nollaa suodattimet",
+    "showProducts": "Näytä {{count}} tuotetta",
+    "loading": "Suklaa sulaa...",
+    "emptyTitle": "Suklaata ei löytynyt",
+    "emptyText": "Kokeile väljempiä suodattimia."
+  },
+  "chocolatiers": {
+    "badge": "Tapaa tekijät",
+    "titlePrefix": "Euroopan käsityöläiset,",
+    "titleAccent": "yksi maanosa",
+    "subtitle": "Brysselistä Helsinkiin: tutustu pieneräsuklaamestareihin, jotka muovaavat eurooppalaisen käsityösuklaan tulevaisuutta.",
+    "searchPlaceholder": "Hae nimellä, kaupungilla, maalla tai tunnisteella...",
+    "filterByCountry": "Suodata maan mukaan:",
+    "all": "Kaikki",
+    "viewProfile": "Näytä profiili",
+    "emptyTitle": "Suklaantekijöitä ei löytynyt",
+    "emptyText": "Kokeile muuttaa hakua tai maasuodatinta.",
+    "clearFilters": "Tyhjennä suodattimet"
+  },
+  "chocolatierProfile": {
+    "backToAll": "Takaisin kaikkiin suklaantekijöihin",
+    "europeanChocolatier": "Eurooppalainen suklaantekijä",
+    "ourStory": "Tarinamme",
+    "storyBehind": "Tarina {{maker}}-tekijän takana",
+    "insideWorkshop": "Työpajan sisällä",
+    "gallerySubtitle": "Muotokuva, työpaja, myymälä ja tuotelähikuvat.",
+    "shopMaker": "Osta tekijältä",
+    "handFinished": "Käsin viimeistellyt suklaat",
+    "filterProducts": "Suodata tuotteita",
+    "emptyProducts": "Mikään tuote ei vielä vastaa tätä suodatinta.",
+    "whatWeStandFor": "Mitä edustamme",
+    "ourValues": "Arvomme",
+    "browseRange": "Selaa koko {{maker}}-valikoimaa",
+    "ctaSubtitle": "Tryffelit, praliinit, bonbonit ja single-origin-levyt - toimitetaan kaupungista {{city}} ympäri Eurooppaa.",
+    "browseAllProducts": "Selaa kaikkia tuotteita",
+    "aboutTheChocolatier": "Tietoa suklaantekijästä",
+    "madeIn": "Valmistettu",
+    "founded": "Perustettu",
+    "specialties": "Erikoisuudet",
+    "signatureProducts": "Nimikkotuotteet",
+    "shipping": "Toimitus",
+    "viewProducts": "Näytä tuotteet",
+    "contactMaker": "Ota yhteyttä tekijään",
+    "visitShop": "Vieraile kaupassa",
+    "featuredProducts": "Esitellyt tuotteet",
+    "awards": "Palkinnot",
+    "story": "Tarina",
+    "ingredients": "Ainesosat",
+    "sustainability": "Vastuullisuus",
+    "deliveryEstimate": "Arvioitu toimitus 2-5 päivää",
+    "shipsFrom": "Toimitetaan kaupungista {{city}}",
+    "heatProtected": "Lämpösuojattu",
+    "giftReady": "Valmis lahjaksi",
+    "ecoPackaging": "Ekologinen pakkaus",
+    "smallBatchAtelier": "Pieneräateljee"
+  },
+  "cart": {
+    "title": "Your Basket",
+    "pageTitle": "Ostoskorisi",
+    "close": "Close cart",
+    "empty": "Ostoskorisi on tyhjä.",
+    "browseProducts": "Selaa tuotteita",
+    "continueShopping": "Continue Shopping",
+    "decrease": "Vähennä määrää",
+    "increase": "Lisää määrää",
+    "remove": "Poista tuote",
+    "subtotal": "Välisumma",
+    "total": "Yhteensä",
+    "orderSummary": "Tilauksen yhteenveto",
+    "shippingNote": "Shipping and taxes calculated at checkout.",
+    "checkout": "Checkout",
+    "proceedToCheckout": "Siirry kassalle"
+  },
+  "productCard": {
+    "addToCart": "Lisää koriin",
+    "outOfStock": "Loppuunmyyty",
+    "inStock": "varastossa",
+    "lowStock": "Vähän jäljellä",
+    "placeholderChocolate": "Chocolate",
+    "noImage": "Ei kuvaa",
+    "cacaoPercent": "{{percent}}% cacao",
+    "viewProductAria": "View {{product}}",
+    "viewMakerProfileAria": "View {{maker}} chocolatier profile"
+  },
+  "productDetail": {
+    "idRequired": "Product ID is required",
+    "loadFailed": "Failed to load product",
+    "notFound": "Product not found",
+    "backToCatalog": "Back to Catalog",
+    "reviews": "{{count}} reviews",
+    "viewMakerProfile": "View maker profile",
+    "quantity": "Quantity",
+    "defaultShipping": "Ships from the maker in protective packaging.",
+    "smallBatchFormat": "Small batch format",
+    "secureCheckout": "Secure checkout and buyer support",
+    "productStory": "Product Story",
+    "details": "Details",
+    "cacao": "Cacao",
+    "weight": "Weight",
+    "origin": "Origin",
+    "variesByPiece": "Varies by piece",
+    "seePackage": "See package",
+    "europeanAtelier": "European atelier",
+    "ingredients": "Ingredients",
+    "ingredientsFallback": "Ingredient details available from the maker.",
+    "allergens": "Allergens",
+    "allergensFallback": "May contain milk, nuts, and soy.",
+    "reviewsTitle": "Reviews",
+    "reviewsEmpty": "Customer reviews will appear here once verified purchases are collected.",
+    "new": "New",
+    "moreFrom": "More from {{maker}}",
+    "similarProducts": "Similar products"
+  },
+  "notifications": {
+    "addedToCart": "{{product}} added to cart!",
+    "addedQuantityToCart": "{{quantity}} x {{product}} added to cart"
+  },
+  "search": {
+    "close": "Sulje haku",
+    "placeholder": "Etsi tryffeleitä, levyjä, lahjoja...",
+    "trendingNow": "Nousussa nyt",
+    "loading": "Haetaan...",
+    "noResults": "Ei tuloksia haulle \"{{query}}\".",
+    "viewAllProducts": "Näytä kaikki tuotteet"
+  },
+  "footer": {
+    "newsletterTitle": "Pysy ajan tasalla!",
+    "newsletterDescription": "Get the latest drops, exclusive deals, and sweet surprises.",
+    "emailPlaceholder": "your.email@cool.com",
+    "newsletterButton": "Mennään!",
+    "shop": "Shop",
+    "allChocolates": "Kaikki suklaat",
+    "byCountry": "Maan mukaan",
+    "byType": "Tyypin mukaan",
+    "giftSets": "Lahjapakkaukset",
+    "support": "Tuki",
+    "faqs": "FAQs",
+    "shippingInfo": "Shipping Info",
+    "returns": "Returns",
+    "contactUs": "Contact Us",
+    "company": "Yritys",
+    "aboutUs": "About Us",
+    "ourStory": "Our Story",
+    "sustainability": "Sustainability",
+    "careers": "Careers",
+    "legal": "Lakiasiat",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "brandSlogan": "Internetin makein paikka!",
+    "copyright": "Tehty kaikille suklaan ystäville."
+  },
+  "corporate": {
+    "badge": "Yrityslahjat uudella tasolla",
+    "heroTitle": "Tee pysyvä",
+    "heroAccent": "vaikutus",
+    "heroSubtitle": "Premium chocolate gifts tailored for your clients, employees, and events. Custom branding, volume pricing, and white-glove concierge service.",
+    "startQuote": "Pyydä tarjous",
+    "downloadCatalog": "Lataa katalogi",
+    "customBrandingTitle": "Oma brändäys",
+    "customBrandingText": "Your logo, your colors. Fully customizable packaging, sleeves, ribbons, and gift cards keep your brand front and center.",
+    "premiumQualityTitle": "Premium-laatu",
+    "premiumQualityText": "Gifts that reflect your standards, sourced from exceptional artisans for a memorable unboxing experience.",
+    "conciergeTitle": "Concierge-palvelu",
+    "conciergeText": "Dedicated account managers handle address collection, timing, and shipments so your team gets the credit.",
+    "processTitle": "Sujuva lahjaprosessi",
+    "processSubtitle": "From selection to delivery in three easy steps.",
+    "stepSelectTitle": "Valitse lahja",
+    "stepSelectText": "Choose from curated collections or build a custom assortment.",
+    "stepCustomizeTitle": "Mukauta & brändää",
+    "stepCustomizeText": "Add your logo, personal message, and packaging finish.",
+    "stepDeliveryTitle": "Me hoidamme toimituksen",
+    "stepDeliveryText": "From one office to 1,000 homes, we help every gift arrive well.",
+    "occasionBadge": "Joka tilanteeseen",
+    "businessTitle": "Kuratoitu yrityksille",
+    "businessText": "Whether you need conference boxes or luxury board gifts, our categories are designed for corporate needs.",
+    "clientAppreciation": "Client Appreciation & Retention",
+    "employeeOnboarding": "Employee Onboarding & Milestones",
+    "virtualEvents": "Virtual Event Tasting Kits",
+    "holidayGifting": "Holiday Gifting Campaigns",
+    "viewFullCatalog": "Näytä koko katalogi",
+    "executiveAlt": "Luxury chocolate gift box",
+    "bestSeller": "Myydyin",
+    "executiveSuite": "The Executive Suite",
+    "tastingAlt": "Premium chocolate tasting set",
+    "eventFavorite": "Tapahtumasuosikki",
+    "virtualTastingKit": "Virtual Tasting Kit",
+    "needHelp": "Tarvitsetko apua?",
+    "needHelpText": "Our gifting specialists are ready to help you curate the perfect experience for your budget and timeline.",
+    "emailPrompt": "Enter your work email...",
+    "getConnected": "Ota yhteyttä",
+    "volumeDiscount": "Volume discounts available for orders over 50 units."
+  },
+  "labels": {
+    "filters": {
+      "all": "Kaikki",
+      "dark": "Tumma",
+      "milk": "Maito",
+      "white": "Valkoinen",
+      "vegan": "Vegaaninen",
+      "nut_free": "Pähkinätön",
+      "single_origin": "Yhden alkuperän",
+      "seasonal": "Kausi",
+      "pralines": "Pralines",
+      "truffles": "Truffles",
+      "bonbons": "Bonbons",
+      "gift_boxes": "Gift Boxes",
+      "hazelnut": "Hazelnut",
+      "caramel": "Caramel",
+      "ganache": "Ganache",
+      "fruit": "Fruit",
+      "floral": "Floral",
+      "cocoa_nibs": "Cocoa Nibs",
+      "organic": "Luomu",
+      "dairy_free": "Dairy-free",
+      "plastic_free": "Plastic-free",
+      "gift_box": "Lahjapakkaus",
+      "celebration": "Celebration",
+      "corporate": "Corporate",
+      "tasting": "Tasting",
+      "self_care": "Self Care",
+      "romantic": "Romantic",
+      "award_winning": "Award Winning",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Käsintehty",
+      "small_batch": "Small Batch",
+      "sustainable": "Vastuullinen",
+      "limited_edition": "Limited Edition",
+      "dark_chocolate": "Tumma suklaa",
+      "hazelnuts": "Hasselpähkinät"
+    },
+    "badges": {
+      "organic": "Luomu",
+      "vegan": "Vegaaninen",
+      "gift_box": "Lahjapakkaus",
+      "award_winning": "Palkittu",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Käsintehty",
+      "small_batch": "Pienerä",
+      "sustainable": "Vastuullinen",
+      "limited_edition": "Rajoitettu erä",
+      "plastic_free": "Muoviton",
+      "family_recipe": "Perheresepti"
+    },
+    "categories": {
+      "dark_chocolate": "Tumma suklaa",
+      "milk_chocolate": "Maitosuklaa",
+      "white_chocolate": "Valkosuklaa",
+      "truffles": "Tryffelit",
+      "pralines": "Praliinit",
+      "bonbons": "Konvehdit",
+      "vegan": "Vegaaninen",
+      "gifts": "Lahjat",
+      "gift_boxes": "Lahjapakkaukset",
+      "bars": "Levyt",
+      "collections": "Kokoelmat",
+      "belgian_pralines": "Belgialaiset praliinit",
+      "artisan_truffles": "Käsityötryffelit",
+      "vegan_chocolate": "Vegaaninen suklaa",
+      "organic_chocolate": "Luomusuklaa"
+    },
+    "countries": {
+      "belgium": "Belgia",
+      "france": "Ranska",
+      "italy": "Italia",
+      "germany": "Saksa",
+      "switzerland": "Sveitsi",
+      "netherlands": "Alankomaat",
+      "denmark": "Tanska",
+      "norway": "Norja",
+      "sweden": "Ruotsi",
+      "finland": "Suomi",
+      "united_kingdom": "Yhdistynyt kuningaskunta",
+      "spain": "Espanja",
+      "austria": "Itävalta",
+      "england": "Englanti"
+    },
+    "searchTerms": {
+      "dark_chocolate": "Tumma suklaa",
+      "vegan": "Vegaaninen",
+      "gift_box": "Lahjapakkaus",
+      "hazelnuts": "Hasselpähkinät",
+      "truffles": "Tryffelit"
+    },
+    "chocolatierTags": {
+      "pralines": "Praliinit",
+      "ganache": "Ganache",
+      "luxury": "Luksus",
+      "traditional": "Perinteinen",
+      "milk": "Maito",
+      "dark": "Tumma",
+      "single_origin": "Single-origin",
+      "vegan": "Vegaaninen",
+      "nut_free": "Pähkinätön",
+      "seasonal": "Kausi",
+      "milk_chocolate": "Maitosuklaa",
+      "family_business": "Perheyritys",
+      "creamy": "Kermainen",
+      "alpine": "Alppinen",
+      "artisan": "Käsityö",
+      "elegant": "Elegantti",
+      "dark_chocolate": "Tumma suklaa",
+      "orange_zest": "Appelsiininkuori",
+      "olive_oil_chocolate": "Oliiviöljysuklaa",
+      "artisanal": "Käsityöläinen",
+      "italian": "Italialainen",
+      "truffles": "Tryffelit",
+      "french": "Ranskalainen",
+      "bean_to_bar": "Bean-to-bar",
+      "chili_chocolate": "Chilisuklaa",
+      "mediterranean": "Välimerellinen",
+      "bold": "Voimakas",
+      "white": "Valkoinen",
+      "smooth": "Sileä",
+      "innovative": "Innovatiivinen",
+      "caramel": "Karamelli",
+      "dutch": "Hollantilainen",
+      "ethical": "Eettinen",
+      "minimalist": "Minimalistinen",
+      "nordic": "Pohjoismainen",
+      "sea_salt": "Merisuola",
+      "natural": "Luonnollinen",
+      "handcrafted": "Käsintehty",
+      "experimental": "Kokeellinen",
+      "design": "Design",
+      "modern": "Moderni",
+      "pure": "Puhdas",
+      "clean": "Selkeä",
+      "minimal": "Minimaalinen",
+      "classic": "Klassinen",
+      "british": "Brittiläinen"
+    },
+    "valueTitles": {
+      "sustainability": "Kestävyys",
+      "ethical_sourcing": "Eettinen hankinta",
+      "family_business": "Perheyritys",
+      "craftsmanship": "Käsityötaito"
+    },
+    "valueDescriptions": {
+      "recycled_and_compostable_packaging_across_every_gift_box": "Kierrätetty ja kompostoituva pakkaus jokaisessa lahjarasiassa.",
+      "direct_trade_cacao_paid_above_fair_trade_premiums": "Suoraan hankittu kaakao, josta maksetaan Fair Trade -lisää enemmän.",
+      "independent_family_owned_and_operated_for_generations": "Itsenäinen, perheomisteinen ja sukupolvien ajan toiminnassa.",
+      "every_piece_hand_finished_in_small_batches_by_trained_artisans": "Jokainen pala viimeistellään käsin pienissä erissä koulutettujen käsityöläisten toimesta."
+    }
+  },
+  "checkout": {
+    "paymentMethod": "Maksutapa",
+    "cardName": "Luotto-/pankkikortti",
+    "cardDescription": "Visa, Mastercard, Amex",
+    "klarnaDescription": "Maksa myöhemmin tai erissä",
+    "paypalDescription": "Maksa PayPal-tililläsi",
+    "savedAddresses": "Tallennetut osoitteet",
+    "newAddress": "+ Uusi osoite",
+    "defaultAddress": "Oletus",
+    "useSavedAddress": "Käytä tallennettua osoitetta",
+    "saveForFuture": "Tallenna tämä osoite tulevia tilauksia varten",
+    "saveAddress": "Tallenna osoite"
+  },
+  "chocolatierData": {
+    "maison-deluxe": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "1923"
+    },
+    "alpenschoggi": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "1962"
+    },
+    "edelkakao": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Viennese atelier"
+    },
+    "cioccolato-fiorentino": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Florentine laboratorio"
+    },
+    "atelier-du-cacao": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Lyon atelier"
+    },
+    "casa-del-cacao": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Barcelona workshop"
+    },
+    "dutchcraft": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Amsterdam studio"
+    },
+    "nordisk-kakao": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Gothenburg atelier"
+    },
+    "fjordcocoa": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Bergen workshop"
+    },
+    "copenhagen-cacao-lab": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Copenhagen lab"
+    },
+    "arctic-bean": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Helsinki studio"
+    },
+    "london-cocoa-house": {
+      "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+      "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+      "founded": "Mayfair shop"
+    }
+  },
+  "chocolatierProducts": {
+    "maison-deluxe-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "maison-deluxe-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "maison-deluxe-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "maison-deluxe-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "alpenschoggi-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "alpenschoggi-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "alpenschoggi-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "alpenschoggi-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "edelkakao-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "edelkakao-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "edelkakao-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "edelkakao-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "cioccolato-fiorentino-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "cioccolato-fiorentino-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "cioccolato-fiorentino-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "cioccolato-fiorentino-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "atelier-du-cacao-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "atelier-du-cacao-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "atelier-du-cacao-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "atelier-du-cacao-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "casa-del-cacao-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "casa-del-cacao-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "casa-del-cacao-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "casa-del-cacao-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "dutchcraft-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "dutchcraft-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "dutchcraft-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "dutchcraft-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "nordisk-kakao-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "nordisk-kakao-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "nordisk-kakao-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "nordisk-kakao-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "fjordcocoa-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "fjordcocoa-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "fjordcocoa-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "fjordcocoa-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "copenhagen-cacao-lab-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "copenhagen-cacao-lab-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "copenhagen-cacao-lab-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "copenhagen-cacao-lab-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "arctic-bean-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "arctic-bean-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "arctic-bean-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "arctic-bean-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "london-cocoa-house-1": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "london-cocoa-house-2": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "london-cocoa-house-3": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    },
+    "london-cocoa-house-4": {
+      "description": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+    }
+  },
+  "profileData": {
+    "tagline": "Pieneräsuklaata, jossa on alueellista luonnetta ja huolellista tekniikkaa.",
+    "story": "Tämä suklaantekijä työskentelee pienissä erissä, tarkoin valitun kaakaon, hiottujen reseptien ja käsin viimeisteltyjen yksityiskohtien kanssa. Jokainen kokoelma heijastaa työpajaa, käsityöperinnettä ja modernia lahja- ja maistelukulttuuria.",
+    "productDescription": "Tämän tekijän käsin viimeistelty suklaavalikoima, valmistettu pienissä erissä tasapainoisella rakenteella ja maulla."
+  },
+  "adminShell": {
+    "badge": "YLLÄPITOPANEELI",
+    "panel": "Ylläpitopaneeli",
+    "menu": "Valikko",
+    "closeNavigation": "Sulje navigaatio",
+    "toggleNavigation": "Vaihda ylläpidon navigaatio",
+    "nav": {
+      "dashboard": "Koontinäkymä",
+      "products": "Tuotteet",
+      "sellerApprovals": "Myyjähyväksynnät",
+      "categories": "Kategoriat",
+      "orders": "Tilaukset",
+      "activityLog": "Tapahtumaloki",
+      "overview": "Yleiskatsaus"
+    }
+  },
+  "sellerShell": {
+    "badge": "MYYJÄN KOONTINÄKYMÄ",
+    "portal": "Myyjäportaali",
+    "menu": "Valikko",
+    "closeNavigation": "Sulje navigaatio",
+    "toggleNavigation": "Vaihda myyjän navigaatio",
+    "nav": {
+      "dashboard": "Koontinäkymä",
+      "products": "Tuotteet",
+      "orders": "Tilaukset",
+      "verification": "Vahvistus",
+      "overview": "Yleiskatsaus"
+    }
+  },
+  "whyDifferent": {
+    "title": "Miksi olemme erilaisia!",
+    "tagline": "Emme ole tavallinen suklaakauppa - tuomme mukaan iloa!",
+    "features": {
+      "passport": {
+        "title": "Suklaapassi",
+        "description": "Kerää leimoja eri maista ja avaa eksklusiivisia palkintoja.",
+        "button": "Aloita kerääminen"
+      },
+      "surprise": {
+        "title": "Yllätä minut",
+        "description": "Seikkailunhaluinen? Valitsemme makuusi sopivan käsityörasian.",
+        "button": "Yllätä minut"
+      },
+      "corporate": {
+        "title": "Yritysportaali",
+        "description": "Helpot suuret tilaukset brändätyillä pakkauksilla asiakkaille ja työntekijöille.",
+        "button": "Tutustu yrityksille"
+      },
+      "sustainability": {
+        "title": "Kestävyyslupaus",
+        "description": "Teemme yhteistyötä vain suklaantekijöiden kanssa, jotka sitoutuvat eettiseen hankintaan ja ekologisiin käytäntöihin.",
+        "button": "Lue lisää"
+      },
+      "discover": {
+        "title": "Löydä",
+        "description": "Tutustu uusiin makuihin ja suklaantekijöihin kuratoidun ohjelmamme kautta.",
+        "button": "Aloita tutkiminen"
+      }
+    }
+  },
+  "shippingPackaging": {
+    "productTitle": "Toimitus ja pakkaus",
+    "profileTitle": "Toimitus- ja pakkausstandardit",
+    "standardsBadge": "Toimituksen hoitaa tekijä",
+    "productManagedByMaker": "Suklaantekijä pakkaa ja lähettää tuotteen suklaalle sopivien suojausstandardien mukaisesti.",
+    "profileManagedByMaker": "Jokainen suklaantekijä hallinnoi toimitusta itse. Nämä standardit kuvaavat tilausten valmistelua ja suojausta kotimaan ja Euroopan toimituksiin.",
+    "shipsFrom": "Lähetetään maasta",
+    "deliveryEstimate": "Toimitusarvio",
+    "shippingEstimate": "Lähetysarvio",
+    "giftReady": "Valmis lahjaksi",
+    "heatProtected": "Lämpösuojattu",
+    "ecoPackaging": "Ekologinen pakkaus",
+    "heatProtectionAvailable": "Lämpösuoja saatavilla",
+    "giftPackagingAvailable": "Lahjapakkaus saatavilla",
+    "summerShippingAvailable": "Kesätoimitus saatavilla",
+    "ecoPackagingAvailable": "Ekologinen pakkaus saatavilla",
+    "domesticEuShipping": "Kotimaan / EU-toimitus",
+    "domesticAndEu": "Kotimaan ja EU-toimitus",
+    "domesticOnly": "Kotimaan toimitus",
+    "deliveryBusinessDays": "{{range}} arkipäivää",
+    "deliveryEstimateFallback": "Tekijän vahvistama",
+    "calculatedAtCheckout": "Tekijä laskee kassalla",
+    "available": "Saatavilla",
+    "onRequest": "Pyynnöstä"
+  },
+  "productData": {
+    "demo-origin-noir-72": {
+      "description": "Huolellisesti viimeistelty suklaavalikoima tältä tekijältä, tasapainossa rakenteen, maun ja lahjaelämyksen osalta.",
+      "story": "Tekijän pienissä erissä valmistama suklaa, jossa näkyvät eurooppalainen käsityö, huolellinen hankinta ja viimeistelty maistelukokemus."
+    },
+    "demo-maison-praline-box": {
+      "description": "Huolellisesti viimeistelty suklaavalikoima tältä tekijältä, tasapainossa rakenteen, maun ja lahjaelämyksen osalta.",
+      "story": "Tekijän pienissä erissä valmistama suklaa, jossa näkyvät eurooppalainen käsityö, huolellinen hankinta ja viimeistelty maistelukokemus."
+    },
+    "demo-lavender-truffle-box": {
+      "description": "Huolellisesti viimeistelty suklaavalikoima tältä tekijältä, tasapainossa rakenteen, maun ja lahjaelämyksen osalta.",
+      "story": "Tekijän pienissä erissä valmistama suklaa, jossa näkyvät eurooppalainen käsityö, huolellinen hankinta ja viimeistelty maistelukokemus."
+    },
+    "demo-alpine-milk-pralines": {
+      "description": "Huolellisesti viimeistelty suklaavalikoima tältä tekijältä, tasapainossa rakenteen, maun ja lahjaelämyksen osalta.",
+      "story": "Tekijän pienissä erissä valmistama suklaa, jossa näkyvät eurooppalainen käsityö, huolellinen hankinta ja viimeistelty maistelukokemus."
+    },
+    "demo-vegan-cacao-selection": {
+      "description": "Huolellisesti viimeistelty suklaavalikoima tältä tekijältä, tasapainossa rakenteen, maun ja lahjaelämyksen osalta.",
+      "story": "Tekijän pienissä erissä valmistama suklaa, jossa näkyvät eurooppalainen käsityö, huolellinen hankinta ja viimeistelty maistelukokemus."
+    },
+    "demo-celebration-bonbons": {
+      "description": "Huolellisesti viimeistelty suklaavalikoima tältä tekijältä, tasapainossa rakenteen, maun ja lahjaelämyksen osalta.",
+      "story": "Tekijän pienissä erissä valmistama suklaa, jossa näkyvät eurooppalainen käsityö, huolellinen hankinta ja viimeistelty maistelukokemus."
+    }
+  }
 }

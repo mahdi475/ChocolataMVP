@@ -1,9 +1,783 @@
 {
-  "language": { "selectorLabel": "Taal kiezen", "current": "Huidige taal" },
-  "nav": { "shop": "Shop", "chocolatiers": "Chocolatiers", "collections": "Collecties", "corporateGifts": "Zakelijke geschenken", "sustainability": "Duurzaamheid", "about": "Over ons", "loginRegister": "Inloggen / Registreren", "logout": "Uitloggen", "search": "Zoeken", "profile": "Gebruikersprofiel", "cart": "Winkelwagen" },
-  "home": { "badge": "Bekroonde collectie", "heroTitle": "De kunst van", "heroAccent": "fijne chocolade", "heroSubtitle": "Ontdek een zorgvuldig geselecteerde marktplaats met de beste artisanale chocolatiers. Ethisch ingekocht, meesterlijk gemaakt.", "shopCollection": "Shop collectie", "ourStory": "Ons verhaal", "exploreTitle": "Ontdek op smaak", "exploreSubtitle": "Begin met geliefde chocoladereizen, van Belgische pralines tot single-origin repen.", "viewMore": "Meer bekijken", "showLess": "Minder tonen", "freshTitle": "Vers uit de keuken", "shopNewArrivals": "Shop nieuw binnen", "meetMakers": "Ontmoet de makers", "makersTitle": "Europese chocolatiers achter elke doos", "makersSubtitle": "Een geselecteerde edit uit dezelfde atelierprofielen die je in de volledige gids vindt.", "featuredMaker": "Uitgelichte maker", "viewProfile": "Bekijk profiel", "browseAllMakers": "Bekijk alle chocolatiers" },
-  "shop": { "eyebrow": "Europese artisanale marktplaats", "title": "Shop fijne chocolade op maker, herkomst en gelegenheid.", "subtitle": "Ontdek small-batch repen, truffels, pralines en geschenkdozen van onafhankelijke Europese chocolatiers.", "products": "producten", "collections": "collecties", "curatedMakers": "Geselecteerde makers", "liveCatalog": "Live catalogus", "searchPlaceholder": "Zoek truffels, pralines, vegan repen...", "filters": "Filters", "popular": "Populair", "newest": "Nieuwste", "priceLowHigh": "Prijs laag-hoog", "priceHighLow": "Prijs hoog-laag", "results": "resultaten", "result": "resultaat", "clearAll": "Alles wissen", "curateBox": "Stel je doos samen", "curateHint": "Begin breed en verfijn op ambacht, smaak en maker.", "origin": "Herkomst", "originSummary": "Land en chocolatier", "country": "Land", "allCountries": "Alle landen", "maker": "Chocolatier / maker", "allMakers": "Alle makers", "taste": "Smaak", "tasteSummary": "Categorie, type, smaak", "category": "Categorie", "allCategories": "Alle categorieën", "chocolateType": "Chocoladetype", "flavorFillings": "Smaken & vullingen", "minimumCacao": "Minimaal cacao", "anyPercent": "Elke %", "lifestyle": "Voorkeuren", "dietaryPreferences": "Dieetvoorkeuren", "occasion": "Gelegenheid", "occasionSummary": "Geschenken en momenten", "priceRating": "Prijs & beoordeling", "priceRatingSummary": "Budget en vertrouwen", "minimumRating": "Minimale beoordeling", "anyRating": "Elke beoordeling", "ratingAbove": "{{rating}} en hoger", "advancedCraft": "Ambacht uitgebreid", "advancedSummary": "Awards, herkomst, zeldzaamheid", "resetFilters": "Filters resetten", "showProducts": "Toon {{count}} producten", "emptyTitle": "Geen chocolade gevonden", "emptyText": "Probeer land-, prijs- of cacaofilters te verruimen." },
-  "chocolatiers": { "badge": "Ontmoet de makers", "titlePrefix": "Europa’s ambachtslieden,", "titleAccent": "één continent", "subtitle": "Van Brussel tot Helsinki: ontmoet de chocolatiers die Europese craft chocolate vormgeven.", "searchPlaceholder": "Zoek op naam, stad, land of tag...", "filterByCountry": "Filter op land:", "all": "Alle", "viewProfile": "Bekijk profiel", "emptyTitle": "Geen chocolatiers gevonden", "emptyText": "Pas je zoekopdracht of landfilter aan.", "clearFilters": "Filters wissen" },
-  "cart": { "title": "Je winkelwagen", "close": "Winkelwagen sluiten", "empty": "Je winkelwagen is leeg.", "continueShopping": "Verder winkelen", "decrease": "Aantal verlagen", "increase": "Aantal verhogen", "remove": "Artikel verwijderen", "subtotal": "Subtotaal", "shippingNote": "Verzending en belasting worden bij afrekenen berekend.", "checkout": "Afrekenen" },
-  "productCard": { "addToCart": "Toevoegen", "outOfStock": "Uitverkocht", "inStock": "op voorraad", "lowStock": "Bijna op" }
+  "language": {
+    "selectorLabel": "Taal kiezen",
+    "current": "Huidige taal"
+  },
+  "nav": {
+    "homeAria": "Chocolata",
+    "toggleMenu": "Menu",
+    "shop": "Shop",
+    "chocolatiers": "Chocolatiers",
+    "collections": "Collecties",
+    "corporateGifts": "Relatiegeschenken",
+    "sustainability": "Duurzaamheid",
+    "about": "Over ons",
+    "loginRegister": "Inloggen / Registreren",
+    "logout": "Uitloggen",
+    "search": "Zoeken",
+    "profile": "Gebruikersprofiel",
+    "cart": "Winkelwagen"
+  },
+  "home": {
+    "badge": "Bekroonde collectie",
+    "heroTitle": "De kunst van",
+    "heroAccent": "fijne chocolade",
+    "heroSubtitle": "Ontdek een samengestelde marketplace met de beste ambachtelijke chocolatiers. Ethisch ingekocht, meesterlijk gemaakt.",
+    "shopCollection": "Collectie shoppen",
+    "ourStory": "Ons verhaal",
+    "exploreTitle": "Ontdek op smaak",
+    "exploreSubtitle": "Begin met de meest geliefde chocoladereizen, van Belgische pralines tot single-origin repen.",
+    "viewMore": "Meer tonen",
+    "showLess": "Minder tonen",
+    "freshTitle": "Vers uit de keuken",
+    "shopNewArrivals": "Shop nieuw binnen",
+    "meetMakers": "Ontmoet de makers",
+    "makersTitle": "Europese chocolatiers achter elke doos",
+    "makersSubtitle": "Een uitgelichte selectie uit dezelfde atelierprofielen die je in de volledige makersdirectory kunt ontdekken.",
+    "featuredMaker": "Uitgelichte maker",
+    "viewProfile": "Bekijk profiel",
+    "browseAllMakers": "Bekijk alle chocolatiers",
+    "curatorsPick": "Keuze van de curator",
+    "spotlightTitle": "De Velvet",
+    "spotlightTitleSecond": "Collectie",
+    "spotlightText": "Een exclusief assortiment van onze donkerste, rijkste single-origin repen, gecombineerd met handgerolde truffels. Het perfecte cadeau voor de echte chocoladeliefhebber.",
+    "shopTheCollection": "Shop de collectie",
+    "viewDetails": "Bekijk details",
+    "newsletterTitle": "Word lid van de inner circle",
+    "newsletterSubtitle": "Krijg vroege toegang tot limited drops, chocolatier-interviews en zoete aanbiedingen.",
+    "newsletterPlaceholder": "Je e-mailadres",
+    "newsletterSubmit": "Aanmelden",
+    "spotlightImageAlt": "Luxe geschenkset",
+    "viewChocolatierProfileAria": "Bekijk het chocolatierprofiel van {{maker}}"
+  },
+  "shop": {
+    "eyebrow": "European artisan marketplace",
+    "title": "Shop fine chocolate by maker, origin, and occasion.",
+    "subtitle": "Discover small-batch bars, truffles, pralines, and gift boxes from independent European chocolatiers.",
+    "products": "products",
+    "collections": "collections",
+    "curatedMakers": "Curated makers",
+    "liveCatalog": "Live catalog",
+    "searchPlaceholder": "Search truffles, pralines, vegan bars...",
+    "filters": "Filters",
+    "closeFilters": "Filters sluiten",
+    "popular": "Popular",
+    "newest": "Newest",
+    "priceLowHigh": "Price low-high",
+    "priceHighLow": "Price high-low",
+    "results": "results",
+    "result": "result",
+    "clearAll": "Clear all",
+    "curateBox": "Curate your box",
+    "curateHint": "Start broad, then refine by craft, taste, and maker.",
+    "origin": "Origin",
+    "originSummary": "Country and chocolatier",
+    "country": "Country",
+    "allCountries": "All countries",
+    "maker": "Chocolatier / Maker",
+    "allMakers": "All makers",
+    "taste": "Taste",
+    "tasteSummary": "Category, type, flavor",
+    "category": "Category",
+    "allCategories": "All categories",
+    "chocolateType": "Chocolate Type",
+    "flavorFillings": "Flavor & Fillings",
+    "minimumCacao": "Minimum cacao",
+    "anyPercent": "Any %",
+    "lifestyle": "Lifestyle",
+    "dietaryPreferences": "Dietary preferences",
+    "occasion": "Occasion",
+    "occasionSummary": "Gifts and moments",
+    "priceRating": "Price & Rating",
+    "priceRatingSummary": "Budget and trust",
+    "minimumRating": "Minimum rating",
+    "anyRating": "Any rating",
+    "ratingAbove": "{{rating}} and above",
+    "advancedCraft": "Advanced craft",
+    "advancedSummary": "Awards, sourcing, rarity",
+    "minSek": "Min SEK",
+    "maxSek": "Max SEK",
+    "resetFilters": "Filters wissen",
+    "showProducts": "{{count}} producten tonen",
+    "loading": "Chocolade smelt...",
+    "emptyTitle": "Geen chocolade gevonden",
+    "emptyText": "Maak de filters ruimer."
+  },
+  "chocolatiers": {
+    "badge": "Ontmoet de makers",
+    "titlePrefix": "Europese ambachtslieden,",
+    "titleAccent": "een continent",
+    "subtitle": "Van Brussel tot Helsinki: ontmoet kleine chocolatiers die de toekomst van Europese ambachtelijke chocolade vormgeven.",
+    "searchPlaceholder": "Zoek op naam, stad, land of tag...",
+    "filterByCountry": "Filter op land:",
+    "all": "Alle",
+    "viewProfile": "Bekijk profiel",
+    "emptyTitle": "Geen chocolatiers gevonden",
+    "emptyText": "Pas je zoekopdracht of landfilter aan.",
+    "clearFilters": "Filters wissen"
+  },
+  "chocolatierProfile": {
+    "backToAll": "Terug naar alle chocolatiers",
+    "europeanChocolatier": "Europese chocolatier",
+    "ourStory": "Ons verhaal",
+    "storyBehind": "Het verhaal achter {{maker}}",
+    "insideWorkshop": "In de werkplaats",
+    "gallerySubtitle": "Portret, werkplaats, winkel en productdetails.",
+    "shopMaker": "Shop de maker",
+    "handFinished": "Handafgewerkte chocolade",
+    "filterProducts": "Producten filteren",
+    "emptyProducts": "Geen producten passen bij dit filter.",
+    "whatWeStandFor": "Waar we voor staan",
+    "ourValues": "Onze waarden",
+    "browseRange": "Bekijk het volledige assortiment van {{maker}}",
+    "ctaSubtitle": "Truffels, pralines, bonbons en single-origin repen - verzonden vanuit {{city}} door Europa.",
+    "browseAllProducts": "Alle producten bekijken",
+    "aboutTheChocolatier": "Over de chocolatier",
+    "madeIn": "Gemaakt in",
+    "founded": "Opgericht",
+    "specialties": "Specialiteiten",
+    "signatureProducts": "Signatuurproducten",
+    "shipping": "Verzending",
+    "viewProducts": "Producten bekijken",
+    "contactMaker": "Maker contacteren",
+    "visitShop": "Shop bezoeken",
+    "featuredProducts": "Uitgelichte producten",
+    "awards": "Prijzen",
+    "story": "Verhaal",
+    "ingredients": "Ingrediënten",
+    "sustainability": "Duurzaamheid",
+    "deliveryEstimate": "Geschatte levering 2-5 dagen",
+    "shipsFrom": "Verzonden vanuit {{city}}",
+    "heatProtected": "Hittebeschermd",
+    "giftReady": "Cadeauklaar",
+    "ecoPackaging": "Eco verpakking",
+    "smallBatchAtelier": "Kleine-batch atelier"
+  },
+  "cart": {
+    "title": "Your Basket",
+    "pageTitle": "Je winkelwagen",
+    "close": "Close cart",
+    "empty": "Je winkelwagen is leeg.",
+    "browseProducts": "Producten bekijken",
+    "continueShopping": "Continue Shopping",
+    "decrease": "Aantal verlagen",
+    "increase": "Aantal verhogen",
+    "remove": "Artikel verwijderen",
+    "subtotal": "Subtotaal",
+    "total": "Totaal",
+    "orderSummary": "Besteloverzicht",
+    "shippingNote": "Shipping and taxes calculated at checkout.",
+    "checkout": "Checkout",
+    "proceedToCheckout": "Naar afrekenen"
+  },
+  "productCard": {
+    "addToCart": "In winkelwagen",
+    "outOfStock": "Uitverkocht",
+    "inStock": "op voorraad",
+    "lowStock": "Weinig voorraad",
+    "placeholderChocolate": "Chocolate",
+    "noImage": "Geen afbeelding",
+    "cacaoPercent": "{{percent}}% cacao",
+    "viewProductAria": "View {{product}}",
+    "viewMakerProfileAria": "View {{maker}} chocolatier profile"
+  },
+  "productDetail": {
+    "idRequired": "Product ID is required",
+    "loadFailed": "Failed to load product",
+    "notFound": "Product not found",
+    "backToCatalog": "Back to Catalog",
+    "reviews": "{{count}} reviews",
+    "viewMakerProfile": "View maker profile",
+    "quantity": "Quantity",
+    "defaultShipping": "Ships from the maker in protective packaging.",
+    "smallBatchFormat": "Small batch format",
+    "secureCheckout": "Secure checkout and buyer support",
+    "productStory": "Product Story",
+    "details": "Details",
+    "cacao": "Cacao",
+    "weight": "Weight",
+    "origin": "Origin",
+    "variesByPiece": "Varies by piece",
+    "seePackage": "See package",
+    "europeanAtelier": "European atelier",
+    "ingredients": "Ingredients",
+    "ingredientsFallback": "Ingredient details available from the maker.",
+    "allergens": "Allergens",
+    "allergensFallback": "May contain milk, nuts, and soy.",
+    "reviewsTitle": "Reviews",
+    "reviewsEmpty": "Customer reviews will appear here once verified purchases are collected.",
+    "new": "New",
+    "moreFrom": "More from {{maker}}",
+    "similarProducts": "Similar products"
+  },
+  "notifications": {
+    "addedToCart": "{{product}} added to cart!",
+    "addedQuantityToCart": "{{quantity}} x {{product}} added to cart"
+  },
+  "search": {
+    "close": "Zoeken sluiten",
+    "placeholder": "Zoek truffels, repen, cadeaus...",
+    "trendingNow": "Trending",
+    "loading": "Zoeken...",
+    "noResults": "Geen resultaten voor \"{{query}}\".",
+    "viewAllProducts": "Alle producten bekijken"
+  },
+  "footer": {
+    "newsletterTitle": "Blijf op de hoogte!",
+    "newsletterDescription": "Get the latest drops, exclusive deals, and sweet surprises.",
+    "emailPlaceholder": "your.email@cool.com",
+    "newsletterButton": "Ga ervoor!",
+    "shop": "Shop",
+    "allChocolates": "Alle chocolade",
+    "byCountry": "Per land",
+    "byType": "Per type",
+    "giftSets": "Cadeausets",
+    "support": "Support",
+    "faqs": "FAQs",
+    "shippingInfo": "Shipping Info",
+    "returns": "Returns",
+    "contactUs": "Contact Us",
+    "company": "Bedrijf",
+    "aboutUs": "About Us",
+    "ourStory": "Our Story",
+    "sustainability": "Sustainability",
+    "careers": "Careers",
+    "legal": "Juridisch",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "brandSlogan": "De zoetste plek op internet!",
+    "copyright": "Gemaakt voor alle chocoladeliefhebbers."
+  },
+  "corporate": {
+    "badge": "Relatiegeschenken, verfijnd",
+    "heroTitle": "Maak een blijvende",
+    "heroAccent": "indruk",
+    "heroSubtitle": "Premium chocolate gifts tailored for your clients, employees, and events. Custom branding, volume pricing, and white-glove concierge service.",
+    "startQuote": "Offerte starten",
+    "downloadCatalog": "Catalogus downloaden",
+    "customBrandingTitle": "Eigen branding",
+    "customBrandingText": "Your logo, your colors. Fully customizable packaging, sleeves, ribbons, and gift cards keep your brand front and center.",
+    "premiumQualityTitle": "Premiumkwaliteit",
+    "premiumQualityText": "Gifts that reflect your standards, sourced from exceptional artisans for a memorable unboxing experience.",
+    "conciergeTitle": "Conciergeservice",
+    "conciergeText": "Dedicated account managers handle address collection, timing, and shipments so your team gets the credit.",
+    "processTitle": "Naadloos cadeauproces",
+    "processSubtitle": "From selection to delivery in three easy steps.",
+    "stepSelectTitle": "Kies je cadeau",
+    "stepSelectText": "Choose from curated collections or build a custom assortment.",
+    "stepCustomizeTitle": "Personaliseer & brand",
+    "stepCustomizeText": "Add your logo, personal message, and packaging finish.",
+    "stepDeliveryTitle": "Wij regelen levering",
+    "stepDeliveryText": "From one office to 1,000 homes, we help every gift arrive well.",
+    "occasionBadge": "Voor elke gelegenheid",
+    "businessTitle": "Gecureerd voor bedrijven",
+    "businessText": "Whether you need conference boxes or luxury board gifts, our categories are designed for corporate needs.",
+    "clientAppreciation": "Client Appreciation & Retention",
+    "employeeOnboarding": "Employee Onboarding & Milestones",
+    "virtualEvents": "Virtual Event Tasting Kits",
+    "holidayGifting": "Holiday Gifting Campaigns",
+    "viewFullCatalog": "Volledige catalogus",
+    "executiveAlt": "Luxury chocolate gift box",
+    "bestSeller": "Bestseller",
+    "executiveSuite": "The Executive Suite",
+    "tastingAlt": "Premium chocolate tasting set",
+    "eventFavorite": "Eventfavoriet",
+    "virtualTastingKit": "Virtual Tasting Kit",
+    "needHelp": "Hulp nodig?",
+    "needHelpText": "Our gifting specialists are ready to help you curate the perfect experience for your budget and timeline.",
+    "emailPrompt": "Enter your work email...",
+    "getConnected": "Neem contact op",
+    "volumeDiscount": "Volume discounts available for orders over 50 units."
+  },
+  "labels": {
+    "filters": {
+      "all": "Alle",
+      "dark": "Puur",
+      "milk": "Melk",
+      "white": "Wit",
+      "vegan": "Vegan",
+      "nut_free": "Notenvrij",
+      "single_origin": "Single-origin",
+      "seasonal": "Seizoen",
+      "pralines": "Pralines",
+      "truffles": "Truffles",
+      "bonbons": "Bonbons",
+      "gift_boxes": "Gift Boxes",
+      "hazelnut": "Hazelnut",
+      "caramel": "Caramel",
+      "ganache": "Ganache",
+      "fruit": "Fruit",
+      "floral": "Floral",
+      "cocoa_nibs": "Cocoa Nibs",
+      "organic": "Biologisch",
+      "dairy_free": "Dairy-free",
+      "plastic_free": "Plastic-free",
+      "gift_box": "Cadeaudoos",
+      "celebration": "Celebration",
+      "corporate": "Corporate",
+      "tasting": "Tasting",
+      "self_care": "Self Care",
+      "romantic": "Romantic",
+      "award_winning": "Award Winning",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Handgemaakt",
+      "small_batch": "Small Batch",
+      "sustainable": "Duurzaam",
+      "limited_edition": "Limited Edition",
+      "dark_chocolate": "Pure chocolade",
+      "hazelnuts": "Hazelnoten"
+    },
+    "badges": {
+      "organic": "Biologisch",
+      "vegan": "Vegan",
+      "gift_box": "Cadeaudoos",
+      "award_winning": "Bekroond",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Handgemaakt",
+      "small_batch": "Kleine oplage",
+      "sustainable": "Duurzaam",
+      "limited_edition": "Gelimiteerde editie",
+      "plastic_free": "Plasticvrij",
+      "family_recipe": "Familierecept"
+    },
+    "categories": {
+      "dark_chocolate": "Pure chocolade",
+      "milk_chocolate": "Melkchocolade",
+      "white_chocolate": "Witte chocolade",
+      "truffles": "Truffels",
+      "pralines": "Pralines",
+      "bonbons": "Bonbons",
+      "vegan": "Vegan",
+      "gifts": "Cadeaus",
+      "gift_boxes": "Cadeaudozen",
+      "bars": "Repen",
+      "collections": "Collecties",
+      "belgian_pralines": "Belgische pralines",
+      "artisan_truffles": "Ambachtelijke truffels",
+      "vegan_chocolate": "Vegan chocolade",
+      "organic_chocolate": "Biologische chocolade"
+    },
+    "countries": {
+      "belgium": "België",
+      "france": "Frankrijk",
+      "italy": "Italië",
+      "germany": "Duitsland",
+      "switzerland": "Zwitserland",
+      "netherlands": "Nederland",
+      "denmark": "Denemarken",
+      "norway": "Noorwegen",
+      "sweden": "Zweden",
+      "finland": "Finland",
+      "united_kingdom": "Verenigd Koninkrijk",
+      "spain": "Spanje",
+      "austria": "Oostenrijk",
+      "england": "Engeland"
+    },
+    "searchTerms": {
+      "dark_chocolate": "Pure chocolade",
+      "vegan": "Vegan",
+      "gift_box": "Cadeaudoos",
+      "hazelnuts": "Hazelnoten",
+      "truffles": "Truffels"
+    },
+    "chocolatierTags": {
+      "pralines": "Pralines",
+      "ganache": "Ganache",
+      "luxury": "Luxe",
+      "traditional": "Traditioneel",
+      "milk": "Melk",
+      "dark": "Puur",
+      "single_origin": "Single origin",
+      "vegan": "Vegan",
+      "nut_free": "Notenvrij",
+      "seasonal": "Seizoensgebonden",
+      "milk_chocolate": "Melkchocolade",
+      "family_business": "Familiebedrijf",
+      "creamy": "Romig",
+      "alpine": "Alpien",
+      "artisan": "Ambachtelijk",
+      "elegant": "Elegant",
+      "dark_chocolate": "Pure chocolade",
+      "orange_zest": "Sinaasappelschil",
+      "olive_oil_chocolate": "Olijfoliechocolade",
+      "artisanal": "Artisanaal",
+      "italian": "Italiaans",
+      "truffles": "Truffels",
+      "french": "Frans",
+      "bean_to_bar": "Bean-to-bar",
+      "chili_chocolate": "Chilichocolade",
+      "mediterranean": "Mediterraan",
+      "bold": "Gedurfd",
+      "white": "Wit",
+      "smooth": "Zacht",
+      "innovative": "Innovatief",
+      "caramel": "Karamel",
+      "dutch": "Nederlands",
+      "ethical": "Ethisch",
+      "minimalist": "Minimalistisch",
+      "nordic": "Noords",
+      "sea_salt": "Zeezout",
+      "natural": "Natuurlijk",
+      "handcrafted": "Handgemaakt",
+      "experimental": "Experimenteel",
+      "design": "Design",
+      "modern": "Modern",
+      "pure": "Puur",
+      "clean": "Schoon",
+      "minimal": "Minimaal",
+      "classic": "Klassiek",
+      "british": "Brits"
+    },
+    "valueTitles": {
+      "sustainability": "Duurzaamheid",
+      "ethical_sourcing": "Ethische inkoop",
+      "family_business": "Familiebedrijf",
+      "craftsmanship": "Vakmanschap"
+    },
+    "valueDescriptions": {
+      "recycled_and_compostable_packaging_across_every_gift_box": "Gerecyclede en composteerbare verpakking voor elke geschenkdoos.",
+      "direct_trade_cacao_paid_above_fair_trade_premiums": "Direct-trade cacao betaald boven Fair Trade-premies.",
+      "independent_family_owned_and_operated_for_generations": "Onafhankelijk, familie-eigendom en al generaties gerund.",
+      "every_piece_hand_finished_in_small_batches_by_trained_artisans": "Elk stuk wordt in kleine batches met de hand afgewerkt door getrainde ambachtslieden."
+    }
+  },
+  "checkout": {
+    "paymentMethod": "Betaalmethode",
+    "cardName": "Creditcard/betaalkaart",
+    "cardDescription": "Visa, Mastercard, Amex",
+    "klarnaDescription": "Betaal later of in termijnen",
+    "paypalDescription": "Betaal met je PayPal-account",
+    "savedAddresses": "Opgeslagen adressen",
+    "newAddress": "+ Nieuw adres",
+    "defaultAddress": "Standaard",
+    "useSavedAddress": "Opgeslagen adres gebruiken",
+    "saveForFuture": "Dit adres bewaren voor toekomstige bestellingen",
+    "saveAddress": "Adres opslaan"
+  },
+  "chocolatierData": {
+    "maison-deluxe": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "1923"
+    },
+    "alpenschoggi": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "1962"
+    },
+    "edelkakao": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Viennese atelier"
+    },
+    "cioccolato-fiorentino": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Florentine laboratorio"
+    },
+    "atelier-du-cacao": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Lyon atelier"
+    },
+    "casa-del-cacao": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Barcelona workshop"
+    },
+    "dutchcraft": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Amsterdam studio"
+    },
+    "nordisk-kakao": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Gothenburg atelier"
+    },
+    "fjordcocoa": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Bergen workshop"
+    },
+    "copenhagen-cacao-lab": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Copenhagen lab"
+    },
+    "arctic-bean": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Helsinki studio"
+    },
+    "london-cocoa-house": {
+      "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+      "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+      "founded": "Mayfair shop"
+    }
+  },
+  "chocolatierProducts": {
+    "maison-deluxe-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "maison-deluxe-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "maison-deluxe-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "maison-deluxe-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "alpenschoggi-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "alpenschoggi-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "alpenschoggi-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "alpenschoggi-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "edelkakao-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "edelkakao-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "edelkakao-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "edelkakao-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "cioccolato-fiorentino-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "cioccolato-fiorentino-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "cioccolato-fiorentino-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "cioccolato-fiorentino-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "atelier-du-cacao-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "atelier-du-cacao-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "atelier-du-cacao-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "atelier-du-cacao-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "casa-del-cacao-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "casa-del-cacao-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "casa-del-cacao-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "casa-del-cacao-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "dutchcraft-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "dutchcraft-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "dutchcraft-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "dutchcraft-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "nordisk-kakao-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "nordisk-kakao-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "nordisk-kakao-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "nordisk-kakao-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "fjordcocoa-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "fjordcocoa-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "fjordcocoa-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "fjordcocoa-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "copenhagen-cacao-lab-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "copenhagen-cacao-lab-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "copenhagen-cacao-lab-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "copenhagen-cacao-lab-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "arctic-bean-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "arctic-bean-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "arctic-bean-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "arctic-bean-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "london-cocoa-house-1": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "london-cocoa-house-2": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "london-cocoa-house-3": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    },
+    "london-cocoa-house-4": {
+      "description": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+    }
+  },
+  "profileData": {
+    "tagline": "Chocolade in kleine batches met regionaal karakter en zorgvuldige techniek.",
+    "story": "Deze chocolatier werkt in kleine batches met zorgvuldig geselecteerde cacao, verfijnde recepten en met de hand afgewerkte details. Elke collectie weerspiegelt de werkplaats, de ambachtstraditie en een moderne kijk op geven en proeven.",
+    "productDescription": "Een met de hand afgewerkte chocoladeselectie van deze maker, bereid in kleine batches met gebalanceerde textuur en smaak."
+  },
+  "adminShell": {
+    "badge": "ADMINPANEEL",
+    "panel": "Adminpaneel",
+    "menu": "Menu",
+    "closeNavigation": "Navigatie sluiten",
+    "toggleNavigation": "Adminnavigatie wisselen",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Producten",
+      "sellerApprovals": "Verkopersgoedkeuringen",
+      "categories": "Categorieën",
+      "orders": "Bestellingen",
+      "activityLog": "Activiteitenlog",
+      "overview": "Overzicht"
+    }
+  },
+  "sellerShell": {
+    "badge": "VERKOPERSDASHBOARD",
+    "portal": "Verkopersportaal",
+    "menu": "Menu",
+    "closeNavigation": "Navigatie sluiten",
+    "toggleNavigation": "Verkopersnavigatie wisselen",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Producten",
+      "orders": "Bestellingen",
+      "verification": "Verificatie",
+      "overview": "Overzicht"
+    }
+  },
+  "whyDifferent": {
+    "title": "Waarom wij anders zijn!",
+    "tagline": "Niet zomaar een chocoladewinkel - wij maken het leuker!",
+    "features": {
+      "passport": {
+        "title": "Chocoladepaspoort",
+        "description": "Verzamel stempels uit verschillende landen en ontgrendel exclusieve beloningen.",
+        "button": "Begin met verzamelen"
+      },
+      "surprise": {
+        "title": "Verras me",
+        "description": "Zin in avontuur? Wij kiezen een ambachtelijke box op basis van je smaak.",
+        "button": "Verras me"
+      },
+      "corporate": {
+        "title": "Zakelijk portaal",
+        "description": "Eenvoudige bulkbestellingen met merkverpakking voor klanten en medewerkers.",
+        "button": "Ontdek zakelijk"
+      },
+      "sustainability": {
+        "title": "Duurzaamheidsbelofte",
+        "description": "We werken alleen met chocolatiers die ethisch inkopen en milieuvriendelijk werken.",
+        "button": "Meer weten"
+      },
+      "discover": {
+        "title": "Ontdekken",
+        "description": "Ontdek nieuwe smaken en chocolatiers via ons samengestelde programma.",
+        "button": "Start ontdekken"
+      }
+    }
+  },
+  "shippingPackaging": {
+    "productTitle": "Verzending & verpakking",
+    "profileTitle": "Standaarden voor verzending & verpakking",
+    "standardsBadge": "Verzending door de maker",
+    "productManagedByMaker": "Verpakt en verzonden door de chocolatier met beschermende standaarden voor chocolade.",
+    "profileManagedByMaker": "Elke chocolatier beheert de verzending zelf. Deze standaarden beschrijven voorbereiding en bescherming voor binnenlandse en Europese levering.",
+    "shipsFrom": "Verzonden vanuit",
+    "deliveryEstimate": "Levertijd",
+    "shippingEstimate": "Verzendinschatting",
+    "giftReady": "Cadeauklaar",
+    "heatProtected": "Hittebeschermd",
+    "ecoPackaging": "Eco-verpakking",
+    "heatProtectionAvailable": "Hittebescherming beschikbaar",
+    "giftPackagingAvailable": "Cadeauverpakking beschikbaar",
+    "summerShippingAvailable": "Zomerverzending beschikbaar",
+    "ecoPackagingAvailable": "Eco-verpakking beschikbaar",
+    "domesticEuShipping": "Binnenlandse / EU-verzending",
+    "domesticAndEu": "Binnenlandse en EU-verzending",
+    "domesticOnly": "Binnenlandse verzending",
+    "deliveryBusinessDays": "{{range}} werkdagen",
+    "deliveryEstimateFallback": "Bevestigd door de maker",
+    "calculatedAtCheckout": "Berekend door de maker bij het afrekenen",
+    "available": "Beschikbaar",
+    "onRequest": "Op aanvraag"
+  },
+  "productData": {
+    "demo-origin-noir-72": {
+      "description": "Een zorgvuldig afgewerkte chocoladeselectie van deze maker, in balans qua textuur, smaak en cadeauwaarde.",
+      "story": "In kleine batches bereid door de maker, met Europees vakmanschap, zorgvuldige herkomst en een verfijnde proefervaring."
+    },
+    "demo-maison-praline-box": {
+      "description": "Een zorgvuldig afgewerkte chocoladeselectie van deze maker, in balans qua textuur, smaak en cadeauwaarde.",
+      "story": "In kleine batches bereid door de maker, met Europees vakmanschap, zorgvuldige herkomst en een verfijnde proefervaring."
+    },
+    "demo-lavender-truffle-box": {
+      "description": "Een zorgvuldig afgewerkte chocoladeselectie van deze maker, in balans qua textuur, smaak en cadeauwaarde.",
+      "story": "In kleine batches bereid door de maker, met Europees vakmanschap, zorgvuldige herkomst en een verfijnde proefervaring."
+    },
+    "demo-alpine-milk-pralines": {
+      "description": "Een zorgvuldig afgewerkte chocoladeselectie van deze maker, in balans qua textuur, smaak en cadeauwaarde.",
+      "story": "In kleine batches bereid door de maker, met Europees vakmanschap, zorgvuldige herkomst en een verfijnde proefervaring."
+    },
+    "demo-vegan-cacao-selection": {
+      "description": "Een zorgvuldig afgewerkte chocoladeselectie van deze maker, in balans qua textuur, smaak en cadeauwaarde.",
+      "story": "In kleine batches bereid door de maker, met Europees vakmanschap, zorgvuldige herkomst en een verfijnde proefervaring."
+    },
+    "demo-celebration-bonbons": {
+      "description": "Een zorgvuldig afgewerkte chocoladeselectie van deze maker, in balans qua textuur, smaak en cadeauwaarde.",
+      "story": "In kleine batches bereid door de maker, met Europees vakmanschap, zorgvuldige herkomst en een verfijnde proefervaring."
+    }
+  }
 }

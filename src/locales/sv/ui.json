@@ -1,9 +1,785 @@
 {
-  "language": { "selectorLabel": "Välj språk", "current": "Aktuellt språk" },
-  "nav": { "shop": "Shop", "chocolatiers": "Chokladmakare", "collections": "Kollektioner", "corporateGifts": "Företagsgåvor", "sustainability": "Hållbarhet", "about": "Om oss", "loginRegister": "Logga in / Registrera", "logout": "Logga ut", "search": "Sök", "profile": "Användarprofil", "cart": "Varukorg" },
-  "home": { "badge": "Prisbelönt kollektion", "heroTitle": "Konsten att skapa", "heroAccent": "fin choklad", "heroSubtitle": "Upptäck en kurerad marknadsplats med världens främsta hantverkschoklad. Etiskt inköpt, mästerligt skapad.", "shopCollection": "Shoppa kollektionen", "ourStory": "Vår historia", "exploreTitle": "Utforska efter smak", "exploreSubtitle": "Börja med älskade chokladupplevelser, från belgiska praliner till single-origin-kakor.", "viewMore": "Visa mer", "showLess": "Visa mindre", "freshTitle": "Färskt från köket", "shopNewArrivals": "Shoppa nyheter", "meetMakers": "Möt skaparna", "makersTitle": "Europeiska chokladmakare bakom varje ask", "makersSubtitle": "Ett utvalt urval från samma ateljéprofiler som finns i hela katalogen.", "featuredMaker": "Utvald skapare", "viewProfile": "Visa profil", "browseAllMakers": "Se alla chokladmakare" },
-  "shop": { "eyebrow": "Europeisk hantverksmarknad", "title": "Shoppa fin choklad efter skapare, ursprung och tillfälle.", "subtitle": "Upptäck småskaliga chokladkakor, tryfflar, praliner och presentaskar från oberoende europeiska chokladmakare.", "products": "produkter", "collections": "kollektioner", "curatedMakers": "Kurerade skapare", "liveCatalog": "Livekatalog", "searchPlaceholder": "Sök tryfflar, praliner, veganska kakor...", "filters": "Filter", "popular": "Populärt", "newest": "Nyast", "priceLowHigh": "Pris lågt-högt", "priceHighLow": "Pris högt-lågt", "results": "resultat", "result": "resultat", "clearAll": "Rensa allt", "curateBox": "Kurera din ask", "curateHint": "Börja brett och förfina efter hantverk, smak och skapare.", "origin": "Ursprung", "originSummary": "Land och chokladmakare", "country": "Land", "allCountries": "Alla länder", "maker": "Chokladmakare", "allMakers": "Alla skapare", "taste": "Smak", "tasteSummary": "Kategori, typ, smak", "category": "Kategori", "allCategories": "Alla kategorier", "chocolateType": "Chokladtyp", "flavorFillings": "Smaker & fyllningar", "minimumCacao": "Minsta kakao", "anyPercent": "Valfri %", "lifestyle": "Livsstil", "dietaryPreferences": "Kostpreferenser", "occasion": "Tillfälle", "occasionSummary": "Gåvor och stunder", "priceRating": "Pris & betyg", "priceRatingSummary": "Budget och förtroende", "minimumRating": "Minsta betyg", "anyRating": "Valfritt betyg", "ratingAbove": "{{rating}} och över", "advancedCraft": "Avancerat hantverk", "advancedSummary": "Utmärkelser, ursprung, sällsynthet", "resetFilters": "Återställ filter", "showProducts": "Visa {{count}} produkter", "emptyTitle": "Ingen choklad hittades", "emptyText": "Prova bredare land-, pris- eller kakaofilter." },
-  "chocolatiers": { "badge": "Möt skaparna", "titlePrefix": "Europas hantverkare,", "titleAccent": "en kontinent", "subtitle": "Från Bryssel till Helsingfors, möt chokladmakarna som formar Europas hantverkschoklad.", "searchPlaceholder": "Sök efter namn, stad, land eller tagg...", "filterByCountry": "Filtrera efter land:", "all": "Alla", "viewProfile": "Visa profil", "emptyTitle": "Inga chokladmakare hittades", "emptyText": "Prova att ändra sökning eller landfilter.", "clearFilters": "Rensa filter" },
-  "cart": { "title": "Din varukorg", "close": "Stäng varukorg", "empty": "Din varukorg är tom.", "continueShopping": "Fortsätt handla", "decrease": "Minska antal", "increase": "Öka antal", "remove": "Ta bort vara", "subtotal": "Delsumma", "shippingNote": "Frakt och skatter beräknas i kassan.", "checkout": "Till kassan" },
-  "productCard": { "addToCart": "Lägg i varukorg", "outOfStock": "Slutsåld", "inStock": "i lager", "lowStock": "Få kvar" }
+  "language": {
+    "selectorLabel": "Välj språk",
+    "current": "Aktuellt språk"
+  },
+  "nav": {
+    "homeAria": "Chocolata startsida",
+    "toggleMenu": "Växla meny",
+    "shop": "Shop",
+    "chocolatiers": "Chokladmakare",
+    "collections": "Kollektioner",
+    "corporateGifts": "Företagsgåvor",
+    "sustainability": "Hållbarhet",
+    "about": "Om oss",
+    "loginRegister": "Logga in / Registrera",
+    "logout": "Logga ut",
+    "search": "Sök",
+    "profile": "Användarprofil",
+    "cart": "Varukorg"
+  },
+  "home": {
+    "badge": "Prisbelönt kollektion",
+    "heroTitle": "Konsten att skapa",
+    "heroAccent": "fin choklad",
+    "heroSubtitle": "Upptäck en kurerad marknadsplats med världens främsta hantverkschoklad. Etiskt inköpt, mästerligt skapad.",
+    "shopCollection": "Shoppa kollektionen",
+    "ourStory": "Vår historia",
+    "exploreTitle": "Utforska efter smak",
+    "exploreSubtitle": "Börja med älskade chokladupplevelser, från belgiska praliner till single-origin-kakor.",
+    "viewMore": "Visa mer",
+    "showLess": "Visa mindre",
+    "freshTitle": "Färskt från köket",
+    "shopNewArrivals": "Shoppa nyheter",
+    "meetMakers": "Möt skaparna",
+    "makersTitle": "Europeiska chokladmakare bakom varje ask",
+    "makersSubtitle": "Ett utvalt urval från samma ateljéprofiler som finns i hela katalogen.",
+    "featuredMaker": "Utvald skapare",
+    "viewProfile": "Visa profil",
+    "browseAllMakers": "Se alla chokladmakare",
+    "curatorsPick": "Kuratorns val",
+    "spotlightTitle": "The Velvet",
+    "spotlightTitleSecond": "Collection",
+    "spotlightText": "Ett exklusivt urval av våra mörkaste single-origin-kakor tillsammans med handrullade tryfflar. Den perfekta gåvan för en sann chokladälskare.",
+    "shopTheCollection": "Shoppa kollektionen",
+    "viewDetails": "Visa detaljer",
+    "newsletterTitle": "Gå med i innercirkeln",
+    "newsletterSubtitle": "Få tidig tillgång till limiterade släpp, intervjuer med chokladmakare och söta erbjudanden.",
+    "newsletterPlaceholder": "Din e-postadress",
+    "newsletterSubmit": "Registrera dig",
+    "spotlightImageAlt": "Lyxig presentask",
+    "viewChocolatierProfileAria": "Visa chokladmakaren {{maker}}s profil"
+  },
+  "shop": {
+    "eyebrow": "Europeisk hantverksmarknad",
+    "title": "Shoppa fin choklad efter skapare, ursprung och tillfälle.",
+    "subtitle": "Upptäck småskaliga chokladkakor, tryfflar, praliner och presentaskar från oberoende europeiska chokladmakare.",
+    "products": "produkter",
+    "collections": "kollektioner",
+    "curatedMakers": "Utvalda skapare",
+    "liveCatalog": "Livekatalog",
+    "searchPlaceholder": "Sök tryfflar, praliner, veganska kakor...",
+    "filters": "Filter",
+    "closeFilters": "Stäng filter",
+    "popular": "Populärt",
+    "newest": "Nyast",
+    "priceLowHigh": "Pris lågt-högt",
+    "priceHighLow": "Pris högt-lågt",
+    "results": "resultat",
+    "result": "resultat",
+    "clearAll": "Rensa allt",
+    "curateBox": "Kurera din ask",
+    "curateHint": "Börja brett och förfina sedan efter hantverk, smak och skapare.",
+    "origin": "Ursprung",
+    "originSummary": "Land och chokladmakare",
+    "country": "Land",
+    "allCountries": "Alla länder",
+    "maker": "Chokladmakare / skapare",
+    "allMakers": "Alla skapare",
+    "taste": "Smak",
+    "tasteSummary": "Kategori, typ, smak",
+    "category": "Kategori",
+    "allCategories": "Alla kategorier",
+    "chocolateType": "Chokladtyp",
+    "flavorFillings": "Smak och fyllningar",
+    "minimumCacao": "Minimum cacao",
+    "anyPercent": "Any %",
+    "lifestyle": "Livsstil",
+    "dietaryPreferences": "Dietary preferences",
+    "occasion": "Tillfälle",
+    "occasionSummary": "Gåvor och stunder",
+    "priceRating": "Pris och betyg",
+    "priceRatingSummary": "Budget och förtroende",
+    "minimumRating": "Minsta betyg",
+    "anyRating": "Alla betyg",
+    "ratingAbove": "{{rating}} and above",
+    "advancedCraft": "Avancerat hantverk",
+    "advancedSummary": "Utmärkelser, ursprung, sällsynthet",
+    "minSek": "Min SEK",
+    "maxSek": "Max SEK",
+    "resetFilters": "Återställ filter",
+    "showProducts": "Visa {{count}} produkter",
+    "loading": "Smälter choklad...",
+    "emptyTitle": "Ingen choklad hittades",
+    "emptyText": "Prova bredare land-, pris- eller kakaofilter."
+  },
+  "chocolatiers": {
+    "badge": "Möt skaparna",
+    "titlePrefix": "Europas hantverkare,",
+    "titleAccent": "en kontinent",
+    "subtitle": "Från Bryssel till Helsingfors, möt småskaliga chokladmakare som formar framtiden för europeisk hantverkschoklad.",
+    "searchPlaceholder": "Sök efter namn, stad, land eller tagg...",
+    "filterByCountry": "Filtrera efter land:",
+    "all": "Alla",
+    "viewProfile": "Visa profil",
+    "emptyTitle": "Inga chokladmakare hittades",
+    "emptyText": "Prova att ändra sökningen eller landfiltret.",
+    "clearFilters": "Rensa filter"
+  },
+  "chocolatierProfile": {
+    "backToAll": "Tillbaka till alla chokladmakare",
+    "europeanChocolatier": "Europeisk chokladmakare",
+    "ourStory": "Vår historia",
+    "storyBehind": "Historien bakom {{maker}}",
+    "insideWorkshop": "Inne i verkstaden",
+    "gallerySubtitle": "Porträtt, verkstad, butik och produktnärbilder.",
+    "shopMaker": "Shoppa skaparen",
+    "handFinished": "Handgjord choklad",
+    "filterProducts": "Filtrera produkter",
+    "emptyProducts": "Inga produkter matchar filtret än - prova ett annat.",
+    "whatWeStandFor": "Det vi står för",
+    "ourValues": "Våra värden",
+    "browseRange": "Utforska hela sortimentet från {{maker}}",
+    "ctaSubtitle": "Tryfflar, praliner, bonbons och single-origin-kakor - skickas från {{city}} över hela Europa.",
+    "browseAllProducts": "Bläddra bland alla produkter",
+    "aboutTheChocolatier": "Om chokladmakaren",
+    "madeIn": "Tillverkad i",
+    "founded": "Grundad",
+    "specialties": "Specialiteter",
+    "signatureProducts": "Signaturprodukter",
+    "shipping": "Frakt",
+    "viewProducts": "Visa produkter",
+    "contactMaker": "Kontakta skaparen",
+    "visitShop": "Besök butiken",
+    "featuredProducts": "Utvalda produkter",
+    "awards": "Utmärkelser",
+    "story": "Berättelse",
+    "ingredients": "Ingredienser",
+    "sustainability": "Hållbarhet",
+    "deliveryEstimate": "Beräknad leverans 2-5 dagar",
+    "shipsFrom": "Skickas från {{city}}",
+    "heatProtected": "Värmeskyddad",
+    "giftReady": "Redo som gåva",
+    "ecoPackaging": "Miljövänlig förpackning",
+    "smallBatchAtelier": "Småskalig ateljé"
+  },
+  "cart": {
+    "title": "Din korg",
+    "pageTitle": "Din varukorg",
+    "close": "Stäng varukorg",
+    "empty": "Din varukorg är tom.",
+    "browseProducts": "Bläddra bland produkter",
+    "continueShopping": "Fortsätt handla",
+    "decrease": "Minska antal",
+    "increase": "Öka antal",
+    "remove": "Ta bort vara",
+    "subtotal": "Delsumma",
+    "total": "Totalt",
+    "orderSummary": "Ordersammanfattning",
+    "shippingNote": "Frakt och skatt beräknas i kassan.",
+    "checkout": "Till kassan",
+    "proceedToCheckout": "Gå till kassan"
+  },
+  "productCard": {
+    "addToCart": "Lägg i varukorg",
+    "outOfStock": "Slutsåld",
+    "inStock": "i lager",
+    "lowStock": "Få kvar",
+    "placeholderChocolate": "Choklad",
+    "noImage": "Ingen bild",
+    "cacaoPercent": "{{percent}}% kakao",
+    "viewProductAria": "Visa {{product}}",
+    "viewMakerProfileAria": "Visa chokladmakaren {{maker}}"
+  },
+  "productDetail": {
+    "idRequired": "Produkt-ID krävs",
+    "loadFailed": "Kunde inte läsa in produkten",
+    "notFound": "Produkten hittades inte",
+    "backToCatalog": "Tillbaka till katalogen",
+    "reviews": "{{count}} recensioner",
+    "viewMakerProfile": "Visa skaparprofil",
+    "quantity": "Antal",
+    "defaultShipping": "Skickas från skaparen i skyddande förpackning.",
+    "smallBatchFormat": "Småskaligt format",
+    "secureCheckout": "Säker kassa och köparsupport",
+    "productStory": "Produktens berättelse",
+    "details": "Detaljer",
+    "cacao": "Kakao",
+    "weight": "Vikt",
+    "origin": "Ursprung",
+    "variesByPiece": "Varierar per bit",
+    "seePackage": "Se förpackning",
+    "europeanAtelier": "Europeisk ateljé",
+    "ingredients": "Ingredienser",
+    "ingredientsFallback": "Ingrediensinformation finns hos skaparen.",
+    "allergens": "Allergener",
+    "allergensFallback": "Kan innehålla mjölk, nötter och soja.",
+    "reviewsTitle": "Recensioner",
+    "reviewsEmpty": "Kundrecensioner visas här när verifierade köp har samlats in.",
+    "new": "Ny",
+    "moreFrom": "Mer från {{maker}}",
+    "similarProducts": "Liknande produkter"
+  },
+  "notifications": {
+    "addedToCart": "{{product}} lades i varukorgen!",
+    "addedQuantityToCart": "{{quantity}} x {{product}} lades i varukorgen"
+  },
+  "search": {
+    "close": "Stäng sök",
+    "placeholder": "Sök tryfflar, kakor, gåvor...",
+    "trendingNow": "Populärt nu",
+    "loading": "Söker...",
+    "noResults": "Inga resultat för \"{{query}}\".",
+    "viewAllProducts": "Visa alla produkter"
+  },
+  "footer": {
+    "newsletterTitle": "Håll dig uppdaterad!",
+    "newsletterDescription": "Få de senaste släppen, exklusiva erbjudanden och söta överraskningar.",
+    "emailPlaceholder": "din.epost@example.com",
+    "newsletterButton": "Kör!",
+    "shop": "Shop",
+    "allChocolates": "All choklad",
+    "byCountry": "Efter land",
+    "byType": "Efter typ",
+    "giftSets": "Presentaskar",
+    "support": "Support",
+    "faqs": "Vanliga frågor",
+    "shippingInfo": "Fraktinfo",
+    "returns": "Returer",
+    "contactUs": "Kontakta oss",
+    "company": "Företag",
+    "aboutUs": "Om oss",
+    "ourStory": "Vår historia",
+    "sustainability": "Hållbarhet",
+    "careers": "Karriär",
+    "legal": "Juridiskt",
+    "privacyPolicy": "Integritetspolicy",
+    "termsOfService": "Användarvillkor",
+    "cookiePolicy": "Cookiepolicy",
+    "brandSlogan": "Internets sötaste plats!",
+    "copyright": "Skapad för alla chokladälskare."
+  },
+  "corporate": {
+    "badge": "Företagsgåvor på högre nivå",
+    "heroTitle": "Gör ett bestående",
+    "heroAccent": "intryck",
+    "heroSubtitle": "Premiumchokladgåvor för kunder, medarbetare och event. Egen branding, volympriser och personlig service.",
+    "startQuote": "Starta offert",
+    "downloadCatalog": "Ladda ner katalog",
+    "customBrandingTitle": "Egen branding",
+    "customBrandingText": "Din logotyp, dina färger. Anpassade förpackningar, sleeves, band och presentkort håller ditt varumärke i centrum.",
+    "premiumQualityTitle": "Premiumkvalitet",
+    "premiumQualityText": "Gåvor som speglar din standard, från utvalda hantverkare för en minnesvärd uppackning.",
+    "conciergeTitle": "Conciergeservice",
+    "conciergeText": "Dedikerade kontaktpersoner hanterar adresser, tidsplanering och leveranser så att ditt team får äran.",
+    "processTitle": "Smidig gåvoprocess",
+    "processSubtitle": "Från val till leverans i tre enkla steg.",
+    "stepSelectTitle": "Välj din gåva",
+    "stepSelectText": "Välj från kurerade kollektioner eller bygg ett eget urval.",
+    "stepCustomizeTitle": "Anpassa & branda",
+    "stepCustomizeText": "Lägg till logotyp, personlig hälsning och förpackningsfinish.",
+    "stepDeliveryTitle": "Vi sköter leveransen",
+    "stepDeliveryText": "Från ett kontor till 1 000 hem hjälper vi varje gåva att komma fram.",
+    "occasionBadge": "För varje tillfälle",
+    "businessTitle": "Kurerat för företag",
+    "businessText": "Oavsett om du behöver konferensaskar eller exklusiva styrelsegåvor är våra kategorier byggda för företagsbehov.",
+    "clientAppreciation": "Kunduppskattning & lojalitet",
+    "employeeOnboarding": "Onboarding & milstolpar för medarbetare",
+    "virtualEvents": "Provningskit för virtuella event",
+    "holidayGifting": "Högtidskampanjer",
+    "viewFullCatalog": "Visa hela katalogen",
+    "executiveAlt": "Lyxig chokladpresentask",
+    "bestSeller": "Bästsäljare",
+    "executiveSuite": "The Executive Suite",
+    "tastingAlt": "Premiumset för chokladprovning",
+    "eventFavorite": "Eventfavorit",
+    "virtualTastingKit": "Virtual Tasting Kit",
+    "needHelp": "Behöver du hjälp att planera?",
+    "needHelpText": "Våra gåvospecialister hjälper dig skapa rätt upplevelse för budget och tidslinje.",
+    "emailPrompt": "Ange din jobbmejl...",
+    "getConnected": "Bli kontaktad",
+    "volumeDiscount": "Volymrabatter finns för beställningar över 50 enheter."
+  },
+  "labels": {
+    "filters": {
+      "all": "Alla",
+      "dark": "Mörk",
+      "milk": "Mjölk",
+      "white": "Vit",
+      "vegan": "Vegansk",
+      "nut_free": "Nötfri",
+      "single_origin": "Single-origin",
+      "seasonal": "Säsong",
+      "pralines": "Praliner",
+      "truffles": "Tryfflar",
+      "bonbons": "Bonbons",
+      "gift_boxes": "Presentaskar",
+      "hazelnut": "Hasselnöt",
+      "caramel": "Karamell",
+      "ganache": "Ganache",
+      "fruit": "Frukt",
+      "floral": "Blommig",
+      "cocoa_nibs": "Kakaonibs",
+      "organic": "Ekologisk",
+      "dairy_free": "Mjölkfri",
+      "plastic_free": "Plastfri",
+      "gift_box": "Presentask",
+      "celebration": "Firande",
+      "corporate": "Företag",
+      "tasting": "Provning",
+      "self_care": "Egenvård",
+      "romantic": "Romantisk",
+      "award_winning": "Prisbelönt",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Handgjord",
+      "small_batch": "Småskalig",
+      "sustainable": "Hållbar",
+      "limited_edition": "Begränsad upplaga",
+      "dark_chocolate": "Mörk choklad",
+      "hazelnuts": "Hasselnötter"
+    },
+    "badges": {
+      "organic": "Ekologisk",
+      "vegan": "Vegansk",
+      "gift_box": "Presentask",
+      "award_winning": "Prisbelönt",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Handgjord",
+      "small_batch": "Småskalig",
+      "sustainable": "Hållbar",
+      "limited_edition": "Begränsad upplaga",
+      "plastic_free": "Plastfri",
+      "family_recipe": "Familjerecept"
+    },
+    "categories": {
+      "dark_chocolate": "Mörk choklad",
+      "milk_chocolate": "Mjölkchoklad",
+      "white_chocolate": "Vit choklad",
+      "truffles": "Tryfflar",
+      "pralines": "Praliner",
+      "bonbons": "Bonbons",
+      "vegan": "Veganskt",
+      "gifts": "Gåvor",
+      "gift_boxes": "Presentaskar",
+      "bars": "Kakor",
+      "collections": "Kollektioner",
+      "belgian_pralines": "Belgiska praliner",
+      "artisan_truffles": "Hantverkstryfflar",
+      "bean_to_bar": "Bean-to-Bar",
+      "vegan_chocolate": "Vegansk choklad",
+      "organic_chocolate": "Ekologisk choklad"
+    },
+    "countries": {
+      "belgium": "Belgien",
+      "france": "Frankrike",
+      "italy": "Italien",
+      "germany": "Tyskland",
+      "switzerland": "Schweiz",
+      "netherlands": "Nederländerna",
+      "denmark": "Danmark",
+      "norway": "Norge",
+      "sweden": "Sverige",
+      "finland": "Finland",
+      "united_kingdom": "Storbritannien",
+      "spain": "Spanien",
+      "austria": "Österrike",
+      "england": "England"
+    },
+    "searchTerms": {
+      "dark_chocolate": "Mörk choklad",
+      "vegan": "Veganskt",
+      "gift_box": "Presentask",
+      "hazelnuts": "Hasselnötter",
+      "truffles": "Tryfflar"
+    },
+    "chocolatierTags": {
+      "pralines": "Praliner",
+      "ganache": "Ganache",
+      "luxury": "Lyx",
+      "traditional": "Traditionell",
+      "milk": "Mjölk",
+      "dark": "Mörk",
+      "single_origin": "Single-origin",
+      "vegan": "Vegansk",
+      "nut_free": "Nötfri",
+      "seasonal": "Säsong",
+      "milk_chocolate": "Mjölkchoklad",
+      "family_business": "Familjeföretag",
+      "creamy": "Krämig",
+      "alpine": "Alpin",
+      "artisan": "Hantverk",
+      "elegant": "Elegant",
+      "dark_chocolate": "Mörk choklad",
+      "orange_zest": "Apelsinzest",
+      "olive_oil_chocolate": "Olivoljechoklad",
+      "artisanal": "Hantverksmässig",
+      "italian": "Italiensk",
+      "truffles": "Tryfflar",
+      "french": "Fransk",
+      "bean_to_bar": "Bean-to-bar",
+      "chili_chocolate": "Chilichoklad",
+      "mediterranean": "Medelhav",
+      "bold": "Kraftfull",
+      "white": "Vit",
+      "smooth": "Len",
+      "innovative": "Innovativ",
+      "caramel": "Karamell",
+      "dutch": "Nederländsk",
+      "ethical": "Etisk",
+      "minimalist": "Minimalistisk",
+      "nordic": "Nordisk",
+      "sea_salt": "Havssalt",
+      "natural": "Naturlig",
+      "handcrafted": "Handgjord",
+      "experimental": "Experimentell",
+      "design": "Design",
+      "modern": "Modern",
+      "pure": "Ren",
+      "clean": "Klar",
+      "minimal": "Minimal",
+      "classic": "Klassisk",
+      "british": "Brittisk"
+    },
+    "valueTitles": {
+      "sustainability": "Hållbarhet",
+      "ethical_sourcing": "Etisk inköpning",
+      "family_business": "Familjeföretag",
+      "craftsmanship": "Hantverk"
+    },
+    "valueDescriptions": {
+      "recycled_and_compostable_packaging_across_every_gift_box": "Återvunnen och komposterbar förpackning i varje presentask.",
+      "direct_trade_cacao_paid_above_fair_trade_premiums": "Direkthandlad kakao betald över Fair Trade-premier.",
+      "independent_family_owned_and_operated_for_generations": "Oberoende, familjeägt och drivet i generationer.",
+      "every_piece_hand_finished_in_small_batches_by_trained_artisans": "Varje bit handfinishas i små satser av utbildade hantverkare."
+    },
+    "all": "Alla"
+  },
+  "checkout": {
+    "paymentMethod": "Betalningsmetod",
+    "cardName": "Kredit-/betalkort",
+    "cardDescription": "Visa, Mastercard, Amex",
+    "klarnaDescription": "Betala senare eller dela upp betalningen",
+    "paypalDescription": "Betala med ditt PayPal-konto",
+    "savedAddresses": "Sparade adresser",
+    "newAddress": "+ Ny adress",
+    "defaultAddress": "Standard",
+    "useSavedAddress": "Använd sparad adress",
+    "saveForFuture": "Spara adressen för framtida beställningar",
+    "saveAddress": "Spara adress"
+  },
+  "chocolatierData": {
+    "maison-deluxe": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "1923"
+    },
+    "alpenschoggi": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "1962"
+    },
+    "edelkakao": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Viennese atelier"
+    },
+    "cioccolato-fiorentino": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Florentine laboratorio"
+    },
+    "atelier-du-cacao": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Lyon atelier"
+    },
+    "casa-del-cacao": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Barcelona workshop"
+    },
+    "dutchcraft": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Amsterdam studio"
+    },
+    "nordisk-kakao": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Gothenburg atelier"
+    },
+    "fjordcocoa": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Bergen workshop"
+    },
+    "copenhagen-cacao-lab": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Copenhagen lab"
+    },
+    "arctic-bean": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Helsinki studio"
+    },
+    "london-cocoa-house": {
+      "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+      "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+      "founded": "Mayfair shop"
+    }
+  },
+  "chocolatierProducts": {
+    "maison-deluxe-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "maison-deluxe-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "maison-deluxe-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "maison-deluxe-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "alpenschoggi-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "alpenschoggi-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "alpenschoggi-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "alpenschoggi-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "edelkakao-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "edelkakao-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "edelkakao-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "edelkakao-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "cioccolato-fiorentino-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "cioccolato-fiorentino-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "cioccolato-fiorentino-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "cioccolato-fiorentino-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "atelier-du-cacao-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "atelier-du-cacao-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "atelier-du-cacao-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "atelier-du-cacao-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "casa-del-cacao-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "casa-del-cacao-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "casa-del-cacao-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "casa-del-cacao-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "dutchcraft-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "dutchcraft-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "dutchcraft-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "dutchcraft-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "nordisk-kakao-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "nordisk-kakao-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "nordisk-kakao-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "nordisk-kakao-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "fjordcocoa-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "fjordcocoa-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "fjordcocoa-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "fjordcocoa-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "copenhagen-cacao-lab-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "copenhagen-cacao-lab-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "copenhagen-cacao-lab-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "copenhagen-cacao-lab-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "arctic-bean-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "arctic-bean-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "arctic-bean-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "arctic-bean-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "london-cocoa-house-1": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "london-cocoa-house-2": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "london-cocoa-house-3": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    },
+    "london-cocoa-house-4": {
+      "description": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+    }
+  },
+  "profileData": {
+    "tagline": "Småskalig choklad skapad med regional karaktär och noggrann teknik.",
+    "story": "Den här chokladmakaren arbetar i små satser med noggrant utvald kakao, förfinade recept och handgjorda detaljer. Varje kollektion speglar verkstaden, hantverkstraditionen och ett modernt sätt att tänka kring gåvor och provsmakning.",
+    "productDescription": "Ett handgjort chokladurval från denna skapare, tillverkat i små satser med balanserad textur och smak."
+  },
+  "adminShell": {
+    "badge": "ADMINPANEL",
+    "panel": "Adminpanel",
+    "menu": "Meny",
+    "closeNavigation": "Stäng navigation",
+    "toggleNavigation": "Växla adminnavigation",
+    "nav": {
+      "dashboard": "Översikt",
+      "products": "Produkter",
+      "sellerApprovals": "Säljargodkännanden",
+      "categories": "Kategorier",
+      "orders": "Ordrar",
+      "activityLog": "Aktivitetslogg",
+      "overview": "Översikt"
+    }
+  },
+  "sellerShell": {
+    "badge": "SÄLJARPANEL",
+    "portal": "Säljarportal",
+    "menu": "Meny",
+    "closeNavigation": "Stäng navigation",
+    "toggleNavigation": "Växla säljarnavigation",
+    "nav": {
+      "dashboard": "Översikt",
+      "products": "Produkter",
+      "orders": "Ordrar",
+      "verification": "Verifiering",
+      "overview": "Översikt"
+    }
+  },
+  "whyDifferent": {
+    "title": "Därför är vi annorlunda!",
+    "tagline": "Inte en vanlig chokladbutik - vi gör det roligare!",
+    "features": {
+      "passport": {
+        "title": "Chokladpass",
+        "description": "Samla stämplar från olika länder medan du utforskar. Fyll passet och lås upp exklusiva belöningar!",
+        "button": "Börja samla"
+      },
+      "surprise": {
+        "title": "Överraska mig",
+        "description": "Känner du dig äventyrlig? Låt oss välja en hantverksask efter dina smakpreferenser.",
+        "button": "Bli överraskad"
+      },
+      "corporate": {
+        "title": "Företagsportal",
+        "description": "Enkel bulkbeställning med varumärkesanpassade förpackningar. Perfekt för kundgåvor och medarbetarbelöningar.",
+        "button": "Utforska företag"
+      },
+      "sustainability": {
+        "title": "Hållbarhetslöfte",
+        "description": "Vi samarbetar bara med chokladmakare som arbetar med etisk inköpning och miljövänliga metoder.",
+        "button": "Läs mer"
+      },
+      "discover": {
+        "title": "Upptäck",
+        "description": "Utforska nya smaker och chokladmakare genom vårt kurerade upptäcktsprogram. Hitta din nästa favoritchoklad.",
+        "button": "Börja utforska"
+      }
+    }
+  },
+  "shippingPackaging": {
+    "productTitle": "Frakt & förpackning",
+    "profileTitle": "Standarder för frakt & förpackning",
+    "standardsBadge": "Frakt hanteras av skaparen",
+    "productManagedByMaker": "Packas och skickas av chokladmakaren med skyddande standarder för choklad.",
+    "profileManagedByMaker": "Varje chokladmakare hanterar frakten direkt. Dessa standarder beskriver hur beställningar förbereds och skyddas för inrikes och europeisk leverans.",
+    "shipsFrom": "Skickas från",
+    "deliveryEstimate": "Beräknad leverans",
+    "shippingEstimate": "Fraktuppskattning",
+    "giftReady": "Redo som gåva",
+    "heatProtected": "Värmeskyddad",
+    "ecoPackaging": "Miljövänlig förpackning",
+    "heatProtectionAvailable": "Värmeskydd finns",
+    "giftPackagingAvailable": "Presentförpackning finns",
+    "summerShippingAvailable": "Sommarfrakt finns",
+    "ecoPackagingAvailable": "Miljövänlig förpackning finns",
+    "domesticEuShipping": "Inrikes / EU-frakt",
+    "domesticAndEu": "Inrikes och EU-frakt",
+    "domesticOnly": "Inrikes frakt",
+    "deliveryBusinessDays": "{{range}} arbetsdagar",
+    "deliveryEstimateFallback": "Bekräftas av skaparen",
+    "calculatedAtCheckout": "Beräknas av skaparen i kassan",
+    "available": "Tillgängligt",
+    "onRequest": "På begäran"
+  },
+  "productData": {
+    "demo-origin-noir-72": {
+      "description": "Ett noggrant färdigställt chokladurval från denna skapare, balanserat för textur, smak och gåvor.",
+      "story": "Tillverkat i små satser av skaparen och format av europeiskt hantverk, noggrann inköpning och en elegant smakupplevelse."
+    },
+    "demo-maison-praline-box": {
+      "description": "Ett noggrant färdigställt chokladurval från denna skapare, balanserat för textur, smak och gåvor.",
+      "story": "Tillverkat i små satser av skaparen och format av europeiskt hantverk, noggrann inköpning och en elegant smakupplevelse."
+    },
+    "demo-lavender-truffle-box": {
+      "description": "Ett noggrant färdigställt chokladurval från denna skapare, balanserat för textur, smak och gåvor.",
+      "story": "Tillverkat i små satser av skaparen och format av europeiskt hantverk, noggrann inköpning och en elegant smakupplevelse."
+    },
+    "demo-alpine-milk-pralines": {
+      "description": "Ett noggrant färdigställt chokladurval från denna skapare, balanserat för textur, smak och gåvor.",
+      "story": "Tillverkat i små satser av skaparen och format av europeiskt hantverk, noggrann inköpning och en elegant smakupplevelse."
+    },
+    "demo-vegan-cacao-selection": {
+      "description": "Ett noggrant färdigställt chokladurval från denna skapare, balanserat för textur, smak och gåvor.",
+      "story": "Tillverkat i små satser av skaparen och format av europeiskt hantverk, noggrann inköpning och en elegant smakupplevelse."
+    },
+    "demo-celebration-bonbons": {
+      "description": "Ett noggrant färdigställt chokladurval från denna skapare, balanserat för textur, smak och gåvor.",
+      "story": "Tillverkat i små satser av skaparen och format av europeiskt hantverk, noggrann inköpning och en elegant smakupplevelse."
+    }
+  }
 }

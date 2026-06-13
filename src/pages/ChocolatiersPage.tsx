@@ -6,6 +6,7 @@ import { Search, MapPin, ArrowRight } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import { CHOCOLATIERS } from '../data/chocolatiers';
+import { translateLabel } from '../lib/translationLabels';
 import heroBg from '../assets/collections/hero-truffles.png';
 import styles from './ChocolatiersPage.module.css';
 
@@ -122,11 +123,11 @@ const ChocolatiersPage = () => {
                       {c.city}, {c.country} <span aria-hidden="true">{c.flag}</span>
                     </span>
                   </div>
-                  <p className={styles.description}>{c.tagline}</p>
+                  <p className={styles.description}>{t(`chocolatierData.${c.slug}.tagline`, { defaultValue: c.tagline })}</p>
                   <div className={styles.tags}>
                     {c.tags.slice(0, 4).map((tag) => (
                       <span key={tag} className={styles.tag}>
-                        {tag}
+                        {translateLabel(t, 'chocolatierTags', tag)}
                       </span>
                     ))}
                   </div>

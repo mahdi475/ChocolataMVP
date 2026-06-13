@@ -10,6 +10,7 @@ import { CHOCOLATIERS } from '../../data/chocolatiers';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
+import { translateLabel } from '../../lib/translationLabels';
 import styles from './CatalogPage.module.css';
 
 interface Category {
@@ -297,7 +298,7 @@ const CatalogPage = () => {
           className={`${styles.chip} ${selected.includes(option) ? styles.chipActive : ''}`}
           onClick={() => onToggle(option)}
         >
-          {option}
+          {translateLabel(t, 'filters', option)}
           {selected.includes(option) && <Check className={styles.chipIcon} />}
         </button>
       ))}
@@ -338,7 +339,7 @@ const CatalogPage = () => {
         <label className={styles.fieldLabel} htmlFor="country-filter">{t('shop.country')}</label>
         <select id="country-filter" className={styles.select} value={selectedCountry} onChange={(event) => setSelectedCountry(event.target.value)}>
           <option value="all">{t('shop.allCountries')}</option>
-          {COUNTRIES.map((country) => <option key={country} value={country}>{country}</option>)}
+          {COUNTRIES.map((country) => <option key={country} value={country}>{translateLabel(t, 'countries', country)}</option>)}
         </select>
 
         <label className={styles.fieldLabel} htmlFor="maker-filter">{t('shop.maker')}</label>
@@ -353,7 +354,7 @@ const CatalogPage = () => {
         <select id="category-filter" className={styles.select} value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)}>
           <option value="all">{t('shop.allCategories')}</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.slug || category.name}>{category.name}</option>
+            <option key={category.id} value={category.slug || category.name}>{translateLabel(t, 'categories', category.name)}</option>
           ))}
         </select>
 
@@ -393,8 +394,8 @@ const CatalogPage = () => {
 
       <FilterGroup title={t('shop.priceRating')} summary={t('shop.priceRatingSummary')}>
         <div className={styles.priceInputs}>
-          <input className={styles.input} type="number" placeholder="Min SEK" value={minPrice} onChange={(event) => setMinPrice(event.target.value)} />
-          <input className={styles.input} type="number" placeholder="Max SEK" value={maxPrice} onChange={(event) => setMaxPrice(event.target.value)} />
+          <input className={styles.input} type="number" placeholder={t('shop.minSek')} value={minPrice} onChange={(event) => setMinPrice(event.target.value)} />
+          <input className={styles.input} type="number" placeholder={t('shop.maxSek')} value={maxPrice} onChange={(event) => setMaxPrice(event.target.value)} />
         </div>
         <label className={styles.fieldLabel} htmlFor="rating-filter">{t('shop.minimumRating')}</label>
         <select id="rating-filter" className={styles.select} value={minRating} onChange={(event) => setMinRating(event.target.value)}>
@@ -425,7 +426,7 @@ const CatalogPage = () => {
   if (loading) {
     return (
       <div className={styles.container}>
-        <LoadingSpinner fullScreen text="Melting chocolate..." />
+        <LoadingSpinner fullScreen text={t('shop.loading')} />
       </div>
     );
   }
@@ -474,11 +475,11 @@ const CatalogPage = () => {
 
           {isFilterOpen && (
             <div className={styles.mobileFilterOverlay}>
-              <button className={styles.mobileFilterBackdrop} aria-label="Close filters" onClick={() => setIsFilterOpen(false)} />
+              <button className={styles.mobileFilterBackdrop} aria-label={t('shop.closeFilters')} onClick={() => setIsFilterOpen(false)} />
               <div className={styles.mobileFilterDrawer}>
                 <div className={styles.mobileFilterHeader}>
                   <h2>{t('shop.filters')}</h2>
-                  <button className={styles.mobileFilterClose} onClick={() => setIsFilterOpen(false)} aria-label="Close filters">
+                  <button className={styles.mobileFilterClose} onClick={() => setIsFilterOpen(false)} aria-label={t('shop.closeFilters')}>
                     <X />
                   </button>
                 </div>

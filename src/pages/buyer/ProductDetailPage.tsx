@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Minus, PackageCheck, Plus, ShieldCheck, Star, Truck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Gift, Leaf, Minus, PackageCheck, Plus, ShieldCheck, Star, ThermometerSun, Truck } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
 import { addItem } from '../../store/slices/cartSlice';
@@ -18,6 +19,8 @@ import {
   type PremiumProduct,
 } from '../../data/demoCatalog';
 import { findChocolatierMatch, getChocolatierProfilePath } from '../../lib/chocolatierMatcher';
+import { getShippingPackaging, type ShippingPackagingInfo } from '../../lib/shippingPackaging';
+import { translateLabel } from '../../lib/translationLabels';
 import styles from './ProductDetailPage.module.css';
 
 interface Seller {
@@ -43,11 +46,13 @@ const asPremiumProduct = (product: Product): ProductWithSeller => ({
   allergens: [],
   weight: '',
   shipping_info: '',
+  shippingPackaging: undefined,
   story: product.description || '',
   gallery: product.image_url ? [product.image_url] : [],
 });
 
 const ProductDetailPage = () => {
+  const { t } = useTranslation('ui');
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,7 +71,7 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) {
-        setError('Product ID is required');
+        setError(t('productDetail.idRequired'));
         setLoading(false);
         return;
       }
@@ -109,7 +114,7 @@ const ProductDetailPage = () => {
           setActiveImage(fallbackProduct.gallery[0] || fallbackProduct.image_url || '');
           setError(null);
         } else {
-          setError(err.message || 'Failed to load product');
+          setError(err.message || t('productDetail.loadFailed'));
         }
       } finally {
         setLoading(false);
@@ -190,7 +195,7 @@ const ProductDetailPage = () => {
     dispatch(addItem(cartItem));
     dispatch(addNotification({
       type: 'success',
-      message: `${quantity} x ${product.name} added to cart`,
+      message: t('notifications.addedQuantityToCart', { quantity, product: product.name }),
     }));
   };
 
@@ -201,8 +206,8 @@ const ProductDetailPage = () => {
   if (error || !product) {
     return (
       <div className={styles.container}>
-        <div className={styles.error}>{error || 'Product not found'}</div>
-        <Button onClick={() => navigate('/catalog')}>Back to Catalog</Button>
+        <div className={styles.error}>{error || t('productDetail.notFound')}</div>
+        <Button onClick={() => navigate('/catalog')}>{t('productDetail.backToCatalog')}</Button>
       </div>
     );
   }
@@ -217,12 +222,54 @@ const ProductDetailPage = () => {
   );
   const makerProfilePath = chocolatierMatch ? getChocolatierProfilePath(chocolatierMatch.slug) : undefined;
   const isSoldOut = product.stock !== undefined && product.stock <= 0;
+  const shippingPackaging = getShippingPackaging(product.shippingPackaging as ShippingPackagingInfo | undefined, {
+    shipsFromCountry: product.country,
+    shipsFromCity: product.city,
+  });
+  const productDescription = t(`productData.${product.id}.description`, { defaultValue: product.description || '' });
+  const productStory = t(`productData.${product.id}.story`, { defaultValue: product.story || product.description || '' });
+  const shipsFrom = [shippingPackaging.shipsFromCity, shippingPackaging.shipsFromCountry].filter(Boolean).join(', ');
+  const deliveryEstimate = shippingPackaging.deliveryEstimate
+    ? t('shippingPackaging.deliveryBusinessDays', { range: shippingPackaging.deliveryEstimate })
+    : t('shippingPackaging.deliveryEstimateFallback');
+  const productShippingItems = [
+    {
+      icon: Truck,
+      label: t('shippingPackaging.shipsFrom'),
+      value: shipsFrom || t('productDetail.europeanAtelier'),
+    },
+    {
+      icon: ShieldCheck,
+      label: t('shippingPackaging.deliveryEstimate'),
+      value: deliveryEstimate,
+    },
+    {
+      icon: PackageCheck,
+      label: t('shippingPackaging.shippingEstimate'),
+      value: t('shippingPackaging.calculatedAtCheckout'),
+    },
+    {
+      icon: Gift,
+      label: t('shippingPackaging.giftReady'),
+      value: shippingPackaging.giftPackaging ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+    {
+      icon: ThermometerSun,
+      label: t('shippingPackaging.heatProtected'),
+      value: shippingPackaging.heatProtection ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+    {
+      icon: Leaf,
+      label: t('shippingPackaging.ecoPackaging'),
+      value: shippingPackaging.ecoPackaging ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+  ];
 
   return (
     <div className={styles.container}>
       <FadeIn>
         <div className={styles.breadcrumbs}>
-          <Link to="/catalog">Shop</Link>
+          <Link to="/catalog">{t('nav.shop')}</Link>
           <span>/</span>
           <span>{product.name}</span>
         </div>
@@ -233,7 +280,7 @@ const ProductDetailPage = () => {
               {activeImage ? (
                 <img src={activeImage} alt={product.name} className={styles.mainImage} />
               ) : (
-                <div className={styles.placeholder}>No image</div>
+                <div className={styles.placeholder}>{t('productCard.noImage')}</div>
               )}
             </div>
             {gallery.length > 1 && (
@@ -254,7 +301,7 @@ const ProductDetailPage = () => {
           <div className={styles.details}>
             <div className={styles.makerLine}>
               {makerProfilePath ? (
-                <Link to={makerProfilePath} aria-label={`View ${chocolatierMatch?.name || makerName} chocolatier profile`}>
+                <Link to={makerProfilePath} aria-label={t('productCard.viewMakerProfileAria', { maker: chocolatierMatch?.name || makerName })}>
                   {chocolatierMatch?.name || makerName}
                 </Link>
               ) : (
@@ -263,24 +310,24 @@ const ProductDetailPage = () => {
               {product.rating > 0 && (
                 <span className={styles.rating}>
                   <Star fill="currentColor" />
-                  {product.rating.toFixed(1)} ({product.reviews} reviews)
+                  {product.rating.toFixed(1)} ({t('productDetail.reviews', { count: product.reviews })})
                 </span>
               )}
             </div>
 
             <h1 className={styles.title}>{product.name}</h1>
             <p className={styles.origin}>{[product.city, product.country].filter(Boolean).join(', ')}</p>
-            <p className={styles.description}>{product.story || product.description}</p>
+            <p className={styles.description}>{productStory || productDescription}</p>
 
             {makerProfilePath && (
               <Link to={makerProfilePath} className={styles.profileButton}>
-                View maker profile
+                {t('productDetail.viewMakerProfile')}
               </Link>
             )}
 
             {product.badges.length > 0 && (
               <div className={styles.badges}>
-                {product.badges.map((badge) => <span key={badge}>{badge}</span>)}
+                {product.badges.map((badge) => <span key={badge}>{translateLabel(t, 'badges', badge)}</span>)}
               </div>
             )}
 
@@ -290,63 +337,78 @@ const ProductDetailPage = () => {
 
             <div className={styles.buyBox}>
               <div className={styles.quantityRow}>
-                <span>Quantity</span>
+                <span>{t('productDetail.quantity')}</span>
                 <div className={styles.quantityControl}>
-                  <button onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label="Decrease quantity"><Minus /></button>
+                  <button onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label={t('cart.decrease')}><Minus /></button>
                   <strong>{quantity}</strong>
-                  <button onClick={() => setQuantity((value) => Math.min(product.stock || 99, value + 1))} aria-label="Increase quantity"><Plus /></button>
+                  <button onClick={() => setQuantity((value) => Math.min(product.stock || 99, value + 1))} aria-label={t('cart.increase')}><Plus /></button>
                 </div>
               </div>
               <Button size="lg" className={styles.addButton} onClick={handleAddToCart} disabled={isSoldOut}>
-                {isSoldOut ? 'Out of stock' : 'Add to cart'}
+                {isSoldOut ? t('productCard.outOfStock') : t('productCard.addToCart')}
               </Button>
             </div>
 
-            <div className={styles.assuranceGrid}>
-              <div><Truck /> {product.shipping_info || 'Ships from the maker in protective packaging.'}</div>
-              <div><PackageCheck /> {product.weight || 'Small batch format'}</div>
-              <div><ShieldCheck /> Secure checkout and buyer support</div>
+            <div className={styles.shippingPanel} aria-labelledby="product-shipping-packaging">
+              <div className={styles.shippingPanelHeader}>
+                <h2 id="product-shipping-packaging">{t('shippingPackaging.productTitle')}</h2>
+                <p>{t('shippingPackaging.productManagedByMaker')}</p>
+              </div>
+              <div className={styles.shippingGrid}>
+                {productShippingItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.label} className={styles.shippingItem}>
+                      <Icon />
+                      <span>
+                        <strong>{item.label}</strong>
+                        <small>{item.value}</small>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
 
         <section className={styles.infoGrid}>
           <div>
-            <h2>Product Story</h2>
-            <p>{product.story || product.description}</p>
+            <h2>{t('productDetail.productStory')}</h2>
+            <p>{productStory || productDescription}</p>
           </div>
           <div>
-            <h2>Details</h2>
+            <h2>{t('productDetail.details')}</h2>
             <dl className={styles.specs}>
-              <div><dt>Cacao</dt><dd>{product.cacao_percentage ? `${product.cacao_percentage}%` : 'Varies by piece'}</dd></div>
-              <div><dt>Weight</dt><dd>{product.weight || 'See package'}</dd></div>
-              <div><dt>Origin</dt><dd>{[product.city, product.country].filter(Boolean).join(', ') || 'European atelier'}</dd></div>
+              <div><dt>{t('productDetail.cacao')}</dt><dd>{product.cacao_percentage ? `${product.cacao_percentage}%` : t('productDetail.variesByPiece')}</dd></div>
+              <div><dt>{t('productDetail.weight')}</dt><dd>{product.weight || t('productDetail.seePackage')}</dd></div>
+              <div><dt>{t('productDetail.origin')}</dt><dd>{[product.city, product.country].filter(Boolean).join(', ') || t('productDetail.europeanAtelier')}</dd></div>
             </dl>
           </div>
           <div>
-            <h2>Ingredients</h2>
-            <p>{product.ingredients.length ? product.ingredients.join(', ') : 'Ingredient details available from the maker.'}</p>
+            <h2>{t('productDetail.ingredients')}</h2>
+            <p>{product.ingredients.length ? product.ingredients.join(', ') : t('productDetail.ingredientsFallback')}</p>
           </div>
           <div>
-            <h2>Allergens</h2>
-            <p>{product.allergens.length ? product.allergens.join(', ') : 'May contain milk, nuts, and soy.'}</p>
+            <h2>{t('productDetail.allergens')}</h2>
+            <p>{product.allergens.length ? product.allergens.join(', ') : t('productDetail.allergensFallback')}</p>
           </div>
         </section>
 
         <section className={styles.reviews}>
           <div>
-            <h2>Reviews</h2>
-            <p>Customer reviews will appear here once verified purchases are collected.</p>
+            <h2>{t('productDetail.reviewsTitle')}</h2>
+            <p>{t('productDetail.reviewsEmpty')}</p>
           </div>
           <div className={styles.reviewScore}>
             <Star fill="currentColor" />
-            {product.rating ? product.rating.toFixed(1) : 'New'}
+            {product.rating ? product.rating.toFixed(1) : t('productDetail.new')}
           </div>
         </section>
 
         {sameMakerProducts.length > 0 && (
           <section className={styles.productSection}>
-            <h2>More from {product.maker_name}</h2>
+            <h2>{t('productDetail.moreFrom', { maker: product.maker_name })}</h2>
             <div className={styles.relatedGrid}>
               {sameMakerProducts.map((item) => <ProductCard key={item.id} product={item} />)}
             </div>
@@ -355,7 +417,7 @@ const ProductDetailPage = () => {
 
         {relatedProducts.length > 0 && (
           <section className={styles.productSection}>
-            <h2>Similar products</h2>
+            <h2>{t('productDetail.similarProducts')}</h2>
             <div className={styles.relatedGrid}>
               {relatedProducts.map((item) => <ProductCard key={item.id} product={item} />)}
             </div>

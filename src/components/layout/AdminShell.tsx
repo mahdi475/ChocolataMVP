@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import Button from '../ui/Button';
 import styles from './AdminShell.module.css';
@@ -9,17 +10,18 @@ interface AdminShellProps {
 }
 
 const AdminShell = ({ children }: AdminShellProps) => {
+  const { t } = useTranslation('ui');
   const { user, handleLogout } = useAuth();
   const location = useLocation();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const navItems = [
-    { path: '/admin/dashboard', label: 'Dashboard' },
-    { path: '/admin/products', label: 'Products' },
-    { path: '/admin/sellers', label: 'Seller Approvals' },
-    { path: '/admin/categories', label: 'Categories' },
-    { path: '/admin/orders', label: 'Orders' },
-    { path: '/admin/activity', label: 'Activity Log' },
+    { path: '/admin/dashboard', labelKey: 'dashboard' },
+    { path: '/admin/products', labelKey: 'products' },
+    { path: '/admin/sellers', labelKey: 'sellerApprovals' },
+    { path: '/admin/categories', labelKey: 'categories' },
+    { path: '/admin/orders', labelKey: 'orders' },
+    { path: '/admin/activity', labelKey: 'activityLog' },
   ];
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const AdminShell = ({ children }: AdminShellProps) => {
         <div className={styles.sidebarHeader}>
           <Link to="/admin/dashboard" className={styles.logo}>
             🍭 Chocolata
-            <span className={styles.adminBadge}>ADMIN PANEL</span>
+            <span className={styles.adminBadge}>{t('adminShell.badge')}</span>
           </Link>
         </div>
         <nav className={styles.sidebarNav}>
@@ -65,7 +67,7 @@ const AdminShell = ({ children }: AdminShellProps) => {
               to={item.path}
               className={`${styles.navLink} ${location.pathname === item.path ? styles.active : ''}`}
             >
-              {item.label}
+              {t(`adminShell.nav.${item.labelKey}`)}
             </Link>
           ))}
         </nav>
@@ -74,13 +76,13 @@ const AdminShell = ({ children }: AdminShellProps) => {
             <span className={styles.userEmail}>{user?.email}</span>
           </div>
           <Button variant="ghost" size="sm" onClick={handleLogout} className={styles.logoutButton}>
-            Logout
+            {t('nav.logout')}
           </Button>
         </div>
       </aside>
       <button
         type="button"
-        aria-label="Close navigation"
+        aria-label={t('adminShell.closeNavigation')}
         className={`${styles.overlay} ${isMobileNavOpen ? styles.overlayVisible : ''}`}
         onClick={closeMobileNav}
         tabIndex={-1}
@@ -90,16 +92,18 @@ const AdminShell = ({ children }: AdminShellProps) => {
           <button
             type="button"
             className={styles.menuButton}
-            aria-label="Toggle admin navigation"
+            aria-label={t('adminShell.toggleNavigation')}
             aria-expanded={isMobileNavOpen}
             onClick={toggleMobileNav}
           >
             <span className={styles.menuIcon} aria-hidden="true" />
-            <span className={styles.menuText}>Menu</span>
+            <span className={styles.menuText}>{t('adminShell.menu')}</span>
           </button>
           <div className={styles.mobileContext}>
-            <span className={styles.mobileLabel}>Admin Panel</span>
-            <span className={styles.mobileRoute}>{navItems.find((item) => location.pathname.startsWith(item.path))?.label ?? 'Overview'}</span>
+            <span className={styles.mobileLabel}>{t('adminShell.panel')}</span>
+            <span className={styles.mobileRoute}>
+              {t(`adminShell.nav.${navItems.find((item) => location.pathname.startsWith(item.path))?.labelKey ?? 'overview'}`)}
+            </span>
           </div>
           <Button
             variant="ghost"
@@ -107,7 +111,7 @@ const AdminShell = ({ children }: AdminShellProps) => {
             onClick={handleLogout}
             className={styles.mobileLogout}
           >
-            Logout
+            {t('nav.logout')}
           </Button>
         </div>
         <div className={styles.mainContent}>{children}</div>

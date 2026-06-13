@@ -8,6 +8,7 @@ import celebrationBonbons from '../assets/collections/celebration-bonbons.png';
 import romancePralines from '../assets/collections/romance-pralines.png';
 import ecoPackaging from '../assets/sustainability/eco-packaging.png';
 import type { Product } from '../components/cards/ProductCard';
+import type { ShippingPackagingInfo } from '../lib/shippingPackaging';
 
 export interface DemoCategory {
   id: string;
@@ -45,6 +46,7 @@ export interface PremiumProduct extends Product {
   allergens: string[];
   weight: string;
   shipping_info: string;
+  shippingPackaging?: ShippingPackagingInfo;
   story: string;
   gallery: string[];
 }
@@ -135,6 +137,15 @@ export const demoProducts: PremiumProduct[] = [
     allergens: ['May contain traces of milk and nuts'],
     weight: '80 g',
     shipping_info: 'Ships chilled from Vienna in 2-4 business days.',
+    shippingPackaging: {
+      shipsFromCountry: 'Austria',
+      shipsFromCity: 'Vienna',
+      deliveryEstimate: '2-4',
+      heatProtection: true,
+      giftPackaging: false,
+      summerShipping: true,
+      ecoPackaging: true,
+    },
     story: 'Made from carefully roasted Peruvian cacao and conched slowly for a clean, elegant snap.',
     gallery: [artisanDarkBars, tastingFlight, chocolatierHands],
   },
@@ -163,6 +174,15 @@ export const demoProducts: PremiumProduct[] = [
     allergens: ['Milk', 'Tree nuts', 'Soy'],
     weight: '180 g',
     shipping_info: 'Gift wrapped and shipped from Brussels in 2-5 business days.',
+    shippingPackaging: {
+      shipsFromCountry: 'Belgium',
+      shipsFromCity: 'Brussels',
+      deliveryEstimate: '2-5',
+      heatProtection: true,
+      giftPackaging: true,
+      summerShipping: true,
+      ecoPackaging: true,
+    },
     story: 'A polished introduction to Belgian praline craft, finished by hand in small weekly batches.',
     gallery: [luxuryPralineBox, celebrationBonbons, chocolatierHands],
   },
@@ -189,6 +209,15 @@ export const demoProducts: PremiumProduct[] = [
     allergens: ['Milk', 'May contain nuts'],
     weight: '160 g',
     shipping_info: 'Ships from Lyon with insulated packaging in 2-4 business days.',
+    shippingPackaging: {
+      shipsFromCountry: 'France',
+      shipsFromCity: 'Lyon',
+      deliveryEstimate: '2-4',
+      heatProtection: true,
+      giftPackaging: true,
+      summerShipping: true,
+      ecoPackaging: true,
+    },
     story: 'A soft floral ganache inspired by quiet mornings in Provence markets.',
     gallery: [handmadeTruffles, heroTruffles, chocolatierHands],
   },
@@ -215,6 +244,15 @@ export const demoProducts: PremiumProduct[] = [
     allergens: ['Milk', 'Tree nuts', 'Soy'],
     weight: '150 g',
     shipping_info: 'Ships from Zurich in 2-5 business days.',
+    shippingPackaging: {
+      shipsFromCountry: 'Switzerland',
+      shipsFromCity: 'Zurich',
+      deliveryEstimate: '2-5',
+      heatProtection: true,
+      giftPackaging: true,
+      summerShipping: true,
+      ecoPackaging: true,
+    },
     story: 'A comfort-forward praline box built around roasted hazelnuts and Swiss alpine milk.',
     gallery: [romancePralines, luxuryPralineBox, celebrationBonbons],
   },
@@ -243,6 +281,15 @@ export const demoProducts: PremiumProduct[] = [
     allergens: ['May contain nuts'],
     weight: '120 g',
     shipping_info: 'Ships plastic-free from Vienna in 2-4 business days.',
+    shippingPackaging: {
+      shipsFromCountry: 'Austria',
+      shipsFromCity: 'Vienna',
+      deliveryEstimate: '2-4',
+      heatProtection: true,
+      giftPackaging: false,
+      summerShipping: true,
+      ecoPackaging: true,
+    },
     story: 'Built for cacao purists who want plant-based chocolate with transparent sourcing.',
     gallery: [ecoPackaging, artisanDarkBars, tastingFlight],
   },
@@ -271,6 +318,15 @@ export const demoProducts: PremiumProduct[] = [
     allergens: ['Milk', 'Tree nuts', 'Soy'],
     weight: '210 g',
     shipping_info: 'Ships gift-ready from Brussels in 2-5 business days.',
+    shippingPackaging: {
+      shipsFromCountry: 'Belgium',
+      shipsFromCity: 'Brussels',
+      deliveryEstimate: '2-5',
+      heatProtection: true,
+      giftPackaging: true,
+      summerShipping: true,
+      ecoPackaging: true,
+    },
     story: 'Designed as a table centerpiece: bright shells, soft centers, and refined Belgian technique.',
     gallery: [celebrationBonbons, luxuryPralineBox, chocolatierHands],
   },

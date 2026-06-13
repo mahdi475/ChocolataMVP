@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { RootState } from '../../store';
 import { removeItem, updateQuantity } from '../../store/slices/cartSlice';
 import Button from '../../components/ui/Button';
@@ -10,6 +11,7 @@ import styles from './CartPage.module.css';
 const CartPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation('ui');
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -27,9 +29,9 @@ const CartPage = () => {
       <div className={styles.container}>
         <FadeIn>
           <Card>
-            <h1 className={styles.title}>Your Cart</h1>
-            <p className={styles.empty}>Your cart is empty</p>
-            <Button onClick={() => navigate('/catalog')}>Browse Products</Button>
+            <h1 className={styles.title}>{t('cart.pageTitle')}</h1>
+            <p className={styles.empty}>{t('cart.empty')}</p>
+            <Button onClick={() => navigate('/catalog')}>{t('cart.browseProducts')}</Button>
           </Card>
         </FadeIn>
       </div>
@@ -39,7 +41,7 @@ const CartPage = () => {
   return (
     <div className={styles.container}>
       <FadeIn>
-        <h1 className={styles.title}>Your Cart</h1>
+        <h1 className={styles.title}>{t('cart.pageTitle')}</h1>
         <div className={styles.content}>
           <div className={styles.items}>
             {cartItems.map((item) => (
@@ -63,7 +65,7 @@ const CartPage = () => {
                     <button
                       onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
                       className={styles.quantityButton}
-                      aria-label="Decrease quantity"
+                      aria-label={t('cart.decrease')}
                     >
                       −
                     </button>
@@ -71,7 +73,7 @@ const CartPage = () => {
                     <button
                       onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
                       className={styles.quantityButton}
-                      aria-label="Increase quantity"
+                      aria-label={t('cart.increase')}
                     >
                       +
                     </button>
@@ -82,16 +84,16 @@ const CartPage = () => {
                     onClick={() => handleRemove(item.productId)}
                     data-testid={`remove-${item.productId}`}
                   >
-                    Remove
+                    {t('cart.remove')}
                   </Button>
                 </div>
               </Card>
             ))}
           </div>
           <Card className={styles.summary}>
-            <h2 className={styles.summaryTitle}>Order Summary</h2>
+            <h2 className={styles.summaryTitle}>{t('cart.orderSummary')}</h2>
             <div className={styles.summaryRow}>
-              <span>Subtotal</span>
+              <span>{t('cart.subtotal')}</span>
               <span>
                 {new Intl.NumberFormat('sv-SE', {
                   style: 'currency',
@@ -100,7 +102,7 @@ const CartPage = () => {
               </span>
             </div>
             <div className={styles.summaryRow}>
-              <span>Total</span>
+              <span>{t('cart.total')}</span>
               <span className={styles.total}>
                 {new Intl.NumberFormat('sv-SE', {
                   style: 'currency',
@@ -114,7 +116,7 @@ const CartPage = () => {
               onClick={() => navigate('/checkout')}
               data-testid="proceed-to-checkout"
             >
-              Proceed to Checkout
+              {t('cart.proceedToCheckout')}
             </Button>
           </Card>
         </div>

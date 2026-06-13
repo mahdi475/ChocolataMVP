@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from 'react';
+﻿import { ReactNode, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -56,7 +56,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           <Link
             to="/"
             className={styles.brand}
-            aria-label="Chocolata home"
+            aria-label={t('nav.homeAria')}
             onMouseEnter={prefetchHomepageData}
             onFocus={prefetchHomepageData}
             onTouchStart={prefetchHomepageData}
@@ -118,7 +118,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <button
               className={`${styles.mobileMenuButton} ${styles.mobileOnly}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={t('nav.toggleMenu')}
               aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X className={styles.icon} /> : <Menu className={styles.icon} />}
@@ -168,21 +168,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         {/* Top Section: Newsletter Signup - Centered */}
         <div className={styles.footerNewsletter}>
           <div className={styles.newsletterContent}>
-            <h2 className={styles.newsletterTitle}>
-              Stay in the Loop! 📬
-            </h2>
-            <p className={styles.newsletterDescription}>
-              Get the latest drops, exclusive deals, and sweet surprises! 🎉
-            </p>
+            <h2 className={styles.newsletterTitle}>{t('footer.newsletterTitle')}</h2>
+            <p className={styles.newsletterDescription}>{t('footer.newsletterDescription')}</p>
             <form className={styles.newsletterForm}>
               <input
                 type="email"
-                placeholder="your.email@cool.com"
+                placeholder={t('footer.emailPlaceholder')}
                 className={styles.newsletterInput}
               />
-              <Button variant="gold" className={styles.newsletterButton}>
-                Let's Go! 🚀
-              </Button>
+              <Button variant="gold" className={styles.newsletterButton}>{t('footer.newsletterButton')}</Button>
             </form>
           </div>
         </div>
@@ -190,38 +184,38 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         {/* Middle Section: Navigation Links - Four Columns */}
         <div className={styles.footerNavigation}>
           <div className={styles.footerColumn}>
-            <h4 className={styles.footerHeading}>Shop</h4>
+            <h4 className={styles.footerHeading}>{t('footer.shop')}</h4>
             <ul className={styles.footerList}>
-              <li><Link to="/catalog" className={styles.footerLink}>All Chocolates</Link></li>
-              <li><Link to="/catalog?category=dark" className={styles.footerLink}>By Country</Link></li>
-              <li><Link to="/catalog?category=gifts" className={styles.footerLink}>By Type</Link></li>
-              <li><Link to="/catalog?category=gifts" className={styles.footerLink}>Gift Sets</Link></li>
+              <li><Link to="/catalog" className={styles.footerLink}>{t('footer.allChocolates')}</Link></li>
+              <li><Link to="/catalog?category=dark" className={styles.footerLink}>{t('footer.byCountry')}</Link></li>
+              <li><Link to="/catalog?category=gifts" className={styles.footerLink}>{t('footer.byType')}</Link></li>
+              <li><Link to="/catalog?category=gifts" className={styles.footerLink}>{t('footer.giftSets')}</Link></li>
             </ul>
           </div>
           <div className={styles.footerColumn}>
-            <h4 className={styles.footerHeading}>Support</h4>
+            <h4 className={styles.footerHeading}>{t('footer.support')}</h4>
             <ul className={styles.footerList}>
-              <li><a href="#" className={styles.footerLink}>FAQs</a></li>
-              <li><a href="#" className={styles.footerLink}>Shipping Info</a></li>
-              <li><a href="#" className={styles.footerLink}>Returns</a></li>
-              <li><a href="#" className={styles.footerLink}>Contact Us</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.faqs')}</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.shippingInfo')}</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.returns')}</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.contactUs')}</a></li>
             </ul>
           </div>
           <div className={styles.footerColumn}>
-            <h4 className={styles.footerHeading}>Company</h4>
+            <h4 className={styles.footerHeading}>{t('footer.company')}</h4>
             <ul className={styles.footerList}>
-              <li><Link to="/about" className={styles.footerLink}>About Us</Link></li>
-              <li><Link to="/about" className={styles.footerLink}>Our Story</Link></li>
-              <li><a href="#" className={styles.footerLink}>Sustainability</a></li>
-              <li><a href="#" className={styles.footerLink}>Careers</a></li>
+              <li><Link to="/about" className={styles.footerLink}>{t('footer.aboutUs')}</Link></li>
+              <li><Link to="/about" className={styles.footerLink}>{t('footer.ourStory')}</Link></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.sustainability')}</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.careers')}</a></li>
             </ul>
           </div>
           <div className={styles.footerColumn}>
-            <h4 className={styles.footerHeading}>Legal</h4>
+            <h4 className={styles.footerHeading}>{t('footer.legal')}</h4>
             <ul className={styles.footerList}>
-              <li><a href="#" className={styles.footerLink}>Privacy Policy</a></li>
-              <li><a href="#" className={styles.footerLink}>Terms of Service</a></li>
-              <li><a href="#" className={styles.footerLink}>Cookie Policy</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.privacyPolicy')}</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.termsOfService')}</a></li>
+              <li><a href="#" className={styles.footerLink}>{t('footer.cookiePolicy')}</a></li>
             </ul>
           </div>
         </div>
@@ -232,7 +226,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <img src={chocolataLogo} alt="Chocolata" className={styles.footerLogo} />
             <div className={styles.brandInfo}>
               <h3 className={styles.brandName}>CHOCOLATA</h3>
-              <p className={styles.brandSlogan}>The Sweetest Spot on the Internet! 🌍✨</p>
+              <p className={styles.brandSlogan}>{t('footer.brandSlogan')}</p>
             </div>
           </div>
           <div className={styles.socialMedia}>
@@ -251,7 +245,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </div>
         </div>
         <div className={styles.footerCopyright}>
-          <p>&copy; {new Date().getFullYear()} Chocolata. Made with ❤️ for all the choco lovers out there! 🍫✨</p>
+          <p>&copy; {new Date().getFullYear()} Chocolata. {t('footer.copyright')}</p>
         </div>
       </footer>
 

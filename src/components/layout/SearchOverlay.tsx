@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X, ArrowRight, TrendingUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import type { Product } from '../../components/cards/ProductCard';
 import { demoProducts } from '../../data/demoCatalog';
+import { translateLabel } from '../../lib/translationLabels';
 import styles from './SearchOverlay.module.css';
 
 interface SearchOverlayProps {
@@ -12,6 +14,7 @@ interface SearchOverlayProps {
 }
 
 const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
+  const { t } = useTranslation('ui');
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -75,7 +78,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
     <div className={styles.overlay}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <button onClick={onClose} className={styles.closeButton} aria-label="Close search">
+          <button onClick={onClose} className={styles.closeButton} aria-label={t('search.close')}>
             <X className={styles.closeIcon} />
           </button>
         </div>
@@ -84,12 +87,12 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
           <input
             autoFocus
             type="text"
-            placeholder="Search for truffles, bars, gifts..."
+            placeholder={t('search.placeholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className={styles.searchInput}
           />
-          <button type="submit" className={styles.submitButton} aria-label="Search">
+          <button type="submit" className={styles.submitButton} aria-label={t('nav.search')}>
             <ArrowRight className={styles.submitIcon} />
           </button>
         </form>
@@ -99,7 +102,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
             <div>
               <h3 className={styles.trendingTitle}>
                 <TrendingUp className={styles.trendingIcon} />
-                Trending Now
+                {t('search.trendingNow')}
               </h3>
               <div className={styles.trendingTerms}>
                 {trendingTerms.map((term) => (
@@ -108,13 +111,13 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
                     onClick={() => setQuery(term)}
                     className={styles.trendingButton}
                   >
-                    {term}
+                    {translateLabel(t, 'searchTerms', term)}
                   </button>
                 ))}
               </div>
             </div>
           ) : loading ? (
-            <p className={styles.loadingText}>Searching...</p>
+            <p className={styles.loadingText}>{t('search.loading')}</p>
           ) : results.length > 0 ? (
             <div className={styles.resultsGrid}>
               {results.map((product) => (
@@ -141,9 +144,9 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
             </div>
           ) : (
             <p className={styles.noResults}>
-              No results found for "{query}".{' '}
+              {t('search.noResults', { query })}{' '}
               <button onClick={() => handleSearch()} className={styles.viewAllLink}>
-                View all products
+                {t('search.viewAllProducts')}
               </button>
             </p>
           )}

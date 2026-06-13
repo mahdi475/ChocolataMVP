@@ -4,6 +4,8 @@
     "current": "Current language"
   },
   "nav": {
+    "homeAria": "Chocolata home",
+    "toggleMenu": "Toggle menu",
     "shop": "Shop",
     "chocolatiers": "Chocolatiers",
     "collections": "Collections",
@@ -34,7 +36,19 @@
     "makersSubtitle": "A featured edit from the same atelier profiles you can explore in the full makers directory.",
     "featuredMaker": "Featured maker",
     "viewProfile": "View profile",
-    "browseAllMakers": "Browse all chocolatiers"
+    "browseAllMakers": "Browse all chocolatiers",
+    "curatorsPick": "Curator's Pick",
+    "spotlightTitle": "The Velvet",
+    "spotlightTitleSecond": "Collection",
+    "spotlightText": "An exclusive assortment of our darkest, richest single-origin bars paired with hand-rolled truffles. The perfect gift for the true chocolate aficionado.",
+    "shopTheCollection": "Shop the Collection",
+    "viewDetails": "View Details",
+    "newsletterTitle": "Join the Inner Circle",
+    "newsletterSubtitle": "Get early access to limited edition drops, chocolatier interviews, and sweet deals.",
+    "newsletterPlaceholder": "Your email address",
+    "newsletterSubmit": "Sign Up",
+    "spotlightImageAlt": "Luxury gift set",
+    "viewChocolatierProfileAria": "View {{maker}} chocolatier profile"
   },
   "shop": {
     "eyebrow": "European artisan marketplace",
@@ -46,6 +60,7 @@
     "liveCatalog": "Live catalog",
     "searchPlaceholder": "Search truffles, pralines, vegan bars...",
     "filters": "Filters",
+    "closeFilters": "Close filters",
     "popular": "Popular",
     "newest": "Newest",
     "priceLowHigh": "Price low-high",
@@ -80,8 +95,11 @@
     "ratingAbove": "{{rating}} and above",
     "advancedCraft": "Advanced craft",
     "advancedSummary": "Awards, sourcing, rarity",
+    "minSek": "Min SEK",
+    "maxSek": "Max SEK",
     "resetFilters": "Reset filters",
     "showProducts": "Show {{count}} products",
+    "loading": "Melting chocolate...",
     "emptyTitle": "No chocolates found",
     "emptyText": "Try broadening the country, price, or cacao filters."
   },
@@ -98,22 +116,665 @@
     "emptyText": "Try adjusting your search or country filter.",
     "clearFilters": "Clear Filters"
   },
+  "chocolatierProfile": {
+    "backToAll": "Back to all chocolatiers",
+    "europeanChocolatier": "European Chocolatier",
+    "ourStory": "Our Story",
+    "storyBehind": "The story behind {{maker}}",
+    "insideWorkshop": "Inside the workshop",
+    "gallerySubtitle": "Portrait, workshop, store and product close-ups.",
+    "shopMaker": "Shop the Maker",
+    "handFinished": "Hand-finished chocolates",
+    "filterProducts": "Filter products",
+    "emptyProducts": "No products match this filter yet - try another.",
+    "whatWeStandFor": "What we stand for",
+    "ourValues": "Our values",
+    "browseRange": "Browse the full range from {{maker}}",
+    "ctaSubtitle": "Truffles, pralines, bonbons and single-origin bars - shipped from {{city}} across Europe.",
+    "browseAllProducts": "Browse All Products",
+    "aboutTheChocolatier": "About the chocolatier",
+    "madeIn": "Made in",
+    "founded": "Founded",
+    "specialties": "Specialties",
+    "signatureProducts": "Signature products",
+    "shipping": "Shipping",
+    "viewProducts": "View products",
+    "contactMaker": "Contact maker",
+    "visitShop": "Visit shop",
+    "featuredProducts": "Featured products",
+    "awards": "Awards",
+    "story": "Story",
+    "ingredients": "Ingredients",
+    "sustainability": "Sustainability",
+    "deliveryEstimate": "Delivery estimate 2-5 days",
+    "shipsFrom": "Ships from {{city}}",
+    "heatProtected": "Heat protected",
+    "giftReady": "Gift ready",
+    "ecoPackaging": "Eco packaging",
+    "smallBatchAtelier": "Small-batch atelier"
+  },
   "cart": {
     "title": "Your Basket",
+    "pageTitle": "Your Cart",
     "close": "Close cart",
     "empty": "Your basket is empty.",
+    "browseProducts": "Browse Products",
     "continueShopping": "Continue Shopping",
     "decrease": "Decrease quantity",
     "increase": "Increase quantity",
     "remove": "Remove item",
     "subtotal": "Subtotal",
+    "total": "Total",
+    "orderSummary": "Order Summary",
     "shippingNote": "Shipping and taxes calculated at checkout.",
-    "checkout": "Checkout"
+    "checkout": "Checkout",
+    "proceedToCheckout": "Proceed to Checkout"
   },
   "productCard": {
     "addToCart": "Add to Cart",
     "outOfStock": "Sold out",
     "inStock": "in stock",
-    "lowStock": "Low stock"
+    "lowStock": "Low stock",
+    "placeholderChocolate": "Chocolate",
+    "noImage": "No image",
+    "cacaoPercent": "{{percent}}% cacao",
+    "viewProductAria": "View {{product}}",
+    "viewMakerProfileAria": "View {{maker}} chocolatier profile"
+  },
+  "productDetail": {
+    "idRequired": "Product ID is required",
+    "loadFailed": "Failed to load product",
+    "notFound": "Product not found",
+    "backToCatalog": "Back to Catalog",
+    "reviews": "{{count}} reviews",
+    "viewMakerProfile": "View maker profile",
+    "quantity": "Quantity",
+    "defaultShipping": "Ships from the maker in protective packaging.",
+    "smallBatchFormat": "Small batch format",
+    "secureCheckout": "Secure checkout and buyer support",
+    "productStory": "Product Story",
+    "details": "Details",
+    "cacao": "Cacao",
+    "weight": "Weight",
+    "origin": "Origin",
+    "variesByPiece": "Varies by piece",
+    "seePackage": "See package",
+    "europeanAtelier": "European atelier",
+    "ingredients": "Ingredients",
+    "ingredientsFallback": "Ingredient details available from the maker.",
+    "allergens": "Allergens",
+    "allergensFallback": "May contain milk, nuts, and soy.",
+    "reviewsTitle": "Reviews",
+    "reviewsEmpty": "Customer reviews will appear here once verified purchases are collected.",
+    "new": "New",
+    "moreFrom": "More from {{maker}}",
+    "similarProducts": "Similar products"
+  },
+  "notifications": {
+    "addedToCart": "{{product}} added to cart!",
+    "addedQuantityToCart": "{{quantity}} x {{product}} added to cart"
+  },
+  "search": {
+    "close": "Close search",
+    "placeholder": "Search for truffles, bars, gifts...",
+    "trendingNow": "Trending Now",
+    "loading": "Searching...",
+    "noResults": "No results found for \"{{query}}\".",
+    "viewAllProducts": "View all products"
+  },
+  "footer": {
+    "newsletterTitle": "Stay in the Loop!",
+    "newsletterDescription": "Get the latest drops, exclusive deals, and sweet surprises.",
+    "emailPlaceholder": "your.email@cool.com",
+    "newsletterButton": "Let's Go!",
+    "shop": "Shop",
+    "allChocolates": "All Chocolates",
+    "byCountry": "By Country",
+    "byType": "By Type",
+    "giftSets": "Gift Sets",
+    "support": "Support",
+    "faqs": "FAQs",
+    "shippingInfo": "Shipping Info",
+    "returns": "Returns",
+    "contactUs": "Contact Us",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "ourStory": "Our Story",
+    "sustainability": "Sustainability",
+    "careers": "Careers",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "brandSlogan": "The Sweetest Spot on the Internet!",
+    "copyright": "Made for all chocolate lovers."
+  },
+  "corporate": {
+    "badge": "Corporate Gifting, Elevated",
+    "heroTitle": "Make a Lasting",
+    "heroAccent": "Impression",
+    "heroSubtitle": "Premium chocolate gifts tailored for your clients, employees, and events. Custom branding, volume pricing, and white-glove concierge service.",
+    "startQuote": "Start a Quote",
+    "downloadCatalog": "Download Catalog",
+    "customBrandingTitle": "Custom Branding",
+    "customBrandingText": "Your logo, your colors. Fully customizable packaging, sleeves, ribbons, and gift cards keep your brand front and center.",
+    "premiumQualityTitle": "Premium Quality",
+    "premiumQualityText": "Gifts that reflect your standards, sourced from exceptional artisans for a memorable unboxing experience.",
+    "conciergeTitle": "Concierge Service",
+    "conciergeText": "Dedicated account managers handle address collection, timing, and shipments so your team gets the credit.",
+    "processTitle": "Seamless Gifting Process",
+    "processSubtitle": "From selection to delivery in three easy steps.",
+    "stepSelectTitle": "Select Your Gift",
+    "stepSelectText": "Choose from curated collections or build a custom assortment.",
+    "stepCustomizeTitle": "Customize & Brand",
+    "stepCustomizeText": "Add your logo, personal message, and packaging finish.",
+    "stepDeliveryTitle": "We Handle Delivery",
+    "stepDeliveryText": "From one office to 1,000 homes, we help every gift arrive well.",
+    "occasionBadge": "For Every Occasion",
+    "businessTitle": "Curated for Business",
+    "businessText": "Whether you need conference boxes or luxury board gifts, our categories are designed for corporate needs.",
+    "clientAppreciation": "Client Appreciation & Retention",
+    "employeeOnboarding": "Employee Onboarding & Milestones",
+    "virtualEvents": "Virtual Event Tasting Kits",
+    "holidayGifting": "Holiday Gifting Campaigns",
+    "viewFullCatalog": "View Full Catalog",
+    "executiveAlt": "Luxury chocolate gift box",
+    "bestSeller": "Best Seller",
+    "executiveSuite": "The Executive Suite",
+    "tastingAlt": "Premium chocolate tasting set",
+    "eventFavorite": "Event Favorite",
+    "virtualTastingKit": "Virtual Tasting Kit",
+    "needHelp": "Need help planning?",
+    "needHelpText": "Our gifting specialists are ready to help you curate the perfect experience for your budget and timeline.",
+    "emailPrompt": "Enter your work email...",
+    "getConnected": "Get Connected",
+    "volumeDiscount": "Volume discounts available for orders over 50 units."
+  },
+  "labels": {
+    "filters": {
+      "all": "All",
+      "dark": "Dark",
+      "milk": "Milk",
+      "white": "White",
+      "vegan": "Vegan",
+      "nut_free": "Nut-free",
+      "single_origin": "Single-origin",
+      "seasonal": "Seasonal",
+      "pralines": "Pralines",
+      "truffles": "Truffles",
+      "bonbons": "Bonbons",
+      "gift_boxes": "Gift Boxes",
+      "hazelnut": "Hazelnut",
+      "caramel": "Caramel",
+      "ganache": "Ganache",
+      "fruit": "Fruit",
+      "floral": "Floral",
+      "cocoa_nibs": "Cocoa Nibs",
+      "organic": "Organic",
+      "dairy_free": "Dairy-free",
+      "plastic_free": "Plastic-free",
+      "gift_box": "Gift Box",
+      "celebration": "Celebration",
+      "corporate": "Corporate",
+      "tasting": "Tasting",
+      "self_care": "Self Care",
+      "romantic": "Romantic",
+      "award_winning": "Award Winning",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Handmade",
+      "small_batch": "Small Batch",
+      "sustainable": "Sustainable",
+      "limited_edition": "Limited Edition",
+      "dark_chocolate": "Dark Chocolate",
+      "hazelnuts": "Hazelnuts"
+    },
+    "badges": {
+      "organic": "Organic",
+      "vegan": "Vegan",
+      "gift_box": "Gift box",
+      "award_winning": "Award Winning",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Handmade",
+      "small_batch": "Small Batch",
+      "sustainable": "Sustainable",
+      "limited_edition": "Limited Edition",
+      "plastic_free": "Plastic-free",
+      "family_recipe": "Family recipe"
+    },
+    "categories": {
+      "dark_chocolate": "Dark Chocolate",
+      "milk_chocolate": "Milk Chocolate",
+      "white_chocolate": "White Chocolate",
+      "truffles": "Truffles",
+      "pralines": "Pralines",
+      "bonbons": "Bonbons",
+      "vegan": "Vegan",
+      "gifts": "Gifts",
+      "gift_boxes": "Gift Boxes",
+      "bars": "Bars",
+      "collections": "Collections"
+    },
+    "countries": {
+      "belgium": "Belgium",
+      "france": "France",
+      "italy": "Italy",
+      "germany": "Germany",
+      "switzerland": "Switzerland",
+      "netherlands": "Netherlands",
+      "denmark": "Denmark",
+      "norway": "Norway",
+      "sweden": "Sweden",
+      "finland": "Finland",
+      "united_kingdom": "United Kingdom",
+      "spain": "Spain",
+      "austria": "Austria",
+      "england": "England"
+    },
+    "searchTerms": {
+      "dark_chocolate": "Dark Chocolate",
+      "vegan": "Vegan",
+      "gift_box": "Gift Box",
+      "hazelnuts": "Hazelnuts",
+      "truffles": "Truffles"
+    },
+    "chocolatierTags": {
+      "pralines": "Pralines",
+      "ganache": "Ganache",
+      "luxury": "Luxury",
+      "traditional": "Traditional",
+      "milk": "Milk",
+      "dark": "Dark",
+      "single_origin": "Single origin",
+      "vegan": "Vegan",
+      "nut_free": "Nut-free",
+      "seasonal": "Seasonal",
+      "milk_chocolate": "Milk chocolate",
+      "family_business": "Family business",
+      "creamy": "Creamy",
+      "alpine": "Alpine",
+      "artisan": "Artisan",
+      "elegant": "Elegant",
+      "dark_chocolate": "Dark chocolate",
+      "orange_zest": "Orange zest",
+      "olive_oil_chocolate": "Olive oil chocolate",
+      "artisanal": "Artisanal",
+      "italian": "Italian",
+      "truffles": "Truffles",
+      "french": "French",
+      "bean_to_bar": "Bean-to-bar",
+      "chili_chocolate": "Chili chocolate",
+      "mediterranean": "Mediterranean",
+      "bold": "Bold",
+      "white": "White",
+      "smooth": "Smooth",
+      "innovative": "Innovative",
+      "caramel": "Caramel",
+      "dutch": "Dutch",
+      "ethical": "Ethical",
+      "minimalist": "Minimalist",
+      "nordic": "Nordic",
+      "sea_salt": "Sea salt",
+      "natural": "Natural",
+      "handcrafted": "Handcrafted",
+      "experimental": "Experimental",
+      "design": "Design",
+      "modern": "Modern",
+      "pure": "Pure",
+      "clean": "Clean",
+      "minimal": "Minimal",
+      "classic": "Classic",
+      "british": "British"
+    },
+    "valueTitles": {
+      "sustainability": "Sustainability",
+      "ethical_sourcing": "Ethical Sourcing",
+      "family_business": "Family Business",
+      "craftsmanship": "Craftsmanship"
+    },
+    "valueDescriptions": {
+      "recycled_and_compostable_packaging_across_every_gift_box": "Recycled and compostable packaging across every gift box.",
+      "direct_trade_cacao_paid_above_fair_trade_premiums": "Direct-trade cacao paid above Fair Trade premiums.",
+      "independent_family_owned_and_operated_for_generations": "Independent, family-owned and operated for generations.",
+      "every_piece_hand_finished_in_small_batches_by_trained_artisans": "Every piece hand-finished in small batches by trained artisans."
+    },
+    "all": "All"
+  },
+  "checkout": {
+    "paymentMethod": "Payment Method",
+    "cardName": "Credit/Debit Card",
+    "cardDescription": "Visa, Mastercard, Amex",
+    "klarnaDescription": "Pay later or in installments",
+    "paypalDescription": "Pay with your PayPal account",
+    "savedAddresses": "Saved Addresses",
+    "newAddress": "+ New Address",
+    "defaultAddress": "Default",
+    "useSavedAddress": "Use Saved Address",
+    "saveForFuture": "Save this address for future orders",
+    "saveAddress": "Save Address"
+  },
+  "chocolatierData": {
+    "maison-deluxe": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "1923"
+    },
+    "alpenschoggi": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "1962"
+    },
+    "edelkakao": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Viennese atelier"
+    },
+    "cioccolato-fiorentino": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Florentine laboratorio"
+    },
+    "atelier-du-cacao": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Lyon atelier"
+    },
+    "casa-del-cacao": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Barcelona workshop"
+    },
+    "dutchcraft": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Amsterdam studio"
+    },
+    "nordisk-kakao": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Gothenburg atelier"
+    },
+    "fjordcocoa": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Bergen workshop"
+    },
+    "copenhagen-cacao-lab": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Copenhagen lab"
+    },
+    "arctic-bean": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Helsinki studio"
+    },
+    "london-cocoa-house": {
+      "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+      "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+      "founded": "Mayfair shop"
+    }
+  },
+  "chocolatierProducts": {
+    "maison-deluxe-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "maison-deluxe-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "maison-deluxe-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "maison-deluxe-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "alpenschoggi-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "alpenschoggi-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "alpenschoggi-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "alpenschoggi-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "edelkakao-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "edelkakao-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "edelkakao-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "edelkakao-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "cioccolato-fiorentino-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "cioccolato-fiorentino-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "cioccolato-fiorentino-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "cioccolato-fiorentino-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "atelier-du-cacao-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "atelier-du-cacao-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "atelier-du-cacao-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "atelier-du-cacao-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "casa-del-cacao-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "casa-del-cacao-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "casa-del-cacao-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "casa-del-cacao-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "dutchcraft-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "dutchcraft-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "dutchcraft-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "dutchcraft-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "nordisk-kakao-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "nordisk-kakao-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "nordisk-kakao-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "nordisk-kakao-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "fjordcocoa-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "fjordcocoa-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "fjordcocoa-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "fjordcocoa-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "copenhagen-cacao-lab-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "copenhagen-cacao-lab-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "copenhagen-cacao-lab-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "copenhagen-cacao-lab-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "arctic-bean-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "arctic-bean-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "arctic-bean-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "arctic-bean-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "london-cocoa-house-1": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "london-cocoa-house-2": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "london-cocoa-house-3": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    },
+    "london-cocoa-house-4": {
+      "description": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+    }
+  },
+  "profileData": {
+    "tagline": "Small-batch chocolate crafted with regional character and careful technique.",
+    "story": "This chocolatier works in small batches with carefully sourced cacao, refined recipes, and hand-finished details. Each collection reflects its workshop, its craft tradition, and a modern approach to gifting and tasting.",
+    "productDescription": "A hand-finished chocolate selection from this maker, prepared in small batches with balanced texture and flavor."
+  },
+  "adminShell": {
+    "badge": "ADMIN PANEL",
+    "panel": "Admin Panel",
+    "menu": "Menu",
+    "closeNavigation": "Close navigation",
+    "toggleNavigation": "Toggle admin navigation",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "sellerApprovals": "Seller Approvals",
+      "categories": "Categories",
+      "orders": "Orders",
+      "activityLog": "Activity Log",
+      "overview": "Overview"
+    }
+  },
+  "sellerShell": {
+    "badge": "SELLER DASHBOARD",
+    "portal": "Seller Portal",
+    "menu": "Menu",
+    "closeNavigation": "Close navigation",
+    "toggleNavigation": "Toggle seller navigation",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "orders": "Orders",
+      "verification": "Verification",
+      "overview": "Overview"
+    }
+  },
+  "whyDifferent": {
+    "title": "Why We're Different!",
+    "tagline": "Not your basic chocolate shop - we're bringing the fun!",
+    "features": {
+      "passport": {
+        "title": "Chocolate Passport",
+        "description": "Collect stamps from different countries as you explore. Complete your passport for exclusive rewards!",
+        "button": "Start Collecting"
+      },
+      "surprise": {
+        "title": "Surprise Me",
+        "description": "Feeling adventurous? Let us randomly select an artisan box tailored to your taste preferences.",
+        "button": "Get Surprised"
+      },
+      "corporate": {
+        "title": "Corporate Portal",
+        "description": "Easy bulk ordering with branded packaging options. Perfect for client gifts and employee rewards.",
+        "button": "Explore Corporate"
+      },
+      "sustainability": {
+        "title": "Sustainability Promise",
+        "description": "We partner only with chocolatiers committed to ethical sourcing and eco-friendly practices.",
+        "button": "Learn More"
+      },
+      "discover": {
+        "title": "Discover",
+        "description": "Explore new flavors and chocolatiers through our curated discovery program. Find your next favorite chocolate.",
+        "button": "Start Exploring"
+      }
+    }
+  },
+  "shippingPackaging": {
+    "productTitle": "Shipping & Packaging",
+    "profileTitle": "Shipping & Packaging Standards",
+    "standardsBadge": "Maker-managed shipping",
+    "productManagedByMaker": "Packed and dispatched by the chocolatier with protective standards for chocolate.",
+    "profileManagedByMaker": "Each chocolatier manages shipping directly. These standards describe how orders are prepared and protected for domestic and European delivery.",
+    "shipsFrom": "Ships from",
+    "deliveryEstimate": "Delivery estimate",
+    "shippingEstimate": "Shipping estimate",
+    "giftReady": "Gift ready",
+    "heatProtected": "Heat protected",
+    "ecoPackaging": "Eco packaging",
+    "heatProtectionAvailable": "Heat protection available",
+    "giftPackagingAvailable": "Gift packaging available",
+    "summerShippingAvailable": "Summer shipping available",
+    "ecoPackagingAvailable": "Eco packaging available",
+    "domesticEuShipping": "Domestic / EU shipping",
+    "domesticAndEu": "Domestic and EU shipping",
+    "domesticOnly": "Domestic shipping",
+    "deliveryBusinessDays": "{{range}} business days",
+    "deliveryEstimateFallback": "Confirmed by the maker",
+    "calculatedAtCheckout": "Calculated by the maker at checkout",
+    "available": "Available",
+    "onRequest": "On request"
+  },
+  "productData": {
+    "demo-origin-noir-72": {
+      "description": "A carefully finished chocolate selection from this maker, balanced for texture, flavour, and gifting.",
+      "story": "Prepared in small batches by the maker, this chocolate reflects European craft, careful sourcing, and a polished tasting experience."
+    },
+    "demo-maison-praline-box": {
+      "description": "A carefully finished chocolate selection from this maker, balanced for texture, flavour, and gifting.",
+      "story": "Prepared in small batches by the maker, this chocolate reflects European craft, careful sourcing, and a polished tasting experience."
+    },
+    "demo-lavender-truffle-box": {
+      "description": "A carefully finished chocolate selection from this maker, balanced for texture, flavour, and gifting.",
+      "story": "Prepared in small batches by the maker, this chocolate reflects European craft, careful sourcing, and a polished tasting experience."
+    },
+    "demo-alpine-milk-pralines": {
+      "description": "A carefully finished chocolate selection from this maker, balanced for texture, flavour, and gifting.",
+      "story": "Prepared in small batches by the maker, this chocolate reflects European craft, careful sourcing, and a polished tasting experience."
+    },
+    "demo-vegan-cacao-selection": {
+      "description": "A carefully finished chocolate selection from this maker, balanced for texture, flavour, and gifting.",
+      "story": "Prepared in small batches by the maker, this chocolate reflects European craft, careful sourcing, and a polished tasting experience."
+    },
+    "demo-celebration-bonbons": {
+      "description": "A carefully finished chocolate selection from this maker, balanced for texture, flavour, and gifting.",
+      "story": "Prepared in small batches by the maker, this chocolate reflects European craft, careful sourcing, and a polished tasting experience."
+    }
   }
 }

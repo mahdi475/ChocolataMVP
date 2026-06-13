@@ -10,6 +10,7 @@ import Badge from '../components/ui/Badge';
 import ProductCard, { type Product } from '../components/cards/ProductCard';
 import { demoProducts } from '../data/demoCatalog';
 import { getCachedHomepageData, loadHomepageData } from '../lib/homepageData';
+import { translateLabel } from '../lib/translationLabels';
 import styles from './HomePage.module.css';
 import heroChocolateImage from '../assets/hero/luxury-chocolate-atelier-hero.png';
 import spotlightImage from './assets/Gemini_Generated_Image_fi49w2fi49w2fi49.png';
@@ -132,7 +133,7 @@ const CategorySection = () => {
                   <Star className={styles.categoryIcon} />
                 )}
               </div>
-              <span className={styles.categoryName}>{cat.name}</span>
+              <span className={styles.categoryName}>{translateLabel(t, 'categories', cat.name)}</span>
             </Link>
           ))}
         </div>
@@ -208,6 +209,8 @@ const ProductGrid = ({
 };
 
 const SpotlightSection = () => {
+  const { t } = useTranslation('ui');
+
   return (
     <section className={styles.spotlightSection}>
       <div className={styles.spotlightPattern}></div>
@@ -223,29 +226,25 @@ const SpotlightSection = () => {
             <div className={styles.spotlightBorder}></div>
             <img
               src={spotlightImage}
-              alt="Luxury Gift Set"
+              alt={t('home.spotlightImageAlt')}
               className={styles.spotlightImage}
             />
           </motion.div>
           <div className={styles.spotlightContent}>
-            <span className={styles.spotlightBadge}>Curator's Pick</span>
+            <span className={styles.spotlightBadge}>{t('home.curatorsPick')}</span>
             <h2 className={styles.spotlightTitle}>
-              The Velvet <br /> Collection
+              {t('home.spotlightTitle')} <br /> {t('home.spotlightTitleSecond')}
             </h2>
-            <p className={styles.spotlightText}>
-              An exclusive assortment of our darkest, richest single-origin bars
-              paired with hand-rolled truffles. The perfect gift for the true
-              chocolate aficionado.
-            </p>
+            <p className={styles.spotlightText}>{t('home.spotlightText')}</p>
             <div className={styles.spotlightActions}>
               <Link to="/catalog?category=gifts">
                 <Button variant="gold" className={styles.spotlightButton}>
-                  Shop the Collection
+                  {t('home.shopTheCollection')}
                 </Button>
               </Link>
               <Link to="/catalog">
                 <Button variant="outline" className={styles.spotlightButtonOutline}>
-                  View Details
+                  {t('home.viewDetails')}
                 </Button>
               </Link>
             </div>
@@ -257,6 +256,7 @@ const SpotlightSection = () => {
 };
 
 const Newsletter = () => {
+  const { t } = useTranslation('ui');
   const [email, setEmail] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -269,22 +269,19 @@ const Newsletter = () => {
   return (
     <section className={styles.newsletterSection}>
       <div className={styles.newsletterContainer}>
-        <h2 className={styles.newsletterTitle}>Join the Inner Circle</h2>
-        <p className={styles.newsletterSubtitle}>
-          Get early access to limited edition drops, chocolatier interviews, and
-          sweet deals.
-        </p>
+        <h2 className={styles.newsletterTitle}>{t('home.newsletterTitle')}</h2>
+        <p className={styles.newsletterSubtitle}>{t('home.newsletterSubtitle')}</p>
         <form onSubmit={handleSubmit} className={styles.newsletterForm}>
           <input
             type="email"
-            placeholder="Your email address"
+            placeholder={t('home.newsletterPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={styles.newsletterInput}
             required
           />
           <button type="submit" className={styles.newsletterButton}>
-            Sign Up
+            {t('home.newsletterSubmit')}
           </button>
         </form>
       </div>

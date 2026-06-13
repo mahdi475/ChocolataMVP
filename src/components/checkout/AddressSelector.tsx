@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
 import Button from '../ui/Button';
@@ -24,6 +25,7 @@ interface AddressSelectorProps {
 }
 
 const AddressSelector = ({ value, onChange, onSaveAddress }: AddressSelectorProps) => {
+  const { t } = useTranslation('ui');
   const { user } = useAuth();
   const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(false);
@@ -116,13 +118,13 @@ const AddressSelector = ({ value, onChange, onSaveAddress }: AddressSelectorProp
       ) : savedAddresses.length > 0 && !showNewAddress ? (
         <div className={styles.savedAddresses}>
           <div className={styles.header}>
-            <h3>Saved Addresses</h3>
+            <h3>{t('checkout.savedAddresses')}</h3>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowNewAddress(true)}
             >
-              + New Address
+              {t('checkout.newAddress')}
             </Button>
           </div>
           <div className={styles.addressList}>
@@ -141,7 +143,7 @@ const AddressSelector = ({ value, onChange, onSaveAddress }: AddressSelectorProp
                   <div className={styles.addressHeader}>
                     <strong>{address.full_name}</strong>
                     {address.is_default && (
-                      <span className={styles.defaultBadge}>Default</span>
+                      <span className={styles.defaultBadge}>{t('checkout.defaultAddress')}</span>
                     )}
                   </div>
                   <p className={styles.addressText}>
@@ -165,9 +167,7 @@ const AddressSelector = ({ value, onChange, onSaveAddress }: AddressSelectorProp
               size="sm"
               onClick={() => setShowNewAddress(false)}
               className={styles.backButton}
-            >
-              ← Use Saved Address
-            </Button>
+            >{t('checkout.useSavedAddress')}</Button>
           )}
           {user && (
             <label className={styles.saveCheckbox}>
@@ -176,7 +176,7 @@ const AddressSelector = ({ value, onChange, onSaveAddress }: AddressSelectorProp
                 checked={saveAddress}
                 onChange={(e) => setSaveAddress(e.target.checked)}
               />
-              <span>Save this address for future orders</span>
+              <span>{t('checkout.saveForFuture')}</span>
             </label>
           )}
           {saveAddress && user && (
@@ -186,7 +186,7 @@ const AddressSelector = ({ value, onChange, onSaveAddress }: AddressSelectorProp
               onClick={handleSaveNewAddress}
               className={styles.saveButton}
             >
-              Save Address
+              {t('checkout.saveAddress')}
             </Button>
           )}
         </div>

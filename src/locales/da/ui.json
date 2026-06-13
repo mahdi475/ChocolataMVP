@@ -1,9 +1,783 @@
 {
-  "language": { "selectorLabel": "Vaelg sprog", "current": "Aktuelt sprog" },
-  "nav": { "shop": "Shop", "chocolatiers": "Chocolatierer", "collections": "Kollektioner", "corporateGifts": "Firmagaver", "sustainability": "Baeredygtighed", "about": "Om os", "loginRegister": "Log ind / Opret konto", "logout": "Log ud", "search": "Sog", "profile": "Brugerprofil", "cart": "Kurv" },
-  "home": { "badge": "Prisvindende kollektion", "heroTitle": "Kunsten at skabe", "heroAccent": "fin chokolade", "heroSubtitle": "Opdag en kurateret markedsplads med Europas fineste haandvaerkschocolatierer. Etisk indkobt, mesterligt fremstillet.", "shopCollection": "Shop kollektionen", "ourStory": "Vores historie", "exploreTitle": "Udforsk efter smag", "exploreSubtitle": "Start med de mest elskede chokoladerejser, fra belgiske praliner til single-origin plader.", "viewMore": "Vis mere", "showLess": "Vis mindre", "freshTitle": "Frisk fra koekkenet", "shopNewArrivals": "Shop nyheder", "meetMakers": "Mod skaberne", "makersTitle": "Europaeiske chocolatierer bag hver aeske", "makersSubtitle": "Et udvalgt edit fra de samme atelierprofiler, du kan udforske i hele maker-kataloget.", "featuredMaker": "Udvalgt maker", "viewProfile": "Se profil", "browseAllMakers": "Se alle chocolatierer" },
-  "shop": { "eyebrow": "Europaeisk haandvaerksmarked", "title": "Shop fin chokolade efter maker, oprindelse og anledning.", "subtitle": "Opdag small-batch plader, truffler, praliner og gaveaesker fra uafhaengige europaeiske chocolatierer.", "products": "produkter", "collections": "kollektioner", "curatedMakers": "Kuraterede makers", "liveCatalog": "Live katalog", "searchPlaceholder": "Sog truffler, praliner, veganske plader...", "filters": "Filtre", "popular": "Populaer", "newest": "Nyeste", "priceLowHigh": "Pris lav-hoj", "priceHighLow": "Pris hoj-lav", "results": "resultater", "result": "resultat", "clearAll": "Ryd alle", "curateBox": "Kurater din aeske", "curateHint": "Start bredt, og forfin efter haandvaerk, smag og maker.", "origin": "Oprindelse", "originSummary": "Land og chocolatier", "country": "Land", "allCountries": "Alle lande", "maker": "Chocolatier / maker", "allMakers": "Alle makers", "taste": "Smag", "tasteSummary": "Kategori, type, smag", "category": "Kategori", "allCategories": "Alle kategorier", "chocolateType": "Chokoladetype", "flavorFillings": "Smage og fyld", "minimumCacao": "Minimum kakao", "anyPercent": "Enhver %", "lifestyle": "Livsstil", "dietaryPreferences": "Kostpraeferencer", "occasion": "Anledning", "occasionSummary": "Gaver og ojeblikke", "priceRating": "Pris og rating", "priceRatingSummary": "Budget og tillid", "minimumRating": "Minimum rating", "anyRating": "Enhver rating", "ratingAbove": "{{rating}} og derover", "advancedCraft": "Avanceret haandvaerk", "advancedSummary": "Priser, sourcing, sjaeldenhed", "resetFilters": "Nulstil filtre", "showProducts": "Vis {{count}} produkter", "emptyTitle": "Ingen chokolader fundet", "emptyText": "Prov at udvide land-, pris- eller kakaofiltrene." },
-  "chocolatiers": { "badge": "Mod skaberne", "titlePrefix": "Europas haandvaerkere,", "titleAccent": "et kontinent", "subtitle": "Fra Bruxelles til Helsinki: mod small-batch chocolatiererne, der former fremtiden for europaeisk craft chocolate.", "searchPlaceholder": "Sog efter navn, by, land eller tag...", "filterByCountry": "Filtrer efter land:", "all": "Alle", "viewProfile": "Se profil", "emptyTitle": "Ingen chocolatierer fundet", "emptyText": "Prov at justere din sogning eller dit landfilter.", "clearFilters": "Ryd filtre" },
-  "cart": { "title": "Din kurv", "close": "Luk kurv", "empty": "Din kurv er tom.", "continueShopping": "Fortsat shopping", "decrease": "Saenk antal", "increase": "Og antal", "remove": "Fjern vare", "subtotal": "Subtotal", "shippingNote": "Fragt og afgifter beregnes ved checkout.", "checkout": "Checkout" },
-  "productCard": { "addToCart": "Tilfoj til kurv", "outOfStock": "Udsolgt", "inStock": "paa lager", "lowStock": "Faa paa lager" }
+  "language": {
+    "selectorLabel": "Vælg sprog",
+    "current": "Aktuelt sprog"
+  },
+  "nav": {
+    "homeAria": "Chocolata",
+    "toggleMenu": "Menu",
+    "shop": "Shop",
+    "chocolatiers": "Chokolademagere",
+    "collections": "Kollektioner",
+    "corporateGifts": "Firmagaver",
+    "sustainability": "Bæredygtighed",
+    "about": "Om os",
+    "loginRegister": "Log ind / Registrer",
+    "logout": "Log ud",
+    "search": "Søg",
+    "profile": "Brugerprofil",
+    "cart": "Indkøbskurv"
+  },
+  "home": {
+    "badge": "Prisvindende kollektion",
+    "heroTitle": "Kunsten at skabe",
+    "heroAccent": "fin chokolade",
+    "heroSubtitle": "Opdag en kurateret markedsplads med verdens fineste håndværkschokolade. Etisk indkøbt, mesterligt fremstillet.",
+    "shopCollection": "Shop kollektionen",
+    "ourStory": "Vores historie",
+    "exploreTitle": "Udforsk efter smag",
+    "exploreSubtitle": "Begynd med de mest elskede chokoladerejser, fra belgiske praliner til single-origin plader.",
+    "viewMore": "Vis mere",
+    "showLess": "Vis mindre",
+    "freshTitle": "Frisk fra køkkenet",
+    "shopNewArrivals": "Shop nyheder",
+    "meetMakers": "Mød skaberne",
+    "makersTitle": "Europæiske chokolademagere bag hver æske",
+    "makersSubtitle": "Et udvalgt edit fra de samme atelierprofiler, som du kan udforske i hele maker-kataloget.",
+    "featuredMaker": "Udvalgt skaber",
+    "viewProfile": "Se profil",
+    "browseAllMakers": "Se alle chokolademagere",
+    "curatorsPick": "Kuratorens valg",
+    "spotlightTitle": "The Velvet",
+    "spotlightTitleSecond": "Kollektionen",
+    "spotlightText": "Et eksklusivt udvalg af vores mørkeste og mest intense single-origin plader kombineret med håndrullede trøfler. Den perfekte gave til den ægte chokoladeelsker.",
+    "shopTheCollection": "Shop kollektionen",
+    "viewDetails": "Se detaljer",
+    "newsletterTitle": "Bliv en del af inderkredsen",
+    "newsletterSubtitle": "Få tidlig adgang til limiterede lanceringer, interviews med chokolademagere og søde tilbud.",
+    "newsletterPlaceholder": "Din e-mailadresse",
+    "newsletterSubmit": "Tilmeld",
+    "spotlightImageAlt": "Luksuriøs gaveæske",
+    "viewChocolatierProfileAria": "Se chocolatierprofil for {{maker}}"
+  },
+  "shop": {
+    "eyebrow": "European artisan marketplace",
+    "title": "Shop fine chocolate by maker, origin, and occasion.",
+    "subtitle": "Discover small-batch bars, truffles, pralines, and gift boxes from independent European chocolatiers.",
+    "products": "products",
+    "collections": "collections",
+    "curatedMakers": "Curated makers",
+    "liveCatalog": "Live catalog",
+    "searchPlaceholder": "Search truffles, pralines, vegan bars...",
+    "filters": "Filtre",
+    "closeFilters": "Luk filtre",
+    "popular": "Popular",
+    "newest": "Newest",
+    "priceLowHigh": "Price low-high",
+    "priceHighLow": "Price high-low",
+    "results": "results",
+    "result": "result",
+    "clearAll": "Clear all",
+    "curateBox": "Curate your box",
+    "curateHint": "Start broad, then refine by craft, taste, and maker.",
+    "origin": "Origin",
+    "originSummary": "Country and chocolatier",
+    "country": "Country",
+    "allCountries": "All countries",
+    "maker": "Chocolatier / Maker",
+    "allMakers": "All makers",
+    "taste": "Taste",
+    "tasteSummary": "Category, type, flavor",
+    "category": "Category",
+    "allCategories": "All categories",
+    "chocolateType": "Chocolate Type",
+    "flavorFillings": "Flavor & Fillings",
+    "minimumCacao": "Minimum cacao",
+    "anyPercent": "Any %",
+    "lifestyle": "Lifestyle",
+    "dietaryPreferences": "Dietary preferences",
+    "occasion": "Occasion",
+    "occasionSummary": "Gifts and moments",
+    "priceRating": "Price & Rating",
+    "priceRatingSummary": "Budget and trust",
+    "minimumRating": "Minimum rating",
+    "anyRating": "Any rating",
+    "ratingAbove": "{{rating}} and above",
+    "advancedCraft": "Advanced craft",
+    "advancedSummary": "Awards, sourcing, rarity",
+    "minSek": "Min SEK",
+    "maxSek": "Max SEK",
+    "resetFilters": "Nulstil filtre",
+    "showProducts": "Vis {{count}} produkter",
+    "loading": "Smelter chokolade...",
+    "emptyTitle": "Ingen chokolade fundet",
+    "emptyText": "Prøv bredere filtre."
+  },
+  "chocolatiers": {
+    "badge": "Mød skaberne",
+    "titlePrefix": "Europas håndværkere,",
+    "titleAccent": "et kontinent",
+    "subtitle": "Fra Bruxelles til Helsinki: mød de små chokoladeværksteder, der former fremtiden for europæisk håndværkschokolade.",
+    "searchPlaceholder": "Søg efter navn, by, land eller tag...",
+    "filterByCountry": "Filtrer efter land:",
+    "all": "Alle",
+    "viewProfile": "Se profil",
+    "emptyTitle": "Ingen chokolademagere fundet",
+    "emptyText": "Prøv at justere søgningen eller landefilteret.",
+    "clearFilters": "Ryd filtre"
+  },
+  "chocolatierProfile": {
+    "backToAll": "Tilbage til alle chokolademagere",
+    "europeanChocolatier": "Europæisk chokolademager",
+    "ourStory": "Vores historie",
+    "storyBehind": "Historien bag {{maker}}",
+    "insideWorkshop": "Inde i værkstedet",
+    "gallerySubtitle": "Portræt, værksted, butik og produktnærbilleder.",
+    "shopMaker": "Shop skaberen",
+    "handFinished": "Håndlavet chokolade",
+    "filterProducts": "Filtrer produkter",
+    "emptyProducts": "Ingen produkter matcher dette filter.",
+    "whatWeStandFor": "Det vi står for",
+    "ourValues": "Vores værdier",
+    "browseRange": "Se hele sortimentet fra {{maker}}",
+    "ctaSubtitle": "Trøfler, praliner, bonbons og single-origin plader - sendt fra {{city}} i hele Europa.",
+    "browseAllProducts": "Se alle produkter",
+    "aboutTheChocolatier": "Om chokolademageren",
+    "madeIn": "Fremstillet i",
+    "founded": "Grundlagt",
+    "specialties": "Specialiteter",
+    "signatureProducts": "Signaturprodukter",
+    "shipping": "Forsendelse",
+    "viewProducts": "Se produkter",
+    "contactMaker": "Kontakt skaberen",
+    "visitShop": "Besøg shop",
+    "featuredProducts": "Udvalgte produkter",
+    "awards": "Priser",
+    "story": "Historie",
+    "ingredients": "Ingredienser",
+    "sustainability": "Bæredygtighed",
+    "deliveryEstimate": "Forventet levering 2-5 dage",
+    "shipsFrom": "Sendes fra {{city}}",
+    "heatProtected": "Varmebeskyttet",
+    "giftReady": "Klar som gave",
+    "ecoPackaging": "Miljøvenlig emballage",
+    "smallBatchAtelier": "Småbatch-atelier"
+  },
+  "cart": {
+    "title": "Your Basket",
+    "pageTitle": "Din kurv",
+    "close": "Close cart",
+    "empty": "Din kurv er tom.",
+    "browseProducts": "Se produkter",
+    "continueShopping": "Continue Shopping",
+    "decrease": "Sænk antal",
+    "increase": "Øg antal",
+    "remove": "Fjern vare",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "orderSummary": "Ordreoversigt",
+    "shippingNote": "Shipping and taxes calculated at checkout.",
+    "checkout": "Checkout",
+    "proceedToCheckout": "Gå til betaling"
+  },
+  "productCard": {
+    "addToCart": "Læg i kurv",
+    "outOfStock": "Udsolgt",
+    "inStock": "på lager",
+    "lowStock": "Få tilbage",
+    "placeholderChocolate": "Chocolate",
+    "noImage": "Intet billede",
+    "cacaoPercent": "{{percent}}% cacao",
+    "viewProductAria": "View {{product}}",
+    "viewMakerProfileAria": "View {{maker}} chocolatier profile"
+  },
+  "productDetail": {
+    "idRequired": "Product ID is required",
+    "loadFailed": "Failed to load product",
+    "notFound": "Product not found",
+    "backToCatalog": "Back to Catalog",
+    "reviews": "{{count}} reviews",
+    "viewMakerProfile": "View maker profile",
+    "quantity": "Quantity",
+    "defaultShipping": "Ships from the maker in protective packaging.",
+    "smallBatchFormat": "Small batch format",
+    "secureCheckout": "Secure checkout and buyer support",
+    "productStory": "Product Story",
+    "details": "Details",
+    "cacao": "Cacao",
+    "weight": "Weight",
+    "origin": "Origin",
+    "variesByPiece": "Varies by piece",
+    "seePackage": "See package",
+    "europeanAtelier": "European atelier",
+    "ingredients": "Ingredients",
+    "ingredientsFallback": "Ingredient details available from the maker.",
+    "allergens": "Allergens",
+    "allergensFallback": "May contain milk, nuts, and soy.",
+    "reviewsTitle": "Reviews",
+    "reviewsEmpty": "Customer reviews will appear here once verified purchases are collected.",
+    "new": "New",
+    "moreFrom": "More from {{maker}}",
+    "similarProducts": "Similar products"
+  },
+  "notifications": {
+    "addedToCart": "{{product}} added to cart!",
+    "addedQuantityToCart": "{{quantity}} x {{product}} added to cart"
+  },
+  "search": {
+    "close": "Luk søgning",
+    "placeholder": "Søg trøfler, plader, gaver...",
+    "trendingNow": "Populært nu",
+    "loading": "Søger...",
+    "noResults": "Ingen resultater for \"{{query}}\".",
+    "viewAllProducts": "Se alle produkter"
+  },
+  "footer": {
+    "newsletterTitle": "Følg med!",
+    "newsletterDescription": "Get the latest drops, exclusive deals, and sweet surprises.",
+    "emailPlaceholder": "your.email@cool.com",
+    "newsletterButton": "Kom i gang!",
+    "shop": "Shop",
+    "allChocolates": "Al chokolade",
+    "byCountry": "Efter land",
+    "byType": "Efter type",
+    "giftSets": "Gavesæt",
+    "support": "Support",
+    "faqs": "FAQs",
+    "shippingInfo": "Shipping Info",
+    "returns": "Returns",
+    "contactUs": "Contact Us",
+    "company": "Virksomhed",
+    "aboutUs": "About Us",
+    "ourStory": "Our Story",
+    "sustainability": "Sustainability",
+    "careers": "Careers",
+    "legal": "Juridisk",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "brandSlogan": "Internettets sødeste sted!",
+    "copyright": "Lavet til alle chokoladeelskere."
+  },
+  "corporate": {
+    "badge": "Firmagaver på højere niveau",
+    "heroTitle": "Gør et varigt",
+    "heroAccent": "indtryk",
+    "heroSubtitle": "Premium chocolate gifts tailored for your clients, employees, and events. Custom branding, volume pricing, and white-glove concierge service.",
+    "startQuote": "Start tilbud",
+    "downloadCatalog": "Download katalog",
+    "customBrandingTitle": "Egen branding",
+    "customBrandingText": "Your logo, your colors. Fully customizable packaging, sleeves, ribbons, and gift cards keep your brand front and center.",
+    "premiumQualityTitle": "Premiumkvalitet",
+    "premiumQualityText": "Gifts that reflect your standards, sourced from exceptional artisans for a memorable unboxing experience.",
+    "conciergeTitle": "Concierge-service",
+    "conciergeText": "Dedicated account managers handle address collection, timing, and shipments so your team gets the credit.",
+    "processTitle": "Nem gaveproces",
+    "processSubtitle": "From selection to delivery in three easy steps.",
+    "stepSelectTitle": "Vælg din gave",
+    "stepSelectText": "Choose from curated collections or build a custom assortment.",
+    "stepCustomizeTitle": "Tilpas & brand",
+    "stepCustomizeText": "Add your logo, personal message, and packaging finish.",
+    "stepDeliveryTitle": "Vi klarer levering",
+    "stepDeliveryText": "From one office to 1,000 homes, we help every gift arrive well.",
+    "occasionBadge": "Til enhver anledning",
+    "businessTitle": "Kureret til erhverv",
+    "businessText": "Whether you need conference boxes or luxury board gifts, our categories are designed for corporate needs.",
+    "clientAppreciation": "Client Appreciation & Retention",
+    "employeeOnboarding": "Employee Onboarding & Milestones",
+    "virtualEvents": "Virtual Event Tasting Kits",
+    "holidayGifting": "Holiday Gifting Campaigns",
+    "viewFullCatalog": "Se hele kataloget",
+    "executiveAlt": "Luxury chocolate gift box",
+    "bestSeller": "Bestseller",
+    "executiveSuite": "The Executive Suite",
+    "tastingAlt": "Premium chocolate tasting set",
+    "eventFavorite": "Eventfavorit",
+    "virtualTastingKit": "Virtual Tasting Kit",
+    "needHelp": "Brug for hjælp?",
+    "needHelpText": "Our gifting specialists are ready to help you curate the perfect experience for your budget and timeline.",
+    "emailPrompt": "Enter your work email...",
+    "getConnected": "Bliv kontaktet",
+    "volumeDiscount": "Volume discounts available for orders over 50 units."
+  },
+  "labels": {
+    "filters": {
+      "all": "Alle",
+      "dark": "Mørk",
+      "milk": "Mælk",
+      "white": "Hvid",
+      "vegan": "Vegansk",
+      "nut_free": "Nøddefri",
+      "single_origin": "Single-origin",
+      "seasonal": "Sæson",
+      "pralines": "Pralines",
+      "truffles": "Truffles",
+      "bonbons": "Bonbons",
+      "gift_boxes": "Gift Boxes",
+      "hazelnut": "Hazelnut",
+      "caramel": "Caramel",
+      "ganache": "Ganache",
+      "fruit": "Fruit",
+      "floral": "Floral",
+      "cocoa_nibs": "Cocoa Nibs",
+      "organic": "Økologisk",
+      "dairy_free": "Dairy-free",
+      "plastic_free": "Plastic-free",
+      "gift_box": "Gaveæske",
+      "celebration": "Celebration",
+      "corporate": "Corporate",
+      "tasting": "Tasting",
+      "self_care": "Self Care",
+      "romantic": "Romantic",
+      "award_winning": "Award Winning",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Håndlavet",
+      "small_batch": "Small Batch",
+      "sustainable": "Bæredygtig",
+      "limited_edition": "Limited Edition",
+      "dark_chocolate": "Mørk chokolade",
+      "hazelnuts": "Hasselnødder"
+    },
+    "badges": {
+      "organic": "Økologisk",
+      "vegan": "Vegansk",
+      "gift_box": "Gaveæske",
+      "award_winning": "Prisvindende",
+      "bean_to_bar": "Bean-to-Bar",
+      "handmade": "Håndlavet",
+      "small_batch": "Små batch",
+      "sustainable": "Bæredygtig",
+      "limited_edition": "Begrænset udgave",
+      "plastic_free": "Plastfri",
+      "family_recipe": "Familieopskrift"
+    },
+    "categories": {
+      "dark_chocolate": "Mørk chokolade",
+      "milk_chocolate": "Mælkechokolade",
+      "white_chocolate": "Hvid chokolade",
+      "truffles": "Trøfler",
+      "pralines": "Praliner",
+      "bonbons": "Bonbons",
+      "vegan": "Vegansk",
+      "gifts": "Gaver",
+      "gift_boxes": "Gaveæsker",
+      "bars": "Plader",
+      "collections": "Kollektioner",
+      "belgian_pralines": "Belgiske praliner",
+      "artisan_truffles": "Håndværkstrøfler",
+      "vegan_chocolate": "Vegansk chokolade",
+      "organic_chocolate": "Økologisk chokolade"
+    },
+    "countries": {
+      "belgium": "Belgien",
+      "france": "Frankrig",
+      "italy": "Italien",
+      "germany": "Tyskland",
+      "switzerland": "Schweiz",
+      "netherlands": "Nederlandene",
+      "denmark": "Danmark",
+      "norway": "Norge",
+      "sweden": "Sverige",
+      "finland": "Finland",
+      "united_kingdom": "Storbritannien",
+      "spain": "Spanien",
+      "austria": "Østrig",
+      "england": "England"
+    },
+    "searchTerms": {
+      "dark_chocolate": "Mørk chokolade",
+      "vegan": "Vegansk",
+      "gift_box": "Gaveæske",
+      "hazelnuts": "Hasselnødder",
+      "truffles": "Trøfler"
+    },
+    "chocolatierTags": {
+      "pralines": "Praliner",
+      "ganache": "Ganache",
+      "luxury": "Luksus",
+      "traditional": "Traditionel",
+      "milk": "Mælk",
+      "dark": "Mørk",
+      "single_origin": "Single-origin",
+      "vegan": "Vegansk",
+      "nut_free": "Nøddefri",
+      "seasonal": "Sæson",
+      "milk_chocolate": "Mælkechokolade",
+      "family_business": "Familievirksomhed",
+      "creamy": "Cremet",
+      "alpine": "Alpin",
+      "artisan": "Håndværk",
+      "elegant": "Elegant",
+      "dark_chocolate": "Mørk chokolade",
+      "orange_zest": "Appelsinskal",
+      "olive_oil_chocolate": "Olivenoliechokolade",
+      "artisanal": "Artisanal",
+      "italian": "Italiensk",
+      "truffles": "Trøfler",
+      "french": "Fransk",
+      "bean_to_bar": "Bean-to-bar",
+      "chili_chocolate": "Chilichokolade",
+      "mediterranean": "Middelhav",
+      "bold": "Kraftig",
+      "white": "Hvid",
+      "smooth": "Blød",
+      "innovative": "Innovativ",
+      "caramel": "Karamel",
+      "dutch": "Hollandsk",
+      "ethical": "Etisk",
+      "minimalist": "Minimalistisk",
+      "nordic": "Nordisk",
+      "sea_salt": "Havsalt",
+      "natural": "Naturlig",
+      "handcrafted": "Håndlavet",
+      "experimental": "Eksperimentel",
+      "design": "Design",
+      "modern": "Moderne",
+      "pure": "Ren",
+      "clean": "Klar",
+      "minimal": "Minimal",
+      "classic": "Klassisk",
+      "british": "Britisk"
+    },
+    "valueTitles": {
+      "sustainability": "Bæredygtighed",
+      "ethical_sourcing": "Etisk sourcing",
+      "family_business": "Familievirksomhed",
+      "craftsmanship": "Håndværk"
+    },
+    "valueDescriptions": {
+      "recycled_and_compostable_packaging_across_every_gift_box": "Genanvendt og komposterbar emballage i hver gaveæske.",
+      "direct_trade_cacao_paid_above_fair_trade_premiums": "Direct-trade kakao betalt over Fair Trade-præmier.",
+      "independent_family_owned_and_operated_for_generations": "Uafhængig, familieejet og drevet gennem generationer.",
+      "every_piece_hand_finished_in_small_batches_by_trained_artisans": "Hvert stykke håndafsluttes i små serier af uddannede håndværkere."
+    }
+  },
+  "checkout": {
+    "paymentMethod": "Betalingsmetode",
+    "cardName": "Kredit-/debetkort",
+    "cardDescription": "Visa, Mastercard, Amex",
+    "klarnaDescription": "Betal senere eller i rater",
+    "paypalDescription": "Betal med din PayPal-konto",
+    "savedAddresses": "Gemte adresser",
+    "newAddress": "+ Ny adresse",
+    "defaultAddress": "Standard",
+    "useSavedAddress": "Brug gemt adresse",
+    "saveForFuture": "Gem denne adresse til fremtidige ordrer",
+    "saveAddress": "Gem adresse"
+  },
+  "chocolatierData": {
+    "maison-deluxe": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "1923"
+    },
+    "alpenschoggi": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "1962"
+    },
+    "edelkakao": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Viennese atelier"
+    },
+    "cioccolato-fiorentino": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Florentine laboratorio"
+    },
+    "atelier-du-cacao": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Lyon atelier"
+    },
+    "casa-del-cacao": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Barcelona workshop"
+    },
+    "dutchcraft": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Amsterdam studio"
+    },
+    "nordisk-kakao": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Gothenburg atelier"
+    },
+    "fjordcocoa": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Bergen workshop"
+    },
+    "copenhagen-cacao-lab": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Copenhagen lab"
+    },
+    "arctic-bean": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Helsinki studio"
+    },
+    "london-cocoa-house": {
+      "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+      "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+      "founded": "Mayfair shop"
+    }
+  },
+  "chocolatierProducts": {
+    "maison-deluxe-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "maison-deluxe-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "maison-deluxe-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "maison-deluxe-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "alpenschoggi-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "alpenschoggi-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "alpenschoggi-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "alpenschoggi-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "edelkakao-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "edelkakao-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "edelkakao-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "edelkakao-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "cioccolato-fiorentino-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "cioccolato-fiorentino-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "cioccolato-fiorentino-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "cioccolato-fiorentino-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "atelier-du-cacao-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "atelier-du-cacao-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "atelier-du-cacao-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "atelier-du-cacao-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "casa-del-cacao-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "casa-del-cacao-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "casa-del-cacao-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "casa-del-cacao-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "dutchcraft-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "dutchcraft-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "dutchcraft-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "dutchcraft-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "nordisk-kakao-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "nordisk-kakao-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "nordisk-kakao-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "nordisk-kakao-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "fjordcocoa-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "fjordcocoa-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "fjordcocoa-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "fjordcocoa-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "copenhagen-cacao-lab-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "copenhagen-cacao-lab-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "copenhagen-cacao-lab-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "copenhagen-cacao-lab-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "arctic-bean-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "arctic-bean-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "arctic-bean-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "arctic-bean-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "london-cocoa-house-1": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "london-cocoa-house-2": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "london-cocoa-house-3": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    },
+    "london-cocoa-house-4": {
+      "description": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+    }
+  },
+  "profileData": {
+    "tagline": "Chokolade i små serier med regional karakter og omhyggelig teknik.",
+    "story": "Denne chokolademager arbejder i små serier med nøje udvalgt kakao, forfinede opskrifter og håndlavede detaljer. Hver kollektion afspejler værkstedet, håndværkstraditionen og en moderne tilgang til gaver og smagning.",
+    "productDescription": "Et håndlavet chokoladeudvalg fra denne skaber, fremstillet i små serier med balanceret tekstur og smag."
+  },
+  "adminShell": {
+    "badge": "ADMINPANEL",
+    "panel": "Adminpanel",
+    "menu": "Menu",
+    "closeNavigation": "Luk navigation",
+    "toggleNavigation": "Skift adminnavigation",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Produkter",
+      "sellerApprovals": "Sælgergodkendelser",
+      "categories": "Kategorier",
+      "orders": "Ordrer",
+      "activityLog": "Aktivitetslog",
+      "overview": "Oversigt"
+    }
+  },
+  "sellerShell": {
+    "badge": "SÆLGERDASHBOARD",
+    "portal": "Sælgerportal",
+    "menu": "Menu",
+    "closeNavigation": "Luk navigation",
+    "toggleNavigation": "Skift sælgernavigation",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Produkter",
+      "orders": "Ordrer",
+      "verification": "Verificering",
+      "overview": "Oversigt"
+    }
+  },
+  "whyDifferent": {
+    "title": "Derfor er vi anderledes!",
+    "tagline": "Ikke bare en almindelig chokoladebutik - vi gør det sjovere!",
+    "features": {
+      "passport": {
+        "title": "Chokoladepas",
+        "description": "Saml stempler fra forskellige lande og lås op for eksklusive belønninger.",
+        "button": "Begynd at samle"
+      },
+      "surprise": {
+        "title": "Overrask mig",
+        "description": "Eventyrlysten? Vi vælger en håndværksæske efter dine smagspræferencer.",
+        "button": "Overrask mig"
+      },
+      "corporate": {
+        "title": "Firmaportal",
+        "description": "Nem bulkbestilling med branded emballage til kunder og medarbejdere.",
+        "button": "Udforsk firma"
+      },
+      "sustainability": {
+        "title": "Bæredygtighedsløfte",
+        "description": "Vi samarbejder kun med chokolademagere med etisk sourcing og miljøvenlige metoder.",
+        "button": "Læs mere"
+      },
+      "discover": {
+        "title": "Opdag",
+        "description": "Udforsk nye smage og chokolademagere gennem vores kuraterede program.",
+        "button": "Begynd at udforske"
+      }
+    }
+  },
+  "shippingPackaging": {
+    "productTitle": "Forsendelse & emballage",
+    "profileTitle": "Standarder for forsendelse & emballage",
+    "standardsBadge": "Forsendelse håndteres af skaberen",
+    "productManagedByMaker": "Pakkes og sendes af chokolademageren med beskyttende standarder for chokolade.",
+    "profileManagedByMaker": "Hver chokolademager håndterer selv forsendelse. Disse standarder beskriver klargøring og beskyttelse til indenlandsk og europæisk levering.",
+    "shipsFrom": "Sendes fra",
+    "deliveryEstimate": "Leveringsestimat",
+    "shippingEstimate": "Forsendelsesestimat",
+    "giftReady": "Klar som gave",
+    "heatProtected": "Varmebeskyttet",
+    "ecoPackaging": "Miljøvenlig emballage",
+    "heatProtectionAvailable": "Varmebeskyttelse tilgængelig",
+    "giftPackagingAvailable": "Gaveemballage tilgængelig",
+    "summerShippingAvailable": "Sommerforsendelse tilgængelig",
+    "ecoPackagingAvailable": "Miljøvenlig emballage tilgængelig",
+    "domesticEuShipping": "Indenlandsk / EU-forsendelse",
+    "domesticAndEu": "Indenlandsk og EU-forsendelse",
+    "domesticOnly": "Indenlandsk forsendelse",
+    "deliveryBusinessDays": "{{range}} hverdage",
+    "deliveryEstimateFallback": "Bekræftes af skaberen",
+    "calculatedAtCheckout": "Beregnes af skaberen ved checkout",
+    "available": "Tilgængelig",
+    "onRequest": "På forespørgsel"
+  },
+  "productData": {
+    "demo-origin-noir-72": {
+      "description": "Et omhyggeligt færdiggjort chokoladeudvalg fra denne skaber, balanceret i tekstur, smag og gaveoplevelse.",
+      "story": "Fremstillet i små serier af skaberen og præget af europæisk håndværk, omhyggelig sourcing og en elegant smagsoplevelse."
+    },
+    "demo-maison-praline-box": {
+      "description": "Et omhyggeligt færdiggjort chokoladeudvalg fra denne skaber, balanceret i tekstur, smag og gaveoplevelse.",
+      "story": "Fremstillet i små serier af skaberen og præget af europæisk håndværk, omhyggelig sourcing og en elegant smagsoplevelse."
+    },
+    "demo-lavender-truffle-box": {
+      "description": "Et omhyggeligt færdiggjort chokoladeudvalg fra denne skaber, balanceret i tekstur, smag og gaveoplevelse.",
+      "story": "Fremstillet i små serier af skaberen og præget af europæisk håndværk, omhyggelig sourcing og en elegant smagsoplevelse."
+    },
+    "demo-alpine-milk-pralines": {
+      "description": "Et omhyggeligt færdiggjort chokoladeudvalg fra denne skaber, balanceret i tekstur, smag og gaveoplevelse.",
+      "story": "Fremstillet i små serier af skaberen og præget af europæisk håndværk, omhyggelig sourcing og en elegant smagsoplevelse."
+    },
+    "demo-vegan-cacao-selection": {
+      "description": "Et omhyggeligt færdiggjort chokoladeudvalg fra denne skaber, balanceret i tekstur, smag og gaveoplevelse.",
+      "story": "Fremstillet i små serier af skaberen og præget af europæisk håndværk, omhyggelig sourcing og en elegant smagsoplevelse."
+    },
+    "demo-celebration-bonbons": {
+      "description": "Et omhyggeligt færdiggjort chokoladeudvalg fra denne skaber, balanceret i tekstur, smag og gaveoplevelse.",
+      "story": "Fremstillet i små serier af skaberen og præget af europæisk håndværk, omhyggelig sourcing og en elegant smagsoplevelse."
+    }
+  }
 }

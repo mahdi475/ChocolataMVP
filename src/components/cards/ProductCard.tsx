@@ -7,6 +7,7 @@ import { addItem } from '../../store/slices/cartSlice';
 import { addNotification } from '../../store/slices/notificationSlice';
 import type { CartItem } from '../../store/slices/cartSlice';
 import { findChocolatierForProduct, getChocolatierProfilePath } from '../../lib/chocolatierMatcher';
+import { formatLocalizedLocation, translateLabel } from '../../lib/translationLabels';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import styles from './ProductCard.module.css';
@@ -48,7 +49,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const makerName = product.maker_name || 'Chocolata maker';
   const chocolatierMatch = findChocolatierForProduct(product);
   const makerProfilePath = chocolatierMatch ? getChocolatierProfilePath(chocolatierMatch.slug) : null;
-  const origin = [product.city, product.country].filter(Boolean).join(', ');
+  const origin = formatLocalizedLocation(t, product.city, product.country);
+  const productDescription = product.description
+    ? t(`ui:productData.${product.id}.description`, { defaultValue: product.description })
+    : '';
   const badges = product.badges?.length
     ? product.badges
     : [
@@ -72,7 +76,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     dispatch(addItem(cartItem));
     dispatch(addNotification({
       type: 'success',
-      message: `${product.name} added to cart!`,
+      message: t('ui:notifications.addedToCart', { product: product.name }),
       duration: 3000,
     }));
   };
@@ -84,7 +88,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       viewport={{ once: true }}
     >
       <Card className={styles.card}>
-        <Link to={`/product/${product.id}`} className={styles.imageLink} aria-label={`View ${product.name}`}>
+        <Link to={`/product/${product.id}`} className={styles.imageLink} aria-label={t('ui:productCard.viewProductAria', { product: product.name })}>
           <div className={styles.imageContainer}>
             {product.image_url ? (
               <img
@@ -104,8 +108,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
             ) : null}
             {(!product.image_url || product.image_url === '') && (
               <div className={styles.placeholder}>
-                <span>Chocolate</span>
-                <span>No Image</span>
+                <span>{t('ui:productCard.placeholderChocolate')}</span>
+                <span>{t('ui:productCard.noImage')}</span>
               </div>
             )}
             <div className={styles.priceBadge}>
@@ -115,7 +119,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               }).format(product.price)}
             </div>
             {product.cacao_percentage && (
-              <span className={styles.cacaoBadge}>{product.cacao_percentage}% cacao</span>
+              <span className={styles.cacaoBadge}>{t('ui:productCard.cacaoPercent', { percent: product.cacao_percentage })}</span>
             )}
             {isSoldOut && (
               <span className={styles.soldOutBadge}>{t('ui:productCard.outOfStock')}</span>
@@ -123,8 +127,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {isLowStock && (
               <span className={styles.lowStockBadge}>{t('ui:productCard.lowStock')}</span>
             )}
-            {product.description && (
-              <div className={styles.hoverOverlay}>{product.description}</div>
+            {productDescription && (
+              <div className={styles.hoverOverlay}>{productDescription}</div>
             )}
           </div>
         </Link>
@@ -135,7 +139,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <Link
                 to={makerProfilePath}
                 className={styles.makerLink}
-                aria-label={`View ${chocolatierMatch?.name || makerName} chocolatier profile`}
+                aria-label={t('ui:productCard.viewMakerProfileAria', { maker: chocolatierMatch?.name || makerName })}
               >
                 {chocolatierMatch?.name || makerName}
               </Link>
@@ -159,7 +163,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <Link
               to={makerProfilePath}
               className={styles.originLink}
-              aria-label={`View ${chocolatierMatch?.name || makerName} profile`}
+              aria-label={t('ui:productCard.viewMakerProfileAria', { maker: chocolatierMatch?.name || makerName })}
             >
               <MapPin className={styles.originIcon} />
               {origin}
@@ -171,13 +175,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </p>
           ) : null}
 
-          {product.description && (
-            <p className={styles.description}>{product.description}</p>
+          {productDescription && (
+            <p className={styles.description}>{productDescription}</p>
           )}
           {badges.length > 0 && (
             <div className={styles.badges}>
               {badges.slice(0, 3).map((badge) => (
-                <span key={badge} className={styles.badge}>{badge}</span>
+                <span key={badge} className={styles.badge}>{translateLabel(t, 'badges', badge)}</span>
               ))}
             </div>
           )}

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Sparkles } from 'lucide-react';
 import Badge from '../ui/Badge';
 import { CHOCOLATIERS } from '../../data/chocolatiers';
+import { formatLocalizedLocation, translateLabel } from '../../lib/translationLabels';
 import styles from './ChocolatiersStories.module.css';
 
 const FEATURED_CHOCOLATIER_SLUGS = [
@@ -53,7 +54,7 @@ const ChocolatiersStories = () => {
               <Link
                 to={`/chocolatiers/${chocolatier.slug}`}
                 className={styles.imageLink}
-                aria-label={`View ${chocolatier.name} chocolatier profile`}
+                aria-label={t('home.viewChocolatierProfileAria', { maker: chocolatier.name })}
               >
                 <div className={styles.imageContainer}>
                   <img
@@ -78,13 +79,15 @@ const ChocolatiersStories = () => {
                 <div className={styles.location}>
                   <MapPin className={styles.locationIcon} />
                   <span>
-                    {chocolatier.city}, {chocolatier.country}
+                    {formatLocalizedLocation(t, chocolatier.city, chocolatier.country)}
                   </span>
                 </div>
-                <p className={styles.description}>{chocolatier.tagline}</p>
+                <p className={styles.description}>
+                  {t(`chocolatierData.${chocolatier.slug}.tagline`, { defaultValue: chocolatier.tagline })}
+                </p>
                 <div className={styles.tags}>
                   {chocolatier.tags.slice(0, 3).map((tag) => (
-                    <span key={tag}>{tag}</span>
+                    <span key={tag}>{translateLabel(t, 'chocolatierTags', tag)}</span>
                   ))}
                 </div>
                 <Link to={`/chocolatiers/${chocolatier.slug}`} className={styles.profileLink}>

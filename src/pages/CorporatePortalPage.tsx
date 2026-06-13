@@ -1,5 +1,6 @@
 
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Gift, Briefcase, Award, PenTool, CheckCircle, Truck, ArrowRight } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
@@ -9,6 +10,8 @@ import executiveGiftImage from '../assets/products/luxury-praline-box.png';
 import tastingKitImage from '../assets/collections/tasting-flight.png';
 
 const CorporatePortalPage = () => {
+  const { t } = useTranslation('ui');
+
   return (
     <div className={styles.container}>
       {/* Hero Section */}
@@ -25,18 +28,15 @@ const CorporatePortalPage = () => {
           <div className={styles.heroGradient}></div>
         </div>
         <div className={styles.heroContent}>
-          <Badge variant="gold" className={styles.heroBadge}>Corporate Gifting, Elevated</Badge>
-          <h1 className={styles.heroTitle}>Make a Lasting <br /><span className={styles.highlight}>Impression</span></h1>
-          <p className={styles.heroSubtitle}>
-            Premium chocolate gifts tailored for your clients, employees, and events.
-            Custom branding, volume pricing, and white-glove concierge service.
-          </p>
+          <Badge variant="gold" className={styles.heroBadge}>{t('corporate.badge')}</Badge>
+          <h1 className={styles.heroTitle}>{t('corporate.heroTitle')} <br /><span className={styles.highlight}>{t('corporate.heroAccent')}</span></h1>
+          <p className={styles.heroSubtitle}>{t('corporate.heroSubtitle')}</p>
           <div className={styles.buttonGroup}>
             <Button variant="primary" size="lg" className={styles.ctaButton}>
-              Start a Quote
+              {t('corporate.startQuote')}
             </Button>
             <Button variant="outline" size="lg" className={styles.catalogButton}>
-              Download Catalog
+              {t('corporate.downloadCatalog')}
             </Button>
           </div>
         </div>
@@ -55,11 +55,8 @@ const CorporatePortalPage = () => {
             <div className={styles.iconBox}>
               <PenTool className={styles.icon} />
             </div>
-            <h3 className={styles.cardTitle}>Custom Branding</h3>
-            <p className={styles.cardText}>
-              Your logo, your colors. We offer fully customizable packaging options including sleeves,
-              ribbons, and gift cards to keep your brand front and center.
-            </p>
+            <h3 className={styles.cardTitle}>{t('corporate.customBrandingTitle')}</h3>
+            <p className={styles.cardText}>{t('corporate.customBrandingText')}</p>
           </motion.div>
 
           <motion.div
@@ -72,11 +69,8 @@ const CorporatePortalPage = () => {
             <div className={styles.iconBox}>
               <Award className={styles.icon} />
             </div>
-            <h3 className={styles.cardTitle}>Premium Quality</h3>
-            <p className={styles.cardText}>
-              Gifts that reflect your standards. Our chocolates are sourced from the world's finest
-              artisans, ensuring an unboxing experience that screams excellence.
-            </p>
+            <h3 className={styles.cardTitle}>{t('corporate.premiumQualityTitle')}</h3>
+            <p className={styles.cardText}>{t('corporate.premiumQualityText')}</p>
           </motion.div>
 
           <motion.div
@@ -89,11 +83,8 @@ const CorporatePortalPage = () => {
             <div className={styles.iconBox}>
               <Briefcase className={styles.icon} />
             </div>
-            <h3 className={styles.cardTitle}>Concierge Service</h3>
-            <p className={styles.cardText}>
-              Dedicated account managers to handle everything from address collection to
-              scheduling shipments. We do the heavy lifting, you get the credit.
-            </p>
+            <h3 className={styles.cardTitle}>{t('corporate.conciergeTitle')}</h3>
+            <p className={styles.cardText}>{t('corporate.conciergeText')}</p>
           </motion.div>
         </div>
       </div>
@@ -101,8 +92,8 @@ const CorporatePortalPage = () => {
       {/* How It Works */}
       <div className={styles.howItWorksRefined}>
         <div className={styles.sectionHeaderCentered}>
-          <h2 className={styles.sectionTitle}>Seamless Gifting Process</h2>
-          <p className={styles.sectionSubtitle}>From selection to delivery in three easy steps.</p>
+          <h2 className={styles.sectionTitle}>{t('corporate.processTitle')}</h2>
+          <p className={styles.sectionSubtitle}>{t('corporate.processSubtitle')}</p>
         </div>
 
         <div className={styles.stepsContainer}>
@@ -110,8 +101,8 @@ const CorporatePortalPage = () => {
             <div className={styles.stepNumber}>01</div>
             <div className={styles.stepContent}>
               <div className={styles.stepIconWrapper}><Gift className={styles.stepIcon} /></div>
-              <h3 className={styles.stepTitle}>Select Your Gift</h3>
-              <p className={styles.stepDesc}>Choose from our curated collections or build a custom assortment.</p>
+              <h3 className={styles.stepTitle}>{t('corporate.stepSelectTitle')}</h3>
+              <p className={styles.stepDesc}>{t('corporate.stepSelectText')}</p>
             </div>
           </div>
 
@@ -123,8 +114,8 @@ const CorporatePortalPage = () => {
             <div className={styles.stepNumber}>02</div>
             <div className={styles.stepContent}>
               <div className={styles.stepIconWrapper}><PenTool className={styles.stepIcon} /></div>
-              <h3 className={styles.stepTitle}>Customize & Brand</h3>
-              <p className={styles.stepDesc}>Add your logo, personal message, and choose your packaging finish.</p>
+              <h3 className={styles.stepTitle}>{t('corporate.stepCustomizeTitle')}</h3>
+              <p className={styles.stepDesc}>{t('corporate.stepCustomizeText')}</p>
             </div>
           </div>
 
@@ -136,8 +127,8 @@ const CorporatePortalPage = () => {
             <div className={styles.stepNumber}>03</div>
             <div className={styles.stepContent}>
               <div className={styles.stepIconWrapper}><Truck className={styles.stepIcon} /></div>
-              <h3 className={styles.stepTitle}>We Handle Delivery</h3>
-              <p className={styles.stepDesc}>Whether to one office or 1,000 individual homes, we ensure successful arrival.</p>
+              <h3 className={styles.stepTitle}>{t('corporate.stepDeliveryTitle')}</h3>
+              <p className={styles.stepDesc}>{t('corporate.stepDeliveryText')}</p>
             </div>
           </div>
         </div>
@@ -147,48 +138,45 @@ const CorporatePortalPage = () => {
       <div className={styles.collectionsSection}>
         <div className={styles.splitLayout}>
           <div className={styles.collectionText}>
-            <Badge variant="gold">For Every Occasion</Badge>
-            <h2 className={styles.sectionTitle}>Curated for Business</h2>
-            <p className={styles.collectionDesc}>
-              Whether you need a thousand boxes for a conference or distinct luxury sets for your board members,
-              we have categories designed for corporate needs.
-            </p>
+            <Badge variant="gold">{t('corporate.occasionBadge')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('corporate.businessTitle')}</h2>
+            <p className={styles.collectionDesc}>{t('corporate.businessText')}</p>
 
             <ul className={styles.featureList}>
               <li className={styles.featureItem}>
                 <CheckCircle className={styles.checkIcon} />
-                <span>Client Appreciation & Retention</span>
+                <span>{t('corporate.clientAppreciation')}</span>
               </li>
               <li className={styles.featureItem}>
                 <CheckCircle className={styles.checkIcon} />
-                <span>Employee Onboarding & Milestones</span>
+                <span>{t('corporate.employeeOnboarding')}</span>
               </li>
               <li className={styles.featureItem}>
                 <CheckCircle className={styles.checkIcon} />
-                <span>Virtual Event Tasting Kits</span>
+                <span>{t('corporate.virtualEvents')}</span>
               </li>
               <li className={styles.featureItem}>
                 <CheckCircle className={styles.checkIcon} />
-                <span>Holiday Gifting Campaigns</span>
+                <span>{t('corporate.holidayGifting')}</span>
               </li>
             </ul>
 
-            <Button variant="primary" className={styles.collectionBtn}>View Full Catalog</Button>
+            <Button variant="primary" className={styles.collectionBtn}>{t('corporate.viewFullCatalog')}</Button>
           </div>
 
           <div className={styles.collectionGrid}>
             <div className={styles.mockProductCard}>
-              <img src={executiveGiftImage} alt="Luxury chocolate gift box" className={styles.productImg} loading="lazy" />
+              <img src={executiveGiftImage} alt={t('corporate.executiveAlt')} className={styles.productImg} loading="lazy" />
               <div className={styles.productInfo}>
-                <span className={styles.productTag}>Best Seller</span>
-                <h4>The Executive Suite</h4>
+                <span className={styles.productTag}>{t('corporate.bestSeller')}</span>
+                <h4>{t('corporate.executiveSuite')}</h4>
               </div>
             </div>
             <div className={styles.mockProductCard}>
-              <img src={tastingKitImage} alt="Premium chocolate tasting set" className={styles.productImg} loading="lazy" />
+              <img src={tastingKitImage} alt={t('corporate.tastingAlt')} className={styles.productImg} loading="lazy" />
               <div className={styles.productInfo}>
-                <span className={styles.productTag}>Event Favorite</span>
-                <h4>Virtual Tasting Kit</h4>
+                <span className={styles.productTag}>{t('corporate.eventFavorite')}</span>
+                <h4>{t('corporate.virtualTastingKit')}</h4>
               </div>
             </div>
           </div>
@@ -199,15 +187,13 @@ const CorporatePortalPage = () => {
       <div className={styles.conciergeSection}>
         <div className={styles.conciergeContainer}>
           <div className={styles.conciergeContent}>
-            <h2 className={styles.conciergeTitle}>Need help planning?</h2>
-            <p className={styles.conciergeDesc}>
-              Our gifting specialists are ready to help you curate the perfect experience for your budget and timeline.
-            </p>
+            <h2 className={styles.conciergeTitle}>{t('corporate.needHelp')}</h2>
+            <p className={styles.conciergeDesc}>{t('corporate.needHelpText')}</p>
             <div className={styles.formVisual}>
-              <div className={styles.fakeInput}>Enter your work email...</div>
-              <Button variant="gold" className={styles.submitBtn}>Get Connected</Button>
+              <div className={styles.fakeInput}>{t('corporate.emailPrompt')}</div>
+              <Button variant="gold" className={styles.submitBtn}>{t('corporate.getConnected')}</Button>
             </div>
-            <p className={styles.smallPrint}>Volume discounts available for orders over 50 units.</p>
+            <p className={styles.smallPrint}>{t('corporate.volumeDiscount')}</p>
           </div>
         </div>
       </div>

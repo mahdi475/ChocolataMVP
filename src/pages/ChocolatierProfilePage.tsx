@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   MapPin,
   ArrowLeft,
@@ -8,14 +9,21 @@ import {
   Plus,
   Minus,
   Leaf,
+  Gift,
   Heart,
   Users,
   Hammer,
+  PackageCheck,
+  ShieldCheck,
+  ThermometerSun,
+  Truck,
 } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import { useCart } from '../contexts/CartContext';
 import { getChocolatierBySlug, type Product, type ProductTag } from '../data/chocolatiers';
+import { getShippingPackaging } from '../lib/shippingPackaging';
+import { translateLabel } from '../lib/translationLabels';
 import styles from './ChocolatierProfilePage.module.css';
 
 const FILTERS: { key: ProductTag | 'all'; label: string }[] = [
@@ -24,8 +32,8 @@ const FILTERS: { key: ProductTag | 'all'; label: string }[] = [
   { key: 'milk', label: 'Milk' },
   { key: 'white', label: 'White' },
   { key: 'vegan', label: 'Vegan' },
-  { key: 'nut-free', label: 'Nut‑free' },
-  { key: 'single-origin', label: 'Single‑origin' },
+  { key: 'nut-free', label: 'Nut-free' },
+  { key: 'single-origin', label: 'Single-origin' },
   { key: 'seasonal', label: 'Seasonal' },
 ];
 
@@ -38,6 +46,7 @@ const ProductCard = ({
   product: Product;
   chocolatierName: string;
 }) => {
+  const { t } = useTranslation('ui');
   const { addToCart, setIsCartOpen } = useCart();
   const [qty, setQty] = useState(1);
 
@@ -45,7 +54,7 @@ const ProductCard = ({
     for (let i = 0; i < qty; i++) {
       addToCart({
         productId: product.id,
-        name: `${product.name} — ${chocolatierName}`,
+        name: `${product.name} - ${chocolatierName}`,
         price: product.price,
         imageUrl: product.image,
       });
@@ -68,11 +77,11 @@ const ProductCard = ({
       </div>
       <div className={styles.productBody}>
         <h3 className={styles.productName}>{product.name}</h3>
-        <p className={styles.productDescription}>{product.description}</p>
+        <p className={styles.productDescription}>{t(`chocolatierProducts.${product.id}.description`, { defaultValue: product.description })}</p>
         <div className={styles.productTags}>
-          {product.tags.map((t) => (
-            <span key={t} className={styles.productTag}>
-              {t}
+          {product.tags.map((tag) => (
+            <span key={tag} className={styles.productTag}>
+              {translateLabel(t, 'filters', tag)}
             </span>
           ))}
         </div>
@@ -83,7 +92,7 @@ const ProductCard = ({
               type="button"
               className={styles.qtyBtn}
               onClick={() => setQty((q) => Math.max(1, q - 1))}
-              aria-label="Decrease quantity"
+              aria-label={t('cart.decrease')}
               data-testid={`qty-minus-${product.id}`}
             >
               <Minus size={14} />
@@ -95,7 +104,7 @@ const ProductCard = ({
               type="button"
               className={styles.qtyBtn}
               onClick={() => setQty((q) => q + 1)}
-              aria-label="Increase quantity"
+              aria-label={t('cart.increase')}
               data-testid={`qty-plus-${product.id}`}
             >
               <Plus size={14} />
@@ -108,7 +117,7 @@ const ProductCard = ({
           onClick={handleAdd}
           data-testid={`add-to-cart-${product.id}`}
         >
-          <ShoppingBag size={16} /> Add to Cart
+          <ShoppingBag size={16} /> {t('productCard.addToCart')}
         </Button>
       </div>
     </motion.div>
@@ -116,6 +125,7 @@ const ProductCard = ({
 };
 
 const ChocolatierProfilePage = () => {
+  const { t } = useTranslation('ui');
   const { slug } = useParams<{ slug: string }>();
   const chocolatier = getChocolatierBySlug(slug);
   const [activeFilter, setActiveFilter] = useState<ProductTag | 'all'>('all');
@@ -137,6 +147,56 @@ const ChocolatierProfilePage = () => {
     chocolatier.products[1]?.image,
     chocolatier.products[2]?.image,
   ].filter(Boolean) as string[];
+  const shippingPackaging = getShippingPackaging(chocolatier.shippingPackaging, {
+    shipsFromCountry: chocolatier.country,
+    shipsFromCity: chocolatier.city,
+  });
+  const shipsFrom = [shippingPackaging.shipsFromCity, shippingPackaging.shipsFromCountry].filter(Boolean).join(', ');
+  const deliveryEstimate = shippingPackaging.deliveryEstimate
+    ? t('shippingPackaging.deliveryBusinessDays', { range: shippingPackaging.deliveryEstimate })
+    : t('shippingPackaging.deliveryEstimateFallback');
+  const shippingStandardItems = [
+    {
+      icon: Truck,
+      label: t('shippingPackaging.shipsFrom'),
+      value: shipsFrom || t('productDetail.europeanAtelier'),
+    },
+    {
+      icon: ShieldCheck,
+      label: t('shippingPackaging.deliveryEstimate'),
+      value: deliveryEstimate,
+    },
+    {
+      icon: PackageCheck,
+      label: t('shippingPackaging.shippingEstimate'),
+      value: t('shippingPackaging.calculatedAtCheckout'),
+    },
+    {
+      icon: Truck,
+      label: t('shippingPackaging.domesticEuShipping'),
+      value: shippingPackaging.euShipping ? t('shippingPackaging.domesticAndEu') : t('shippingPackaging.domesticOnly'),
+    },
+    {
+      icon: ThermometerSun,
+      label: t('shippingPackaging.heatProtectionAvailable'),
+      value: shippingPackaging.heatProtection ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+    {
+      icon: Gift,
+      label: t('shippingPackaging.giftPackagingAvailable'),
+      value: shippingPackaging.giftPackaging ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+    {
+      icon: ShieldCheck,
+      label: t('shippingPackaging.summerShippingAvailable'),
+      value: shippingPackaging.summerShipping ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+    {
+      icon: Leaf,
+      label: t('shippingPackaging.ecoPackagingAvailable'),
+      value: shippingPackaging.ecoPackaging ? t('shippingPackaging.available') : t('shippingPackaging.onRequest'),
+    },
+  ];
 
   return (
     <div className={styles.container} data-testid="chocolatier-profile-page">
@@ -154,9 +214,9 @@ const ChocolatierProfilePage = () => {
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <Link to="/chocolatiers" className={styles.backLink} data-testid="back-to-chocolatiers">
-            <ArrowLeft size={16} /> Back to all chocolatiers
+            <ArrowLeft size={16} /> {t('chocolatierProfile.backToAll')}
           </Link>
-          <Badge variant="gold">European Chocolatier</Badge>
+          <Badge variant="gold">{t('chocolatierProfile.europeanChocolatier')}</Badge>
           <h1 className={styles.heroName}>{chocolatier.name}</h1>
           <div className={styles.heroLocation}>
             <MapPin size={18} />
@@ -164,7 +224,7 @@ const ChocolatierProfilePage = () => {
               {chocolatier.city}, {chocolatier.country} <span aria-hidden="true">{chocolatier.flag}</span>
             </span>
           </div>
-          <p className={styles.heroTagline}>{chocolatier.tagline}</p>
+          <p className={styles.heroTagline}>{t(`chocolatierData.${chocolatier.slug}.tagline`, { defaultValue: chocolatier.tagline })}</p>
         </div>
       </motion.section>
 
@@ -172,9 +232,27 @@ const ChocolatierProfilePage = () => {
       <section className={styles.storySection} data-testid="story-section">
         <div className={styles.storyInner}>
           <div className={styles.storyText}>
-            <Badge variant="gold">Our Story</Badge>
-            <h2 className={styles.sectionTitle}>The story behind {chocolatier.name}</h2>
-            <p className={styles.storyParagraph}>{chocolatier.story}</p>
+            <Badge variant="gold">{t('chocolatierProfile.ourStory')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('chocolatierProfile.storyBehind', { maker: chocolatier.name })}</h2>
+            <p className={styles.storyParagraph}>{t(`chocolatierData.${chocolatier.slug}.story`, { defaultValue: chocolatier.story })}</p>
+            <dl className={styles.valueCard}>
+              <div>
+                <dt>{t('chocolatierProfile.aboutTheChocolatier')}</dt>
+                <dd>{t(`chocolatierData.${chocolatier.slug}.tagline`, { defaultValue: chocolatier.tagline })}</dd>
+              </div>
+              <div>
+                <dt>{t('chocolatierProfile.madeIn')}</dt>
+                <dd>{chocolatier.city}, {chocolatier.country}</dd>
+              </div>
+              <div>
+                <dt>{t('chocolatierProfile.founded')}</dt>
+                <dd>{t(`chocolatierData.${chocolatier.slug}.founded`, { defaultValue: t('chocolatierProfile.smallBatchAtelier') })}</dd>
+              </div>
+              <div>
+                <dt>{t('chocolatierProfile.specialties')}</dt>
+                <dd>{chocolatier.tags.slice(0, 4).map((tag) => translateLabel(t, 'chocolatierTags', tag)).join(', ')}</dd>
+              </div>
+            </dl>
           </div>
           <div className={styles.storyPortrait}>
             <img src={chocolatier.portrait} alt={`${chocolatier.name} portrait`} className={styles.storyImage} />
@@ -182,11 +260,35 @@ const ChocolatierProfilePage = () => {
         </div>
       </section>
 
+      <section className={styles.shippingStandardsSection} data-testid="shipping-packaging-standards">
+        <div className={styles.shippingStandardsInner}>
+          <div className={styles.shippingStandardsHeader}>
+            <Badge variant="gold">{t('shippingPackaging.standardsBadge')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('shippingPackaging.profileTitle')}</h2>
+            <p className={styles.sectionSubtitle}>{t('shippingPackaging.profileManagedByMaker')}</p>
+          </div>
+          <div className={styles.shippingStandardsGrid}>
+            {shippingStandardItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.label} className={styles.shippingStandardCard}>
+                  <Icon className={styles.shippingStandardIcon} />
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.value}</small>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Gallery */}
       <section className={styles.gallerySection} data-testid="gallery-section">
         <div className={styles.galleryHeader}>
-          <h2 className={styles.sectionTitle}>Inside the workshop</h2>
-          <p className={styles.sectionSubtitle}>Portrait, workshop, store and product close‑ups.</p>
+          <h2 className={styles.sectionTitle}>{t('chocolatierProfile.insideWorkshop')}</h2>
+          <p className={styles.sectionSubtitle}>{t('chocolatierProfile.gallerySubtitle')}</p>
         </div>
         <div className={styles.galleryGrid}>
           {gallery.map((src, i) => (
@@ -201,12 +303,12 @@ const ChocolatierProfilePage = () => {
       <section className={styles.productsSection} data-testid="products-section">
         <div className={styles.productsHeader}>
           <div>
-            <Badge variant="gold">Shop the Maker</Badge>
-            <h2 className={styles.sectionTitle}>Hand-finished chocolates</h2>
+            <Badge variant="gold">{t('chocolatierProfile.shopMaker')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('chocolatierProfile.handFinished')}</h2>
           </div>
         </div>
 
-        <div className={styles.filters} role="tablist" aria-label="Filter products">
+        <div className={styles.filters} role="tablist" aria-label={t('chocolatierProfile.filterProducts')}>
           {FILTERS.map((f) => (
             <button
               key={f.key}
@@ -216,7 +318,7 @@ const ChocolatierProfilePage = () => {
               role="tab"
               aria-selected={activeFilter === f.key}
             >
-              {f.label}
+              {translateLabel(t, 'filters', f.label)}
             </button>
           ))}
         </div>
@@ -229,7 +331,7 @@ const ChocolatierProfilePage = () => {
           </div>
         ) : (
           <div className={styles.emptyProducts} data-testid="empty-products">
-            <p>No products match this filter yet — try another.</p>
+            <p>{t('chocolatierProfile.emptyProducts')}</p>
           </div>
         )}
       </section>
@@ -238,8 +340,8 @@ const ChocolatierProfilePage = () => {
       <section className={styles.valuesSection} data-testid="values-section">
         <div className={styles.valuesInner}>
           <div className={styles.valuesHeader}>
-            <Badge variant="gold">What we stand for</Badge>
-            <h2 className={styles.sectionTitle}>Our values</h2>
+            <Badge variant="gold">{t('chocolatierProfile.whatWeStandFor')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('chocolatierProfile.ourValues')}</h2>
           </div>
           <div className={styles.valuesGrid}>
             {chocolatier.values.map((v, i) => {
@@ -249,8 +351,8 @@ const ChocolatierProfilePage = () => {
                   <div className={styles.valueIconWrap}>
                     <Icon size={22} />
                   </div>
-                  <h3 className={styles.valueTitle}>{v.title}</h3>
-                  <p className={styles.valueDescription}>{v.description}</p>
+                  <h3 className={styles.valueTitle}>{translateLabel(t, 'valueTitles', v.title)}</h3>
+                  <p className={styles.valueDescription}>{translateLabel(t, 'valueDescriptions', v.description)}</p>
                 </div>
               );
             })}
@@ -261,15 +363,23 @@ const ChocolatierProfilePage = () => {
       {/* CTA */}
       <section className={styles.ctaSection} data-testid="cta-section">
         <div className={styles.ctaInner}>
-          <h2 className={styles.ctaTitle}>Browse the full range from {chocolatier.name}</h2>
+          <h2 className={styles.ctaTitle}>{t('chocolatierProfile.browseRange', { maker: chocolatier.name })}</h2>
           <p className={styles.ctaSubtitle}>
-            Truffles, pralines, bonbons and single-origin bars — shipped from {chocolatier.city} across Europe.
+            {t('chocolatierProfile.ctaSubtitle', { city: chocolatier.city })}
           </p>
           <Link to="/catalog" className={styles.ctaLink}>
             <Button variant="gold" size="lg" data-testid="cta-browse-button">
-              Browse All Products
+              {t('chocolatierProfile.browseAllProducts')}
             </Button>
           </Link>
+          <div className={styles.filters}>
+            <Link to="/catalog" className={styles.filterChip}>{t('chocolatierProfile.viewProducts')}</Link>
+            <a href={`mailto:hello@chocolata.example?subject=${encodeURIComponent(chocolatier.name)}`} className={styles.filterChip}>{t('chocolatierProfile.contactMaker')}</a>
+            <Link to="/catalog" className={styles.filterChip}>{t('chocolatierProfile.visitShop')}</Link>
+            <span className={styles.filterChip}>{t('chocolatierProfile.awards')}</span>
+            <span className={styles.filterChip}>{t('chocolatierProfile.ingredients')}</span>
+            <span className={styles.filterChip}>{t('chocolatierProfile.sustainability')}</span>
+          </div>
         </div>
       </section>
     </div>

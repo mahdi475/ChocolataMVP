@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Card from '../ui/Card';
 import styles from './PaymentMethodSelector.module.css';
 import visaLogo from '../../pages/assets/Version=Logo.jpg';
@@ -14,6 +15,7 @@ interface PaymentMethodSelectorProps {
 }
 
 const PaymentMethodSelector = ({ value, onChange }: PaymentMethodSelectorProps) => {
+  const { t } = useTranslation('ui');
   const methods: { 
     id: PaymentMethod; 
     name: string; 
@@ -23,35 +25,35 @@ const PaymentMethodSelector = ({ value, onChange }: PaymentMethodSelectorProps) 
   }[] = [
     {
       id: 'card',
-      name: 'Credit/Debit Card',
+      name: t('checkout.cardName'),
       icon: (
         <div className={styles.cardLogos}>
           <img src={visaLogo} alt="Visa" className={styles.paymentLogo} />
           <img src={mastercardLogo} alt="Mastercard" className={styles.paymentLogo} />
         </div>
       ),
-      description: 'Visa, Mastercard, Amex',
+      description: t('checkout.cardDescription'),
       isImage: true,
     },
     {
       id: 'klarna',
       name: 'Klarna',
       icon: <img src={klarnaLogo} alt="Klarna" className={styles.paymentLogo} />,
-      description: 'Pay later or in installments',
+      description: t('checkout.klarnaDescription'),
       isImage: true,
     },
     {
       id: 'paypal',
       name: 'PayPal',
       icon: <img src={paypalLogo} alt="PayPal" className={styles.paymentLogo} />,
-      description: 'Pay with your PayPal account',
+      description: t('checkout.paypalDescription'),
       isImage: true,
     },
   ];
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Payment Method</h3>
+      <h3 className={styles.title}>{t('checkout.paymentMethod')}</h3>
       <div className={styles.methods}>
         {methods.map((method) => (
           <Card

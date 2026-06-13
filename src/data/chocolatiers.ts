@@ -18,6 +18,7 @@ import bonbons from '../assets/collections/lunar-gold-bonbons.png';
 import tastingBar from '../assets/collections/tasting-flight.png';
 import giftBox from '../assets/collections/office-praline-box.png';
 import centerpiece from '../assets/collections/celebration-bonbons.png';
+import type { ShippingPackagingInfo } from '../lib/shippingPackaging';
 
 export type ProductTag =
   | 'dark'
@@ -48,6 +49,7 @@ export interface Chocolatier {
   portrait: string;
   tags: string[];
   values: { title: string; description: string }[];
+  shippingPackaging?: ShippingPackagingInfo;
   products: Product[];
 }
 
@@ -62,6 +64,18 @@ const DEFAULT_VALUES = [
   { title: 'Craftsmanship', description: 'Every piece hand-finished in small batches by trained artisans.' },
 ];
 
+const buildShippingPackaging = (country: string, city: string): ShippingPackagingInfo => ({
+  shipsFromCountry: country,
+  shipsFromCity: city,
+  deliveryEstimate: '2-5',
+  domesticShipping: true,
+  euShipping: true,
+  heatProtection: true,
+  giftPackaging: true,
+  summerShipping: true,
+  ecoPackaging: true,
+});
+
 export const CHOCOLATIERS: Chocolatier[] = [
   {
     slug: 'maison-deluxe',
@@ -75,6 +89,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: maisonDeluxe,
     tags: ['pralines', 'ganache', 'luxury', 'traditional'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Belgium', 'Brussels'),
     products: buildProducts('maison-deluxe', [
       { name: 'Signature Praline Box', description: '12 hand-finished pralines with seasonal infusions.', price: 32.0, image: pralines, tags: ['milk', 'dark', 'single-origin'] },
       { name: 'Dark Ganache Truffles', description: '70% single-origin dark ganache, dusted in cocoa.', price: 24.0, image: truffles, tags: ['dark', 'vegan', 'nut-free'] },
@@ -94,6 +109,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: alpenschoggi,
     tags: ['milk chocolate', 'family business', 'creamy', 'alpine'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Switzerland', 'ZÃ¼rich'),
     products: buildProducts('alpenschoggi', [
       { name: 'Alpine Milk Bar', description: '38% milk chocolate with fresh alpine cream.', price: 12.0, image: tastingBar, tags: ['milk'] },
       { name: 'Hazelnut Pralines', description: 'Roasted Piemonte hazelnuts in milk ganache.', price: 26.0, image: pralines, tags: ['milk'] },
@@ -113,6 +129,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: edelkakao,
     tags: ['single origin', 'artisan', 'elegant', 'dark chocolate'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Austria', 'Vienna'),
     products: buildProducts('edelkakao', [
       { name: 'Peru 72% Single-Origin Bar', description: 'Chuncho cacao from the Cusco valley.', price: 14.0, image: tastingBar, tags: ['dark', 'vegan', 'single-origin', 'nut-free'] },
       { name: 'Madagascar 75% Bar', description: 'Bright red-fruit and citrus notes.', price: 14.0, image: tastingBar, tags: ['dark', 'vegan', 'single-origin', 'nut-free'] },
@@ -132,6 +149,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: cioccolatoFiorentino,
     tags: ['orange zest', 'olive oil chocolate', 'artisanal', 'Italian'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Italy', 'Florence'),
     products: buildProducts('cioccolato-fiorentino', [
       { name: 'Blood Orange Tablet', description: 'Dark 65% with candied Sicilian blood orange.', price: 13.0, image: tastingBar, tags: ['dark', 'vegan', 'nut-free'] },
       { name: 'Olio & Cacao Bar', description: 'Dark chocolate enriched with Tuscan EVOO.', price: 15.0, image: tastingBar, tags: ['dark', 'vegan', 'nut-free'] },
@@ -151,6 +169,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: atelierDuCacao,
     tags: ['truffles', 'ganache', 'luxury', 'French'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('France', 'Lyon'),
     products: buildProducts('atelier-du-cacao', [
       { name: 'Lavender Truffles', description: 'Provence lavender ganache, dark chocolate shell.', price: 26.0, image: truffles, tags: ['dark', 'nut-free'] },
       { name: 'Caramel Beurre Salé', description: 'Brittany salted caramel pralines.', price: 28.0, image: pralines, tags: ['milk'] },
@@ -170,6 +189,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: casaDelCacao,
     tags: ['bean-to-bar', 'chili chocolate', 'Mediterranean', 'bold'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Spain', 'Barcelona'),
     products: buildProducts('casa-del-cacao', [
       { name: 'Chili & Cacao Bar', description: 'Dark 70% with smoky chipotle chili.', price: 13.0, image: tastingBar, tags: ['dark', 'vegan', 'nut-free'] },
       { name: 'Saffron Bonbons', description: 'White chocolate ganache with Spanish saffron.', price: 30.0, image: bonbons, tags: ['white'] },
@@ -189,6 +209,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: dutchcraft,
     tags: ['smooth', 'innovative', 'caramel', 'Dutch'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Netherlands', 'Amsterdam'),
     products: buildProducts('dutchcraft', [
       { name: 'Stroopwafel Bar', description: 'Milk chocolate with stroopwafel crumb.', price: 12.0, image: tastingBar, tags: ['milk'] },
       { name: 'Gin Botanical Pralines', description: 'Pralines infused with juniper and citrus.', price: 28.0, image: pralines, tags: ['milk'] },
@@ -208,6 +229,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: nordiskKakao,
     tags: ['ethical', 'minimalist', 'Nordic', 'dark chocolate'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Sweden', 'Gothenburg'),
     products: buildProducts('nordisk-kakao', [
       { name: 'Ren 70% Bar', description: 'Three ingredients. Pure dark.', price: 13.0, image: tastingBar, tags: ['dark', 'vegan', 'nut-free', 'single-origin'] },
       { name: 'Lakrits Truffles', description: 'Dark truffles with Nordic liquorice root.', price: 24.0, image: truffles, tags: ['dark', 'vegan'] },
@@ -227,6 +249,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: fjordcocoa,
     tags: ['sea salt', 'dark chocolate', 'natural', 'handcrafted'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Norway', 'Bergen'),
     products: buildProducts('fjordcocoa', [
       { name: 'Sea Salt Dark Bar', description: 'Dark 72% topped with Arctic sea salt flakes.', price: 13.0, image: tastingBar, tags: ['dark', 'vegan', 'nut-free'] },
       { name: 'Lingonberry Bonbons', description: 'Wild lingonberry ganache in dark shells.', price: 28.0, image: bonbons, tags: ['dark', 'nut-free'] },
@@ -246,6 +269,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: copenhagenCacaoLab,
     tags: ['experimental', 'design', 'modern', 'bean-to-bar'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Denmark', 'Copenhagen'),
     products: buildProducts('copenhagen-cacao-lab', [
       { name: 'Miso Caramel Bar', description: 'Dark chocolate, white miso, caramel.', price: 14.0, image: tastingBar, tags: ['dark'] },
       { name: 'Fermented Berry Bonbons', description: 'Wild Nordic berries, ferment-led ganache.', price: 30.0, image: bonbons, tags: ['dark'] },
@@ -265,6 +289,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: arcticBean,
     tags: ['pure', 'clean', 'minimal', 'dark chocolate'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('Finland', 'Helsinki'),
     products: buildProducts('arctic-bean', [
       { name: 'Pure 75% Bar', description: 'Two ingredients. Single-origin Ecuador.', price: 13.0, image: tastingBar, tags: ['dark', 'vegan', 'single-origin', 'nut-free'] },
       { name: 'Pure 85% Bar', description: 'Two ingredients. Single-origin Tanzania.', price: 13.0, image: tastingBar, tags: ['dark', 'vegan', 'single-origin', 'nut-free'] },
@@ -284,6 +309,7 @@ export const CHOCOLATIERS: Chocolatier[] = [
     portrait: londonCocoaHouse,
     tags: ['classic', 'modern', 'truffles', 'British'],
     values: DEFAULT_VALUES,
+    shippingPackaging: buildShippingPackaging('England', 'London'),
     products: buildProducts('london-cocoa-house', [
       { name: 'Earl Grey Truffles', description: 'Black tea ganache in dark chocolate.', price: 26.0, image: truffles, tags: ['dark', 'nut-free'] },
       { name: 'Sticky Toffee Pralines', description: 'Salted toffee in milk chocolate shells.', price: 28.0, image: pralines, tags: ['milk'] },
