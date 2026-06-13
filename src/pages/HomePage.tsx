@@ -1,29 +1,32 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, Gift, Heart, Coffee, Leaf } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabaseClient';
 import Button from '../components/ui/Button';
 
 import Badge from '../components/ui/Badge';
 import ProductCard, { type Product } from '../components/cards/ProductCard';
-import { demoCategories, demoProducts } from '../data/demoCatalog';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-import ChocolatiersStories from '../components/sections/ChocolatiersStories';
+import { demoProducts } from '../data/demoCatalog';
+import { getCachedHomepageData, loadHomepageData } from '../lib/homepageData';
 import styles from './HomePage.module.css';
+import heroChocolateImage from '../assets/hero/luxury-chocolate-atelier-hero.png';
 import spotlightImage from './assets/Gemini_Generated_Image_fi49w2fi49w2fi49.png';
 
-interface Category {
-  id: string;
-  name: string;
-  slug?: string;
-}
+const ChocolatiersStories = lazy(() => import('../components/sections/ChocolatiersStories'));
 
 const Hero = () => {
   return (
     <section className={styles.hero}>
       <div className={styles.heroBackground}>
+        <img
+          src={heroChocolateImage}
+          alt=""
+          className={styles.heroImage}
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+        />
         <div className={styles.heroOverlay}></div>
       </div>
 
@@ -79,7 +82,23 @@ const Hero = () => {
   );
 };
 
-const CategorySection = ({ categories }: { categories: Category[] }) => {
+const CategorySection = () => {
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const discoveryCategories = [
+    { name: 'Belgian Pralines', to: '/catalog?country=Belgium&types=Pralines', icon: 'truffles' },
+    { name: 'Artisan Truffles', to: '/catalog?types=Truffles', icon: 'truffles' },
+    { name: 'Dark Chocolate', to: '/catalog?category=dark&types=Dark', icon: 'dark' },
+    { name: 'Gift Boxes', to: '/catalog?occasion=Gift%20Box', icon: 'gifts' },
+    { name: 'Bean-to-Bar', to: '/catalog?advanced=Bean-to-Bar', icon: 'dark' },
+    { name: 'Vegan Chocolate', to: '/catalog?dietary=Vegan', icon: 'vegan' },
+    { name: 'Milk Chocolate', to: '/catalog?category=milk&types=Milk', icon: 'milk' },
+    { name: 'Organic Chocolate', to: '/catalog?dietary=Organic', icon: 'vegan' },
+    { name: 'Single-Origin', to: '/catalog?flavors=Cocoa%20Nibs&advanced=Bean-to-Bar', icon: 'dark' },
+    { name: 'Corporate Gifts', to: '/corporate-portal', icon: 'gifts' },
+    { name: 'Award-Winning', to: '/catalog?advanced=Award%20Winning', icon: 'white' },
+    { name: 'Seasonal Collections', to: '/collections', icon: 'gifts' },
+  ];
+  const visibleCategories = showAllCategories ? discoveryCategories : discoveryCategories.slice(0, 8);
   const icons: Record<string, React.ReactNode> = {
     dark: <Coffee className={styles.categoryIcon} />,
     milk: <Heart className={styles.categoryIcon} />,
@@ -94,22 +113,34 @@ const CategorySection = ({ categories }: { categories: Category[] }) => {
       <div className={styles.categoryContainer}>
         <div className={styles.categoryHeader}>
           <h2 className={styles.categoryTitle}>Explore by Taste</h2>
+          <p className={styles.categorySubtitle}>
+            Start with the most-loved chocolate journeys, from Belgian pralines to single-origin bars.
+          </p>
         </div>
         <div className={styles.categoryGrid}>
-          {categories.map((cat) => (
+          {visibleCategories.map((cat) => (
             <Link
-              to={`/catalog?category=${cat.slug || cat.name.toLowerCase()}`}
-              key={cat.id}
+              to={cat.to}
+              key={cat.name}
               className={styles.categoryCard}
             >
               <div className={styles.categoryIconWrapper}>
-                {icons[cat.slug || cat.name.toLowerCase()] || (
+                {icons[cat.icon] || (
                   <Star className={styles.categoryIcon} />
                 )}
               </div>
               <span className={styles.categoryName}>{cat.name}</span>
             </Link>
           ))}
+        </div>
+        <div className={styles.categoryMore}>
+          <button
+            type="button"
+            className={styles.categoryMoreButton}
+            onClick={() => setShowAllCategories((current) => !current)}
+          >
+            {showAllCategories ? 'Show Less' : 'View More'}
+          </button>
         </div>
       </div>
     </section>
@@ -261,9 +292,9 @@ const Newsletter = () => {
 const HomePage = () => {
   const { user, role } = useAuth();
   const navigate = useNavigate();
-  const [newProducts, setNewProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cachedHomepageData = getCachedHomepageData();
+  const [newProducts, setNewProducts] = useState<Product[]>(cachedHomepageData?.products || demoProducts.slice(0, 6));
+  const [renderDeferredSections, setRenderDeferredSections] = useState(false);
 
   // Redirect authenticated users to their appropriate dashboard
   useEffect(() => {
@@ -288,53 +319,37 @@ const HomePage = () => {
     }
   }, [user, role, navigate]);
 
-  // Fetch products and categories from Supabase
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [productsResult, categoriesResult] = await Promise.all([
-          supabase
-            .from('products')
-            .select('*')
-            .eq('is_active', true)
-            .order('created_at', { ascending: false })
-            .limit(6),
-          supabase.from('categories').select('*').order('display_order', { ascending: true }).order('name', { ascending: true }),
-        ]);
+    let isMounted = true;
 
-        if (productsResult.error) {
-          throw productsResult.error;
-        }
-
-        const allProducts = productsResult.data?.length ? productsResult.data : demoProducts;
-        setNewProducts(allProducts.slice(0, 6));
-        setCategories(categoriesResult.data?.length ? categoriesResult.data : demoCategories);
-      } catch (error) {
-        console.error('Failed to load homepage data:', error);
-        setNewProducts(demoProducts.slice(0, 6));
-        setCategories(demoCategories);
-      } finally {
-        setLoading(false);
+    loadHomepageData().then((data) => {
+      if (isMounted) {
+        setNewProducts(data.products);
       }
-    };
+    });
 
-    fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  if (loading) {
-    return (
-      <div className={styles.container}>
-        <LoadingSpinner fullScreen text="Melting chocolate..." />
-      </div>
-    );
-  }
+  useEffect(() => {
+    const scheduleDeferredRender = window.requestIdleCallback || ((callback: IdleRequestCallback) => window.setTimeout(callback, 350));
+    const cancelDeferredRender = window.cancelIdleCallback || window.clearTimeout;
+    const id = scheduleDeferredRender(() => setRenderDeferredSections(true));
+    return () => cancelDeferredRender(id as number);
+  }, []);
 
   return (
     <div className={`${styles.container} ${styles.homePage}`}>
       <Hero />
-      <CategorySection categories={categories} />
-      <ChocolatiersStories />
-      <SpotlightSection />
+      <CategorySection />
+      {renderDeferredSections && (
+        <Suspense fallback={null}>
+          <ChocolatiersStories />
+        </Suspense>
+      )}
+      {renderDeferredSections && <SpotlightSection />}
       <ProductGrid
         title="Fresh from the Kitchen"
         products={newProducts}

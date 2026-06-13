@@ -293,3 +293,103 @@
 .imageContainer:hover .hoverOverlay {
   opacity: 1;
 }
+
+@media (max-width: 619px) {
+  .card {
+    box-shadow: 0 10px 26px rgba(61, 35, 23, 0.08);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .imageContainer {
+    aspect-ratio: 1 / 1;
+  }
+
+  .priceBadge {
+    top: 0.45rem;
+    right: 0.45rem;
+    padding: 0.32rem 0.48rem;
+    font-size: 0.64rem;
+  }
+
+  .cacaoBadge,
+  .soldOutBadge,
+  .lowStockBadge {
+    display: none;
+  }
+
+  .content {
+    padding: 0.7rem;
+    gap: 0.32rem;
+  }
+
+  .makerRow {
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .maker,
+  .makerLink {
+    min-width: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rating {
+    font-size: 0.68rem;
+  }
+
+  .reviewCount,
+  .origin,
+  .originLink,
+  .description,
+  .stock,
+  .hoverOverlay {
+    display: none;
+  }
+
+  .title {
+    font-size: 0.95rem;
+    line-height: 1.16;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .badges {
+    gap: 0.25rem;
+    margin-top: 0.05rem;
+  }
+
+  .badge {
+    padding: 0.18rem 0.4rem;
+    font-size: 0.58rem;
+  }
+
+  .badges .badge:nth-child(n + 3) {
+    display: none;
+  }
+
+  .footer {
+    display: none;
+  }
+
+  .addButton {
+    min-height: 2.25rem;
+    margin: 0 0.7rem 0.7rem;
+    padding: 0 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .addIcon {
+    width: 0.86rem;
+    height: 0.86rem;
+  }
+}

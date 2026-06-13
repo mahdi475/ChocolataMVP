@@ -11,11 +11,13 @@
 .hero {
   position: relative;
   height: 85vh;
+  min-height: 620px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   padding-top: calc(var(--spacing-xs) + 4.5rem);
+  background: #20120f;
 }
 
 .heroBackground {
@@ -28,7 +30,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.9;
+  object-position: center;
+  opacity: 0.96;
   animation: zoomOut 20s ease-out forwards;
 }
 
@@ -44,16 +47,15 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(62, 39, 35, 0.6),
-    rgba(62, 39, 35, 0.4),
-    rgba(62, 39, 35, 0.8)
-  );
+  background:
+    radial-gradient(circle at 50% 42%, rgba(212, 175, 55, 0.12), transparent 28%),
+    linear-gradient(90deg, rgba(18, 9, 6, 0.82), rgba(37, 19, 13, 0.58) 45%, rgba(18, 9, 6, 0.72)),
+    linear-gradient(to bottom, rgba(18, 9, 6, 0.5), rgba(18, 9, 6, 0.32) 48%, rgba(18, 9, 6, 0.86));
+  backdrop-filter: saturate(1.05);
 }
 
 .heroContent {
-  max-width: 64rem;
+  max-width: 68rem;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
   position: relative;
@@ -74,7 +76,7 @@
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
   color: #ffffff;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.48);
 }
 
 .heroTitleAccent {
@@ -85,13 +87,34 @@
 
 .heroSubtitle {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
-  color: rgba(248, 245, 242, 0.9);
+  color: rgba(248, 245, 242, 0.94);
   margin-bottom: var(--spacing-2xl);
   line-height: var(--line-height-relaxed);
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: 680px;
+    height: 88vh;
+  }
+
+  .heroImage {
+    object-position: 54% center;
+  }
+
+  .heroOverlay {
+    background:
+      linear-gradient(to bottom, rgba(18, 9, 6, 0.74), rgba(31, 15, 10, 0.58), rgba(18, 9, 6, 0.9)),
+      linear-gradient(90deg, rgba(18, 9, 6, 0.74), rgba(18, 9, 6, 0.42));
+  }
+
+  .heroContent {
+    padding: 0 var(--spacing-md);
+  }
 }
 
 .heroActions {
@@ -151,7 +174,7 @@
 
 /* Category Section */
 .categorySection {
-  padding: var(--spacing-2xl) 0;
+  padding: clamp(1.4rem, 3vw, var(--spacing-2xl)) 0;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
@@ -164,19 +187,27 @@
 
 .categoryHeader {
   text-align: center;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: clamp(1rem, 2.2vw, var(--spacing-xl));
 }
 
 .categoryTitle {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
   color: var(--color-primary);
+}
+
+.categorySubtitle {
+  max-width: 560px;
+  margin: 0.35rem auto 0;
+  color: rgba(83, 59, 43, 0.7);
+  font-size: 0.96rem;
+  line-height: 1.45;
 }
 
 .categoryGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-lg);
+  gap: clamp(0.65rem, 1.6vw, var(--spacing-lg));
 }
 
 @media (min-width: 768px) {
@@ -195,8 +226,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-lg);
+  gap: 0.55rem;
+  padding: clamp(0.85rem, 1.8vw, var(--spacing-lg));
   border-radius: var(--border-radius-sm);
   background: var(--color-background);
   border: 1px solid transparent;
@@ -210,8 +241,8 @@
 }
 
 .categoryIconWrapper {
-  width: 3rem;
-  height: 3rem;
+  width: 2.65rem;
+  height: 2.65rem;
   background-color: rgba(62, 39, 35, 0.1);
   color: var(--color-primary);
   border-radius: 50%;
@@ -242,10 +273,36 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
   transition: color var(--transition-base);
+  text-align: center;
+  line-height: 1.2;
 }
 
 .categoryCard:hover .categoryName {
   color: var(--color-gold);
+}
+
+.categoryMore {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+}
+
+.categoryMoreButton {
+  min-height: 2.55rem;
+  border: 1px solid rgba(126, 85, 45, 0.22);
+  border-radius: 999px;
+  background: #fffaf2;
+  color: var(--color-primary);
+  padding: 0 1.2rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.categoryMoreButton:hover {
+  border-color: var(--color-gold);
+  color: #8a5827;
+  transform: translateY(-1px);
 }
 
 /* Product Grid Section */

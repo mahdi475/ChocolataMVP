@@ -46,7 +46,7 @@ const ChocolatiersPage = () => {
         <div className={styles.heroContent}>
           <Badge variant="gold" className={styles.heroBadge}>Meet the Makers</Badge>
           <h1 className={styles.heroTitle}>
-            Twelve Artisans, <span className={styles.highlight}>One Continent</span>
+            Europe's Artisans, <span className={styles.highlight}>One Continent</span>
           </h1>
           <p className={styles.heroSubtitle}>
             From Brussels to Helsinki, meet the small-batch chocolatiers shaping the future of European craft chocolate.

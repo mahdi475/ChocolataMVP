@@ -10,6 +10,7 @@ import Button from '../ui/Button';
 import SearchOverlay from './SearchOverlay';
 import WhyWereDifferent from '../sections/WhyWereDifferent';
 import chocolataLogo from '../../LogoAssets/ChokolatLogo.png';
+import { prefetchHomepageData } from '../../lib/homepageData';
 
 interface MainLayoutProps { children: ReactNode }
 
@@ -49,7 +50,15 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     <div className={styles.root}>
       <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.navbarContainer}>
-          <Link to="/" className={styles.brand}>
+          <Link
+            to="/"
+            className={styles.brand}
+            aria-label="Chocolata home"
+            onMouseEnter={prefetchHomepageData}
+            onFocus={prefetchHomepageData}
+            onTouchStart={prefetchHomepageData}
+            onClick={() => setIsMenuOpen(false)}
+          >
             <img src={chocolataLogo} alt="Chocolata" className={styles.logoImage} />
           </Link>
 

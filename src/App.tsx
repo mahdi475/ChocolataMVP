@@ -20,10 +20,9 @@ const AppContent = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    // Show splash animation every time user visits homepage
-    if (location.pathname === '/') {
-      // Small delay to ensure content renders first
+    if (location.pathname === '/' && !sessionStorage.getItem('chocolata:splash-seen')) {
       const timer = setTimeout(() => {
+        sessionStorage.setItem('chocolata:splash-seen', 'true');
         setShowSplash(true);
       }, 50);
       return () => clearTimeout(timer);

@@ -4,6 +4,9 @@ import { Gift, Briefcase, Award, PenTool, CheckCircle, Truck, ArrowRight } from 
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import styles from './CorporatePortalPage.module.css';
+import corporateHeroImage from '../assets/collections/office-praline-box.png';
+import executiveGiftImage from '../assets/products/luxury-praline-box.png';
+import tastingKitImage from '../assets/collections/tasting-flight.png';
 
 const CorporatePortalPage = () => {
   return (
@@ -15,7 +18,10 @@ const CorporatePortalPage = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <div className={styles.heroBackground}>
+        <div
+          className={styles.heroBackground}
+          style={{ backgroundImage: `url(${corporateHeroImage})` }}
+        >
           <div className={styles.heroGradient}></div>
         </div>
         <div className={styles.heroContent}>
@@ -172,14 +178,14 @@ const CorporatePortalPage = () => {
 
           <div className={styles.collectionGrid}>
             <div className={styles.mockProductCard}>
-              <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=2670&auto=format&fit=crop" alt="Luxury Box" className={styles.productImg} />
+              <img src={executiveGiftImage} alt="Luxury chocolate gift box" className={styles.productImg} loading="lazy" />
               <div className={styles.productInfo}>
                 <span className={styles.productTag}>Best Seller</span>
                 <h4>The Executive Suite</h4>
               </div>
             </div>
             <div className={styles.mockProductCard}>
-              <img src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?q=80&w=2670&auto=format&fit=crop" alt="Tasting Set" className={styles.productImg} />
+              <img src={tastingKitImage} alt="Premium chocolate tasting set" className={styles.productImg} loading="lazy" />
               <div className={styles.productInfo}>
                 <span className={styles.productTag}>Event Favorite</span>
                 <h4>Virtual Tasting Kit</h4>
