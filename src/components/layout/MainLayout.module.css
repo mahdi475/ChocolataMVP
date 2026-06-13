@@ -68,6 +68,11 @@
   .brand {
     font-size: 1.25rem;
   }
+
+  .navbarContainer {
+    gap: var(--spacing-sm);
+    padding: 0 var(--spacing-sm);
+  }
 }
 
 
@@ -112,6 +117,12 @@
   gap: var(--spacing-md);
 }
 
+@media (max-width: 640px) {
+  .icons {
+    gap: 0.3rem;
+  }
+}
+
 .iconButton {
   padding: var(--spacing-sm);
   background: transparent;
@@ -123,6 +134,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .iconButton,
+  .mobileMenuButton {
+    padding: 0.45rem;
+  }
 }
 
 .iconButton:hover {

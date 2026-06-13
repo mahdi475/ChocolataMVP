@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, Star, Gift, Heart, Coffee, Leaf } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,6 +17,8 @@ import spotlightImage from './assets/Gemini_Generated_Image_fi49w2fi49w2fi49.png
 const ChocolatiersStories = lazy(() => import('../components/sections/ChocolatiersStories'));
 
 const Hero = () => {
+  const { t } = useTranslation('ui');
+
   return (
     <section className={styles.hero}>
       <div className={styles.heroBackground}>
@@ -37,7 +40,7 @@ const Hero = () => {
           transition={{ delay: 0.1 }}
           className={styles.heroBadge}
         >
-          <Badge variant="gold">Award Winning Collection</Badge>
+          <Badge variant="gold">{t('home.badge')}</Badge>
         </motion.div>
 
         <motion.h1
@@ -46,8 +49,8 @@ const Hero = () => {
           transition={{ delay: 0.2 }}
           className={styles.heroTitle}
         >
-          The Art of <br />
-          <span className={styles.heroTitleAccent}>Fine Chocolate</span>
+          {t('home.heroTitle')} <br />
+          <span className={styles.heroTitleAccent}>{t('home.heroAccent')}</span>
         </motion.h1>
 
         <motion.p
@@ -56,8 +59,7 @@ const Hero = () => {
           transition={{ delay: 0.3 }}
           className={styles.heroSubtitle}
         >
-          Discover a curated marketplace of the world's finest artisan chocolatiers.
-          Ethically sourced, masterfully crafted.
+          {t('home.heroSubtitle')}
         </motion.p>
 
         <motion.div
@@ -68,12 +70,12 @@ const Hero = () => {
         >
           <Link to="/catalog">
             <Button variant="gold" className={styles.heroButton}>
-              Shop Collection
+              {t('home.shopCollection')}
             </Button>
           </Link>
           <Link to="/about">
             <Button variant="outline" className={styles.heroButtonOutline}>
-              Our Story
+              {t('home.ourStory')}
             </Button>
           </Link>
         </motion.div>
@@ -83,6 +85,7 @@ const Hero = () => {
 };
 
 const CategorySection = () => {
+  const { t } = useTranslation('ui');
   const [showAllCategories, setShowAllCategories] = useState(false);
   const discoveryCategories = [
     { name: 'Belgian Pralines', to: '/catalog?country=Belgium&types=Pralines', icon: 'truffles' },
@@ -112,9 +115,9 @@ const CategorySection = () => {
     <section className={styles.categorySection}>
       <div className={styles.categoryContainer}>
         <div className={styles.categoryHeader}>
-          <h2 className={styles.categoryTitle}>Explore by Taste</h2>
+          <h2 className={styles.categoryTitle}>{t('home.exploreTitle')}</h2>
           <p className={styles.categorySubtitle}>
-            Start with the most-loved chocolate journeys, from Belgian pralines to single-origin bars.
+            {t('home.exploreSubtitle')}
           </p>
         </div>
         <div className={styles.categoryGrid}>
@@ -139,7 +142,7 @@ const CategorySection = () => {
             className={styles.categoryMoreButton}
             onClick={() => setShowAllCategories((current) => !current)}
           >
-            {showAllCategories ? 'Show Less' : 'View More'}
+            {showAllCategories ? t('home.showLess') : t('home.viewMore')}
           </button>
         </div>
       </div>
@@ -290,6 +293,7 @@ const Newsletter = () => {
 };
 
 const HomePage = () => {
+  const { t } = useTranslation('ui');
   const { user, role } = useAuth();
   const navigate = useNavigate();
   const cachedHomepageData = getCachedHomepageData();
@@ -345,9 +349,9 @@ const HomePage = () => {
       <Hero />
       <CategorySection />
       <ProductGrid
-        title="Fresh from the Kitchen"
+        title={t('home.freshTitle')}
         products={newProducts}
-        linkText="Shop New Arrivals"
+        linkText={t('home.shopNewArrivals')}
         linkTo="/catalog"
       />
       {renderDeferredSections && (

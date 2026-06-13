@@ -1,6 +1,7 @@
 import { ReactNode, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { ShoppingBag, User as UserIcon, Menu, X, Search, LogOut, Facebook, Instagram, Twitter, Mail } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
@@ -8,6 +9,7 @@ import type { RootState } from '../../store';
 import styles from './MainLayout.module.css';
 import Button from '../ui/Button';
 import SearchOverlay from './SearchOverlay';
+import LanguageSelector from './LanguageSelector';
 import WhyWereDifferent from '../sections/WhyWereDifferent';
 import chocolataLogo from '../../LogoAssets/ChokolatLogo.png';
 import { prefetchHomepageData } from '../../lib/homepageData';
@@ -16,6 +18,7 @@ interface MainLayoutProps { children: ReactNode }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const { user, role, handleLogout } = useAuth();
+  const { t } = useTranslation('ui');
   const { setIsCartOpen } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,27 +66,29 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </Link>
 
           <div className={styles.desktopLinks}>
-            <Link to="/catalog" className={styles.link}>Shop</Link>
-            <Link to="/chocolatiers" className={styles.link}>Chocolatiers</Link>
-            <Link to="/collections" className={styles.link}>Collections</Link>
-            <Link to="/corporate-portal" className={styles.link}>Corporate Gifts</Link>
-            <Link to="/sustainability" className={styles.link}>Sustainability</Link>
-            <Link to="/about" className={styles.link}>About Us</Link>
+            <Link to="/catalog" className={styles.link}>{t('nav.shop')}</Link>
+            <Link to="/chocolatiers" className={styles.link}>{t('nav.chocolatiers')}</Link>
+            <Link to="/collections" className={styles.link}>{t('nav.collections')}</Link>
+            <Link to="/corporate-portal" className={styles.link}>{t('nav.corporateGifts')}</Link>
+            <Link to="/sustainability" className={styles.link}>{t('nav.sustainability')}</Link>
+            <Link to="/about" className={styles.link}>{t('nav.about')}</Link>
           </div>
 
           <div className={styles.icons}>
             <button
               onClick={() => setIsSearchOpen(true)}
               className={styles.iconButton}
-              aria-label="Search"
+              aria-label={t('nav.search')}
             >
               <Search className={styles.icon} />
             </button>
 
+            <LanguageSelector />
+
             <Link
               to={user ? (role === 'buyer' ? '/profile' : `/${role}/dashboard`) : '/login'}
               className={styles.iconButton}
-              aria-label="User profile"
+              aria-label={t('nav.profile')}
             >
               <UserIcon className={styles.icon} />
             </Link>
@@ -91,7 +96,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <button
               onClick={() => setIsCartOpen(true)}
               className={styles.iconButton}
-              aria-label="Shopping cart"
+              aria-label={t('nav.cart')}
             >
               <ShoppingBag className={styles.icon} />
               {cartCount > 0 && (
@@ -103,8 +108,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               <button
                 onClick={handleLogoutClick}
                 className={`${styles.iconButton} ${styles.mobileOnly}`}
-                aria-label="Logout"
-                title="Logout"
+                aria-label={t('nav.logout')}
+                title={t('nav.logout')}
               >
                 <LogOut className={styles.icon} />
               </button>
@@ -124,31 +129,31 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         {isMenuOpen && (
           <div className={styles.mobileMenu}>
             <Link to="/catalog" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-              Shop
+              {t('nav.shop')}
             </Link>
             <Link to="/chocolatiers" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-              Chocolatiers
+              {t('nav.chocolatiers')}
             </Link>
             <Link to="/collections" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-              Collections
+              {t('nav.collections')}
             </Link>
             <Link to="/corporate-portal" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-              Corporate Gifts
+              {t('nav.corporateGifts')}
             </Link>
             <Link to="/sustainability" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-              Sustainability
+              {t('nav.sustainability')}
             </Link>
             <Link to="/about" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-              About Us
+              {t('nav.about')}
             </Link>
             {!user && (
               <Link to="/login" onClick={() => setIsMenuOpen(false)} className={styles.mobileLink}>
-                Login / Register
+                {t('nav.loginRegister')}
               </Link>
             )}
             {user && (
               <button onClick={handleLogoutClick} className={styles.mobileLink}>
-                Logout
+                {t('nav.logout')}
               </button>
             )}
           </div>

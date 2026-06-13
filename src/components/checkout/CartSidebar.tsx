@@ -1,6 +1,7 @@
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../../contexts/CartContext';
 import type { RootState } from '../../store';
 import { removeItem, updateQuantity } from '../../store/slices/cartSlice';
@@ -8,6 +9,7 @@ import Button from '../ui/Button';
 import styles from './CartSidebar.module.css';
 
 const CartSidebar = () => {
+  const { t } = useTranslation('ui');
   const { isCartOpen, setIsCartOpen } = useCart();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,11 +44,11 @@ const CartSidebar = () => {
       />
       <div className={styles.sidebar}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Your Basket</h2>
+          <h2 className={styles.title}>{t('cart.title')}</h2>
           <button
             onClick={() => setIsCartOpen(false)}
             className={styles.closeButton}
-            aria-label="Close cart"
+            aria-label={t('cart.close')}
           >
             <X className={styles.closeIcon} />
           </button>
@@ -55,9 +57,9 @@ const CartSidebar = () => {
         <div className={styles.content}>
           {items.length === 0 ? (
             <div className={styles.empty}>
-              <p className={styles.emptyText}>Your basket is empty.</p>
+              <p className={styles.emptyText}>{t('cart.empty')}</p>
               <Button variant="outline" onClick={() => setIsCartOpen(false)}>
-                Continue Shopping
+                {t('cart.continueShopping')}
               </Button>
             </div>
           ) : (
@@ -82,7 +84,7 @@ const CartSidebar = () => {
                         <button
                           onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
                           className={styles.quantityButton}
-                          aria-label="Decrease quantity"
+                          aria-label={t('cart.decrease')}
                         >
                           <Minus className={styles.quantityIcon} />
                         </button>
@@ -90,7 +92,7 @@ const CartSidebar = () => {
                         <button
                           onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
                           className={styles.quantityButton}
-                          aria-label="Increase quantity"
+                          aria-label={t('cart.increase')}
                         >
                           <Plus className={styles.quantityIcon} />
                         </button>
@@ -98,7 +100,7 @@ const CartSidebar = () => {
                       <button
                         onClick={() => handleRemove(item.productId)}
                         className={styles.removeButton}
-                        aria-label="Remove item"
+                        aria-label={t('cart.remove')}
                       >
                         <Trash2 className={styles.removeIcon} />
                       </button>
@@ -113,7 +115,7 @@ const CartSidebar = () => {
         {items.length > 0 && (
           <div className={styles.footer}>
             <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>Subtotal</span>
+              <span className={styles.totalLabel}>{t('cart.subtotal')}</span>
               <span className={styles.totalAmount}>
                 {new Intl.NumberFormat('sv-SE', {
                   style: 'currency',
@@ -121,9 +123,9 @@ const CartSidebar = () => {
                 }).format(cartTotal)}
               </span>
             </div>
-            <p className={styles.shippingNote}>Shipping and taxes calculated at checkout.</p>
+            <p className={styles.shippingNote}>{t('cart.shippingNote')}</p>
             <Button className={styles.checkoutButton} onClick={handleCheckout}>
-              Checkout
+              {t('cart.checkout')}
             </Button>
           </div>
         )}
@@ -133,4 +135,3 @@ const CartSidebar = () => {
 };
 
 export default CartSidebar;
-

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Sparkles } from 'lucide-react';
 import Badge from '../ui/Badge';
@@ -18,6 +19,8 @@ const featuredChocolatiers = FEATURED_CHOCOLATIER_SLUGS
   .map((chocolatier) => chocolatier!);
 
 const ChocolatiersStories = () => {
+  const { t } = useTranslation('ui');
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -29,11 +32,11 @@ const ChocolatiersStories = () => {
           transition={{ duration: 0.6 }}
         >
           <Badge variant="gold" className={styles.headerBadge}>
-            Meet the Makers
+            {t('home.meetMakers')}
           </Badge>
-          <h2 className={styles.title}>European chocolatiers behind every box</h2>
+          <h2 className={styles.title}>{t('home.makersTitle')}</h2>
           <p className={styles.tagline}>
-            A featured edit from the same atelier profiles you can explore in the full makers directory.
+            {t('home.makersSubtitle')}
           </p>
         </motion.div>
 
@@ -62,7 +65,7 @@ const ChocolatiersStories = () => {
                   <div className={styles.badgeOverlay}>
                     <span>
                       <Sparkles className={styles.badgeIcon} />
-                      Featured maker
+                      {t('home.featuredMaker')}
                     </span>
                   </div>
                 </div>
@@ -85,7 +88,7 @@ const ChocolatiersStories = () => {
                   ))}
                 </div>
                 <Link to={`/chocolatiers/${chocolatier.slug}`} className={styles.profileLink}>
-                  View profile <ArrowRight className={styles.arrowIcon} />
+                  {t('home.viewProfile')} <ArrowRight className={styles.arrowIcon} />
                 </Link>
               </div>
             </motion.article>
@@ -94,7 +97,7 @@ const ChocolatiersStories = () => {
 
         <div className={styles.footerAction}>
           <Link to="/chocolatiers" className={styles.allMakersLink}>
-            Browse all chocolatiers <ArrowRight className={styles.arrowIcon} />
+            {t('home.browseAllMakers')} <ArrowRight className={styles.arrowIcon} />
           </Link>
         </div>
       </div>
@@ -103,4 +106,3 @@ const ChocolatiersStories = () => {
 };
 
 export default ChocolatiersStories;
-

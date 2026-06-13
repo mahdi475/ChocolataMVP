@@ -41,7 +41,7 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { t } = useTranslation('products');
+  const { t } = useTranslation(['ui', 'products']);
   const dispatch = useDispatch();
   const isSoldOut = product.stock !== undefined && product.stock <= 0;
   const isLowStock = !isSoldOut && product.stock !== undefined && product.stock > 0 && product.stock < 5;
@@ -118,10 +118,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <span className={styles.cacaoBadge}>{product.cacao_percentage}% cacao</span>
             )}
             {isSoldOut && (
-              <span className={styles.soldOutBadge}>{t('card.outOfStock', 'Sold out')}</span>
+              <span className={styles.soldOutBadge}>{t('ui:productCard.outOfStock')}</span>
             )}
             {isLowStock && (
-              <span className={styles.lowStockBadge}>{t('card.lowStock', 'Low stock')}</span>
+              <span className={styles.lowStockBadge}>{t('ui:productCard.lowStock')}</span>
             )}
             {product.description && (
               <div className={styles.hoverOverlay}>{product.description}</div>
@@ -191,8 +191,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.stock !== undefined && (
               <span className={styles.stock}>
                 {product.stock > 0
-                  ? `${product.stock} ${t('card.inStock')}`
-                  : t('card.outOfStock', 'Sold out')}
+                  ? `${product.stock} ${t('ui:productCard.inStock')}`
+                  : t('ui:productCard.outOfStock')}
               </span>
             )}
           </div>
@@ -206,7 +206,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           variant={isSoldOut ? 'outline' : 'primary'}
         >
           <ShoppingBag className={styles.addIcon} />
-          {isSoldOut ? t('card.outOfStock') : t('card.addToCart')}
+          {isSoldOut ? t('ui:productCard.outOfStock') : t('ui:productCard.addToCart')}
         </Button>
       </Card>
     </motion.div>
@@ -214,4 +214,3 @@ const ProductCard = ({ product }: ProductCardProps) => {
 };
 
 export default ProductCard;
-

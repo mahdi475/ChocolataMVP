@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Search, MapPin, ArrowRight } from 'lucide-react';
 import Badge from '../components/ui/Badge';
@@ -9,6 +10,7 @@ import heroBg from '../assets/collections/hero-truffles.png';
 import styles from './ChocolatiersPage.module.css';
 
 const ChocolatiersPage = () => {
+  const { t } = useTranslation('ui');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
@@ -44,19 +46,19 @@ const ChocolatiersPage = () => {
           <div className={styles.heroGradient} />
         </div>
         <div className={styles.heroContent}>
-          <Badge variant="gold" className={styles.heroBadge}>Meet the Makers</Badge>
+          <Badge variant="gold" className={styles.heroBadge}>{t('chocolatiers.badge')}</Badge>
           <h1 className={styles.heroTitle}>
-            Europe's Artisans, <span className={styles.highlight}>One Continent</span>
+            {t('chocolatiers.titlePrefix')} <span className={styles.highlight}>{t('chocolatiers.titleAccent')}</span>
           </h1>
           <p className={styles.heroSubtitle}>
-            From Brussels to Helsinki, meet the small-batch chocolatiers shaping the future of European craft chocolate.
+            {t('chocolatiers.subtitle')}
           </p>
 
           <div className={styles.searchContainer}>
             <Search className={styles.searchIcon} />
             <input
               type="text"
-              placeholder="Search by name, city, country or tag…"
+              placeholder={t('chocolatiers.searchPlaceholder')}
               className={styles.searchInput}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -69,14 +71,14 @@ const ChocolatiersPage = () => {
       {/* Country Filter */}
       <div className={styles.filterSection}>
         <div className={styles.filterContainer}>
-          <span className={styles.filterLabel}>Filter by country:</span>
+          <span className={styles.filterLabel}>{t('chocolatiers.filterByCountry')}</span>
           <div className={styles.filterOptions}>
             <button
               className={`${styles.filterButton} ${selectedCountry === null ? styles.active : ''}`}
               onClick={() => setSelectedCountry(null)}
               data-testid="filter-all"
             >
-              All
+              {t('chocolatiers.all')}
             </button>
             {countries.map((country) => (
               <button
@@ -130,7 +132,7 @@ const ChocolatiersPage = () => {
                   </div>
                   <Link to={`/chocolatiers/${c.slug}`} className={styles.profileButtonLink}>
                     <Button variant="outline" className={styles.profileButton} data-testid={`view-profile-${c.slug}`}>
-                      View Profile <ArrowRight className={styles.arrowIcon} />
+                      {t('chocolatiers.viewProfile')} <ArrowRight className={styles.arrowIcon} />
                     </Button>
                   </Link>
                 </div>
@@ -138,8 +140,8 @@ const ChocolatiersPage = () => {
             ))
           ) : (
             <div className={styles.noResults}>
-              <h3 className={styles.noResultsTitle}>No chocolatiers found</h3>
-              <p className={styles.noResultsText}>Try adjusting your search or country filter.</p>
+              <h3 className={styles.noResultsTitle}>{t('chocolatiers.emptyTitle')}</h3>
+              <p className={styles.noResultsText}>{t('chocolatiers.emptyText')}</p>
               <Button
                 variant="gold"
                 onClick={() => {
@@ -148,7 +150,7 @@ const ChocolatiersPage = () => {
                 }}
                 data-testid="clear-filters"
               >
-                Clear Filters
+                {t('chocolatiers.clearFilters')}
               </Button>
             </div>
           )}

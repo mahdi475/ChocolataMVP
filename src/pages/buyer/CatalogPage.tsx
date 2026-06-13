@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Check, ChevronDown, RotateCcw, Search, SlidersHorizontal, X } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import ProductCard, { type Product } from '../../components/cards/ProductCard';
@@ -20,13 +21,6 @@ interface Category {
 type SortOption = 'popular' | 'newest' | 'price_asc' | 'price_desc';
 
 const COUNTRIES = Array.from(new Set(CHOCOLATIERS.map((chocolatier) => chocolatier.country))).sort();
-
-const SORT_OPTIONS: Array<{ label: string; value: SortOption }> = [
-  { label: 'Popular', value: 'popular' },
-  { label: 'Newest', value: 'newest' },
-  { label: 'Price low-high', value: 'price_asc' },
-  { label: 'Price high-low', value: 'price_desc' },
-];
 
 const CHOCOLATE_TYPES = ['Dark', 'Milk', 'White', 'Pralines', 'Truffles', 'Bonbons', 'Gift Boxes'];
 const FLAVOR_OPTIONS = ['Hazelnut', 'Caramel', 'Ganache', 'Fruit', 'Floral', 'Cocoa Nibs'];
@@ -113,6 +107,7 @@ const isDemoLikeProduct = (product: Product) =>
   Boolean(product.badges || product.rating || product.cacao_percentage || product.maker_name);
 
 const CatalogPage = () => {
+  const { t } = useTranslation('ui');
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -136,6 +131,12 @@ const CatalogPage = () => {
   const [giftOnly, setGiftOnly] = useState(() => searchParams.get('gift') === '1');
   const [selectedAdvanced, setSelectedAdvanced] = useState<string[]>(() => searchParams.get('advanced')?.split(',').filter(Boolean) || []);
   const [sortBy, setSortBy] = useState<SortOption>(() => (searchParams.get('sort') as SortOption) || 'popular');
+  const sortOptions: Array<{ label: string; value: SortOption }> = [
+    { label: t('shop.popular'), value: 'popular' },
+    { label: t('shop.newest'), value: 'newest' },
+    { label: t('shop.priceLowHigh'), value: 'price_asc' },
+    { label: t('shop.priceHighLow'), value: 'price_desc' },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -329,52 +330,52 @@ const CatalogPage = () => {
   const FilterPanel = () => (
     <div className={styles.filterPanel}>
       <div className={styles.filterIntro}>
-        <span>Curate your box</span>
-        <p>Start broad, then refine by craft, taste, and maker.</p>
+        <span>{t('shop.curateBox')}</span>
+        <p>{t('shop.curateHint')}</p>
       </div>
 
-      <FilterGroup title="Origin" summary="Country and chocolatier" defaultOpen>
-        <label className={styles.fieldLabel} htmlFor="country-filter">Country</label>
+      <FilterGroup title={t('shop.origin')} summary={t('shop.originSummary')} defaultOpen>
+        <label className={styles.fieldLabel} htmlFor="country-filter">{t('shop.country')}</label>
         <select id="country-filter" className={styles.select} value={selectedCountry} onChange={(event) => setSelectedCountry(event.target.value)}>
-          <option value="all">All countries</option>
+          <option value="all">{t('shop.allCountries')}</option>
           {COUNTRIES.map((country) => <option key={country} value={country}>{country}</option>)}
         </select>
 
-        <label className={styles.fieldLabel} htmlFor="maker-filter">Chocolatier / Maker</label>
+        <label className={styles.fieldLabel} htmlFor="maker-filter">{t('shop.maker')}</label>
         <select id="maker-filter" className={styles.select} value={selectedMaker} onChange={(event) => setSelectedMaker(event.target.value)}>
-          <option value="all">All makers</option>
+          <option value="all">{t('shop.allMakers')}</option>
           {makers.map((maker) => <option key={maker} value={maker}>{maker}</option>)}
         </select>
       </FilterGroup>
 
-      <FilterGroup title="Taste" summary="Category, type, flavor" defaultOpen>
-        <label className={styles.fieldLabel} htmlFor="category-filter">Category</label>
+      <FilterGroup title={t('shop.taste')} summary={t('shop.tasteSummary')} defaultOpen>
+        <label className={styles.fieldLabel} htmlFor="category-filter">{t('shop.category')}</label>
         <select id="category-filter" className={styles.select} value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)}>
-          <option value="all">All categories</option>
+          <option value="all">{t('shop.allCategories')}</option>
           {categories.map((category) => (
             <option key={category.id} value={category.slug || category.name}>{category.name}</option>
           ))}
         </select>
 
-        <p className={styles.filterLabel}>Chocolate Type</p>
+        <p className={styles.filterLabel}>{t('shop.chocolateType')}</p>
         <MultiChoiceGroup
           options={CHOCOLATE_TYPES}
           selected={selectedChocolateTypes}
           onToggle={(value) => setSelectedChocolateTypes((current) => toggleArrayValue(current, value))}
         />
 
-        <p className={styles.filterLabel}>Flavor & Fillings</p>
+        <p className={styles.filterLabel}>{t('shop.flavorFillings')}</p>
         <MultiChoiceGroup
           options={FLAVOR_OPTIONS}
           selected={selectedFlavors}
           onToggle={(value) => setSelectedFlavors((current) => toggleArrayValue(current, value))}
         />
 
-        <label className={styles.fieldLabel} htmlFor="cacao-filter">Minimum cacao</label>
-        <input id="cacao-filter" className={styles.input} type="number" placeholder="Any %" value={minCacao} onChange={(event) => setMinCacao(event.target.value)} />
+        <label className={styles.fieldLabel} htmlFor="cacao-filter">{t('shop.minimumCacao')}</label>
+        <input id="cacao-filter" className={styles.input} type="number" placeholder={t('shop.anyPercent')} value={minCacao} onChange={(event) => setMinCacao(event.target.value)} />
       </FilterGroup>
 
-      <FilterGroup title="Lifestyle" summary="Dietary preferences">
+      <FilterGroup title={t('shop.lifestyle')} summary={t('shop.dietaryPreferences')}>
         <MultiChoiceGroup
           options={DIETARY_OPTIONS}
           selected={selectedDietary}
@@ -382,7 +383,7 @@ const CatalogPage = () => {
         />
       </FilterGroup>
 
-      <FilterGroup title="Occasion" summary="Gifts and moments">
+      <FilterGroup title={t('shop.occasion')} summary={t('shop.occasionSummary')}>
         <MultiChoiceGroup
           options={OCCASION_OPTIONS}
           selected={selectedOccasions}
@@ -390,21 +391,21 @@ const CatalogPage = () => {
         />
       </FilterGroup>
 
-      <FilterGroup title="Price & Rating" summary="Budget and trust">
+      <FilterGroup title={t('shop.priceRating')} summary={t('shop.priceRatingSummary')}>
         <div className={styles.priceInputs}>
           <input className={styles.input} type="number" placeholder="Min SEK" value={minPrice} onChange={(event) => setMinPrice(event.target.value)} />
           <input className={styles.input} type="number" placeholder="Max SEK" value={maxPrice} onChange={(event) => setMaxPrice(event.target.value)} />
         </div>
-        <label className={styles.fieldLabel} htmlFor="rating-filter">Minimum rating</label>
+        <label className={styles.fieldLabel} htmlFor="rating-filter">{t('shop.minimumRating')}</label>
         <select id="rating-filter" className={styles.select} value={minRating} onChange={(event) => setMinRating(event.target.value)}>
-          <option value="">Any rating</option>
-          <option value="4.9">4.9 and above</option>
-          <option value="4.8">4.8 and above</option>
-          <option value="4.5">4.5 and above</option>
+          <option value="">{t('shop.anyRating')}</option>
+          <option value="4.9">{t('shop.ratingAbove', { rating: '4.9' })}</option>
+          <option value="4.8">{t('shop.ratingAbove', { rating: '4.8' })}</option>
+          <option value="4.5">{t('shop.ratingAbove', { rating: '4.5' })}</option>
         </select>
       </FilterGroup>
 
-      <FilterGroup title="Advanced craft" summary="Awards, sourcing, rarity">
+      <FilterGroup title={t('shop.advancedCraft')} summary={t('shop.advancedSummary')}>
         <MultiChoiceGroup
           options={ADVANCED_FILTERS}
           selected={selectedAdvanced}
@@ -415,7 +416,7 @@ const CatalogPage = () => {
       {activeFilterCount > 0 && (
         <button className={styles.resetButton} onClick={clearFilters}>
           <RotateCcw className={styles.resetIcon} />
-          Reset filters
+          {t('shop.resetFilters')}
         </button>
       )}
     </div>
@@ -434,16 +435,16 @@ const CatalogPage = () => {
       <FadeIn>
         <section className={styles.hero}>
           <div>
-            <p className={styles.eyebrow}>European artisan marketplace</p>
-            <h1 className={styles.title}>Shop fine chocolate by maker, origin, and occasion.</h1>
+            <p className={styles.eyebrow}>{t('shop.eyebrow')}</p>
+            <h1 className={styles.title}>{t('shop.title')}</h1>
             <p className={styles.subtitle}>
-              Discover small-batch bars, truffles, pralines, and gift boxes from independent European chocolatiers.
+              {t('shop.subtitle')}
             </p>
           </div>
           <div className={styles.heroStats}>
-            <span>{products.length} products</span>
-            <span>{demoCategories.length} collections</span>
-            <span>{products.some(isDemoLikeProduct) ? 'Curated makers' : 'Live catalog'}</span>
+            <span>{products.length} {t('shop.products')}</span>
+            <span>{demoCategories.length} {t('shop.collections')}</span>
+            <span>{products.some(isDemoLikeProduct) ? t('shop.curatedMakers') : t('shop.liveCatalog')}</span>
           </div>
         </section>
 
@@ -453,16 +454,16 @@ const CatalogPage = () => {
             <input
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Search truffles, pralines, vegan bars..."
+              placeholder={t('shop.searchPlaceholder')}
               className={styles.searchInput}
             />
           </div>
           <button className={styles.mobileFilterButton} onClick={() => setIsFilterOpen(true)}>
             <SlidersHorizontal className={styles.filterIcon} />
-            Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ''}
+            {t('shop.filters')} {activeFilterCount > 0 ? `(${activeFilterCount})` : ''}
           </button>
           <select className={styles.sortSelect} value={sortBy} onChange={(event) => setSortBy(event.target.value as SortOption)}>
-            {SORT_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+            {sortOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
         </section>
 
@@ -476,28 +477,28 @@ const CatalogPage = () => {
               <button className={styles.mobileFilterBackdrop} aria-label="Close filters" onClick={() => setIsFilterOpen(false)} />
               <div className={styles.mobileFilterDrawer}>
                 <div className={styles.mobileFilterHeader}>
-                  <h2>Filters</h2>
+                  <h2>{t('shop.filters')}</h2>
                   <button className={styles.mobileFilterClose} onClick={() => setIsFilterOpen(false)} aria-label="Close filters">
                     <X />
                   </button>
                 </div>
                 <FilterPanel />
-                <Button className={styles.mobileApply} onClick={() => setIsFilterOpen(false)}>Show {filteredProducts.length} products</Button>
+                <Button className={styles.mobileApply} onClick={() => setIsFilterOpen(false)}>{t('shop.showProducts', { count: filteredProducts.length })}</Button>
               </div>
             </div>
           )}
 
           <section className={styles.productArea}>
             <div className={styles.resultHeader}>
-              <p>{filteredProducts.length} {filteredProducts.length === 1 ? 'result' : 'results'}</p>
-              {activeFilterCount > 0 && <button onClick={clearFilters}>Clear all</button>}
+              <p>{filteredProducts.length} {filteredProducts.length === 1 ? t('shop.result') : t('shop.results')}</p>
+              {activeFilterCount > 0 && <button onClick={clearFilters}>{t('shop.clearAll')}</button>}
             </div>
 
             {filteredProducts.length === 0 ? (
               <div className={styles.emptyState}>
-                <h3>No chocolates found</h3>
-                <p>Try broadening the country, price, or cacao filters.</p>
-                <Button variant="outline" onClick={clearFilters}>Reset filters</Button>
+                <h3>{t('shop.emptyTitle')}</h3>
+                <p>{t('shop.emptyText')}</p>
+                <Button variant="outline" onClick={clearFilters}>{t('shop.resetFilters')}</Button>
               </div>
             ) : (
               <div className={styles.grid}>
