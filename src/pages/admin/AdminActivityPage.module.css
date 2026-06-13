@@ -1,0 +1,318 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--spacing-3xl) 0;
+  background: linear-gradient(180deg, #f8eee4 0%, #f5e2d1 45%, #f9efe8 100%);
+}
+
+.panel {
+  margin: 0 auto;
+  max-width: 1280px;
+  background: var(--color-cream);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-3xl);
+  box-shadow: 0 25px 50px rgba(88, 47, 36, 0.18);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-2xl);
+  gap: var(--spacing-md);
+}
+
+.title {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--color-chocolate-dark);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.liveIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: #4caf50;
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-pill);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.filters {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.filterGroup label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-chocolate-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.select {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--color-gold);
+  border-radius: var(--border-radius-md);
+  background: white;
+  color: var(--color-chocolate-dark);
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.select:hover {
+  border-color: var(--color-chocolate);
+  box-shadow: var(--shadow-sm);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-chocolate-dark);
+  box-shadow: 0 0 0 3px rgba(44, 24, 16, 0.1);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.statCard {
+  text-align: center;
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, white, #fffef5);
+  border: 1px solid var(--color-gold);
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-chocolate-dark);
+  font-family: var(--font-serif);
+  margin-bottom: var(--spacing-xs);
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.activityCard {
+  padding: var(--spacing-lg);
+  background: white;
+  border-left: 4px solid var(--color-gold);
+  transition: all var(--transition-base);
+}
+
+.activityCard:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateX(4px);
+}
+
+.activityHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.activityMeta {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.actionBadge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.actionCreate {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.actionUpdate {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.actionDelete {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.tableBadge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-gold);
+  color: var(--color-chocolate-dark);
+  border-radius: var(--border-radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.activityBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.userInfo strong {
+  color: var(--color-chocolate-dark);
+  font-size: 0.95rem;
+}
+
+.userEmail {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.changes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: #f5f5f5;
+  border-radius: var(--border-radius-md);
+}
+
+.change {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.changeField {
+  font-weight: 600;
+  color: var(--color-chocolate-dark);
+  text-transform: capitalize;
+}
+
+.changeOld {
+  color: #d32f2f;
+  text-decoration: line-through;
+  background: #ffebee;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.changeArrow {
+  color: var(--color-text-secondary);
+  font-weight: bold;
+}
+
+.changeNew {
+  color: #388e3c;
+  background: #e8f5e9;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+}
+
+.dataPreview {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  padding: var(--spacing-sm);
+  background: #fafafa;
+  border-radius: var(--border-radius-md);
+  margin-top: var(--spacing-xs);
+}
+
+.dataPreview strong {
+  color: var(--color-chocolate-dark);
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--spacing-3xl);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: var(--spacing-lg);
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activityHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

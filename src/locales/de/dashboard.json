@@ -1,0 +1,9 @@
+{
+  "title": "Dashboard",
+  "stats": {
+    "products": "Produkte",
+    "orders": "Bestellungen",
+    "users": "Benutzer"
+  }
+}
+

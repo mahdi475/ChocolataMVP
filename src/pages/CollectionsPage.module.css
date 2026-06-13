@@ -1,0 +1,524 @@
+.container {
+    min-height: 100vh;
+    background-color: var(--color-background);
+}
+
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 80vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: -64px;
+    padding-top: 64px;
+}
+
+.heroBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a0f08;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.heroGradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.7) 90%);
+}
+
+.heroContent {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: white;
+    padding: var(--spacing-xl);
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.iconWrapper {
+    display: inline-flex;
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.heroIcon {
+    width: 3.5rem;
+    height: 3.5rem;
+    color: var(--color-gold);
+}
+
+.heroBadge {
+    margin-bottom: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-gold);
+}
+
+.heroTitle {
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    line-height: 1.05;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.highlight {
+    color: var(--color-gold);
+    font-style: italic;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.heroSubtitle {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    opacity: 0.95;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-bottom: 3rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    font-weight: 300;
+}
+
+.exploreButton {
+    background-color: var(--color-gold);
+    color: var(--color-chocolate-dark);
+    border: none;
+    font-weight: 700;
+    padding: 1.125rem 2.5rem;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    transition: all 0.3s ease;
+}
+
+.exploreButton:hover {
+    background-color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+/* Sections */
+.section {
+    padding: 10rem 0;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.sectionHeader {
+    padding: 0 var(--spacing-2xl);
+    margin-bottom: var(--spacing-3xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.sectionTitle {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--color-primary);
+    line-height: 1.1;
+}
+
+.sectionSubtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.25rem;
+    margin-top: 0.75rem;
+}
+
+.sectionLead {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0.5rem 0 var(--spacing-2xl);
+}
+
+.viewAllButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+.arrowIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Horizontal Scroll */
+.horizontalScroll {
+    display: flex;
+    gap: var(--spacing-2xl);
+    overflow-x: auto;
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
+
+.horizontalScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.seasonalCard {
+    min-width: 380px;
+    background: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transition: transform 0.4s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.seasonalCard:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.seasonalImageContainer {
+    position: relative;
+    height: 280px;
+}
+
+.seasonalImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.seasonalCard:hover .seasonalImage {
+    transform: scale(1.05);
+}
+
+.priceTag {
+    position: absolute;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 700;
+    color: var(--color-primary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-size: 0.95rem;
+}
+
+.seasonalContent {
+    padding: var(--spacing-xl);
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gold);
+    font-weight: 700;
+    background: rgba(212, 175, 55, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.seasonalTitle {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.seasonalDescription {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+.cardButton {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    font-weight: 600;
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+}
+
+.seasonalCard:hover .cardButton {
+    background: var(--color-primary);
+    color: white;
+}
+
+/* Mood Section */
+.moodSection {
+    background: #fffcf5;
+    padding: 10rem 0;
+}
+
+.moodContainer {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+}
+
+.moodGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: var(--spacing-3xl);
+}
+
+.moodCard {
+    position: relative;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.moodImageBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.8s ease;
+}
+
+.moodCard:hover .moodImageBg {
+    transform: scale(1.08);
+}
+
+.moodOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Darker gradient for better text readability */
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.7) 100%);
+    transition: background 0.3s ease;
+}
+
+.moodCard:hover .moodOverlay {
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.moodContent {
+    position: relative;
+    z-index: 10;
+    padding: var(--spacing-2xl);
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.moodCard:hover .moodContent {
+    transform: translateY(0);
+}
+
+.moodIconWrapper {
+    display: inline-flex;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    margin-bottom: var(--spacing-lg);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.moodIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.moodTitle {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+}
+
+.moodDescription {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-bottom: var(--spacing-xl);
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.moodButton {
+    border-color: rgba(255, 255, 255, 0.8);
+    color: white;
+    min-width: 160px;
+}
+
+.moodButton:hover {
+    background: white;
+    color: var(--color-primary);
+    border-color: white;
+}
+
+/* Tasting Section */
+.tastingSection {
+    padding: 10rem var(--spacing-xl);
+    background: white;
+}
+
+.tastingContent {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6xl);
+    align-items: center;
+}
+
+.tastingText {
+    padding-right: var(--spacing-2xl);
+}
+
+.tastingTitle {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    color: var(--color-primary);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.1;
+}
+
+.tastingDescription {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.tastingImageContainer {
+    position: relative;
+    border-radius: var(--border-radius-lg);
+    overflow: visible;
+}
+
+.tastingImage {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    transform: rotate(2deg);
+    transition: transform 0.5s ease;
+}
+
+.tastingImageContainer:hover .tastingImage {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.floatingCard {
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    background: white;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    z-index: 20;
+    max-width: 300px;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floatingIcon {
+    font-size: 2.5rem;
+}
+
+.floatingText {
+    display: flex;
+    flex-direction: column;
+}
+
+.floatingText strong {
+    color: var(--color-primary);
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.floatingText span {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 1024px) {
+    .tastingContent {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--spacing-4xl);
+    }
+
+    .tastingText {
+        padding-right: 0;
+    }
+
+    .tastingImageContainer {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}

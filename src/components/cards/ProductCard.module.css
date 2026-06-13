@@ -1,0 +1,295 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: #fffaf2;
+  border: 1px solid rgba(128, 92, 53, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 18px 42px rgba(61, 35, 23, 0.09);
+  position: relative;
+  transition: box-shadow var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
+}
+
+.card:hover {
+  border-color: rgba(178, 132, 70, 0.42);
+  box-shadow: 0 24px 60px rgba(61, 35, 23, 0.16);
+  transform: translateY(-4px);
+}
+
+.imageLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.imageContainer {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: linear-gradient(145deg, #efe1cf, #fff8ed);
+  position: relative;
+  isolation: isolate;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms ease;
+}
+
+.imageLink:hover .image {
+  transform: scale(1.06);
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  color: rgba(62, 39, 35, 0.55);
+  font-size: 2rem;
+}
+
+.placeholder span:last-child {
+  font-size: 0.875rem;
+}
+
+.priceBadge,
+.cacaoBadge,
+.soldOutBadge,
+.lowStockBadge {
+  position: absolute;
+  z-index: 2;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.priceBadge {
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: rgba(255, 250, 242, 0.94);
+  color: #3b2118;
+  padding: 0.45rem 0.7rem;
+  box-shadow: 0 10px 28px rgba(37, 19, 12, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.cacaoBadge {
+  left: var(--spacing-sm);
+  bottom: var(--spacing-sm);
+  background: rgba(63, 34, 23, 0.88);
+  color: #fff8ed;
+  padding: 0.4rem 0.65rem;
+}
+
+.content {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.55rem;
+}
+
+.makerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.maker {
+  color: #8a6234;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.makerLink {
+  color: #8a6234;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.makerLink:hover,
+.makerLink:focus-visible {
+  color: #4d2a18;
+  border-bottom-color: rgba(184, 135, 62, 0.75);
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #7a4b1d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ratingIcon {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: #b98a45;
+}
+
+.reviewCount {
+  color: rgba(83, 59, 43, 0.58);
+  font-weight: 600;
+}
+
+.title {
+  font-size: 1.12rem;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-serif);
+  margin: 0;
+  color: #2d1811;
+  line-height: 1.25;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.titleLink:hover .title,
+.titleLink:focus-visible .title {
+  color: #8a5827;
+}
+
+.origin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: rgba(83, 59, 43, 0.68);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+.originLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: rgba(83, 59, 43, 0.68);
+  font-size: 0.82rem;
+  margin: 0;
+  text-decoration: none;
+  width: fit-content;
+  transition: color var(--transition-fast);
+}
+
+.originLink:hover,
+.originLink:focus-visible {
+  color: #6f451e;
+}
+
+.originIcon {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: #a4773f;
+}
+
+.description {
+  font-size: 0.86rem;
+  color: rgba(68, 45, 34, 0.72);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.45;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+}
+
+.badge {
+  border: 1px solid rgba(169, 122, 58, 0.28);
+  background: rgba(255, 245, 229, 0.86);
+  color: #6f451e;
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.price {
+  display: none;
+}
+
+.stock {
+  font-size: 0.78rem;
+  color: rgba(83, 59, 43, 0.58);
+}
+
+.addButton {
+  margin: 0 var(--spacing-md) var(--spacing-md);
+  border-radius: 999px;
+  min-height: 2.75rem;
+  gap: 0.45rem;
+}
+
+.addIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.soldOutBadge {
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 0.4rem 0.7rem;
+  text-transform: uppercase;
+}
+
+.lowStockBadge {
+  left: var(--spacing-sm);
+  top: var(--spacing-sm);
+  background: #7f2635;
+  color: #fff;
+  padding: 0.4rem 0.65rem;
+}
+
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(34, 17, 10, 0.72), rgba(34, 17, 10, 0));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-md);
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.imageContainer:hover .hoverOverlay {
+  opacity: 1;
+}

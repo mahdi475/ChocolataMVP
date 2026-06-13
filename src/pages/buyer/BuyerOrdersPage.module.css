@@ -1,0 +1,234 @@
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-xl);
+  padding-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.heroTag {
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-chocolate-dark);
+  letter-spacing: 0.05em;
+}
+
+.heroBadge {
+  background: var(--color-gold);
+  color: var(--color-chocolate-dark);
+  padding: 0.35rem 1rem;
+  border-radius: var(--border-radius-pill);
+  font-weight: var(--font-weight-bold);
+  font-size: 0.8rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.heroSubtitle {
+  color: var(--color-text-secondary);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 2.4rem);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-chocolate-dark);
+  margin: 0;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.orderCard {
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.orderCard:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid rgba(62, 39, 35, 0.15);
+}
+
+.orderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.orderId {
+  font-size: 1.4rem;
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  color: var(--color-gold);
+}
+
+.orderDate {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.statusPending {
+  background: rgba(255, 209, 102, 0.25);
+  color: #b45309;
+}
+
+.statusProcessing {
+  background: rgba(252, 211, 77, 0.2);
+  color: #92400e;
+}
+
+.statusShipped {
+  background: rgba(16, 185, 129, 0.2);
+  color: #047857;
+}
+
+.statusCompleted {
+  background: rgba(22, 101, 52, 0.2);
+  color: #166534;
+}
+
+.statusCancelled {
+  background: rgba(239, 68, 68, 0.2);
+  color: #b91c1c;
+}
+
+.orderDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--color-chocolate-dark);
+}
+
+.value {
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.orderActions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--spacing-md);
+  border-top: 1px dashed rgba(62, 39, 35, 0.3);
+}
+
+.emptyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-2xl);
+  text-align: center;
+  border: 2px dashed var(--color-gold);
+  background: var(--color-cream);
+  border-radius: var(--border-radius-lg);
+}
+
+.empty {
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.error {
+  padding: var(--spacing-md);
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--color-error);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .orderHeader {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  .detailRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  .value {
+    text-align: left;
+  }
+}

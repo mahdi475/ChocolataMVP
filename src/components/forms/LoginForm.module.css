@@ -1,0 +1,53 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.roleGroup {
+  margin-bottom: var(--spacing-sm);
+}
+
+.roleLabel {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.roleOptions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.radio {
+  margin: 0;
+  accent-color: var(--color-primary);
+}
+
+.helperText {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: var(--border-radius-sm);
+  border-left: 3px solid var(--color-success);
+}
+
+.submitButton {
+  margin-top: var(--spacing-sm);
+}
+
