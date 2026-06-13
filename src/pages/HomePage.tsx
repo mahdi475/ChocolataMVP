@@ -344,18 +344,18 @@ const HomePage = () => {
     <div className={`${styles.container} ${styles.homePage}`}>
       <Hero />
       <CategorySection />
-      {renderDeferredSections && (
-        <Suspense fallback={null}>
-          <ChocolatiersStories />
-        </Suspense>
-      )}
-      {renderDeferredSections && <SpotlightSection />}
       <ProductGrid
         title="Fresh from the Kitchen"
         products={newProducts}
         linkText="Shop New Arrivals"
         linkTo="/catalog"
       />
+      {renderDeferredSections && (
+        <Suspense fallback={null}>
+          <ChocolatiersStories />
+        </Suspense>
+      )}
+      {renderDeferredSections && <SpotlightSection />}
       <Newsletter />
     </div>
   );
