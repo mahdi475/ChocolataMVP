@@ -1,10 +1,35 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { BarChart3, Eye, PackagePlus, ShoppingBag, Store, TrendingUp } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
+import { DEMO_SELLER_PROFILE_SLUG } from '../../lib/sellerProfile';
 import Card from '../../components/ui/Card';
+import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
 import styles from './SellerDashboardPage.module.css';
+
+const demoAnalytics = {
+  revenue: 18420,
+  productViews: 1248,
+  profileVisitors: 386,
+  addToCart: 94,
+  abandonedCarts: 21,
+  conversionRate: 4.8,
+  pendingOrders: 3,
+  bestSellingProducts: [
+    { name: 'Velvet Noir Bar', value: 42 },
+    { name: 'Nordic Gift Box', value: 28 },
+    { name: 'Sea Salt Truffles', value: 19 },
+  ],
+  mostViewedProducts: [
+    { name: 'Nordic Gift Box', value: 312 },
+    { name: 'Velvet Noir Bar', value: 284 },
+    { name: 'Raspberry Bonbons', value: 177 },
+  ],
+  attention: ['Add stock to Velvet Noir Bar', 'Upload a stronger cover image', 'Review summer shipping settings'],
+};
 
 const SellerDashboardPage = () => {
   const { user } = useAuth();
@@ -64,12 +89,13 @@ const SellerDashboardPage = () => {
               <p className={styles.heroTag}>Seller Portal</p>
               <h1 className={styles.title}>Seller HQ</h1>
               <p className={styles.heroSubtitle}>
-                Manage your chocolate empire with ease. Track products, monitor orders, and grow your business.
+                Understand what customers view, add to cart, and buy so you can grow your Chocolata store with confidence.
               </p>
             </div>
-            <span className={styles.heroBadge}>
-              {stats.totalOrders} {stats.totalOrders === 1 ? 'order' : 'orders'}
-            </span>
+            <div className={styles.heroActions}>
+              <Link to="/seller/products/new"><Button><PackagePlus size={16} /> Add product</Button></Link>
+              <Link to={`/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`}><Button variant="outline"><Store size={16} /> View public profile</Button></Link>
+            </div>
           </div>
           {stats.verificationStatus === 'pending' && (
             <Card className={styles.warning}>
@@ -96,13 +122,53 @@ const SellerDashboardPage = () => {
             </Card>
           )}
           <div className={styles.stats}>
-            <Card className={styles.statCard}>
-              <h3 className={styles.statValue}>{stats.totalProducts}</h3>
-              <p className={styles.statLabel}>Total Products</p>
+            {[
+              { label: 'Total sales', value: new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 }).format(demoAnalytics.revenue), icon: TrendingUp },
+              { label: 'Orders', value: stats.totalOrders || demoAnalytics.pendingOrders, icon: ShoppingBag },
+              { label: 'Products', value: stats.totalProducts, icon: PackagePlus },
+              { label: 'Product views', value: demoAnalytics.productViews, icon: Eye },
+              { label: 'Store visitors', value: demoAnalytics.profileVisitors, icon: Store },
+              { label: 'Add-to-cart', value: demoAnalytics.addToCart, icon: BarChart3 },
+              { label: 'Abandoned carts', value: demoAnalytics.abandonedCarts, icon: ShoppingBag },
+              { label: 'Conversion rate', value: `${demoAnalytics.conversionRate}%`, icon: TrendingUp },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <Card key={item.label} className={styles.statCard}>
+                  <Icon className={styles.statIcon} />
+                  <h3 className={styles.statValue}>{item.value}</h3>
+                  <p className={styles.statLabel}>{item.label}</p>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div className={styles.insightsGrid}>
+            <Card className={styles.insightCard}>
+              <h2>Best-selling products</h2>
+              {demoAnalytics.bestSellingProducts.map((product) => (
+                <div key={product.name} className={styles.chartRow}>
+                  <span>{product.name}</span>
+                  <div><i style={{ width: `${product.value * 2}%` }} /></div>
+                  <strong>{product.value}</strong>
+                </div>
+              ))}
             </Card>
-            <Card className={styles.statCard}>
-              <h3 className={styles.statValue}>{stats.totalOrders}</h3>
-              <p className={styles.statLabel}>Total Orders</p>
+            <Card className={styles.insightCard}>
+              <h2>Most viewed products</h2>
+              {demoAnalytics.mostViewedProducts.map((product) => (
+                <div key={product.name} className={styles.chartRow}>
+                  <span>{product.name}</span>
+                  <div><i style={{ width: `${Math.min(product.value / 4, 100)}%` }} /></div>
+                  <strong>{product.value}</strong>
+                </div>
+              ))}
+            </Card>
+            <Card className={styles.insightCard}>
+              <h2>Needs attention</h2>
+              <ul className={styles.attentionList}>
+                {demoAnalytics.attention.map((item) => <li key={item}>{item}</li>)}
+              </ul>
             </Card>
           </div>
         </div>

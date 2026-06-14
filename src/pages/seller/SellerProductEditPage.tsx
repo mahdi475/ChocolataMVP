@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import type { ProductFormValues } from '../../components/forms/ProductForm';
 import ProductForm from '../../components/forms/ProductForm';
+import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
@@ -61,7 +62,14 @@ const SellerProductEditPage = () => {
     <div className={styles.container}>
       <FadeIn>
         <Card>
-          <h1 className={styles.title}>{id ? 'Edit Product' : 'Create Product'}</h1>
+          <div className={styles.header}>
+            <h1 className={styles.title}>{id ? 'Edit Product' : 'Create Product'}</h1>
+            {id && (
+              <Link to={`/product/${id}`}>
+                <Button type="button" variant="outline">View product as customer</Button>
+              </Link>
+            )}
+          </div>
           {error && <div className={styles.error}>{error}</div>}
           <ProductForm
             initialValues={initialValues}

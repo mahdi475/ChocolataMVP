@@ -41,6 +41,7 @@ const productSearchText = (product: Product) => {
     product.country || '',
     product.city || '',
     product.badges?.join(' ') || '',
+    product.tags?.join(' ') || '',
     richProduct.ingredients?.join(' ') || '',
     richProduct.story || '',
   ].join(' ').toLowerCase();
@@ -52,9 +53,10 @@ const toggleArrayValue = (values: string[], value: string) =>
 const productHasSignal = (product: Product, signal: string) => {
   const text = productSearchText(product);
   const badges = product.badges?.map((badge) => normalize(badge)) || [];
+  const tags = product.tags?.map((tag) => normalize(tag)) || [];
   const normalizedSignal = normalize(signal);
 
-  if (badges.includes(normalizedSignal) || text.includes(signal.toLowerCase())) return true;
+  if (badges.includes(normalizedSignal) || tags.includes(normalizedSignal) || text.includes(signal.toLowerCase())) return true;
 
   switch (signal) {
     case 'Gift Boxes':

@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
+import { DEMO_SELLER_PROFILE_SLUG } from '../../lib/sellerProfile';
 import Button from '../ui/Button';
 import styles from './SellerDashboardShell.module.css';
 
@@ -16,11 +17,14 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const navItems = [
-    { path: '/seller/dashboard', labelKey: 'dashboard' },
-    { path: '/seller/products', labelKey: 'products' },
-    { path: '/seller/orders', labelKey: 'orders' },
-    { path: '/seller/verification', labelKey: 'verification' },
+    { path: '/seller/dashboard', label: 'Dashboard' },
+    { path: '/seller/products', label: 'Products' },
+    { path: '/seller/products/new', label: 'Add product' },
+    { path: '/seller/orders', label: 'Orders' },
+    { path: '/seller/verification', label: 'Verification' },
+    { path: '/seller/profile', label: 'Profile settings' },
   ];
+  const publicProfilePath = `/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`;
 
   useEffect(() => {
     setIsMobileNavOpen(false);
@@ -65,9 +69,15 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
               to={item.path}
               className={`${styles.navLink} ${location.pathname === item.path ? styles.active : ''}`}
             >
-              {t(`sellerShell.nav.${item.labelKey}`)}
+              {item.label}
             </Link>
           ))}
+          <Link to={publicProfilePath} className={styles.navLink}>
+            View public profile
+          </Link>
+          <Link to="/" className={styles.navLink}>
+            View marketplace
+          </Link>
         </nav>
         <div className={styles.sidebarFooter}>
           <div className={styles.userInfo}>
@@ -99,7 +109,7 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
           <div className={styles.mobileContext}>
             <span className={styles.mobileLabel}>{t('sellerShell.portal')}</span>
             <span className={styles.mobileRoute}>
-              {t(`sellerShell.nav.${navItems.find((item) => location.pathname.startsWith(item.path))?.labelKey ?? 'overview'}`)}
+              {navItems.find((item) => location.pathname.startsWith(item.path))?.label ?? t('sellerShell.nav.overview')}
             </span>
           </div>
           <Button

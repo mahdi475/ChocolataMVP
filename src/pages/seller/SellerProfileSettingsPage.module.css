@@ -1,0 +1,154 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px;
+  border: 1px solid rgba(245, 215, 161, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(245, 215, 161, 0.12), rgba(255, 246, 227, 0.06));
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: #f5d7a1;
+}
+
+.title {
+  margin: 0;
+  color: #fff6e3;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.subtitle {
+  max-width: 680px;
+  color: rgba(255, 246, 227, 0.72);
+}
+
+.heroActions,
+.footerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.success {
+  padding: 14px 18px;
+  border-radius: 12px;
+  color: #1f3b20;
+  background: #d9f4d2;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(245, 215, 161, 0.18);
+  background: #fff8ed;
+  color: #2c1810;
+}
+
+.card h2 {
+  margin: 0;
+  color: #2c1810;
+  font-size: 1.2rem;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.cardHeader span {
+  color: #8a642c;
+  font-weight: 800;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 700;
+  color: #2c1810;
+}
+
+.label textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: 12px;
+  border: 1px solid rgba(44, 24, 16, 0.18);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.toggles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.12);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    flex-direction: column;
+  }
+
+  .heroActions,
+  .footerActions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .row,
+  .toggles {
+    grid-template-columns: 1fr;
+  }
+
+  .hero,
+  .card {
+    padding: 18px;
+  }
+}

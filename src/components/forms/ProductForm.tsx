@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
+import { PRODUCT_TAG_OPTIONS, uniqueProductTags } from '../../lib/productTags';
 import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
@@ -42,6 +43,7 @@ const productSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   country: z.string().optional(),
   stock: z.number().int().min(0, 'Stock must be a non-negative integer'),
+  tags: z.array(z.string()).optional(),
   // Removed image_url from schema since we handle file upload separately
 });
 
@@ -50,6 +52,8 @@ type ProductFormData = z.infer<typeof productSchema>;
 export interface ProductFormValues extends ProductFormData {
   id?: string;
   image_url?: string | null;
+  tags?: string[];
+  badges?: string[];
 }
 
 interface ProductFormProps {
@@ -65,6 +69,10 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     initialValues?.image_url || null
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    uniqueProductTags(initialValues?.tags || initialValues?.badges || [])
+  );
+  const [tagSearch, setTagSearch] = useState('');
   const {
     register,
     handleSubmit,
@@ -74,8 +82,26 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     defaultValues: {
       ...initialValues,
       country: initialValues?.country || '',
+      tags: initialValues?.tags || initialValues?.badges || [],
     },
   });
+
+  const filteredTags = PRODUCT_TAG_OPTIONS.filter((tag) =>
+    tag.toLowerCase().includes(tagSearch.toLowerCase())
+  );
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags((current) =>
+      current.includes(tag) ? current.filter((item) => item !== tag) : uniqueProductTags([...current, tag])
+    );
+  };
+
+  const addTypedTag = () => {
+    const nextTag = tagSearch.trim();
+    if (!nextTag) return;
+    setSelectedTags((current) => uniqueProductTags([...current, nextTag]));
+    setTagSearch('');
+  };
 
   const handleImageUpload = async (file: File) => {
     setImageFile(file);
@@ -123,6 +149,8 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
 
       const productData = {
         ...data,
+        tags: selectedTags,
+        badges: selectedTags,
         seller_id: user.id,
         image_url: finalImageUrl,
         country: data.country && data.country.trim() !== '' ? data.country : null,
@@ -203,6 +231,55 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           data-testid="product-country"
         />
       </div>
+      <section className={styles.tagSection}>
+        <div className={styles.tagHeader}>
+          <div>
+            <h3>Categories and tags</h3>
+            <p>Choose the words customers use when filtering and discovering chocolate.</p>
+          </div>
+          <span>{selectedTags.length} selected</span>
+        </div>
+        <div className={styles.tagInputRow}>
+          <Input
+            label="Search or add tag"
+            value={tagSearch}
+            onChange={(event) => setTagSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                addTypedTag();
+              }
+            }}
+            helperText="Press Enter or click Add to create a custom tag."
+          />
+          <Button type="button" variant="outline" onClick={addTypedTag}>
+            Add
+          </Button>
+        </div>
+        <div className={styles.selectedTags}>
+          {selectedTags.length === 0 ? (
+            <p>No tags selected yet.</p>
+          ) : (
+            selectedTags.map((tag) => (
+              <button type="button" key={tag} className={styles.selectedTag} onClick={() => toggleTag(tag)}>
+                {tag} x
+              </button>
+            ))
+          )}
+        </div>
+        <div className={styles.tagCloud}>
+          {filteredTags.map((tag) => (
+            <button
+              type="button"
+              key={tag}
+              className={`${styles.tagChip} ${selectedTags.includes(tag) ? styles.tagChipActive : ''}`}
+              onClick={() => toggleTag(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </section>
       <ImageUpload
         onImageUpload={handleImageUpload}
         existingImage={uploadedImageUrl || undefined}

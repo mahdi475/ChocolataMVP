@@ -1,12 +1,20 @@
 .container {
   width: 100%;
-  max-width: 800px;
+  max-width: 980px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .title {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: var(--spacing-lg);
+  margin: 0;
   color: var(--color-text);
 }
 
@@ -17,5 +25,11 @@
   border-radius: var(--border-radius-md);
   margin-bottom: var(--spacing-md);
   font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+  }
 }
 

@@ -30,6 +30,7 @@ export interface Product {
   rating?: number;
   reviews?: number;
   badges?: string[];
+  tags?: string[];
   cacao_percentage?: number;
   is_vegan?: boolean;
   is_organic?: boolean;
@@ -53,8 +54,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productDescription = product.description
     ? t(`ui:productData.${product.id}.description`, { defaultValue: product.description })
     : '';
-  const badges = product.badges?.length
-    ? product.badges
+  const badges = product.tags?.length || product.badges?.length
+    ? [...(product.tags || []), ...(product.badges || [])]
     : [
         product.is_organic ? 'Organic' : null,
         product.is_vegan ? 'Vegan' : null,

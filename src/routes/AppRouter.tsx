@@ -36,6 +36,7 @@ import SellerProductsPage from '../pages/seller/SellerProductsPage';
 import SellerProductEditPage from '../pages/seller/SellerProductEditPage';
 import SellerOrdersPage from '../pages/seller/SellerOrdersPage';
 import SellerVerificationPage from '../pages/seller/SellerVerificationPage';
+import SellerProfileSettingsPage from '../pages/seller/SellerProfileSettingsPage';
 
 // Admin pages
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
@@ -234,6 +235,16 @@ const AppRouter = () => {
           <ProtectedRoute requiredRole="seller">
             <SellerDashboardShell>
               <SellerVerificationPage />
+            </SellerDashboardShell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/seller/profile"
+        element={
+          <ProtectedRoute requiredRole="seller">
+            <SellerDashboardShell>
+              <SellerProfileSettingsPage />
             </SellerDashboardShell>
           </ProtectedRoute>
         }

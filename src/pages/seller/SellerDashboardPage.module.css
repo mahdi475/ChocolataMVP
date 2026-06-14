@@ -48,16 +48,12 @@
   color: var(--color-text-secondary);
 }
 
-.heroBadge {
-  background: var(--color-gold);
-  color: var(--color-chocolate-dark);
-  padding: 0.5rem 1.75rem;
-  border-radius: var(--border-radius-pill);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.2em;
-  box-shadow: var(--shadow-sm);
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
   align-self: flex-start;
-  white-space: nowrap;
 }
 
 .warning {
@@ -147,7 +143,7 @@
 }
 
 .statCard {
-  text-align: center;
+  text-align: left;
   padding: var(--spacing-xl);
   border: 1px solid var(--color-gold);
   background: linear-gradient(135deg, var(--color-cream), #fffbe6);
@@ -157,7 +153,14 @@
 }
 .statCard:hover {
   box-shadow: var(--shadow-lg);
-  transform: scale(1.04) rotate(-1deg);
+  transform: translateY(-2px);
+}
+
+.statIcon {
+  width: 22px;
+  height: 22px;
+  color: var(--color-gold);
+  margin-bottom: var(--spacing-sm);
 }
 
 .statValue {
@@ -170,11 +173,64 @@
 }
 
 .statLabel {
-  font-size: 1rem;
+  font-size: 0.82rem;
   color: var(--color-chocolate-dark);
   margin: 0;
   font-family: var(--font-sans);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.insightsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.insightCard {
+  padding: var(--spacing-xl);
+  border: 1px solid rgba(88, 47, 36, 0.12);
+  background: #fff8ed;
+}
+
+.insightCard h2 {
+  margin: 0 0 var(--spacing-md);
+  color: var(--color-chocolate-dark);
+  font-size: 1.15rem;
+}
+
+.chartRow {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) 1.5fr auto;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-chocolate-dark);
+}
+
+.chartRow div {
+  height: 9px;
+  border-radius: var(--border-radius-pill);
+  background: rgba(88, 47, 36, 0.12);
+  overflow: hidden;
+}
+
+.chartRow i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-gold), #8a642c);
+}
+
+.attentionList {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--color-text-secondary);
+}
+
+.attentionList li + li {
+  margin-top: var(--spacing-sm);
 }
 
 @media (max-width: 1024px) {
@@ -209,10 +265,8 @@
     font-size: clamp(1.8rem, 5vw, 2.2rem);
   }
 
-  .heroBadge {
-    align-self: flex-start;
-    padding: 0.4rem 1.5rem;
-    font-size: 0.85rem;
+  .heroActions {
+    justify-content: flex-start;
   }
 
   .stats {
@@ -226,6 +280,12 @@
 
   .statValue {
     font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .insightsGrid {
+    grid-template-columns: 1fr;
   }
 }
 

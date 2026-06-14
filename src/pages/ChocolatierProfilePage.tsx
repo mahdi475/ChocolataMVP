@@ -23,6 +23,7 @@ import Button from '../components/ui/Button';
 import { useCart } from '../contexts/CartContext';
 import { getChocolatierBySlug, type Product, type ProductTag } from '../data/chocolatiers';
 import { getShippingPackaging } from '../lib/shippingPackaging';
+import { DEMO_SELLER_PROFILE_SLUG, sellerProfileToChocolatier } from '../lib/sellerProfile';
 import { translateLabel } from '../lib/translationLabels';
 import styles from './ChocolatierProfilePage.module.css';
 
@@ -127,7 +128,9 @@ const ProductCard = ({
 const ChocolatierProfilePage = () => {
   const { t } = useTranslation('ui');
   const { slug } = useParams<{ slug: string }>();
-  const chocolatier = getChocolatierBySlug(slug);
+  const chocolatier = slug === DEMO_SELLER_PROFILE_SLUG
+    ? sellerProfileToChocolatier()
+    : getChocolatierBySlug(slug);
   const [activeFilter, setActiveFilter] = useState<ProductTag | 'all'>('all');
 
   const filteredProducts = useMemo(() => {
