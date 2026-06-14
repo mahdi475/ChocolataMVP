@@ -17,18 +17,57 @@ console.log('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? `Loaded (${supabaseAnon
 const DEMO_CUSTOMER_EMAIL = 'customer@test.com';
 const DEMO_CUSTOMER_PASSWORD = 'Test1234!';
 const DEMO_CUSTOMER_ID = '00000000-0000-4000-8000-000000000001';
+const DEMO_SELLER_EMAIL = 'seller@test.com';
+const DEMO_SELLER_PASSWORD = 'Test1234!';
+const DEMO_SELLER_ID = '00000000-0000-4000-8000-000000000002';
 
-const demoCustomerUser = (): User => ({
-  id: DEMO_CUSTOMER_ID,
+type DemoAccount = {
+  id: string;
+  email: string;
+  password: string;
+  fullName: string;
+  role: 'buyer' | 'seller';
+  sessionKey: 'customer' | 'seller';
+};
+
+const demoAccounts: DemoAccount[] = [
+  {
+    id: DEMO_CUSTOMER_ID,
+    email: DEMO_CUSTOMER_EMAIL,
+    password: DEMO_CUSTOMER_PASSWORD,
+    fullName: 'Test Customer',
+    role: 'buyer',
+    sessionKey: 'customer',
+  },
+  {
+    id: DEMO_SELLER_ID,
+    email: DEMO_SELLER_EMAIL,
+    password: DEMO_SELLER_PASSWORD,
+    fullName: 'Test Chocolatier',
+    role: 'seller',
+    sessionKey: 'seller',
+  },
+];
+
+const getDemoAccountBySession = () => {
+  const raw = window.localStorage.getItem('chocolata:demo-session');
+  return demoAccounts.find((account) => account.sessionKey === raw) || null;
+};
+
+const getDemoAccountByCredentials = (email: string, password: string) =>
+  demoAccounts.find((account) => account.email === email.toLowerCase() && account.password === password) || null;
+
+const demoUser = (account: DemoAccount): User => ({
+  id: account.id,
   aud: 'authenticated',
   role: 'authenticated',
-  email: DEMO_CUSTOMER_EMAIL,
+  email: account.email,
   email_confirmed_at: new Date().toISOString(),
   phone: '',
   confirmed_at: new Date().toISOString(),
   last_sign_in_at: new Date().toISOString(),
   app_metadata: { provider: 'email', providers: ['email'] },
-  user_metadata: { full_name: 'Test Customer', role: 'buyer' },
+  user_metadata: { full_name: account.fullName, role: account.role },
   identities: [],
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
@@ -36,9 +75,9 @@ const demoCustomerUser = (): User => ({
 });
 
 const demoSession = () => {
-  const raw = window.localStorage.getItem('chocolata:demo-session');
-  if (!raw) return null;
-  const user = demoCustomerUser();
+  const account = getDemoAccountBySession();
+  if (!account) return null;
+  const user = demoUser(account);
   return {
     access_token: 'demo-access-token',
     refresh_token: 'demo-refresh-token',
@@ -67,16 +106,34 @@ const createDemoQuery = (table: string) => {
     update: async () => ({ data: null, error: null }),
     single: async () => {
       if (table === 'users') {
+        const account = getDemoAccountBySession() || demoAccounts[0];
         return {
           data: {
-            id: DEMO_CUSTOMER_ID,
-            email: DEMO_CUSTOMER_EMAIL,
-            full_name: 'Test Customer',
-            role: 'buyer',
+            id: account.id,
+            email: account.email,
+            full_name: account.fullName,
+            role: account.role,
             created_at: new Date().toISOString(),
           },
           error: null,
         };
+      }
+      if (table === 'seller_verifications') {
+        const account = getDemoAccountBySession();
+        if (account?.role === 'seller') {
+          return {
+            data: {
+              id: 'demo-seller-verification',
+              user_id: account.id,
+              status: 'approved',
+              document_url: null,
+              admin_notes: null,
+              created_at: new Date().toISOString(),
+              reviewed_at: new Date().toISOString(),
+            },
+            error: null,
+          };
+        }
       }
       return { data: null, error: { message: 'Demo backend has no live record.' } };
     },
@@ -93,20 +150,22 @@ const createDemoSupabaseClient = () => ({
     getSession: async () => ({ data: { session: demoSession() }, error: null }),
     getUser: async () => ({ data: { user: demoSession()?.user || null }, error: null }),
     signInWithPassword: async ({ email, password }: { email: string; password: string }) => {
-      if (email.toLowerCase() !== DEMO_CUSTOMER_EMAIL || password !== DEMO_CUSTOMER_PASSWORD) {
-        return { data: { user: null, session: null }, error: { message: 'Invalid demo customer credentials' } };
+      const account = getDemoAccountByCredentials(email, password);
+      if (!account) {
+        return { data: { user: null, session: null }, error: { message: 'Invalid demo account credentials' } };
       }
-      window.localStorage.setItem('chocolata:demo-session', 'customer');
+      window.localStorage.setItem('chocolata:demo-session', account.sessionKey);
       notifyDemoAuthListeners('SIGNED_IN');
-      return { data: { user: demoCustomerUser(), session: demoSession() }, error: null };
+      return { data: { user: demoUser(account), session: demoSession() }, error: null };
     },
     signUp: async ({ email, password }: any) => {
-      if (email.toLowerCase() !== DEMO_CUSTOMER_EMAIL || password !== DEMO_CUSTOMER_PASSWORD) {
-        return { data: { user: null, session: null }, error: { message: 'Demo mode only supports customer@test.com' } };
+      const account = getDemoAccountByCredentials(email, password);
+      if (!account) {
+        return { data: { user: null, session: null }, error: { message: 'Demo mode only supports the configured test accounts' } };
       }
-      window.localStorage.setItem('chocolata:demo-session', 'customer');
+      window.localStorage.setItem('chocolata:demo-session', account.sessionKey);
       notifyDemoAuthListeners('SIGNED_IN');
-      return { data: { user: demoCustomerUser(), session: demoSession() }, error: null };
+      return { data: { user: demoUser(account), session: demoSession() }, error: null };
     },
     signOut: async () => {
       window.localStorage.removeItem('chocolata:demo-session');
