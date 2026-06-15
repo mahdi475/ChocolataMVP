@@ -6,6 +6,7 @@ import { Search, MapPin, ArrowRight } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import { CHOCOLATIERS } from '../data/chocolatiers';
+import { isSellerProfileLive, loadSellerStoreProfile, sellerProfileToChocolatier } from '../lib/sellerProfile';
 import { translateLabel } from '../lib/translationLabels';
 import heroBg from '../assets/collections/hero-truffles.png';
 import styles from './ChocolatiersPage.module.css';
@@ -15,14 +16,23 @@ const ChocolatiersPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
+  const chocolatiers = useMemo(() => {
+    const sellerProfile = loadSellerStoreProfile();
+    const demoSeller = sellerProfileToChocolatier(sellerProfile);
+    return [
+      ...(isSellerProfileLive(sellerProfile) ? [demoSeller] : []),
+      ...CHOCOLATIERS.filter((item) => item.slug !== demoSeller.slug),
+    ];
+  }, []);
+
   const countries = useMemo(
-    () => Array.from(new Set(CHOCOLATIERS.map((c) => c.country))).sort(),
-    []
+    () => Array.from(new Set(chocolatiers.map((c) => c.country))).sort(),
+    [chocolatiers]
   );
 
   const filtered = useMemo(() => {
     const q = searchTerm.toLowerCase().trim();
-    return CHOCOLATIERS.filter((c) => {
+    return chocolatiers.filter((c) => {
       const matchesSearch =
         !q ||
         c.name.toLowerCase().includes(q) ||
@@ -32,7 +42,7 @@ const ChocolatiersPage = () => {
       const matchesCountry = selectedCountry ? c.country === selectedCountry : true;
       return matchesSearch && matchesCountry;
     });
-  }, [searchTerm, selectedCountry]);
+  }, [chocolatiers, searchTerm, selectedCountry]);
 
   return (
     <div className={styles.container} data-testid="chocolatiers-page">
@@ -112,6 +122,7 @@ const ChocolatiersPage = () => {
                 <Link to={`/chocolatiers/${c.slug}`} className={styles.cardImageLink}>
                   <div className={styles.cardImageContainer}>
                     <img src={c.portrait} alt={`${c.name} portrait`} className={styles.cardImage} loading="lazy" />
+                    {c.logoImage && <img src={c.logoImage} alt="" className={styles.cardLogo} loading="lazy" />}
                   </div>
                 </Link>
 

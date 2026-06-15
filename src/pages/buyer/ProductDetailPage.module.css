@@ -112,8 +112,25 @@
   margin-bottom: var(--spacing-sm);
 }
 
+.makerIdentity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.makerLogo {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  object-fit: cover;
+  border: 1px solid rgba(126, 85, 45, 0.2);
+  background: #fff8ed;
+}
+
 .makerLine a,
-.makerLine > span {
+.makerLine > span,
+.makerIdentity > span {
   color: #8a5827;
   font-size: 0.78rem;
   font-weight: 900;

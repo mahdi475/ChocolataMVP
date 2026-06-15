@@ -56,6 +56,49 @@
   align-self: flex-start;
 }
 
+.profileStatusCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  border: 1px solid rgba(138, 100, 44, 0.22);
+  background: #fff8ed;
+}
+
+.profileStatusCard p,
+.profileStatusCard h2,
+.profileStatusCard span {
+  margin: 0;
+}
+
+.profileStatusCard p {
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.profileStatusCard h2 {
+  color: var(--color-chocolate-dark);
+  font-size: 1.25rem;
+}
+
+.profileStatusCard span {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+.profileStatusActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+}
+
 .warning {
   background: rgba(255, 152, 0, 0.08);
   border: 2px solid rgba(237, 108, 2, 0.3);
@@ -254,7 +297,8 @@
     border-radius: var(--border-radius-lg);
   }
 
-  .hero {
+  .hero,
+  .profileStatusCard {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-lg);
@@ -265,7 +309,8 @@
     font-size: clamp(1.8rem, 5vw, 2.2rem);
   }
 
-  .heroActions {
+  .heroActions,
+  .profileStatusActions {
     justify-content: flex-start;
   }
 

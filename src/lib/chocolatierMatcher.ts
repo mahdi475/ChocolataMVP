@@ -1,5 +1,6 @@
 import { CHOCOLATIERS } from '../data/chocolatiers';
 import type { Product } from '../components/cards/ProductCard';
+import { DEMO_SELLER_PROFILE_SLUG, sellerProfileToChocolatier } from './sellerProfile';
 
 const normalize = (value?: string | null) =>
   (value || '')
@@ -13,6 +14,11 @@ export const getChocolatierProfilePath = (slug: string) => `/chocolatiers/${slug
 export const findChocolatierMatch = (...values: Array<string | null | undefined>) => {
   const candidates = values.filter(Boolean) as string[];
   if (candidates.length === 0) return undefined;
+  const demoSeller = sellerProfileToChocolatier();
+
+  if (candidates.some((value) => normalize(value) === normalize(DEMO_SELLER_PROFILE_SLUG) || normalize(value) === normalize(demoSeller.name))) {
+    return demoSeller;
+  }
 
   for (const value of candidates) {
     const exact = CHOCOLATIERS.find(

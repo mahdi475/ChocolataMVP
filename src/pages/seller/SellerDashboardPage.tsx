@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BarChart3, Eye, PackagePlus, ShoppingBag, Store, TrendingUp } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
-import { DEMO_SELLER_PROFILE_SLUG } from '../../lib/sellerProfile';
+import {
+  DEMO_SELLER_PROFILE_SLUG,
+  type SellerStoreProfile,
+  loadSellerStoreProfile,
+  saveSellerStoreProfile,
+} from '../../lib/sellerProfile';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
@@ -32,7 +38,9 @@ const demoAnalytics = {
 };
 
 const SellerDashboardPage = () => {
+  const { t } = useTranslation('ui');
   const { user } = useAuth();
+  const [profile, setProfile] = useState<SellerStoreProfile>(() => loadSellerStoreProfile());
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalOrders: 0,
@@ -80,6 +88,13 @@ const SellerDashboardPage = () => {
     );
   }
 
+  const setProfileStatus = (status: SellerStoreProfile['status']) => {
+    if (status === 'offline' && !window.confirm(t('sellerProfile.offlineWarning'))) return;
+    const next = { ...profile, status };
+    setProfile(next);
+    saveSellerStoreProfile(next);
+  };
+
   return (
     <div className={styles.container}>
       <FadeIn>
@@ -97,6 +112,21 @@ const SellerDashboardPage = () => {
               <Link to={`/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`}><Button variant="outline"><Store size={16} /> View public profile</Button></Link>
             </div>
           </div>
+          <Card className={styles.profileStatusCard}>
+            <div>
+              <p>{t('sellerProfile.profileStatus')}</p>
+              <h2>{profile.status === 'live' ? t('sellerProfile.live') : t('sellerProfile.offline')}</h2>
+              <span>{profile.status === 'live' ? t('sellerProfile.liveHelp') : t('sellerProfile.offlineHelp')}</span>
+            </div>
+            <div className={styles.profileStatusActions}>
+              <Button type="button" variant={profile.status === 'live' ? 'gold' : 'outline'} onClick={() => setProfileStatus('live')}>
+                {t('sellerProfile.goLive')}
+              </Button>
+              <Button type="button" variant={profile.status === 'offline' ? 'gold' : 'ghost'} onClick={() => setProfileStatus('offline')}>
+                {t('sellerProfile.goOffline')}
+              </Button>
+            </div>
+          </Card>
           {stats.verificationStatus === 'pending' && (
             <Card className={styles.warning}>
               <h3>⏳ Verification Pending</h3>

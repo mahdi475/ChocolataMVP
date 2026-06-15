@@ -6,7 +6,7 @@ import { Check, ChevronDown, RotateCcw, Search, SlidersHorizontal, X } from 'luc
 import { supabase } from '../../lib/supabaseClient';
 import ProductCard, { type Product } from '../../components/cards/ProductCard';
 import { demoCategories, demoProducts } from '../../data/demoCatalog';
-import { CHOCOLATIERS } from '../../data/chocolatiers';
+import { MARKETPLACE_COUNTRIES } from '../../lib/marketplaceCountries';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
@@ -21,7 +21,7 @@ interface Category {
 
 type SortOption = 'popular' | 'newest' | 'price_asc' | 'price_desc';
 
-const COUNTRIES = Array.from(new Set(CHOCOLATIERS.map((chocolatier) => chocolatier.country))).sort();
+const COUNTRIES = MARKETPLACE_COUNTRIES;
 
 const CHOCOLATE_TYPES = ['Dark', 'Milk', 'White', 'Pralines', 'Truffles', 'Bonbons', 'Gift Boxes'];
 const FLAVOR_OPTIONS = ['Hazelnut', 'Caramel', 'Ganache', 'Fruit', 'Floral', 'Cocoa Nibs'];

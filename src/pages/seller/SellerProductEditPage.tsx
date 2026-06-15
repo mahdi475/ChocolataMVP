@@ -7,6 +7,7 @@ import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
+import { DEMO_SELLER_PROFILE_SLUG } from '../../lib/sellerProfile';
 import styles from './SellerProductEditPage.module.css';
 
 const SellerProductEditPage = () => {
@@ -15,6 +16,7 @@ const SellerProductEditPage = () => {
   const [initialValues, setInitialValues] = useState<ProductFormValues | undefined>();
   const [loading, setLoading] = useState(!!id);
   const [error, setError] = useState<string | null>(null);
+  const [savedProductId, setSavedProductId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -42,8 +44,11 @@ const SellerProductEditPage = () => {
     fetchProduct();
   }, [id]);
 
-  const handleSuccess = () => {
-    navigate('/seller/products');
+  const handleSuccess = (productId?: string) => {
+    setSavedProductId(productId || id || null);
+    if (!productId && !id) {
+      navigate('/seller/products');
+    }
   };
 
   const handleError = (errorMessage: string) => {
@@ -70,6 +75,18 @@ const SellerProductEditPage = () => {
               </Link>
             )}
           </div>
+          {savedProductId && (
+            <div className={styles.successPanel}>
+              <strong>Product saved and published.</strong>
+              <span>Customers can now see this product in the marketplace prototype.</span>
+              <div className={styles.successActions}>
+                <Link to={`/product/${savedProductId}`}><Button type="button" variant="outline">View product as customer</Button></Link>
+                <Link to={`/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`}><Button type="button" variant="outline">View seller public profile</Button></Link>
+                <Link to="/catalog"><Button type="button" variant="ghost">Go to shop</Button></Link>
+                <Link to="/seller/products"><Button type="button">Back to products</Button></Link>
+              </div>
+            </div>
+          )}
           {error && <div className={styles.error}>{error}</div>}
           <ProductForm
             initialValues={initialValues}

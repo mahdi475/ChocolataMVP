@@ -232,6 +232,19 @@
   display: block;
 }
 
+.cardLogo {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid #fff8ed;
+  background: #fff8ed;
+  box-shadow: 0 10px 24px rgba(44, 24, 16, 0.28);
+}
+
 .card:hover .cardImage {
   transform: scale(1.05);
 }

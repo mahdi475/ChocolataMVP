@@ -47,6 +47,9 @@ export interface Chocolatier {
   tagline: string;
   story: string;
   portrait: string;
+  logoImage?: string;
+  coverImage?: string;
+  galleryImages?: string[];
   tags: string[];
   values: { title: string; description: string }[];
   shippingPackaging?: ShippingPackagingInfo;

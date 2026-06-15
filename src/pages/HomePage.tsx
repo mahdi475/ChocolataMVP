@@ -1,9 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, Star, Gift, Heart, Coffee, Leaf } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
 
 import Badge from '../components/ui/Badge';
@@ -291,34 +290,9 @@ const Newsletter = () => {
 
 const HomePage = () => {
   const { t } = useTranslation('ui');
-  const { user, role } = useAuth();
-  const navigate = useNavigate();
   const cachedHomepageData = getCachedHomepageData();
   const [newProducts, setNewProducts] = useState<Product[]>(cachedHomepageData?.products || demoProducts.slice(0, 6));
   const [renderDeferredSections, setRenderDeferredSections] = useState(false);
-
-  // Redirect authenticated users to their appropriate dashboard
-  useEffect(() => {
-    if (user && role) {
-      console.log('🏠 Homepage: User is logged in with role:', role);
-      switch (role) {
-        case 'seller':
-          console.log('➡️ Homepage: Redirecting seller to dashboard');
-          navigate('/seller/dashboard', { replace: true });
-          break;
-        case 'admin':
-          console.log('➡️ Homepage: Redirecting admin to dashboard');
-          navigate('/admin/dashboard', { replace: true });
-          break;
-        case 'buyer':
-          console.log('➡️ Homepage: Buyer can stay on homepage or browse catalog');
-          break;
-        default:
-          console.log('🤷 Homepage: Unknown role, staying on homepage');
-          break;
-      }
-    }
-  }, [user, role, navigate]);
 
   useEffect(() => {
     let isMounted = true;

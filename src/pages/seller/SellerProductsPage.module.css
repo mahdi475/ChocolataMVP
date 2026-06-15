@@ -102,6 +102,16 @@
   margin: 0;
 }
 
+.statusBadge {
+  width: fit-content;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.16);
+  color: var(--color-chocolate-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .actions {
   display: flex;
   gap: var(--spacing-sm);

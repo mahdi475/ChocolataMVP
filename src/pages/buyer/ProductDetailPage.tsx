@@ -20,6 +20,12 @@ import {
 } from '../../data/demoCatalog';
 import { findChocolatierMatch, getChocolatierProfilePath } from '../../lib/chocolatierMatcher';
 import { getShippingPackaging, type ShippingPackagingInfo } from '../../lib/shippingPackaging';
+import {
+  DEMO_SELLER_PROFILE_SLUG,
+  isPublicSellerProduct,
+  isSellerProfileLive,
+  loadSellerStoreProfile,
+} from '../../lib/sellerProfile';
 import { translateLabel } from '../../lib/translationLabels';
 import styles from './ProductDetailPage.module.css';
 
@@ -48,7 +54,7 @@ const asPremiumProduct = (product: Product): ProductWithSeller => ({
   shipping_info: '',
   shippingPackaging: undefined,
   story: product.description || '',
-  gallery: product.image_url ? [product.image_url] : [],
+  gallery: [product.image_url, ...(product.gallery_images || [])].filter(Boolean) as string[],
 });
 
 const ProductDetailPage = () => {
@@ -91,6 +97,9 @@ const ProductDetailPage = () => {
         }
 
         const normalized = asPremiumProduct(data as Product);
+        if (normalized.maker_slug === DEMO_SELLER_PROFILE_SLUG && (!isSellerProfileLive() || !isPublicSellerProduct(normalized))) {
+          throw new Error(t('productDetail.notFound'));
+        }
         normalized.seller = data?.seller as Seller | undefined;
         if (!normalized.maker_name || normalized.maker_name === normalized.seller_id) {
           normalized.maker_name = normalized.seller?.full_name || normalized.seller?.email || normalized.maker_name;
@@ -221,6 +230,8 @@ const ProductDetailPage = () => {
     product.seller_id
   );
   const makerProfilePath = chocolatierMatch ? getChocolatierProfilePath(chocolatierMatch.slug) : undefined;
+  const sellerProfile = chocolatierMatch?.slug === DEMO_SELLER_PROFILE_SLUG ? loadSellerStoreProfile() : null;
+  const makerLogo = sellerProfile?.logoImage || chocolatierMatch?.logoImage;
   const isSoldOut = product.stock !== undefined && product.stock <= 0;
   const shippingPackaging = getShippingPackaging(product.shippingPackaging as ShippingPackagingInfo | undefined, {
     shipsFromCountry: product.country,
@@ -300,13 +311,16 @@ const ProductDetailPage = () => {
 
           <div className={styles.details}>
             <div className={styles.makerLine}>
-              {makerProfilePath ? (
-                <Link to={makerProfilePath} aria-label={t('productCard.viewMakerProfileAria', { maker: chocolatierMatch?.name || makerName })}>
-                  {chocolatierMatch?.name || makerName}
-                </Link>
-              ) : (
-                <span>{makerName}</span>
-              )}
+              <div className={styles.makerIdentity}>
+                {makerLogo && <img src={makerLogo} alt="" className={styles.makerLogo} />}
+                {makerProfilePath ? (
+                  <Link to={makerProfilePath} aria-label={t('productCard.viewMakerProfileAria', { maker: chocolatierMatch?.name || makerName })}>
+                    {chocolatierMatch?.name || makerName}
+                  </Link>
+                ) : (
+                  <span>{makerName}</span>
+                )}
+              </div>
               {product.rating > 0 && (
                 <span className={styles.rating}>
                   <Star fill="currentColor" />

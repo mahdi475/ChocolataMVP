@@ -1,5 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
+import {
+  readDemoSellerProducts,
+  readPublicDemoSellerProducts,
+  upsertDemoSellerProduct,
+  writeDemoSellerProducts,
+} from './marketplaceData';
 
 console.log('--- DEBUG: supabaseClient.ts START ---');
 
@@ -96,15 +102,50 @@ const notifyDemoAuthListeners = (event: string) => {
 };
 
 const createDemoQuery = (table: string) => {
+  let filters: Array<{ column: string; value: any }> = [];
   const query: any = {
     select: () => query,
-    eq: () => query,
+    eq: (column: string, value: any) => {
+      filters.push({ column, value });
+      return query;
+    },
     neq: () => query,
     order: () => query,
     limit: () => query,
-    insert: async () => ({ data: null, error: null }),
-    update: async () => ({ data: null, error: null }),
+    insert: async (payload: any) => {
+      if (table === 'products') {
+        const rows = Array.isArray(payload) ? payload : [payload];
+        const inserted = rows.map((row) => upsertDemoSellerProduct(row));
+        return { data: Array.isArray(payload) ? inserted : inserted[0], error: null };
+      }
+      return { data: null, error: null };
+    },
+    update: (payload: any) => ({
+      eq: async (column: string, value: any) => {
+        if (table === 'products') {
+          const current = readDemoSellerProducts().find((product: any) => product[column] === value);
+          const updated = current ? upsertDemoSellerProduct({ ...current, ...payload }) : null;
+          return { data: updated, error: null };
+        }
+        return { data: null, error: null };
+      },
+    }),
+    delete: () => ({
+      eq: async (column: string, value: any) => {
+        if (table === 'products') {
+          writeDemoSellerProducts(readDemoSellerProducts().filter((product: any) => product[column] !== value));
+        }
+        return { data: null, error: null };
+      },
+    }),
     single: async () => {
+      if (table === 'products') {
+        const products = readDemoSellerProducts();
+        const product = products.find((item: any) => filters.every((filter) => item[filter.column] === filter.value));
+        return product
+          ? { data: product, error: null }
+          : { data: null, error: { message: 'Demo product not found.' } };
+      }
       if (table === 'users') {
         const account = getDemoAccountBySession() || demoAccounts[0];
         return {
@@ -138,6 +179,16 @@ const createDemoQuery = (table: string) => {
       return { data: null, error: { message: 'Demo backend has no live record.' } };
     },
     then: (resolve: any) => {
+      if (table === 'products') {
+        const publicOnly = filters.some((filter) => filter.column === 'is_active' && filter.value === true);
+        let products = publicOnly ? readPublicDemoSellerProducts() : readDemoSellerProducts();
+        products = products.filter((item: any) => filters.every((filter) => {
+          if (filter.column === 'is_active') return item.is_active === filter.value;
+          if (filter.column === 'status') return item.status === filter.value;
+          return item[filter.column] === filter.value;
+        }));
+        return Promise.resolve({ data: products, error: null, count: products.length }).then(resolve);
+      }
       const empty = { data: [], error: null, count: 0 };
       return Promise.resolve(empty).then(resolve);
     },

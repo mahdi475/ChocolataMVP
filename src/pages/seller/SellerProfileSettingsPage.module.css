@@ -51,6 +51,37 @@
   font-weight: 700;
 }
 
+.statusCard {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 22px;
+  border: 1px solid rgba(138, 100, 44, 0.22);
+  border-radius: 16px;
+  background: #fff8ed;
+  color: #2c1810;
+}
+
+.statusCard h2 {
+  margin: 0.2rem 0 0.35rem;
+  color: #2c1810;
+  font-size: 1.15rem;
+}
+
+.statusCard p {
+  margin: 0;
+  color: #6b5847;
+  line-height: 1.5;
+}
+
+.statusActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -109,6 +140,14 @@
   font: inherit;
 }
 
+.helperText,
+.imagePicker small {
+  margin: 0;
+  color: #6b5847;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
 .toggles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -125,17 +164,89 @@
   font-weight: 700;
 }
 
+.imageUploadGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.imagePicker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed rgba(44, 24, 16, 0.22);
+  border-radius: 12px;
+  background: #fff;
+  font-weight: 700;
+}
+
+.imagePicker img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.imagePicker strong {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  border-radius: 10px;
+  background: rgba(212, 175, 55, 0.12);
+  color: #8a642c;
+}
+
+.imagePicker button,
+.galleryItem button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  background: #2c1810;
+  color: #fff8ed;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.galleryItem {
+  overflow: hidden;
+  border: 1px solid rgba(44, 24, 16, 0.16);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.galleryItem img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.galleryItem button {
+  width: 100%;
+  border-radius: 0;
+}
+
 @media (max-width: 900px) {
   .hero,
+  .statusCard,
   .grid {
     grid-template-columns: 1fr;
   }
 
-  .hero {
+  .hero,
+  .statusCard {
     flex-direction: column;
   }
 
   .heroActions,
+  .statusActions,
   .footerActions {
     justify-content: flex-start;
   }
@@ -143,11 +254,13 @@
 
 @media (max-width: 640px) {
   .row,
-  .toggles {
+  .toggles,
+  .imageUploadGrid {
     grid-template-columns: 1fr;
   }
 
   .hero,
+  .statusCard,
   .card {
     padding: 18px;
   }

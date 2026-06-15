@@ -18,6 +18,7 @@ export interface Product {
   description?: string;
   price: number;
   image_url?: string;
+  gallery_images?: string[];
   category?: string;
   country?: string;
   stock?: number;
@@ -36,6 +37,8 @@ export interface Product {
   is_organic?: boolean;
   is_gift_box?: boolean;
   is_popular?: boolean;
+  is_active?: boolean;
+  status?: 'draft' | 'published';
 }
 
 interface ProductCardProps {

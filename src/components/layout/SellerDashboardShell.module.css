@@ -86,6 +86,23 @@
   gap: 12px;
 }
 
+.languageWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(245, 215, 161, 0.08);
+  border: 1px solid rgba(245, 215, 161, 0.14);
+}
+
+.languageWrap span {
+  color: rgba(245, 215, 161, 0.78);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
 .userInfo {
   display: flex;
   flex-direction: column;

@@ -4,12 +4,14 @@ import styles from './ImageUpload.module.css';
 
 interface ImageUploadProps {
   onImageUpload: (file: File) => void;
+  onImageRemove?: () => void;
   existingImage?: string;
   maxSize?: number; // in MB
 }
 
 const ImageUpload = ({ 
   onImageUpload, 
+  onImageRemove,
   existingImage, 
   maxSize = 5 
 }: ImageUploadProps) => {
@@ -76,7 +78,7 @@ const ImageUpload = ({
   const removeImage = () => {
     setPreview(null);
     setError(null);
-    // You might want to call a callback here to notify parent
+    onImageRemove?.();
   };
 
   return (

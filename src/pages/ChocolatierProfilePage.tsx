@@ -23,7 +23,12 @@ import Button from '../components/ui/Button';
 import { useCart } from '../contexts/CartContext';
 import { getChocolatierBySlug, type Product, type ProductTag } from '../data/chocolatiers';
 import { getShippingPackaging } from '../lib/shippingPackaging';
-import { DEMO_SELLER_PROFILE_SLUG, sellerProfileToChocolatier } from '../lib/sellerProfile';
+import {
+  DEMO_SELLER_PROFILE_SLUG,
+  isSellerProfileLive,
+  loadSellerStoreProfile,
+  sellerProfileToChocolatier,
+} from '../lib/sellerProfile';
 import { translateLabel } from '../lib/translationLabels';
 import styles from './ChocolatierProfilePage.module.css';
 
@@ -73,11 +78,13 @@ const ProductCard = ({
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
     >
-      <div className={styles.productImageWrap}>
+      <Link to={`/product/${product.id}`} className={styles.productImageWrap}>
         <img src={product.image} alt={product.name} className={styles.productImage} loading="lazy" />
-      </div>
+      </Link>
       <div className={styles.productBody}>
-        <h3 className={styles.productName}>{product.name}</h3>
+        <Link to={`/product/${product.id}`} className={styles.productNameLink}>
+          <h3 className={styles.productName}>{product.name}</h3>
+        </Link>
         <p className={styles.productDescription}>{t(`chocolatierProducts.${product.id}.description`, { defaultValue: product.description })}</p>
         <div className={styles.productTags}>
           {product.tags.map((tag) => (
@@ -128,8 +135,9 @@ const ProductCard = ({
 const ChocolatierProfilePage = () => {
   const { t } = useTranslation('ui');
   const { slug } = useParams<{ slug: string }>();
+  const sellerProfile = slug === DEMO_SELLER_PROFILE_SLUG ? loadSellerStoreProfile() : null;
   const chocolatier = slug === DEMO_SELLER_PROFILE_SLUG
-    ? sellerProfileToChocolatier()
+    ? (sellerProfile && isSellerProfileLive(sellerProfile) ? sellerProfileToChocolatier(sellerProfile) : undefined)
     : getChocolatierBySlug(slug);
   const [activeFilter, setActiveFilter] = useState<ProductTag | 'all'>('all');
 
@@ -143,13 +151,15 @@ const ChocolatierProfilePage = () => {
     return <Navigate to="/chocolatiers" replace />;
   }
 
-  // Gallery: portrait + reused product images as workshop/store/close-ups
+  const coverImage = chocolatier.coverImage || chocolatier.portrait;
+  const logoImage = chocolatier.logoImage || chocolatier.portrait;
   const gallery = [
-    chocolatier.portrait,
+    ...(chocolatier.galleryImages || []),
+    coverImage,
     chocolatier.products[0]?.image,
     chocolatier.products[1]?.image,
     chocolatier.products[2]?.image,
-  ].filter(Boolean) as string[];
+  ].filter(Boolean).filter((src, index, all) => all.indexOf(src) === index) as string[];
   const shippingPackaging = getShippingPackaging(chocolatier.shippingPackaging, {
     shipsFromCountry: chocolatier.country,
     shipsFromCity: chocolatier.city,
@@ -212,15 +222,20 @@ const ChocolatierProfilePage = () => {
       >
         <div
           className={styles.heroBackground}
-          style={{ backgroundImage: `url(${chocolatier.portrait})` }}
+          style={{ backgroundImage: `url(${coverImage})` }}
         />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <Link to="/chocolatiers" className={styles.backLink} data-testid="back-to-chocolatiers">
             <ArrowLeft size={16} /> {t('chocolatierProfile.backToAll')}
           </Link>
-          <Badge variant="gold">{t('chocolatierProfile.europeanChocolatier')}</Badge>
-          <h1 className={styles.heroName}>{chocolatier.name}</h1>
+          <div className={styles.profileHeader}>
+            <img src={logoImage} alt="" className={styles.profileLogo} />
+            <div className={styles.profileHeaderText}>
+              <Badge variant="gold">{t('chocolatierProfile.europeanChocolatier')}</Badge>
+              <h1 className={styles.heroName}>{chocolatier.name}</h1>
+            </div>
+          </div>
           <div className={styles.heroLocation}>
             <MapPin size={18} />
             <span>
@@ -228,82 +243,24 @@ const ChocolatierProfilePage = () => {
             </span>
           </div>
           <p className={styles.heroTagline}>{t(`chocolatierData.${chocolatier.slug}.tagline`, { defaultValue: chocolatier.tagline })}</p>
+          <div className={styles.heroBadges}>
+            {[
+              t('shippingPackaging.heatProtected'),
+              t('shippingPackaging.giftReady'),
+              t('shippingPackaging.ecoPackaging'),
+            ].map((badge) => <span key={badge}>{badge}</span>)}
+          </div>
+          <div className={styles.heroActions}>
+            <a href="#maker-products" className={styles.heroAction}>{t('chocolatierProfile.viewProducts')}</a>
+            <a href={`mailto:hello@chocolata.example?subject=${encodeURIComponent(chocolatier.name)}`} className={styles.heroAction}>
+              {t('chocolatierProfile.contactMaker')}
+            </a>
+          </div>
         </div>
       </motion.section>
 
-      {/* Story */}
-      <section className={styles.storySection} data-testid="story-section">
-        <div className={styles.storyInner}>
-          <div className={styles.storyText}>
-            <Badge variant="gold">{t('chocolatierProfile.ourStory')}</Badge>
-            <h2 className={styles.sectionTitle}>{t('chocolatierProfile.storyBehind', { maker: chocolatier.name })}</h2>
-            <p className={styles.storyParagraph}>{t(`chocolatierData.${chocolatier.slug}.story`, { defaultValue: chocolatier.story })}</p>
-            <dl className={styles.valueCard}>
-              <div>
-                <dt>{t('chocolatierProfile.aboutTheChocolatier')}</dt>
-                <dd>{t(`chocolatierData.${chocolatier.slug}.tagline`, { defaultValue: chocolatier.tagline })}</dd>
-              </div>
-              <div>
-                <dt>{t('chocolatierProfile.madeIn')}</dt>
-                <dd>{chocolatier.city}, {chocolatier.country}</dd>
-              </div>
-              <div>
-                <dt>{t('chocolatierProfile.founded')}</dt>
-                <dd>{t(`chocolatierData.${chocolatier.slug}.founded`, { defaultValue: t('chocolatierProfile.smallBatchAtelier') })}</dd>
-              </div>
-              <div>
-                <dt>{t('chocolatierProfile.specialties')}</dt>
-                <dd>{chocolatier.tags.slice(0, 4).map((tag) => translateLabel(t, 'chocolatierTags', tag)).join(', ')}</dd>
-              </div>
-            </dl>
-          </div>
-          <div className={styles.storyPortrait}>
-            <img src={chocolatier.portrait} alt={`${chocolatier.name} portrait`} className={styles.storyImage} />
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.shippingStandardsSection} data-testid="shipping-packaging-standards">
-        <div className={styles.shippingStandardsInner}>
-          <div className={styles.shippingStandardsHeader}>
-            <Badge variant="gold">{t('shippingPackaging.standardsBadge')}</Badge>
-            <h2 className={styles.sectionTitle}>{t('shippingPackaging.profileTitle')}</h2>
-            <p className={styles.sectionSubtitle}>{t('shippingPackaging.profileManagedByMaker')}</p>
-          </div>
-          <div className={styles.shippingStandardsGrid}>
-            {shippingStandardItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className={styles.shippingStandardCard}>
-                  <Icon className={styles.shippingStandardIcon} />
-                  <span>
-                    <strong>{item.label}</strong>
-                    <small>{item.value}</small>
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className={styles.gallerySection} data-testid="gallery-section">
-        <div className={styles.galleryHeader}>
-          <h2 className={styles.sectionTitle}>{t('chocolatierProfile.insideWorkshop')}</h2>
-          <p className={styles.sectionSubtitle}>{t('chocolatierProfile.gallerySubtitle')}</p>
-        </div>
-        <div className={styles.galleryGrid}>
-          {gallery.map((src, i) => (
-            <div key={i} className={styles.galleryItem}>
-              <img src={src} alt={`${chocolatier.name} gallery ${i + 1}`} className={styles.galleryImage} loading="lazy" />
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Products */}
-      <section className={styles.productsSection} data-testid="products-section">
+      <section className={styles.productsSection} id="maker-products" data-testid="products-section">
         <div className={styles.productsHeader}>
           <div>
             <Badge variant="gold">{t('chocolatierProfile.shopMaker')}</Badge>
@@ -337,6 +294,82 @@ const ChocolatierProfilePage = () => {
             <p>{t('chocolatierProfile.emptyProducts')}</p>
           </div>
         )}
+      </section>
+
+      {/* Gallery */}
+      <section className={styles.gallerySection} data-testid="gallery-section">
+        <div className={styles.galleryHeader}>
+          <h2 className={styles.sectionTitle}>{t('chocolatierProfile.photoAlbum')}</h2>
+          <p className={styles.sectionSubtitle}>{t('chocolatierProfile.gallerySubtitle')}</p>
+        </div>
+        <div className={styles.galleryGrid}>
+          {gallery.map((src, i) => (
+            <a key={src} href={src} target="_blank" rel="noreferrer" className={styles.galleryItem}>
+              <img
+                src={src}
+                alt={t('chocolatierProfile.galleryImageAlt', { maker: chocolatier.name, number: i + 1 })}
+                className={styles.galleryImage}
+                loading="lazy"
+              />
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.shippingStandardsSection} data-testid="shipping-packaging-standards">
+        <div className={styles.shippingStandardsInner}>
+          <div className={styles.shippingStandardsHeader}>
+            <Badge variant="gold">{t('shippingPackaging.standardsBadge')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('shippingPackaging.profileTitle')}</h2>
+            <p className={styles.sectionSubtitle}>{t('shippingPackaging.profileManagedByMaker')}</p>
+          </div>
+          <div className={styles.shippingStandardsGrid}>
+            {shippingStandardItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.label} className={styles.shippingStandardCard}>
+                  <Icon className={styles.shippingStandardIcon} />
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.value}</small>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section className={styles.storySection} data-testid="story-section">
+        <div className={styles.storyInner}>
+          <div className={styles.storyText}>
+            <Badge variant="gold">{t('chocolatierProfile.ourStory')}</Badge>
+            <h2 className={styles.sectionTitle}>{t('chocolatierProfile.storyBehind', { maker: chocolatier.name })}</h2>
+            <p className={styles.storyParagraph}>{t(`chocolatierData.${chocolatier.slug}.story`, { defaultValue: chocolatier.story })}</p>
+            <dl className={styles.valueCard}>
+              <div>
+                <dt>{t('chocolatierProfile.aboutTheChocolatier')}</dt>
+                <dd>{t(`chocolatierData.${chocolatier.slug}.tagline`, { defaultValue: chocolatier.tagline })}</dd>
+              </div>
+              <div>
+                <dt>{t('chocolatierProfile.madeIn')}</dt>
+                <dd>{chocolatier.city}, {chocolatier.country}</dd>
+              </div>
+              <div>
+                <dt>{t('chocolatierProfile.founded')}</dt>
+                <dd>{t(`chocolatierData.${chocolatier.slug}.founded`, { defaultValue: t('chocolatierProfile.smallBatchAtelier') })}</dd>
+              </div>
+              <div>
+                <dt>{t('chocolatierProfile.specialties')}</dt>
+                <dd>{chocolatier.tags.slice(0, 4).map((tag) => translateLabel(t, 'chocolatierTags', tag)).join(', ')}</dd>
+              </div>
+            </dl>
+          </div>
+          <div className={styles.storyPortrait}>
+            <img src={coverImage} alt="" className={styles.storyImage} />
+          </div>
+        </div>
       </section>
 
       {/* Values */}

@@ -4,9 +4,11 @@ import type { ShippingPackagingInfo } from './shippingPackaging';
 
 export const DEMO_SELLER_PROFILE_SLUG = 'test-chocolatier';
 const STORAGE_KEY = 'chocolata:demo-seller-profile';
+const DEMO_PRODUCTS_KEY = 'chocolata:demo-products';
 
 export interface SellerStoreProfile {
   slug: string;
+  status: 'live' | 'offline';
   storeName: string;
   tagline: string;
   story: string;
@@ -29,6 +31,7 @@ export interface SellerStoreProfile {
 
 export const DEFAULT_SELLER_PROFILE: SellerStoreProfile = {
   slug: DEMO_SELLER_PROFILE_SLUG,
+  status: 'live',
   storeName: 'Test Chocolatier',
   tagline: 'Small-batch European chocolates prepared for premium gifting.',
   story:
@@ -66,7 +69,22 @@ export const saveSellerStoreProfile = (profile: SellerStoreProfile) => {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...profile, slug: DEMO_SELLER_PROFILE_SLUG }));
 };
 
+export const isSellerProfileLive = (profile: SellerStoreProfile = loadSellerStoreProfile()) =>
+  profile.status !== 'offline';
+
+export const isPublicSellerProduct = (product: { is_active?: boolean; status?: string }) =>
+  product.is_active !== false && product.status !== 'draft';
+
 export const sellerProfileToChocolatier = (profile: SellerStoreProfile = loadSellerStoreProfile()): Chocolatier => {
+  const sellerProducts = (() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem(DEMO_PRODUCTS_KEY) || '[]');
+      return Array.isArray(parsed) ? parsed.filter(isPublicSellerProduct) : [];
+    } catch {
+      return [];
+    }
+  })();
   const shippingPackaging: ShippingPackagingInfo = {
     shipsFromCountry: profile.country,
     shipsFromCity: profile.city,
@@ -87,7 +105,10 @@ export const sellerProfileToChocolatier = (profile: SellerStoreProfile = loadSel
     flag: '',
     tagline: profile.tagline,
     story: profile.story,
-    portrait: profile.coverImage || demoProducts[0]?.image_url || '',
+    portrait: profile.coverImage || profile.logoImage || demoProducts[0]?.image_url || '',
+    logoImage: profile.logoImage,
+    coverImage: profile.coverImage,
+    galleryImages: profile.galleryImages,
     tags: profile.specialties,
     values: [
       { title: 'Sustainability', description: profile.sustainability },
@@ -96,12 +117,12 @@ export const sellerProfileToChocolatier = (profile: SellerStoreProfile = loadSel
       { title: 'Craft', description: profile.signatureProducts.join(', ') },
     ],
     shippingPackaging,
-    products: demoProducts.slice(0, 4).map((product, index) => ({
-      id: `test-chocolatier-${index + 1}`,
-      name: profile.signatureProducts[index] || product.name,
+    products: (sellerProducts.length ? sellerProducts : demoProducts.slice(0, 4)).map((product, index) => ({
+      id: sellerProducts.length ? product.id : `test-chocolatier-${index + 1}`,
+      name: sellerProducts.length ? product.name : profile.signatureProducts[index] || product.name,
       description: product.description || '',
       price: product.price,
-      image: product.image_url || '',
+      image: product.image_url || profile.galleryImages[index] || profile.coverImage || '',
       tags: ['dark'],
     })),
   };

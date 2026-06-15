@@ -5,36 +5,15 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
+import { countrySelectOptions } from '../../lib/marketplaceCountries';
 import { PRODUCT_TAG_OPTIONS, uniqueProductTags } from '../../lib/productTags';
+import { DEMO_SELLER_PROFILE_SLUG, loadSellerStoreProfile } from '../../lib/sellerProfile';
 import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ImageUpload from '../ui/ImageUpload';
 import styles from './ProductForm.module.css';
-
-const COUNTRIES = [
-  { value: '', label: 'Select a country...' },
-  { value: 'Sweden', label: 'Sweden' },
-  { value: 'Belgium', label: 'Belgium' },
-  { value: 'Switzerland', label: 'Switzerland' },
-  { value: 'France', label: 'France' },
-  { value: 'Italy', label: 'Italy' },
-  { value: 'Germany', label: 'Germany' },
-  { value: 'UK', label: 'United Kingdom' },
-  { value: 'USA', label: 'United States' },
-  { value: 'Ecuador', label: 'Ecuador' },
-  { value: 'Ghana', label: 'Ghana' },
-  { value: 'Madagascar', label: 'Madagascar' },
-  { value: 'Venezuela', label: 'Venezuela' },
-  { value: 'Peru', label: 'Peru' },
-  { value: 'Dominican Republic', label: 'Dominican Republic' },
-  { value: 'Colombia', label: 'Colombia' },
-  { value: 'Brazil', label: 'Brazil' },
-  { value: 'Mexico', label: 'Mexico' },
-  { value: 'Costa Rica', label: 'Costa Rica' },
-  { value: 'Other', label: 'Other' },
-];
 
 const productSchema = z.object({
   name: z.string().min(1, 'Product name is required'),
@@ -44,6 +23,7 @@ const productSchema = z.object({
   country: z.string().optional(),
   stock: z.number().int().min(0, 'Stock must be a non-negative integer'),
   tags: z.array(z.string()).optional(),
+  status: z.enum(['published', 'draft']).default('published'),
   // Removed image_url from schema since we handle file upload separately
 });
 
@@ -52,23 +32,27 @@ type ProductFormData = z.infer<typeof productSchema>;
 export interface ProductFormValues extends ProductFormData {
   id?: string;
   image_url?: string | null;
+  gallery_images?: string[];
   tags?: string[];
   badges?: string[];
+  status: 'draft' | 'published';
+  is_active?: boolean;
 }
 
 interface ProductFormProps {
   initialValues?: ProductFormValues;
-  onSuccess?: () => void;
+  onSuccess?: (productId?: string) => void;
   onError?: (error: string) => void;
 }
 
 const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) => {
-  const { t } = useTranslation('products');
+  const { t } = useTranslation(['products', 'ui']);
   const dispatch = useDispatch();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(
     initialValues?.image_url || null
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [galleryImages, setGalleryImages] = useState<string[]>(initialValues?.gallery_images || []);
   const [selectedTags, setSelectedTags] = useState<string[]>(
     uniqueProductTags(initialValues?.tags || initialValues?.badges || [])
   );
@@ -83,6 +67,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       ...initialValues,
       country: initialValues?.country || '',
       tags: initialValues?.tags || initialValues?.badges || [],
+      status: initialValues?.status || (initialValues?.is_active === false ? 'draft' : 'published'),
     },
   });
 
@@ -106,9 +91,9 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
   const handleImageUpload = async (file: File) => {
     setImageFile(file);
     
-    // Create a temporary preview URL
-    const previewUrl = URL.createObjectURL(file);
-    setUploadedImageUrl(previewUrl);
+    const reader = new FileReader();
+    reader.onload = () => setUploadedImageUrl(reader.result as string);
+    reader.readAsDataURL(file);
     
     console.log('📷 Bild vald för uppladdning:', file.name, file.size);
   };
@@ -132,10 +117,13 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
 
         if (uploadError) {
           console.error('❌ Image upload failed:', uploadError);
-          throw new Error('Image upload failed. Please try again.');
+          if (!finalImageUrl?.startsWith('data:image/')) {
+            throw new Error('Image upload failed. Please try again.');
+          }
         }
 
-        const { data: urlData } = supabase.storage
+        if (!uploadError) {
+          const { data: urlData } = supabase.storage
           .from('product-images')
           .getPublicUrl(fileName);
 
@@ -147,35 +135,46 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         console.log('✅ Image uploaded successfully:', finalImageUrl);
       }
 
+      }
+
       const productData = {
         ...data,
         tags: selectedTags,
         badges: selectedTags,
         seller_id: user.id,
+        maker_id: DEMO_SELLER_PROFILE_SLUG,
+        maker_slug: DEMO_SELLER_PROFILE_SLUG,
+        maker_name: loadSellerStoreProfile().storeName,
         image_url: finalImageUrl,
+        gallery_images: galleryImages,
         country: data.country && data.country.trim() !== '' ? data.country : null,
+        is_active: data.status === 'published',
+        status: data.status,
       };
+      let savedProductId = initialValues?.id;
 
       if (initialValues?.id) {
-        const { error } = await supabase
+        const { data: updated, error } = await supabase
           .from('products')
           .update(productData)
           .eq('id', initialValues.id);
         if (error) throw error;
+        savedProductId = (updated as { id?: string } | null)?.id || initialValues.id;
         dispatch(addNotification({
           type: 'success',
           message: 'Product updated successfully!',
         }));
       } else {
-        const { error } = await supabase.from('products').insert(productData);
+        const { data: inserted, error } = await supabase.from('products').insert(productData);
         if (error) throw error;
+        savedProductId = (inserted as { id?: string } | null)?.id;
         dispatch(addNotification({
           type: 'success',
           message: 'Product created successfully!',
         }));
       }
 
-      onSuccess?.();
+      onSuccess?.(savedProductId);
     } catch (error: any) {
       dispatch(addNotification({
         type: 'error',
@@ -227,21 +226,36 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           {...register('country')}
           label={t('form.country', 'Country')}
           error={errors.country?.message}
-          options={COUNTRIES}
+          options={countrySelectOptions()}
           data-testid="product-country"
         />
       </div>
+      <section className={styles.statusSection}>
+        <div>
+          <h3>{t('ui:sellerProductForm.visibility')}</h3>
+          <p>{t('ui:sellerProductForm.visibilityHelper')}</p>
+        </div>
+        <Select
+          {...register('status')}
+          label={t('ui:sellerProductForm.productStatus')}
+          options={[
+            { value: 'published', label: t('ui:sellerProductForm.publishProduct') },
+            { value: 'draft', label: t('ui:sellerProductForm.saveAsDraft') },
+          ]}
+          data-testid="product-status"
+        />
+      </section>
       <section className={styles.tagSection}>
         <div className={styles.tagHeader}>
           <div>
-            <h3>Categories and tags</h3>
-            <p>Choose the words customers use when filtering and discovering chocolate.</p>
+            <h3>{t('ui:sellerProductForm.categoriesAndTags')}</h3>
+            <p>{t('ui:sellerProductForm.categoriesAndTagsHelper')}</p>
           </div>
-          <span>{selectedTags.length} selected</span>
+          <span>{t('ui:sellerProductForm.selectedCount', { count: selectedTags.length })}</span>
         </div>
         <div className={styles.tagInputRow}>
           <Input
-            label="Search or add tag"
+            label={t('ui:sellerProductForm.searchOrAddTag')}
             value={tagSearch}
             onChange={(event) => setTagSearch(event.target.value)}
             onKeyDown={(event) => {
@@ -250,19 +264,19 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
                 addTypedTag();
               }
             }}
-            helperText="Press Enter or click Add to create a custom tag."
+            helperText={t('ui:sellerProductForm.tagHelper')}
           />
           <Button type="button" variant="outline" onClick={addTypedTag}>
-            Add
+            {t('ui:sellerProductForm.addTag')}
           </Button>
         </div>
         <div className={styles.selectedTags}>
           {selectedTags.length === 0 ? (
-            <p>No tags selected yet.</p>
+            <p>{t('ui:sellerProductForm.noTagsSelected')}</p>
           ) : (
             selectedTags.map((tag) => (
               <button type="button" key={tag} className={styles.selectedTag} onClick={() => toggleTag(tag)}>
-                {tag} x
+                {tag} {t('ui:sellerProductForm.removeTagSuffix')}
               </button>
             ))
           )}
@@ -282,9 +296,48 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       </section>
       <ImageUpload
         onImageUpload={handleImageUpload}
+        onImageRemove={() => {
+          setImageFile(null);
+          setUploadedImageUrl(null);
+        }}
         existingImage={uploadedImageUrl || undefined}
         maxSize={5}
       />
+      <section className={styles.gallerySection}>
+        <div className={styles.tagHeader}>
+          <div>
+            <h3>{t('ui:sellerProductForm.productGallery')}</h3>
+            <p>{t('ui:sellerProductForm.productGalleryHelper')}</p>
+          </div>
+          <span>{t('ui:sellerProductForm.imageCount', { count: galleryImages.length })}</span>
+        </div>
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          multiple
+          className={styles.fileInput}
+          onChange={(event) => {
+            const files = Array.from(event.target.files || []);
+            files.forEach((file) => {
+              if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) return;
+              const reader = new FileReader();
+              reader.onload = () => setGalleryImages((current) => [...current, reader.result as string]);
+              reader.readAsDataURL(file);
+            });
+            event.currentTarget.value = '';
+          }}
+        />
+        <div className={styles.galleryGrid}>
+          {galleryImages.map((image, index) => (
+            <div key={`${image}-${index}`} className={styles.galleryItem}>
+              <img src={image} alt={t('ui:sellerProductForm.productGalleryAlt', { number: index + 1 })} />
+              <button type="button" onClick={() => setGalleryImages((current) => current.filter((_, i) => i !== index))}>
+                {t('ui:sellerProductForm.removeImage')}
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
       <Button type="submit" isLoading={isSubmitting} className={styles.submitButton} data-testid="product-submit">
         {initialValues?.id ? t('form.update') : t('form.create')}
       </Button>

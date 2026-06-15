@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
 import type { Product } from '../../components/cards/ProductCard';
@@ -10,6 +11,7 @@ import FadeIn from '../../components/animations/FadeIn';
 import styles from './SellerProductsPage.module.css';
 
 const SellerProductsPage = () => {
+  const { t } = useTranslation('ui');
   const { user } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -116,6 +118,11 @@ const SellerProductsPage = () => {
                         currency: 'SEK',
                       }).format(product.price)}
                     </p>
+                    <span className={styles.statusBadge}>
+                      {product.status === 'draft' || product.is_active === false
+                        ? t('sellerProductForm.saveAsDraft')
+                        : t('sellerProductForm.publishProduct')}
+                    </span>
                     <div className={styles.actions}>
                       <Link to={`/seller/products/${product.id}/edit`}>
                         <Button variant="outline" size="sm">

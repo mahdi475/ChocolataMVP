@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { DEMO_SELLER_PROFILE_SLUG } from '../../lib/sellerProfile';
 import Button from '../ui/Button';
+import LanguageSelector from './LanguageSelector';
 import styles from './SellerDashboardShell.module.css';
 
 interface SellerDashboardShellProps {
@@ -17,12 +18,12 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const navItems = [
-    { path: '/seller/dashboard', label: 'Dashboard' },
-    { path: '/seller/products', label: 'Products' },
-    { path: '/seller/products/new', label: 'Add product' },
-    { path: '/seller/orders', label: 'Orders' },
-    { path: '/seller/verification', label: 'Verification' },
-    { path: '/seller/profile', label: 'Profile settings' },
+    { path: '/seller/dashboard', labelKey: 'dashboard' },
+    { path: '/seller/products', labelKey: 'products' },
+    { path: '/seller/products/new', labelKey: 'addProduct' },
+    { path: '/seller/orders', labelKey: 'orders' },
+    { path: '/seller/verification', labelKey: 'verification' },
+    { path: '/seller/profile', labelKey: 'profileSettings' },
   ];
   const publicProfilePath = `/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`;
 
@@ -69,17 +70,21 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
               to={item.path}
               className={`${styles.navLink} ${location.pathname === item.path ? styles.active : ''}`}
             >
-              {item.label}
+              {t(`sellerShell.nav.${item.labelKey}`)}
             </Link>
           ))}
           <Link to={publicProfilePath} className={styles.navLink}>
-            View public profile
+            {t('sellerShell.viewPublicProfile')}
           </Link>
           <Link to="/" className={styles.navLink}>
-            View marketplace
+            {t('sellerShell.viewMarketplace')}
           </Link>
         </nav>
         <div className={styles.sidebarFooter}>
+          <div className={styles.languageWrap}>
+            <span>{t('language.selectorLabel')}</span>
+            <LanguageSelector />
+          </div>
           <div className={styles.userInfo}>
             <span className={styles.userEmail}>{user?.email}</span>
           </div>
@@ -109,9 +114,10 @@ const SellerDashboardShell = ({ children }: SellerDashboardShellProps) => {
           <div className={styles.mobileContext}>
             <span className={styles.mobileLabel}>{t('sellerShell.portal')}</span>
             <span className={styles.mobileRoute}>
-              {navItems.find((item) => location.pathname.startsWith(item.path))?.label ?? t('sellerShell.nav.overview')}
+              {t(`sellerShell.nav.${navItems.find((item) => location.pathname.startsWith(item.path))?.labelKey ?? 'overview'}`)}
             </span>
           </div>
+          <LanguageSelector />
           <Button
             variant="ghost"
             size="sm"
