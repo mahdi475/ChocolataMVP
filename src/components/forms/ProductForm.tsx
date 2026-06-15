@@ -15,6 +15,9 @@ import Button from '../ui/Button';
 import ImageUpload from '../ui/ImageUpload';
 import styles from './ProductForm.module.css';
 
+const MAX_PRODUCT_IMAGES = 10;
+const MAX_PRODUCT_GALLERY_IMAGES = MAX_PRODUCT_IMAGES - 1;
+
 const productSchema = z.object({
   name: z.string().min(1, 'Product name is required'),
   description: z.string().optional(),
@@ -53,6 +56,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>(initialValues?.gallery_images || []);
+  const [galleryError, setGalleryError] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>(
     uniqueProductTags(initialValues?.tags || initialValues?.badges || [])
   );
@@ -86,6 +90,22 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     if (!nextTag) return;
     setSelectedTags((current) => uniqueProductTags([...current, nextTag]));
     setTagSearch('');
+  };
+
+  const addProductGalleryFiles = (files: File[]) => {
+    setGalleryError('');
+    const availableSlots = MAX_PRODUCT_GALLERY_IMAGES - galleryImages.length;
+
+    if (files.length > availableSlots) {
+      setGalleryError(t('ui:upload.maxImagesAllowed', { count: MAX_PRODUCT_IMAGES }));
+    }
+
+    files.slice(0, Math.max(availableSlots, 0)).forEach((file) => {
+      if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) return;
+      const reader = new FileReader();
+      reader.onload = () => setGalleryImages((current) => [...current, reader.result as string].slice(0, MAX_PRODUCT_GALLERY_IMAGES));
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleImageUpload = async (file: File) => {
@@ -162,7 +182,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         savedProductId = (updated as { id?: string } | null)?.id || initialValues.id;
         dispatch(addNotification({
           type: 'success',
-          message: 'Product updated successfully!',
+          message: t('ui:sellerProductForm.savedSuccessfully'),
         }));
       } else {
         const { data: inserted, error } = await supabase.from('products').insert(productData);
@@ -170,7 +190,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         savedProductId = (inserted as { id?: string } | null)?.id;
         dispatch(addNotification({
           type: 'success',
-          message: 'Product created successfully!',
+          message: t('ui:sellerProductForm.savedSuccessfully'),
         }));
       }
 
@@ -178,9 +198,9 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     } catch (error: any) {
       dispatch(addNotification({
         type: 'error',
-        message: error.message || 'Failed to save product',
+        message: error.message || t('ui:sellerProductForm.saveFailed', { defaultValue: 'Failed to save product' }),
       }));
-      onError?.(error.message || 'Failed to save product');
+      onError?.(error.message || t('ui:sellerProductForm.saveFailed', { defaultValue: 'Failed to save product' }));
     }
   };
 
@@ -308,22 +328,20 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           <div>
             <h3>{t('ui:sellerProductForm.productGallery')}</h3>
             <p>{t('ui:sellerProductForm.productGalleryHelper')}</p>
+            <p>{t('ui:upload.productImageLimit', { count: MAX_PRODUCT_IMAGES, galleryCount: MAX_PRODUCT_GALLERY_IMAGES })}</p>
           </div>
           <span>{t('ui:sellerProductForm.imageCount', { count: galleryImages.length })}</span>
         </div>
+        {galleryError && <div className={styles.uploadError}>{galleryError}</div>}
         <input
           type="file"
           accept="image/png,image/jpeg,image/webp,image/gif"
           multiple
           className={styles.fileInput}
+          disabled={galleryImages.length >= MAX_PRODUCT_GALLERY_IMAGES}
           onChange={(event) => {
             const files = Array.from(event.target.files || []);
-            files.forEach((file) => {
-              if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) return;
-              const reader = new FileReader();
-              reader.onload = () => setGalleryImages((current) => [...current, reader.result as string]);
-              reader.readAsDataURL(file);
-            });
+            addProductGalleryFiles(files);
             event.currentTarget.value = '';
           }}
         />

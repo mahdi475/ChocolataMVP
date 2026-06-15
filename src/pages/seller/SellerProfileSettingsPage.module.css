@@ -51,6 +51,14 @@
   font-weight: 700;
 }
 
+.error {
+  padding: 14px 18px;
+  border-radius: 12px;
+  color: #8a1f16;
+  background: rgba(180, 35, 24, 0.1);
+  font-weight: 700;
+}
+
 .statusCard {
   display: flex;
   justify-content: space-between;

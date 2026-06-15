@@ -832,7 +832,9 @@
     "storeIdentity": "Winkelidentiteit",
     "logoHelper": "Dit verschijnt op je openbare profiel, productpagina’s en marketplace-kaarten.",
     "photoAlbum": "Fotoalbum",
-    "photoAlbumHelper": "Voeg foto’s toe van buitenkant, interieur, team, werkplaats, productie, verpakking en producten."
+    "photoAlbumHelper": "Voeg foto’s toe van buitenkant, interieur, team, werkplaats, productie, verpakking en producten.",
+    "savedSuccessfully": "Profiel succesvol opgeslagen.",
+    "saveFailed": "Profiel kon niet worden opgeslagen. Probeer opnieuw."
   },
   "sellerProductForm": {
     "visibility": "Productzichtbaarheid",
@@ -852,6 +854,18 @@
     "productGalleryHelper": "Voeg extra afbeeldingen toe voor de productdetailpagina. In demomodus worden ze in deze browser opgeslagen.",
     "imageCount": "{{count}} afbeeldingen",
     "productGalleryAlt": "Productgalerij afbeelding {{number}}",
-    "removeImage": "Verwijderen"
+    "removeImage": "Afbeelding verwijderen",
+    "savedSuccessfully": "Product succesvol opgeslagen.",
+    "saveFailed": "Product kon niet worden opgeslagen"
+  },
+  "upload": {
+    "upToImages": "Je kunt maximaal {{count}} afbeeldingen uploaden.",
+    "productImageLimit": "Je kunt maximaal {{count}} afbeeldingen uploaden: één hoofdafbeelding en maximaal {{galleryCount}} galerijafbeeldingen.",
+    "maxImagesAllowed": "Maximaal {{count}} afbeeldingen toegestaan.",
+    "removeImage": "Afbeelding verwijderen",
+    "replaceImage": "Afbeelding vervangen",
+    "uploadMoreImages": "Meer afbeeldingen uploaden",
+    "galleryImages": "Galerijafbeeldingen",
+    "productGallery": "Productgalerij"
   }
 }

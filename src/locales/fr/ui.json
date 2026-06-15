@@ -833,7 +833,9 @@
     "storeIdentity": "Identité de la boutique",
     "logoHelper": "Elle apparaît sur votre profil public, les pages produit et les cartes marketplace.",
     "photoAlbum": "Album photo",
-    "photoAlbumHelper": "Ajoutez des photos de façade, intérieur, équipe, atelier, production, emballage et produits."
+    "photoAlbumHelper": "Ajoutez des photos de façade, intérieur, équipe, atelier, production, emballage et produits.",
+    "savedSuccessfully": "Profil enregistré avec succès.",
+    "saveFailed": "Le profil n’a pas pu être enregistré. Réessayez."
   },
   "sellerProductForm": {
     "visibility": "Visibilité du produit",
@@ -853,6 +855,18 @@
     "productGalleryHelper": "Ajoutez des images supplémentaires pour la page produit. En mode démo, elles sont enregistrées dans ce navigateur.",
     "imageCount": "{{count}} images",
     "productGalleryAlt": "Image galerie produit {{number}}",
-    "removeImage": "Supprimer"
+    "removeImage": "Supprimer l’image",
+    "savedSuccessfully": "Produit enregistré avec succès.",
+    "saveFailed": "Le produit n’a pas pu être enregistré"
+  },
+  "upload": {
+    "upToImages": "Vous pouvez téléverser jusqu’à {{count}} images.",
+    "productImageLimit": "Vous pouvez téléverser jusqu’à {{count}} images au total : une image principale et jusqu’à {{galleryCount}} images de galerie.",
+    "maxImagesAllowed": "Maximum {{count}} images autorisées.",
+    "removeImage": "Supprimer l’image",
+    "replaceImage": "Remplacer l’image",
+    "uploadMoreImages": "Téléverser plus d’images",
+    "galleryImages": "Images de galerie",
+    "productGallery": "Galerie produit"
   }
 }

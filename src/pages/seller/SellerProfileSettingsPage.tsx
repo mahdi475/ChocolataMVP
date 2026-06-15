@@ -15,6 +15,8 @@ import {
 } from '../../lib/sellerProfile';
 import styles from './SellerProfileSettingsPage.module.css';
 
+const MAX_PROFILE_GALLERY_IMAGES = 10;
+
 const splitList = (value: string) =>
   value.split(',').map((item) => item.trim()).filter(Boolean);
 
@@ -28,7 +30,9 @@ const readImageFile = (file: File, onLoad: (url: string) => void) => {
 const SellerProfileSettingsPage = () => {
   const { t } = useTranslation('ui');
   const [profile, setProfile] = useState<SellerStoreProfile>(() => loadSellerStoreProfile());
-  const [saved, setSaved] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
+  const [saveError, setSaveError] = useState('');
+  const [galleryError, setGalleryError] = useState('');
 
   const publicProfilePath = `/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`;
 
@@ -47,12 +51,21 @@ const SellerProfileSettingsPage = () => {
 
   const updateField = <K extends keyof SellerStoreProfile>(field: K, value: SellerStoreProfile[K]) => {
     setProfile((current) => ({ ...current, [field]: value }));
-    setSaved(false);
+    setSaveMessage('');
+    setSaveError('');
   };
 
   const appendGalleryImage = (url: string) => {
-    setProfile((current) => ({ ...current, galleryImages: [...current.galleryImages, url] }));
-    setSaved(false);
+    setProfile((current) => {
+      if (current.galleryImages.length >= MAX_PROFILE_GALLERY_IMAGES) {
+        setGalleryError(t('upload.maxImagesAllowed', { count: MAX_PROFILE_GALLERY_IMAGES }));
+        return current;
+      }
+      setGalleryError('');
+      return { ...current, galleryImages: [...current.galleryImages, url] };
+    });
+    setSaveMessage('');
+    setSaveError('');
   };
 
   const setProfileStatus = (status: SellerStoreProfile['status']) => {
@@ -62,14 +75,26 @@ const SellerProfileSettingsPage = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    saveSellerStoreProfile(profile);
-    setSaved(true);
+    try {
+      saveSellerStoreProfile(profile);
+      setSaveMessage(t('sellerProfile.savedSuccessfully'));
+      setSaveError('');
+    } catch {
+      setSaveMessage('');
+      setSaveError(t('sellerProfile.saveFailed'));
+    }
   };
 
   const resetDemo = () => {
     setProfile(DEFAULT_SELLER_PROFILE);
-    saveSellerStoreProfile(DEFAULT_SELLER_PROFILE);
-    setSaved(true);
+    try {
+      saveSellerStoreProfile(DEFAULT_SELLER_PROFILE);
+      setSaveMessage(t('sellerProfile.savedSuccessfully'));
+      setSaveError('');
+    } catch {
+      setSaveMessage('');
+      setSaveError(t('sellerProfile.saveFailed'));
+    }
   };
 
   return (
@@ -92,7 +117,8 @@ const SellerProfileSettingsPage = () => {
         </div>
       </section>
 
-      {saved && <div className={styles.success}>{t('sellerProfile.saved')}</div>}
+      {saveMessage && <div className={styles.success}>{saveMessage}</div>}
+      {saveError && <div className={styles.error}>{saveError}</div>}
 
       <section className={styles.statusCard}>
         <div>
@@ -210,10 +236,17 @@ const SellerProfileSettingsPage = () => {
         <div className={styles.card}>
           <h2>{t('sellerProfile.photoAlbum')}</h2>
           <p className={styles.helperText}>{t('sellerProfile.photoAlbumHelper')}</p>
+          <p className={styles.helperText}>{t('upload.upToImages', { count: MAX_PROFILE_GALLERY_IMAGES })}</p>
+          {galleryError && <div className={styles.error}>{galleryError}</div>}
           <label className={styles.label}>
             {t('sellerProfile.galleryImages')}
-            <input type="file" accept="image/png,image/jpeg,image/webp" multiple onChange={(event) => {
-              Array.from(event.target.files || []).forEach((file) => {
+            <input type="file" accept="image/png,image/jpeg,image/webp" multiple disabled={profile.galleryImages.length >= MAX_PROFILE_GALLERY_IMAGES} onChange={(event) => {
+              const files = Array.from(event.target.files || []);
+              const availableSlots = MAX_PROFILE_GALLERY_IMAGES - profile.galleryImages.length;
+              if (files.length > availableSlots) {
+                setGalleryError(t('upload.maxImagesAllowed', { count: MAX_PROFILE_GALLERY_IMAGES }));
+              }
+              files.slice(0, Math.max(availableSlots, 0)).forEach((file) => {
                 readImageFile(file, appendGalleryImage);
               });
               event.currentTarget.value = '';

@@ -833,7 +833,9 @@
     "storeIdentity": "Shop-Identität",
     "logoHelper": "Es erscheint auf deinem öffentlichen Profil, Produktseiten und Marketplace-Karten.",
     "photoAlbum": "Fotoalbum",
-    "photoAlbumHelper": "Füge Fotos von Außenansicht, Innenraum, Team, Werkstatt, Produktion, Verpackung und Produkten hinzu."
+    "photoAlbumHelper": "Füge Fotos von Außenansicht, Innenraum, Team, Werkstatt, Produktion, Verpackung und Produkten hinzu.",
+    "savedSuccessfully": "Profil erfolgreich gespeichert.",
+    "saveFailed": "Profil konnte nicht gespeichert werden. Bitte erneut versuchen."
   },
   "sellerProductForm": {
     "visibility": "Produktsichtbarkeit",
@@ -853,6 +855,18 @@
     "productGalleryHelper": "Füge zusätzliche Bilder für die Produktdetailseite hinzu. Im Demomodus werden sie in diesem Browser gespeichert.",
     "imageCount": "{{count}} Bilder",
     "productGalleryAlt": "Produktgaleriebild {{number}}",
-    "removeImage": "Entfernen"
+    "removeImage": "Bild entfernen",
+    "savedSuccessfully": "Produkt erfolgreich gespeichert.",
+    "saveFailed": "Produkt konnte nicht gespeichert werden"
+  },
+  "upload": {
+    "upToImages": "Du kannst bis zu {{count}} Bilder hochladen.",
+    "productImageLimit": "Du kannst insgesamt bis zu {{count}} Bilder hochladen: ein Hauptbild und bis zu {{galleryCount}} Galeriebilder.",
+    "maxImagesAllowed": "Maximal {{count}} Bilder erlaubt.",
+    "removeImage": "Bild entfernen",
+    "replaceImage": "Bild ersetzen",
+    "uploadMoreImages": "Weitere Bilder hochladen",
+    "galleryImages": "Galeriebilder",
+    "productGallery": "Produktgalerie"
   }
 }

@@ -832,7 +832,9 @@
     "storeIdentity": "Butikkidentitet",
     "logoHelper": "Den vises på offentlig profil, produktsider og marketplace-kort.",
     "photoAlbum": "Fotoalbum",
-    "photoAlbumHelper": "Legg til bilder av fasade, interiør, team, verksted, produksjon, emballasje og produkter."
+    "photoAlbumHelper": "Legg til bilder av fasade, interiør, team, verksted, produksjon, emballasje og produkter.",
+    "savedSuccessfully": "Profilen ble lagret.",
+    "saveFailed": "Profilen kunne ikke lagres. Prøv igjen."
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighet",
@@ -852,6 +854,18 @@
     "productGalleryHelper": "Legg til ekstra bilder for produktdetaljsiden. I demo lagres de i denne nettleseren.",
     "imageCount": "{{count}} bilder",
     "productGalleryAlt": "Produktgalleribilde {{number}}",
-    "removeImage": "Fjern"
+    "removeImage": "Fjern bilde",
+    "savedSuccessfully": "Produktet ble lagret.",
+    "saveFailed": "Produktet kunne ikke lagres"
+  },
+  "upload": {
+    "upToImages": "Du kan laste opp opptil {{count}} bilder.",
+    "productImageLimit": "Du kan laste opp opptil {{count}} bilder totalt: ett hovedbilde og opptil {{galleryCount}} galleribilder.",
+    "maxImagesAllowed": "Maksimum {{count}} bilder tillatt.",
+    "removeImage": "Fjern bilde",
+    "replaceImage": "Bytt bilde",
+    "uploadMoreImages": "Last opp flere bilder",
+    "galleryImages": "Galleribilder",
+    "productGallery": "Produktgalleri"
   }
 }

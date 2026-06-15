@@ -832,7 +832,9 @@
     "storeIdentity": "Kaupan identiteetti",
     "logoHelper": "Tämä näkyy julkisessa profiilissa, tuotesivuilla ja marketplace-korteissa.",
     "photoAlbum": "Kuva-albumi",
-    "photoAlbumHelper": "Lisää kuvia myymälästä, tiimistä, työpajasta, tuotannosta, pakkauksista ja tuotteista."
+    "photoAlbumHelper": "Lisää kuvia myymälästä, tiimistä, työpajasta, tuotannosta, pakkauksista ja tuotteista.",
+    "savedSuccessfully": "Profiili tallennettu onnistuneesti.",
+    "saveFailed": "Profiilia ei voitu tallentaa. Yritä uudelleen."
   },
   "sellerProductForm": {
     "visibility": "Tuotteen näkyvyys",
@@ -852,6 +854,18 @@
     "productGalleryHelper": "Lisää kuvia tuotesivulle. Demotilassa ne tallennetaan tähän selaimeen.",
     "imageCount": "{{count}} kuvaa",
     "productGalleryAlt": "Tuotegallerian kuva {{number}}",
-    "removeImage": "Poista"
+    "removeImage": "Poista kuva",
+    "savedSuccessfully": "Tuote tallennettu onnistuneesti.",
+    "saveFailed": "Tuotetta ei voitu tallentaa"
+  },
+  "upload": {
+    "upToImages": "Voit ladata enintään {{count}} kuvaa.",
+    "productImageLimit": "Voit ladata yhteensä enintään {{count}} kuvaa: yhden pääkuvan ja enintään {{galleryCount}} galleriakuvaa.",
+    "maxImagesAllowed": "Enintään {{count}} kuvaa sallittu.",
+    "removeImage": "Poista kuva",
+    "replaceImage": "Vaihda kuva",
+    "uploadMoreImages": "Lataa lisää kuvia",
+    "galleryImages": "Galleriakuvat",
+    "productGallery": "Tuotegalleria"
   }
 }

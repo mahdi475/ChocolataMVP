@@ -829,7 +829,9 @@
     "storeIdentity": "Store identity",
     "logoHelper": "This appears on your public profile, product pages, and marketplace cards.",
     "photoAlbum": "Photo Album",
-    "photoAlbumHelper": "Add store exterior, interior, team, workshop, production, packaging, and product showcase photos."
+    "photoAlbumHelper": "Add store exterior, interior, team, workshop, production, packaging, and product showcase photos.",
+    "savedSuccessfully": "Profile saved successfully.",
+    "saveFailed": "Profile could not be saved. Please try again."
   },
   "sellerProductForm": {
     "visibility": "Product visibility",
@@ -849,6 +851,18 @@
     "productGalleryHelper": "Add extra images for the product detail page. In demo mode these are saved in this browser.",
     "imageCount": "{{count}} images",
     "productGalleryAlt": "Product gallery image {{number}}",
-    "removeImage": "Remove"
+    "removeImage": "Remove image",
+    "savedSuccessfully": "Product saved successfully.",
+    "saveFailed": "Failed to save product"
+  },
+  "upload": {
+    "upToImages": "You can upload up to {{count}} images.",
+    "productImageLimit": "You can upload up to {{count}} images total: one main image and up to {{galleryCount}} gallery images.",
+    "maxImagesAllowed": "Maximum {{count}} images allowed.",
+    "removeImage": "Remove image",
+    "replaceImage": "Replace image",
+    "uploadMoreImages": "Upload more images",
+    "galleryImages": "Gallery images",
+    "productGallery": "Product gallery"
   }
 }

@@ -832,7 +832,9 @@
     "storeIdentity": "Butiksidentitet",
     "logoHelper": "Den vises på din offentlige profil, produktsider og marketplace-kort.",
     "photoAlbum": "Fotoalbum",
-    "photoAlbumHelper": "Tilføj fotos af facade, interiør, team, værksted, produktion, emballage og produkter."
+    "photoAlbumHelper": "Tilføj fotos af facade, interiør, team, værksted, produktion, emballage og produkter.",
+    "savedSuccessfully": "Profil gemt.",
+    "saveFailed": "Profilen kunne ikke gemmes. Prøv igen."
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighed",
@@ -852,6 +854,18 @@
     "productGalleryHelper": "Tilføj ekstra billeder til produktsiden. I demo gemmes de i denne browser.",
     "imageCount": "{{count}} billeder",
     "productGalleryAlt": "Produktgalleribillede {{number}}",
-    "removeImage": "Fjern"
+    "removeImage": "Fjern billede",
+    "savedSuccessfully": "Produkt gemt.",
+    "saveFailed": "Produktet kunne ikke gemmes"
+  },
+  "upload": {
+    "upToImages": "Du kan uploade op til {{count}} billeder.",
+    "productImageLimit": "Du kan uploade op til {{count}} billeder i alt: ét hovedbillede og op til {{galleryCount}} galleribilleder.",
+    "maxImagesAllowed": "Maksimum {{count}} billeder tilladt.",
+    "removeImage": "Fjern billede",
+    "replaceImage": "Erstat billede",
+    "uploadMoreImages": "Upload flere billeder",
+    "galleryImages": "Galleribilleder",
+    "productGallery": "Produktgalleri"
   }
 }

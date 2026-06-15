@@ -834,7 +834,9 @@
     "storeIdentity": "Butiksidentitet",
     "logoHelper": "Den visas på din offentliga profil, produktsidor och marketplace-kort.",
     "photoAlbum": "Fotoalbum",
-    "photoAlbumHelper": "Lägg till bilder på butikens utsida, interiör, team, verkstad, produktion, förpackning och produktpresentation."
+    "photoAlbumHelper": "Lägg till bilder på butikens utsida, interiör, team, verkstad, produktion, förpackning och produktpresentation.",
+    "savedSuccessfully": "Profilen sparades.",
+    "saveFailed": "Profilen kunde inte sparas. Försök igen."
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighet",
@@ -854,6 +856,18 @@
     "productGalleryHelper": "Lägg till extra bilder för produktdetaljsidan. I demoläge sparas de i den här webbläsaren.",
     "imageCount": "{{count}} bilder",
     "productGalleryAlt": "Produktgalleribild {{number}}",
-    "removeImage": "Ta bort"
+    "removeImage": "Ta bort bild",
+    "savedSuccessfully": "Produkten sparades.",
+    "saveFailed": "Produkten kunde inte sparas"
+  },
+  "upload": {
+    "upToImages": "Du kan ladda upp upp till {{count}} bilder.",
+    "productImageLimit": "Du kan ladda upp upp till {{count}} bilder totalt: en huvudbild och upp till {{galleryCount}} galleribilder.",
+    "maxImagesAllowed": "Max {{count}} bilder är tillåtna.",
+    "removeImage": "Ta bort bild",
+    "replaceImage": "Byt bild",
+    "uploadMoreImages": "Ladda upp fler bilder",
+    "galleryImages": "Galleribilder",
+    "productGallery": "Produktgalleri"
   }
 }
