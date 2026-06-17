@@ -835,7 +835,8 @@
     "photoAlbum": "Album photo",
     "photoAlbumHelper": "Ajoutez des photos de façade, intérieur, équipe, atelier, production, emballage et produits.",
     "savedSuccessfully": "Profil enregistré avec succès.",
-    "saveFailed": "Le profil n’a pas pu être enregistré. Réessayez."
+    "saveFailed": "Le profil n’a pas pu être enregistré. Réessayez.",
+    "saving": "Enregistrement..."
   },
   "sellerProductForm": {
     "visibility": "Visibilité du produit",
@@ -857,7 +858,20 @@
     "productGalleryAlt": "Image galerie produit {{number}}",
     "removeImage": "Supprimer l’image",
     "savedSuccessfully": "Produit enregistré avec succès.",
-    "saveFailed": "Le produit n’a pas pu être enregistré"
+    "saveFailed": "Le produit n’a pas pu être enregistré",
+    "validationNameRequired": "Le nom du produit est requis",
+    "validationPricePositive": "Le prix doit être positif",
+    "validationCategoryRequired": "La catégorie est requise",
+    "validationStock": "Le stock doit être un entier non négatif",
+    "notAuthenticated": "Vous devez être connecté pour enregistrer un produit.",
+    "saving": "Enregistrement...",
+    "loadFailed": "Impossible de charger le produit",
+    "editProduct": "Modifier le produit",
+    "createProduct": "Créer un produit",
+    "viewProductAsCustomer": "Voir le produit comme client",
+    "savedDescription": "Les clients peuvent voir ce produit lorsqu’il est publié et que votre profil est en ligne.",
+    "goToShop": "Aller à la boutique",
+    "backToProducts": "Retour aux produits"
   },
   "upload": {
     "upToImages": "Vous pouvez téléverser jusqu’à {{count}} images.",
@@ -868,5 +882,20 @@
     "uploadMoreImages": "Téléverser plus d’images",
     "galleryImages": "Images de galerie",
     "productGallery": "Galerie produit"
+  },
+  "imageUpload": {
+    "productImage": "Image produit",
+    "previewAlt": "Aperçu de l’image produit",
+    "removeImage": "Supprimer l’image",
+    "replaceImage": "Remplacer l’image",
+    "uploading": "Téléversement de l’image...",
+    "dropHere": "Déposez l’image ici",
+    "dragDrop": "Glissez-déposez une image ici",
+    "clickToChoose": "ou cliquez pour choisir un fichier",
+    "hint": "PNG, JPG, WEBP jusqu’à {{size}} Mo",
+    "fileTooLarge": "L’image est trop grande. Taille maximale : {{size}} Mo.",
+    "invalidType": "Seules les images JPG, PNG et WebP sont autorisées.",
+    "uploadFailed": "Impossible de téléverser l’image. Réessayez.",
+    "publicUrlFailed": "Impossible de récupérer l’URL de l’image téléversée."
   }
 }

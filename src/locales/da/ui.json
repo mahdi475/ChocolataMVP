@@ -834,7 +834,8 @@
     "photoAlbum": "Fotoalbum",
     "photoAlbumHelper": "Tilføj fotos af facade, interiør, team, værksted, produktion, emballage og produkter.",
     "savedSuccessfully": "Profil gemt.",
-    "saveFailed": "Profilen kunne ikke gemmes. Prøv igen."
+    "saveFailed": "Profilen kunne ikke gemmes. Prøv igen.",
+    "saving": "Gemmer..."
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighed",
@@ -856,7 +857,20 @@
     "productGalleryAlt": "Produktgalleribillede {{number}}",
     "removeImage": "Fjern billede",
     "savedSuccessfully": "Produkt gemt.",
-    "saveFailed": "Produktet kunne ikke gemmes"
+    "saveFailed": "Produktet kunne ikke gemmes",
+    "validationNameRequired": "Produktnavn er påkrævet",
+    "validationPricePositive": "Prisen skal være positiv",
+    "validationCategoryRequired": "Kategori er påkrævet",
+    "validationStock": "Lager skal være et ikke-negativt heltal",
+    "notAuthenticated": "Du skal være logget ind for at gemme et produkt.",
+    "saving": "Gemmer...",
+    "loadFailed": "Kunne ikke indlæse produktet",
+    "editProduct": "Rediger produkt",
+    "createProduct": "Opret produkt",
+    "viewProductAsCustomer": "Se produkt som kunde",
+    "savedDescription": "Kunder kan se dette produkt, når det er udgivet og din profil er live.",
+    "goToShop": "Gå til butik",
+    "backToProducts": "Tilbage til produkter"
   },
   "upload": {
     "upToImages": "Du kan uploade op til {{count}} billeder.",
@@ -867,5 +881,20 @@
     "uploadMoreImages": "Upload flere billeder",
     "galleryImages": "Galleribilleder",
     "productGallery": "Produktgalleri"
+  },
+  "imageUpload": {
+    "productImage": "Produktbillede",
+    "previewAlt": "Forhåndsvisning af produktbillede",
+    "removeImage": "Fjern billede",
+    "replaceImage": "Erstat billede",
+    "uploading": "Uploader billede...",
+    "dropHere": "Slip billedet her",
+    "dragDrop": "Træk og slip et billede her",
+    "clickToChoose": "eller klik for at vælge en fil",
+    "hint": "PNG, JPG, WEBP op til {{size}} MB",
+    "fileTooLarge": "Billedet er for stort. Maksimal størrelse: {{size}} MB.",
+    "invalidType": "Kun JPG-, PNG- og WebP-billeder er tilladt.",
+    "uploadFailed": "Kunne ikke uploade billedet. Prøv igen.",
+    "publicUrlFailed": "Kunne ikke hente URL til det uploadede billede."
   }
 }

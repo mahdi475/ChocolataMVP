@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import type { ProductFormValues } from '../../components/forms/ProductForm';
 import ProductForm from '../../components/forms/ProductForm';
@@ -11,6 +12,7 @@ import { DEMO_SELLER_PROFILE_SLUG } from '../../lib/sellerProfile';
 import styles from './SellerProductEditPage.module.css';
 
 const SellerProductEditPage = () => {
+  const { t } = useTranslation('ui');
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState<ProductFormValues | undefined>();
@@ -35,7 +37,7 @@ const SellerProductEditPage = () => {
         if (fetchError) throw fetchError;
         setInitialValues(data);
       } catch (err: any) {
-        setError(err.message || 'Failed to load product');
+        setError(err.message || t('sellerProductForm.loadFailed'));
       } finally {
         setLoading(false);
       }
@@ -68,22 +70,22 @@ const SellerProductEditPage = () => {
       <FadeIn>
         <Card>
           <div className={styles.header}>
-            <h1 className={styles.title}>{id ? 'Edit Product' : 'Create Product'}</h1>
+            <h1 className={styles.title}>{id ? t('sellerProductForm.editProduct') : t('sellerProductForm.createProduct')}</h1>
             {id && (
               <Link to={`/product/${id}`}>
-                <Button type="button" variant="outline">View product as customer</Button>
+                <Button type="button" variant="outline">{t('sellerProductForm.viewProductAsCustomer')}</Button>
               </Link>
             )}
           </div>
           {savedProductId && (
             <div className={styles.successPanel}>
-              <strong>Product saved and published.</strong>
-              <span>Customers can now see this product in the marketplace prototype.</span>
+              <strong>{t('sellerProductForm.savedSuccessfully')}</strong>
+              <span>{t('sellerProductForm.savedDescription')}</span>
               <div className={styles.successActions}>
-                <Link to={`/product/${savedProductId}`}><Button type="button" variant="outline">View product as customer</Button></Link>
-                <Link to={`/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`}><Button type="button" variant="outline">View seller public profile</Button></Link>
-                <Link to="/catalog"><Button type="button" variant="ghost">Go to shop</Button></Link>
-                <Link to="/seller/products"><Button type="button">Back to products</Button></Link>
+                <Link to={`/product/${savedProductId}`}><Button type="button" variant="outline">{t('sellerProductForm.viewProductAsCustomer')}</Button></Link>
+                <Link to={`/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`}><Button type="button" variant="outline">{t('sellerShell.viewPublicProfile')}</Button></Link>
+                <Link to="/catalog"><Button type="button" variant="ghost">{t('sellerProductForm.goToShop')}</Button></Link>
+                <Link to="/seller/products"><Button type="button">{t('sellerProductForm.backToProducts')}</Button></Link>
               </div>
             </div>
           )}

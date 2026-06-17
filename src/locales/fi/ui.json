@@ -834,7 +834,8 @@
     "photoAlbum": "Kuva-albumi",
     "photoAlbumHelper": "Lisää kuvia myymälästä, tiimistä, työpajasta, tuotannosta, pakkauksista ja tuotteista.",
     "savedSuccessfully": "Profiili tallennettu onnistuneesti.",
-    "saveFailed": "Profiilia ei voitu tallentaa. Yritä uudelleen."
+    "saveFailed": "Profiilia ei voitu tallentaa. Yritä uudelleen.",
+    "saving": "Tallennetaan..."
   },
   "sellerProductForm": {
     "visibility": "Tuotteen näkyvyys",
@@ -856,7 +857,20 @@
     "productGalleryAlt": "Tuotegallerian kuva {{number}}",
     "removeImage": "Poista kuva",
     "savedSuccessfully": "Tuote tallennettu onnistuneesti.",
-    "saveFailed": "Tuotetta ei voitu tallentaa"
+    "saveFailed": "Tuotetta ei voitu tallentaa",
+    "validationNameRequired": "Tuotteen nimi vaaditaan",
+    "validationPricePositive": "Hinnan on oltava positiivinen",
+    "validationCategoryRequired": "Kategoria vaaditaan",
+    "validationStock": "Varaston on oltava ei-negatiivinen kokonaisluku",
+    "notAuthenticated": "Sinun täytyy kirjautua sisään tallentaaksesi tuotteen.",
+    "saving": "Tallennetaan...",
+    "loadFailed": "Tuotetta ei voitu ladata",
+    "editProduct": "Muokkaa tuotetta",
+    "createProduct": "Luo tuote",
+    "viewProductAsCustomer": "Näytä tuote asiakkaana",
+    "savedDescription": "Asiakkaat näkevät tämän tuotteen, kun se on julkaistu ja profiilisi on live.",
+    "goToShop": "Siirry kauppaan",
+    "backToProducts": "Takaisin tuotteisiin"
   },
   "upload": {
     "upToImages": "Voit ladata enintään {{count}} kuvaa.",
@@ -867,5 +881,20 @@
     "uploadMoreImages": "Lataa lisää kuvia",
     "galleryImages": "Galleriakuvat",
     "productGallery": "Tuotegalleria"
+  },
+  "imageUpload": {
+    "productImage": "Tuotekuva",
+    "previewAlt": "Tuotekuvan esikatselu",
+    "removeImage": "Poista kuva",
+    "replaceImage": "Vaihda kuva",
+    "uploading": "Ladataan kuvaa...",
+    "dropHere": "Pudota kuva tähän",
+    "dragDrop": "Vedä ja pudota kuva tähän",
+    "clickToChoose": "tai valitse tiedosto klikkaamalla",
+    "hint": "PNG, JPG, WEBP enintään {{size}} MB",
+    "fileTooLarge": "Kuva on liian suuri. Enimmäiskoko: {{size}} MB.",
+    "invalidType": "Vain JPG-, PNG- ja WebP-kuvat ovat sallittuja.",
+    "uploadFailed": "Kuvan lataus epäonnistui. Yritä uudelleen.",
+    "publicUrlFailed": "Ladatun kuvan URL-osoitetta ei voitu hakea."
   }
 }

@@ -39,8 +39,19 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-end;
+}
+
+.saveFeedback {
+  min-height: 1.2rem;
+  color: #1f6b35;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.saveFeedbackError {
+  color: #8a1f16;
 }
 
 .success {

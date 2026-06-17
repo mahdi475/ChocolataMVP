@@ -13,6 +13,7 @@ import {
   loadSellerStoreProfile,
   saveSellerStoreProfile,
 } from '../../lib/sellerProfile';
+import { IMAGE_MAX_SIZE_MB, isAcceptedImageSize, isAcceptedImageType } from '../../lib/imageUploadLimits';
 import styles from './SellerProfileSettingsPage.module.css';
 
 const MAX_PROFILE_GALLERY_IMAGES = 10;
@@ -20,8 +21,15 @@ const MAX_PROFILE_GALLERY_IMAGES = 10;
 const splitList = (value: string) =>
   value.split(',').map((item) => item.trim()).filter(Boolean);
 
-const readImageFile = (file: File, onLoad: (url: string) => void) => {
-  if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) return;
+const readImageFile = (file: File, onLoad: (url: string) => void, onError: (message: string) => void, t: ReturnType<typeof useTranslation>['t']) => {
+  if (!isAcceptedImageType(file)) {
+    onError(t('imageUpload.invalidType'));
+    return;
+  }
+  if (!isAcceptedImageSize(file)) {
+    onError(t('imageUpload.fileTooLarge', { size: IMAGE_MAX_SIZE_MB }));
+    return;
+  }
   const reader = new FileReader();
   reader.onload = () => onLoad(reader.result as string);
   reader.readAsDataURL(file);
@@ -32,6 +40,7 @@ const SellerProfileSettingsPage = () => {
   const [profile, setProfile] = useState<SellerStoreProfile>(() => loadSellerStoreProfile());
   const [saveMessage, setSaveMessage] = useState('');
   const [saveError, setSaveError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const [galleryError, setGalleryError] = useState('');
 
   const publicProfilePath = `/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`;
@@ -75,13 +84,17 @@ const SellerProfileSettingsPage = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    setIsSaving(true);
     try {
       saveSellerStoreProfile(profile);
       setSaveMessage(t('sellerProfile.savedSuccessfully'));
       setSaveError('');
+      window.setTimeout(() => setSaveMessage(''), 3500);
     } catch {
       setSaveMessage('');
       setSaveError(t('sellerProfile.saveFailed'));
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -116,9 +129,6 @@ const SellerProfileSettingsPage = () => {
           </Link>
         </div>
       </section>
-
-      {saveMessage && <div className={styles.success}>{saveMessage}</div>}
-      {saveError && <div className={styles.error}>{saveError}</div>}
 
       <section className={styles.statusCard}>
         <div>
@@ -217,7 +227,7 @@ const SellerProfileSettingsPage = () => {
               {profile.logoImage ? <img src={profile.logoImage} alt="" /> : <strong>{t('sellerProfile.noLogo')}</strong>}
               <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => {
                 const file = event.target.files?.[0];
-                if (file) readImageFile(file, (url) => updateField('logoImage', url));
+                if (file) readImageFile(file, (url) => updateField('logoImage', url), setSaveError, t);
               }} />
               {profile.logoImage && <button type="button" onClick={() => updateField('logoImage', '')}>{t('sellerProfile.removeLogo')}</button>}
             </label>
@@ -226,7 +236,7 @@ const SellerProfileSettingsPage = () => {
               {profile.coverImage ? <img src={profile.coverImage} alt="" /> : <strong>{t('sellerProfile.noCover')}</strong>}
               <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => {
                 const file = event.target.files?.[0];
-                if (file) readImageFile(file, (url) => updateField('coverImage', url));
+                if (file) readImageFile(file, (url) => updateField('coverImage', url), setSaveError, t);
               }} />
               {profile.coverImage && <button type="button" onClick={() => updateField('coverImage', '')}>{t('sellerProfile.removeCover')}</button>}
             </label>
@@ -247,7 +257,7 @@ const SellerProfileSettingsPage = () => {
                 setGalleryError(t('upload.maxImagesAllowed', { count: MAX_PROFILE_GALLERY_IMAGES }));
               }
               files.slice(0, Math.max(availableSlots, 0)).forEach((file) => {
-                readImageFile(file, appendGalleryImage);
+                readImageFile(file, appendGalleryImage, setGalleryError, t);
               });
               event.currentTarget.value = '';
             }} />
@@ -265,7 +275,10 @@ const SellerProfileSettingsPage = () => {
 
       <div className={styles.footerActions}>
         <Button type="button" variant="ghost" onClick={resetDemo}>{t('sellerProfile.resetDemo')}</Button>
-        <Button type="submit" variant="gold"><Save size={16} /> {t('sellerProfile.save')}</Button>
+        <Button type="submit" variant="gold" isLoading={isSaving}><Save size={16} /> {t('sellerProfile.save')}</Button>
+        <span className={`${styles.saveFeedback} ${saveError ? styles.saveFeedbackError : ''}`}>
+          {isSaving ? t('sellerProfile.saving') : saveError || saveMessage}
+        </span>
       </div>
     </form>
   );

@@ -1,20 +1,27 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
+import {
+  IMAGE_MAX_SIZE_MB,
+  isAcceptedImageSize,
+  isAcceptedImageType,
+} from '../../lib/imageUploadLimits';
 import styles from './ImageUpload.module.css';
 
 interface ImageUploadProps {
   onImageUpload: (file: File) => void;
   onImageRemove?: () => void;
   existingImage?: string;
-  maxSize?: number; // in MB
+  maxSize?: number;
 }
 
-const ImageUpload = ({ 
-  onImageUpload, 
+const ImageUpload = ({
+  onImageUpload,
   onImageRemove,
-  existingImage, 
-  maxSize = 5 
+  existingImage,
+  maxSize = IMAGE_MAX_SIZE_MB,
 }: ImageUploadProps) => {
+  const { t } = useTranslation('ui');
   const [preview, setPreview] = useState<string | null>(existingImage || null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,56 +30,48 @@ const ImageUpload = ({
     const file = acceptedFiles[0];
     if (!file) return;
 
-    // Reset error
     setError(null);
 
-    // Check file size
-    if (file.size > maxSize * 1024 * 1024) {
-      setError(`Bilden är för stor. Max storlek är ${maxSize}MB.`);
+    if (!isAcceptedImageSize(file)) {
+      setError(t('imageUpload.fileTooLarge', { size: maxSize }));
       return;
     }
 
-    // Check file type
-    if (!file.type.startsWith('image/')) {
-      setError('Endast bildfiler är tillåtna.');
+    if (!isAcceptedImageType(file)) {
+      setError(t('imageUpload.invalidType'));
       return;
     }
 
-    // Create preview
     const reader = new FileReader();
-    reader.onload = () => {
-      setPreview(reader.result as string);
-    };
+    reader.onload = () => setPreview(reader.result as string);
     reader.readAsDataURL(file);
 
-    // Set uploading state
     setUploading(true);
-
     try {
-      // Call parent callback with the file
       await onImageUpload(file);
-      console.log('✅ Bild uppladdad framgångsrikt');
-    } catch (error) {
-      console.error('❌ Fel vid bilduppladdning:', error);
-      setError('Kunde inte ladda upp bilden. Försök igen.');
+    } catch (uploadError) {
+      console.error('Image upload failed:', uploadError);
+      setError(t('imageUpload.uploadFailed'));
       setPreview(existingImage || null);
     } finally {
       setUploading(false);
     }
-  }, [onImageUpload, maxSize, existingImage]);
+  }, [existingImage, maxSize, onImageUpload, t]);
 
   const {
     getRootProps,
     getInputProps,
     isDragActive,
-    isDragReject
+    isDragReject,
   } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.webp', '.gif']
+      'image/jpeg': ['.jpeg', '.jpg'],
+      'image/png': ['.png'],
+      'image/webp': ['.webp'],
     },
     maxFiles: 1,
-    multiple: false
+    multiple: false,
   });
 
   const removeImage = () => {
@@ -83,13 +82,13 @@ const ImageUpload = ({
 
   return (
     <div className={styles.container}>
-      <label className={styles.label}>Produktbild</label>
-      
+      <label className={styles.label}>{t('imageUpload.productImage')}</label>
+
       {preview ? (
         <div className={styles.previewContainer}>
-          <img 
-            src={preview} 
-            alt="Produktbild förhandsvisning" 
+          <img
+            src={preview}
+            alt={t('imageUpload.previewAlt')}
             className={styles.preview}
           />
           <div className={styles.previewOverlay}>
@@ -97,16 +96,13 @@ const ImageUpload = ({
               type="button"
               onClick={removeImage}
               className={styles.removeButton}
-              title="Ta bort bild"
+              title={t('imageUpload.removeImage')}
             >
-              ✕
+              x
             </button>
-            <div 
-              {...getRootProps()} 
-              className={styles.changeButton}
-            >
+            <div {...getRootProps()} className={styles.changeButton}>
               <input {...getInputProps()} />
-              📷 Byt bild
+              {t('imageUpload.replaceImage')}
             </div>
           </div>
         </div>
@@ -118,38 +114,28 @@ const ImageUpload = ({
           } ${isDragReject ? styles.dragReject : ''}`}
         >
           <input {...getInputProps()} />
-          
+
           {uploading ? (
             <div className={styles.uploading}>
               <div className={styles.spinner}></div>
-              <p>Laddar upp bild...</p>
+              <p>{t('imageUpload.uploading')}</p>
             </div>
           ) : isDragActive ? (
             <div className={styles.dragMessage}>
-              <p>📤 Släpp bilden här</p>
+              <p>{t('imageUpload.dropHere')}</p>
             </div>
           ) : (
             <div className={styles.placeholder}>
-              <div className={styles.icon}>📷</div>
-              <p className={styles.primaryText}>
-                Dra och släpp en bild här
-              </p>
-              <p className={styles.secondaryText}>
-                eller klicka för att välja en fil
-              </p>
-              <p className={styles.hint}>
-                PNG, JPG, WEBP upp till {maxSize}MB
-              </p>
+              <div className={styles.icon}>+</div>
+              <p className={styles.primaryText}>{t('imageUpload.dragDrop')}</p>
+              <p className={styles.secondaryText}>{t('imageUpload.clickToChoose')}</p>
+              <p className={styles.hint}>{t('imageUpload.hint', { size: maxSize })}</p>
             </div>
           )}
         </div>
       )}
 
-      {error && (
-        <div className={styles.error}>
-          ⚠️ {error}
-        </div>
-      )}
+      {error && <div className={styles.error}>{error}</div>}
     </div>
   );
 };

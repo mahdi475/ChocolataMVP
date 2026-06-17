@@ -834,7 +834,8 @@
     "photoAlbum": "Fotoalbum",
     "photoAlbumHelper": "Voeg foto’s toe van buitenkant, interieur, team, werkplaats, productie, verpakking en producten.",
     "savedSuccessfully": "Profiel succesvol opgeslagen.",
-    "saveFailed": "Profiel kon niet worden opgeslagen. Probeer opnieuw."
+    "saveFailed": "Profiel kon niet worden opgeslagen. Probeer opnieuw.",
+    "saving": "Opslaan..."
   },
   "sellerProductForm": {
     "visibility": "Productzichtbaarheid",
@@ -856,7 +857,20 @@
     "productGalleryAlt": "Productgalerij afbeelding {{number}}",
     "removeImage": "Afbeelding verwijderen",
     "savedSuccessfully": "Product succesvol opgeslagen.",
-    "saveFailed": "Product kon niet worden opgeslagen"
+    "saveFailed": "Product kon niet worden opgeslagen",
+    "validationNameRequired": "Productnaam is verplicht",
+    "validationPricePositive": "Prijs moet positief zijn",
+    "validationCategoryRequired": "Categorie is verplicht",
+    "validationStock": "Voorraad moet een niet-negatief geheel getal zijn",
+    "notAuthenticated": "Je moet ingelogd zijn om een product op te slaan.",
+    "saving": "Opslaan...",
+    "loadFailed": "Product kon niet worden geladen",
+    "editProduct": "Product bewerken",
+    "createProduct": "Product maken",
+    "viewProductAsCustomer": "Product als klant bekijken",
+    "savedDescription": "Klanten kunnen dit product zien wanneer het gepubliceerd is en je profiel live is.",
+    "goToShop": "Naar winkel",
+    "backToProducts": "Terug naar producten"
   },
   "upload": {
     "upToImages": "Je kunt maximaal {{count}} afbeeldingen uploaden.",
@@ -867,5 +881,20 @@
     "uploadMoreImages": "Meer afbeeldingen uploaden",
     "galleryImages": "Galerijafbeeldingen",
     "productGallery": "Productgalerij"
+  },
+  "imageUpload": {
+    "productImage": "Productafbeelding",
+    "previewAlt": "Voorbeeld van productafbeelding",
+    "removeImage": "Afbeelding verwijderen",
+    "replaceImage": "Afbeelding vervangen",
+    "uploading": "Afbeelding uploaden...",
+    "dropHere": "Laat de afbeelding hier los",
+    "dragDrop": "Sleep een afbeelding hierheen",
+    "clickToChoose": "of klik om een bestand te kiezen",
+    "hint": "PNG, JPG, WEBP tot {{size}} MB",
+    "fileTooLarge": "Afbeelding is te groot. Maximale grootte: {{size}} MB.",
+    "invalidType": "Alleen JPG-, PNG- en WebP-afbeeldingen zijn toegestaan.",
+    "uploadFailed": "Afbeelding kon niet worden geüpload. Probeer opnieuw.",
+    "publicUrlFailed": "URL van geüploade afbeelding kon niet worden opgehaald."
   }
 }

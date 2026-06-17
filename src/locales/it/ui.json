@@ -834,7 +834,8 @@
     "photoAlbum": "Album fotografico",
     "photoAlbumHelper": "Aggiungi foto di esterno, interno, team, laboratorio, produzione, packaging e prodotti.",
     "savedSuccessfully": "Profilo salvato correttamente.",
-    "saveFailed": "Impossibile salvare il profilo. Riprova."
+    "saveFailed": "Impossibile salvare il profilo. Riprova.",
+    "saving": "Salvataggio..."
   },
   "sellerProductForm": {
     "visibility": "Visibilità prodotto",
@@ -856,7 +857,20 @@
     "productGalleryAlt": "Immagine galleria prodotto {{number}}",
     "removeImage": "Rimuovi immagine",
     "savedSuccessfully": "Prodotto salvato correttamente.",
-    "saveFailed": "Impossibile salvare il prodotto"
+    "saveFailed": "Impossibile salvare il prodotto",
+    "validationNameRequired": "Il nome prodotto è obbligatorio",
+    "validationPricePositive": "Il prezzo deve essere positivo",
+    "validationCategoryRequired": "La categoria è obbligatoria",
+    "validationStock": "Lo stock deve essere un numero intero non negativo",
+    "notAuthenticated": "Devi accedere per salvare un prodotto.",
+    "saving": "Salvataggio...",
+    "loadFailed": "Impossibile caricare il prodotto",
+    "editProduct": "Modifica prodotto",
+    "createProduct": "Crea prodotto",
+    "viewProductAsCustomer": "Vedi prodotto come cliente",
+    "savedDescription": "I clienti possono vedere questo prodotto quando è pubblicato e il profilo è live.",
+    "goToShop": "Vai al negozio",
+    "backToProducts": "Torna ai prodotti"
   },
   "upload": {
     "upToImages": "Puoi caricare fino a {{count}} immagini.",
@@ -867,5 +881,20 @@
     "uploadMoreImages": "Carica altre immagini",
     "galleryImages": "Immagini galleria",
     "productGallery": "Galleria prodotto"
+  },
+  "imageUpload": {
+    "productImage": "Immagine prodotto",
+    "previewAlt": "Anteprima immagine prodotto",
+    "removeImage": "Rimuovi immagine",
+    "replaceImage": "Sostituisci immagine",
+    "uploading": "Caricamento immagine...",
+    "dropHere": "Rilascia qui l’immagine",
+    "dragDrop": "Trascina e rilascia un’immagine qui",
+    "clickToChoose": "oppure clicca per scegliere un file",
+    "hint": "PNG, JPG, WEBP fino a {{size}} MB",
+    "fileTooLarge": "L’immagine è troppo grande. Dimensione massima: {{size}} MB.",
+    "invalidType": "Sono consentite solo immagini JPG, PNG e WebP.",
+    "uploadFailed": "Impossibile caricare l’immagine. Riprova.",
+    "publicUrlFailed": "Impossibile recuperare l’URL dell’immagine caricata."
   }
 }

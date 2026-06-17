@@ -835,7 +835,8 @@
     "photoAlbum": "Fotoalbum",
     "photoAlbumHelper": "Füge Fotos von Außenansicht, Innenraum, Team, Werkstatt, Produktion, Verpackung und Produkten hinzu.",
     "savedSuccessfully": "Profil erfolgreich gespeichert.",
-    "saveFailed": "Profil konnte nicht gespeichert werden. Bitte erneut versuchen."
+    "saveFailed": "Profil konnte nicht gespeichert werden. Bitte erneut versuchen.",
+    "saving": "Speichern..."
   },
   "sellerProductForm": {
     "visibility": "Produktsichtbarkeit",
@@ -857,7 +858,20 @@
     "productGalleryAlt": "Produktgaleriebild {{number}}",
     "removeImage": "Bild entfernen",
     "savedSuccessfully": "Produkt erfolgreich gespeichert.",
-    "saveFailed": "Produkt konnte nicht gespeichert werden"
+    "saveFailed": "Produkt konnte nicht gespeichert werden",
+    "validationNameRequired": "Produktname ist erforderlich",
+    "validationPricePositive": "Preis muss positiv sein",
+    "validationCategoryRequired": "Kategorie ist erforderlich",
+    "validationStock": "Bestand muss eine nicht negative ganze Zahl sein",
+    "notAuthenticated": "Du musst angemeldet sein, um ein Produkt zu speichern.",
+    "saving": "Speichern...",
+    "loadFailed": "Produkt konnte nicht geladen werden",
+    "editProduct": "Produkt bearbeiten",
+    "createProduct": "Produkt erstellen",
+    "viewProductAsCustomer": "Produkt als Kunde ansehen",
+    "savedDescription": "Kunden sehen dieses Produkt, wenn es veröffentlicht ist und dein Profil live ist.",
+    "goToShop": "Zum Shop",
+    "backToProducts": "Zurück zu Produkten"
   },
   "upload": {
     "upToImages": "Du kannst bis zu {{count}} Bilder hochladen.",
@@ -868,5 +882,20 @@
     "uploadMoreImages": "Weitere Bilder hochladen",
     "galleryImages": "Galeriebilder",
     "productGallery": "Produktgalerie"
+  },
+  "imageUpload": {
+    "productImage": "Produktbild",
+    "previewAlt": "Produktbild-Vorschau",
+    "removeImage": "Bild entfernen",
+    "replaceImage": "Bild ersetzen",
+    "uploading": "Bild wird hochgeladen...",
+    "dropHere": "Bild hier ablegen",
+    "dragDrop": "Bild hierher ziehen und ablegen",
+    "clickToChoose": "oder klicken, um eine Datei auszuwählen",
+    "hint": "PNG, JPG, WEBP bis {{size}} MB",
+    "fileTooLarge": "Bild ist zu groß. Maximale Größe: {{size}} MB.",
+    "invalidType": "Nur JPG-, PNG- und WebP-Bilder sind erlaubt.",
+    "uploadFailed": "Bild konnte nicht hochgeladen werden. Bitte erneut versuchen.",
+    "publicUrlFailed": "URL des hochgeladenen Bildes konnte nicht abgerufen werden."
   }
 }

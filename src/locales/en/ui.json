@@ -831,7 +831,8 @@
     "photoAlbum": "Photo Album",
     "photoAlbumHelper": "Add store exterior, interior, team, workshop, production, packaging, and product showcase photos.",
     "savedSuccessfully": "Profile saved successfully.",
-    "saveFailed": "Profile could not be saved. Please try again."
+    "saveFailed": "Profile could not be saved. Please try again.",
+    "saving": "Saving..."
   },
   "sellerProductForm": {
     "visibility": "Product visibility",
@@ -853,7 +854,20 @@
     "productGalleryAlt": "Product gallery image {{number}}",
     "removeImage": "Remove image",
     "savedSuccessfully": "Product saved successfully.",
-    "saveFailed": "Failed to save product"
+    "saveFailed": "Failed to save product",
+    "validationNameRequired": "Product name is required",
+    "validationPricePositive": "Price must be positive",
+    "validationCategoryRequired": "Category is required",
+    "validationStock": "Stock must be a non-negative integer",
+    "notAuthenticated": "You must be logged in to save a product.",
+    "saving": "Saving...",
+    "loadFailed": "Failed to load product",
+    "editProduct": "Edit Product",
+    "createProduct": "Create Product",
+    "viewProductAsCustomer": "View product as customer",
+    "savedDescription": "Customers can see this product when it is published and your profile is live.",
+    "goToShop": "Go to shop",
+    "backToProducts": "Back to products"
   },
   "upload": {
     "upToImages": "You can upload up to {{count}} images.",
@@ -864,5 +878,20 @@
     "uploadMoreImages": "Upload more images",
     "galleryImages": "Gallery images",
     "productGallery": "Product gallery"
+  },
+  "imageUpload": {
+    "productImage": "Product image",
+    "previewAlt": "Product image preview",
+    "removeImage": "Remove image",
+    "replaceImage": "Replace image",
+    "uploading": "Uploading image...",
+    "dropHere": "Drop the image here",
+    "dragDrop": "Drag and drop an image here",
+    "clickToChoose": "or click to choose a file",
+    "hint": "PNG, JPG, WEBP up to {{size}} MB",
+    "fileTooLarge": "Image is too large. Maximum size is {{size}} MB.",
+    "invalidType": "Only JPG, PNG, and WebP images are allowed.",
+    "uploadFailed": "Could not upload the image. Please try again.",
+    "publicUrlFailed": "Could not retrieve the uploaded image URL."
   }
 }

@@ -836,7 +836,8 @@
     "photoAlbum": "Fotoalbum",
     "photoAlbumHelper": "Lägg till bilder på butikens utsida, interiör, team, verkstad, produktion, förpackning och produktpresentation.",
     "savedSuccessfully": "Profilen sparades.",
-    "saveFailed": "Profilen kunde inte sparas. Försök igen."
+    "saveFailed": "Profilen kunde inte sparas. Försök igen.",
+    "saving": "Sparar..."
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighet",
@@ -858,7 +859,20 @@
     "productGalleryAlt": "Produktgalleribild {{number}}",
     "removeImage": "Ta bort bild",
     "savedSuccessfully": "Produkten sparades.",
-    "saveFailed": "Produkten kunde inte sparas"
+    "saveFailed": "Produkten kunde inte sparas",
+    "validationNameRequired": "Produktnamn krävs",
+    "validationPricePositive": "Priset måste vara positivt",
+    "validationCategoryRequired": "Kategori krävs",
+    "validationStock": "Lager måste vara ett icke-negativt heltal",
+    "notAuthenticated": "Du måste vara inloggad för att spara en produkt.",
+    "saving": "Sparar...",
+    "loadFailed": "Kunde inte läsa in produkten",
+    "editProduct": "Redigera produkt",
+    "createProduct": "Skapa produkt",
+    "viewProductAsCustomer": "Visa produkt som kund",
+    "savedDescription": "Kunder kan se produkten när den är publicerad och din profil är live.",
+    "goToShop": "Gå till butiken",
+    "backToProducts": "Tillbaka till produkter"
   },
   "upload": {
     "upToImages": "Du kan ladda upp upp till {{count}} bilder.",
@@ -869,5 +883,20 @@
     "uploadMoreImages": "Ladda upp fler bilder",
     "galleryImages": "Galleribilder",
     "productGallery": "Produktgalleri"
+  },
+  "imageUpload": {
+    "productImage": "Produktbild",
+    "previewAlt": "Förhandsvisning av produktbild",
+    "removeImage": "Ta bort bild",
+    "replaceImage": "Byt bild",
+    "uploading": "Laddar upp bild...",
+    "dropHere": "Släpp bilden här",
+    "dragDrop": "Dra och släpp en bild här",
+    "clickToChoose": "eller klicka för att välja en fil",
+    "hint": "PNG, JPG, WEBP upp till {{size}} MB",
+    "fileTooLarge": "Bilden är för stor. Maxstorlek är {{size}} MB.",
+    "invalidType": "Endast JPG, PNG och WebP-bilder är tillåtna.",
+    "uploadFailed": "Kunde inte ladda upp bilden. Försök igen.",
+    "publicUrlFailed": "Kunde inte hämta URL för den uppladdade bilden."
   }
 }

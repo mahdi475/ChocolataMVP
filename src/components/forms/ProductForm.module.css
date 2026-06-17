@@ -15,6 +15,24 @@
   margin-top: var(--spacing-sm);
 }
 
+.submitRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.saveFeedback {
+  min-height: 1.2rem;
+  color: #1f6b35;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.saveFeedbackError {
+  color: #8a1f16;
+}
+
 .statusSection,
 .tagSection {
   display: flex;

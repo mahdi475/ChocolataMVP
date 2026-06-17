@@ -13,24 +13,24 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ImageUpload from '../ui/ImageUpload';
+import { IMAGE_MAX_SIZE_MB, isAcceptedImageSize, isAcceptedImageType } from '../../lib/imageUploadLimits';
 import styles from './ProductForm.module.css';
 
 const MAX_PRODUCT_IMAGES = 10;
 const MAX_PRODUCT_GALLERY_IMAGES = MAX_PRODUCT_IMAGES - 1;
 
-const productSchema = z.object({
-  name: z.string().min(1, 'Product name is required'),
+const createProductSchema = (t: ReturnType<typeof useTranslation>['t']) => z.object({
+  name: z.string().min(1, t('ui:sellerProductForm.validationNameRequired')),
   description: z.string().optional(),
-  price: z.number().positive('Price must be positive'),
-  category: z.string().min(1, 'Category is required'),
+  price: z.number().positive(t('ui:sellerProductForm.validationPricePositive')),
+  category: z.string().min(1, t('ui:sellerProductForm.validationCategoryRequired')),
   country: z.string().optional(),
-  stock: z.number().int().min(0, 'Stock must be a non-negative integer'),
+  stock: z.number().int().min(0, t('ui:sellerProductForm.validationStock')),
   tags: z.array(z.string()).optional(),
   status: z.enum(['published', 'draft']).default('published'),
-  // Removed image_url from schema since we handle file upload separately
 });
 
-type ProductFormData = z.infer<typeof productSchema>;
+type ProductFormData = z.infer<ReturnType<typeof createProductSchema>>;
 
 export interface ProductFormValues extends ProductFormData {
   id?: string;
@@ -50,6 +50,7 @@ interface ProductFormProps {
 
 const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) => {
   const { t } = useTranslation(['products', 'ui']);
+  const productSchema = createProductSchema(t);
   const dispatch = useDispatch();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(
     initialValues?.image_url || null
@@ -57,6 +58,8 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>(initialValues?.gallery_images || []);
   const [galleryError, setGalleryError] = useState('');
+  const [saveFeedback, setSaveFeedback] = useState('');
+  const [saveFeedbackError, setSaveFeedbackError] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>(
     uniqueProductTags(initialValues?.tags || initialValues?.badges || [])
   );
@@ -101,7 +104,14 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     }
 
     files.slice(0, Math.max(availableSlots, 0)).forEach((file) => {
-      if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) return;
+      if (!isAcceptedImageType(file)) {
+        setGalleryError(t('ui:imageUpload.invalidType'));
+        return;
+      }
+      if (!isAcceptedImageSize(file)) {
+        setGalleryError(t('ui:imageUpload.fileTooLarge', { size: IMAGE_MAX_SIZE_MB }));
+        return;
+      }
       const reader = new FileReader();
       reader.onload = () => setGalleryImages((current) => [...current, reader.result as string].slice(0, MAX_PRODUCT_GALLERY_IMAGES));
       reader.readAsDataURL(file);
@@ -119,9 +129,11 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
   };
 
   const onSubmit = async (data: ProductFormData) => {
+    setSaveFeedback(t('ui:sellerProductForm.saving'));
+    setSaveFeedbackError('');
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!user) throw new Error(t('ui:sellerProductForm.notAuthenticated'));
 
       let finalImageUrl = uploadedImageUrl;
 
@@ -138,7 +150,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         if (uploadError) {
           console.error('❌ Image upload failed:', uploadError);
           if (!finalImageUrl?.startsWith('data:image/')) {
-            throw new Error('Image upload failed. Please try again.');
+            throw new Error(t('ui:imageUpload.uploadFailed'));
           }
         }
 
@@ -148,7 +160,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           .getPublicUrl(fileName);
 
         if (!urlData.publicUrl) {
-          throw new Error('Could not retrieve public URL for the uploaded image.');
+          throw new Error(t('ui:imageUpload.publicUrlFailed'));
         }
 
         finalImageUrl = urlData.publicUrl;
@@ -194,8 +206,12 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         }));
       }
 
+      setSaveFeedback(t('ui:sellerProductForm.savedSuccessfully'));
+      window.setTimeout(() => setSaveFeedback(''), 3500);
       onSuccess?.(savedProductId);
     } catch (error: any) {
+      setSaveFeedback('');
+      setSaveFeedbackError(error.message || t('ui:sellerProductForm.saveFailed'));
       dispatch(addNotification({
         type: 'error',
         message: error.message || t('ui:sellerProductForm.saveFailed', { defaultValue: 'Failed to save product' }),
@@ -321,7 +337,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           setUploadedImageUrl(null);
         }}
         existingImage={uploadedImageUrl || undefined}
-        maxSize={5}
+        maxSize={IMAGE_MAX_SIZE_MB}
       />
       <section className={styles.gallerySection}>
         <div className={styles.tagHeader}>
@@ -356,9 +372,14 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           ))}
         </div>
       </section>
-      <Button type="submit" isLoading={isSubmitting} className={styles.submitButton} data-testid="product-submit">
-        {initialValues?.id ? t('form.update') : t('form.create')}
-      </Button>
+      <div className={styles.submitRow}>
+        <Button type="submit" isLoading={isSubmitting} className={styles.submitButton} data-testid="product-submit">
+          {initialValues?.id ? t('form.update') : t('form.create')}
+        </Button>
+        <span className={`${styles.saveFeedback} ${saveFeedbackError ? styles.saveFeedbackError : ''}`}>
+          {saveFeedbackError || saveFeedback}
+        </span>
+      </div>
     </form>
   );
 };
