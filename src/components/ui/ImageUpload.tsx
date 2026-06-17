@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import {
@@ -6,6 +6,7 @@ import {
   isAcceptedImageSize,
   isAcceptedImageType,
 } from '../../lib/imageUploadLimits';
+import StoredImage from './StoredImage';
 import styles from './ImageUpload.module.css';
 
 interface ImageUploadProps {
@@ -26,6 +27,10 @@ const ImageUpload = ({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    setPreview(existingImage || null);
+  }, [existingImage]);
+
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
@@ -42,18 +47,18 @@ const ImageUpload = ({
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => setPreview(reader.result as string);
-    reader.readAsDataURL(file);
+    const previewUrl = URL.createObjectURL(file);
+    setPreview(previewUrl);
 
     setUploading(true);
     try {
       await onImageUpload(file);
     } catch (uploadError) {
       console.error('Image upload failed:', uploadError);
-      setError(t('imageUpload.uploadFailed'));
+      setError(uploadError instanceof Error ? uploadError.message : t('imageUpload.uploadFailed'));
       setPreview(existingImage || null);
     } finally {
+      URL.revokeObjectURL(previewUrl);
       setUploading(false);
     }
   }, [existingImage, maxSize, onImageUpload, t]);
@@ -86,7 +91,7 @@ const ImageUpload = ({
 
       {preview ? (
         <div className={styles.previewContainer}>
-          <img
+          <StoredImage
             src={preview}
             alt={t('imageUpload.previewAlt')}
             className={styles.preview}

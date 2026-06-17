@@ -5,6 +5,7 @@ import { Eye, Home, Save } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import StoredImage from '../../components/ui/StoredImage';
 import { countrySelectOptions } from '../../lib/marketplaceCountries';
 import {
   DEFAULT_SELLER_PROFILE,
@@ -13,6 +14,7 @@ import {
   loadSellerStoreProfile,
   saveSellerStoreProfile,
 } from '../../lib/sellerProfile';
+import { BrowserImageStoreError, saveBrowserImage } from '../../lib/browserImageStore';
 import { IMAGE_MAX_SIZE_MB, isAcceptedImageSize, isAcceptedImageType } from '../../lib/imageUploadLimits';
 import styles from './SellerProfileSettingsPage.module.css';
 
@@ -21,7 +23,7 @@ const MAX_PROFILE_GALLERY_IMAGES = 10;
 const splitList = (value: string) =>
   value.split(',').map((item) => item.trim()).filter(Boolean);
 
-const readImageFile = (file: File, onLoad: (url: string) => void, onError: (message: string) => void, t: ReturnType<typeof useTranslation>['t']) => {
+const readImageFile = async (file: File, onLoad: (url: string) => void, onError: (message: string) => void, t: ReturnType<typeof useTranslation>['t']) => {
   if (!isAcceptedImageType(file)) {
     onError(t('imageUpload.invalidType'));
     return;
@@ -30,9 +32,17 @@ const readImageFile = (file: File, onLoad: (url: string) => void, onError: (mess
     onError(t('imageUpload.fileTooLarge', { size: IMAGE_MAX_SIZE_MB }));
     return;
   }
-  const reader = new FileReader();
-  reader.onload = () => onLoad(reader.result as string);
-  reader.readAsDataURL(file);
+
+  try {
+    const storedUrl = await saveBrowserImage(file);
+    onLoad(storedUrl);
+  } catch (error) {
+    onError(
+      error instanceof BrowserImageStoreError && error.code === 'storage-limit'
+        ? t('imageUpload.storageLimitReached')
+        : t('imageUpload.uploadFailed'),
+    );
+  }
 };
 
 const SellerProfileSettingsPage = () => {
@@ -224,7 +234,7 @@ const SellerProfileSettingsPage = () => {
             <label className={styles.imagePicker}>
               <span>{t('sellerProfile.logoImage')}</span>
               <small>{t('sellerProfile.logoHelper')}</small>
-              {profile.logoImage ? <img src={profile.logoImage} alt="" /> : <strong>{t('sellerProfile.noLogo')}</strong>}
+              {profile.logoImage ? <StoredImage src={profile.logoImage} alt="" /> : <strong>{t('sellerProfile.noLogo')}</strong>}
               <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (file) readImageFile(file, (url) => updateField('logoImage', url), setSaveError, t);
@@ -233,7 +243,7 @@ const SellerProfileSettingsPage = () => {
             </label>
             <label className={styles.imagePicker}>
               <span>{t('sellerProfile.coverImage')}</span>
-              {profile.coverImage ? <img src={profile.coverImage} alt="" /> : <strong>{t('sellerProfile.noCover')}</strong>}
+              {profile.coverImage ? <StoredImage src={profile.coverImage} alt="" /> : <strong>{t('sellerProfile.noCover')}</strong>}
               <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (file) readImageFile(file, (url) => updateField('coverImage', url), setSaveError, t);
@@ -265,7 +275,7 @@ const SellerProfileSettingsPage = () => {
           <div className={styles.galleryGrid}>
             {profile.galleryImages.map((image, index) => (
               <div className={styles.galleryItem} key={`${image}-${index}`}>
-                <img src={image} alt="" />
+                <StoredImage src={image} alt="" />
                 <button type="button" onClick={() => updateField('galleryImages', profile.galleryImages.filter((_, i) => i !== index))}>{t('sellerProfile.removeImage')}</button>
               </div>
             ))}

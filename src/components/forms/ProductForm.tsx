@@ -13,6 +13,8 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ImageUpload from '../ui/ImageUpload';
+import StoredImage from '../ui/StoredImage';
+import { BrowserImageStoreError, saveBrowserImage } from '../../lib/browserImageStore';
 import { IMAGE_MAX_SIZE_MB, isAcceptedImageSize, isAcceptedImageType } from '../../lib/imageUploadLimits';
 import styles from './ProductForm.module.css';
 
@@ -55,7 +57,6 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(
     initialValues?.image_url || null
   );
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>(initialValues?.gallery_images || []);
   const [galleryError, setGalleryError] = useState('');
   const [saveFeedback, setSaveFeedback] = useState('');
@@ -95,7 +96,14 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
     setTagSearch('');
   };
 
-  const addProductGalleryFiles = (files: File[]) => {
+  const getImageStorageErrorMessage = (error: unknown) => {
+    if (error instanceof BrowserImageStoreError && error.code === 'storage-limit') {
+      return t('ui:imageUpload.storageLimitReached');
+    }
+    return t('ui:imageUpload.uploadFailed');
+  };
+
+  const addProductGalleryFiles = async (files: File[]) => {
     setGalleryError('');
     const availableSlots = MAX_PRODUCT_GALLERY_IMAGES - galleryImages.length;
 
@@ -103,29 +111,31 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       setGalleryError(t('ui:upload.maxImagesAllowed', { count: MAX_PRODUCT_IMAGES }));
     }
 
-    files.slice(0, Math.max(availableSlots, 0)).forEach((file) => {
+    for (const file of files.slice(0, Math.max(availableSlots, 0))) {
       if (!isAcceptedImageType(file)) {
         setGalleryError(t('ui:imageUpload.invalidType'));
-        return;
+        continue;
       }
       if (!isAcceptedImageSize(file)) {
         setGalleryError(t('ui:imageUpload.fileTooLarge', { size: IMAGE_MAX_SIZE_MB }));
-        return;
+        continue;
       }
-      const reader = new FileReader();
-      reader.onload = () => setGalleryImages((current) => [...current, reader.result as string].slice(0, MAX_PRODUCT_GALLERY_IMAGES));
-      reader.readAsDataURL(file);
-    });
+      try {
+        const storedUrl = await saveBrowserImage(file);
+        setGalleryImages((current) => [...current, storedUrl].slice(0, MAX_PRODUCT_GALLERY_IMAGES));
+      } catch (error) {
+        setGalleryError(getImageStorageErrorMessage(error));
+      }
+    }
   };
 
   const handleImageUpload = async (file: File) => {
-    setImageFile(file);
-    
-    const reader = new FileReader();
-    reader.onload = () => setUploadedImageUrl(reader.result as string);
-    reader.readAsDataURL(file);
-    
-    console.log('📷 Bild vald för uppladdning:', file.name, file.size);
+    try {
+      const storedUrl = await saveBrowserImage(file);
+      setUploadedImageUrl(storedUrl);
+    } catch (error) {
+      throw new Error(getImageStorageErrorMessage(error));
+    }
   };
 
   const onSubmit = async (data: ProductFormData) => {
@@ -136,38 +146,6 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       if (!user) throw new Error(t('ui:sellerProductForm.notAuthenticated'));
 
       let finalImageUrl = uploadedImageUrl;
-
-      // Upload image to Supabase Storage if a new file was selected
-      if (imageFile) {
-        console.log('📤 Uploading image to Supabase Storage...');
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('product-images')
-          .upload(fileName, imageFile);
-
-        if (uploadError) {
-          console.error('❌ Image upload failed:', uploadError);
-          if (!finalImageUrl?.startsWith('data:image/')) {
-            throw new Error(t('ui:imageUpload.uploadFailed'));
-          }
-        }
-
-        if (!uploadError) {
-          const { data: urlData } = supabase.storage
-          .from('product-images')
-          .getPublicUrl(fileName);
-
-        if (!urlData.publicUrl) {
-          throw new Error(t('ui:imageUpload.publicUrlFailed'));
-        }
-
-        finalImageUrl = urlData.publicUrl;
-        console.log('✅ Image uploaded successfully:', finalImageUrl);
-      }
-
-      }
 
       const productData = {
         ...data,
@@ -333,7 +311,6 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       <ImageUpload
         onImageUpload={handleImageUpload}
         onImageRemove={() => {
-          setImageFile(null);
           setUploadedImageUrl(null);
         }}
         existingImage={uploadedImageUrl || undefined}
@@ -364,7 +341,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
         <div className={styles.galleryGrid}>
           {galleryImages.map((image, index) => (
             <div key={`${image}-${index}`} className={styles.galleryItem}>
-              <img src={image} alt={t('ui:sellerProductForm.productGalleryAlt', { number: index + 1 })} />
+              <StoredImage src={image} alt={t('ui:sellerProductForm.productGalleryAlt', { number: index + 1 })} />
               <button type="button" onClick={() => setGalleryImages((current) => current.filter((_, i) => i !== index))}>
                 {t('ui:sellerProductForm.removeImage')}
               </button>

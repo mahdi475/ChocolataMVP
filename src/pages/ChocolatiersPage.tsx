@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Search, MapPin, ArrowRight } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
+import StoredImage from '../components/ui/StoredImage';
 import { CHOCOLATIERS } from '../data/chocolatiers';
 import { isSellerProfileLive, loadSellerStoreProfile, sellerProfileToChocolatier } from '../lib/sellerProfile';
 import { translateLabel } from '../lib/translationLabels';
@@ -121,8 +122,8 @@ const ChocolatiersPage = () => {
               >
                 <Link to={`/chocolatiers/${c.slug}`} className={styles.cardImageLink}>
                   <div className={styles.cardImageContainer}>
-                    <img src={c.portrait} alt={`${c.name} portrait`} className={styles.cardImage} loading="lazy" />
-                    {c.logoImage && <img src={c.logoImage} alt="" className={styles.cardLogo} loading="lazy" />}
+                    <StoredImage src={c.portrait} alt={`${c.name} portrait`} className={styles.cardImage} loading="lazy" />
+                    {c.logoImage && <StoredImage src={c.logoImage} alt="" className={styles.cardLogo} loading="lazy" />}
                   </div>
                 </Link>
 

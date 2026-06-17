@@ -6,6 +6,7 @@ import { useCart } from '../../contexts/CartContext';
 import type { RootState } from '../../store';
 import { removeItem, updateQuantity } from '../../store/slices/cartSlice';
 import Button from '../ui/Button';
+import StoredImage from '../ui/StoredImage';
 import styles from './CartSidebar.module.css';
 
 const CartSidebar = () => {
@@ -68,7 +69,7 @@ const CartSidebar = () => {
                 <div key={item.id} className={styles.item}>
                   <div className={styles.itemImageContainer}>
                     {item.imageUrl && (
-                      <img src={item.imageUrl} alt={item.name} className={styles.itemImage} />
+                      <StoredImage src={item.imageUrl} alt={item.name} className={styles.itemImage} />
                     )}
                   </div>
                   <div className={styles.itemDetails}>

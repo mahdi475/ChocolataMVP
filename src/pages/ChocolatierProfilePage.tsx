@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
+import StoredImage, { useResolvedImageUrl } from '../components/ui/StoredImage';
 import { useCart } from '../contexts/CartContext';
 import { getChocolatierBySlug, type Product, type ProductTag } from '../data/chocolatiers';
 import { getShippingPackaging } from '../lib/shippingPackaging';
@@ -79,7 +80,7 @@ const ProductCard = ({
       transition={{ duration: 0.4 }}
     >
       <Link to={`/product/${product.id}`} className={styles.productImageWrap}>
-        <img src={product.image} alt={product.name} className={styles.productImage} loading="lazy" />
+        <StoredImage src={product.image} alt={product.name} className={styles.productImage} loading="lazy" />
       </Link>
       <div className={styles.productBody}>
         <Link to={`/product/${product.id}`} className={styles.productNameLink}>
@@ -140,6 +141,9 @@ const ChocolatierProfilePage = () => {
     ? (sellerProfile && isSellerProfileLive(sellerProfile) ? sellerProfileToChocolatier(sellerProfile) : undefined)
     : getChocolatierBySlug(slug);
   const [activeFilter, setActiveFilter] = useState<ProductTag | 'all'>('all');
+  const coverSource = chocolatier?.coverImage || chocolatier?.portrait || '';
+  const logoSource = chocolatier?.logoImage || chocolatier?.portrait || '';
+  const resolvedCoverImage = useResolvedImageUrl(coverSource);
 
   const filteredProducts = useMemo(() => {
     if (!chocolatier) return [];
@@ -151,8 +155,8 @@ const ChocolatierProfilePage = () => {
     return <Navigate to="/chocolatiers" replace />;
   }
 
-  const coverImage = chocolatier.coverImage || chocolatier.portrait;
-  const logoImage = chocolatier.logoImage || chocolatier.portrait;
+  const coverImage = coverSource;
+  const logoImage = logoSource;
   const gallery = [
     ...(chocolatier.galleryImages || []),
     coverImage,
@@ -222,7 +226,7 @@ const ChocolatierProfilePage = () => {
       >
         <div
           className={styles.heroBackground}
-          style={{ backgroundImage: `url(${coverImage})` }}
+          style={{ backgroundImage: resolvedCoverImage ? `url(${resolvedCoverImage})` : undefined }}
         />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
@@ -230,7 +234,7 @@ const ChocolatierProfilePage = () => {
             <ArrowLeft size={16} /> {t('chocolatierProfile.backToAll')}
           </Link>
           <div className={styles.profileHeader}>
-            <img src={logoImage} alt="" className={styles.profileLogo} />
+            <StoredImage src={logoImage} alt="" className={styles.profileLogo} />
             <div className={styles.profileHeaderText}>
               <Badge variant="gold">{t('chocolatierProfile.europeanChocolatier')}</Badge>
               <h1 className={styles.heroName}>{chocolatier.name}</h1>
@@ -305,7 +309,7 @@ const ChocolatierProfilePage = () => {
         <div className={styles.galleryGrid}>
           {gallery.map((src, i) => (
             <a key={src} href={src} target="_blank" rel="noreferrer" className={styles.galleryItem}>
-              <img
+              <StoredImage
                 src={src}
                 alt={t('chocolatierProfile.galleryImageAlt', { maker: chocolatier.name, number: i + 1 })}
                 className={styles.galleryImage}
@@ -367,7 +371,7 @@ const ChocolatierProfilePage = () => {
             </dl>
           </div>
           <div className={styles.storyPortrait}>
-            <img src={coverImage} alt="" className={styles.storyImage} />
+            <StoredImage src={coverImage} alt="" className={styles.storyImage} />
           </div>
         </div>
       </section>

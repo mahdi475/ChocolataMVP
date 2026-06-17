@@ -895,6 +895,7 @@
     "fileTooLarge": "Billedet er for stort. Maksimal størrelse: {{size}} MB.",
     "invalidType": "Kun JPG-, PNG- og WebP-billeder er tilladt.",
     "uploadFailed": "Kunne ikke uploade billedet. Prøv igen.",
-    "publicUrlFailed": "Kunne ikke hente URL til det uploadede billede."
+    "publicUrlFailed": "Kunne ikke hente URL til det uploadede billede.",
+    "storageLimitReached": "Lagergrænsen er nået. Fjern nogle billeder, eller brug mindre billedfiler."
   }
 }

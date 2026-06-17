@@ -897,6 +897,7 @@
     "fileTooLarge": "Bilden är för stor. Maxstorlek är {{size}} MB.",
     "invalidType": "Endast JPG, PNG och WebP-bilder är tillåtna.",
     "uploadFailed": "Kunde inte ladda upp bilden. Försök igen.",
-    "publicUrlFailed": "Kunde inte hämta URL för den uppladdade bilden."
+    "publicUrlFailed": "Kunde inte hämta URL för den uppladdade bilden.",
+    "storageLimitReached": "Lagringsgränsen är nådd. Ta bort några bilder eller använd mindre bildfiler."
   }
 }

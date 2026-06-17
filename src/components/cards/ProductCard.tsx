@@ -10,6 +10,7 @@ import { findChocolatierForProduct, getChocolatierProfilePath } from '../../lib/
 import { formatLocalizedLocation, translateLabel } from '../../lib/translationLabels';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
+import StoredImage from '../ui/StoredImage';
 import styles from './ProductCard.module.css';
 
 export interface Product {
@@ -95,7 +96,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <Link to={`/product/${product.id}`} className={styles.imageLink} aria-label={t('ui:productCard.viewProductAria', { product: product.name })}>
           <div className={styles.imageContainer}>
             {product.image_url ? (
-              <img
+              <StoredImage
                 src={product.image_url}
                 alt={product.name}
                 className={styles.image}

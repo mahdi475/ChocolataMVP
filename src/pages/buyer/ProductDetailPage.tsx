@@ -11,6 +11,7 @@ import type { Product } from '../../components/cards/ProductCard';
 import ProductCard from '../../components/cards/ProductCard';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import StoredImage, { useResolvedImageUrl } from '../../components/ui/StoredImage';
 import FadeIn from '../../components/animations/FadeIn';
 import {
   demoProducts,
@@ -69,6 +70,7 @@ const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const resolvedActiveImage = useResolvedImageUrl(activeImage);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -289,7 +291,7 @@ const ProductDetailPage = () => {
           <div className={styles.gallery}>
             <div className={styles.mainImageWrap}>
               {activeImage ? (
-                <img src={activeImage} alt={product.name} className={styles.mainImage} />
+                resolvedActiveImage ? <img src={resolvedActiveImage} alt={product.name} className={styles.mainImage} /> : null
               ) : (
                 <div className={styles.placeholder}>{t('productCard.noImage')}</div>
               )}
@@ -302,7 +304,7 @@ const ProductDetailPage = () => {
                     className={`${styles.thumbnail} ${activeImage === image ? styles.thumbnailActive : ''}`}
                     onClick={() => setActiveImage(image)}
                   >
-                    <img src={image} alt="" />
+                    <StoredImage src={image} alt="" />
                   </button>
                 ))}
               </div>
@@ -312,7 +314,7 @@ const ProductDetailPage = () => {
           <div className={styles.details}>
             <div className={styles.makerLine}>
               <div className={styles.makerIdentity}>
-                {makerLogo && <img src={makerLogo} alt="" className={styles.makerLogo} />}
+                {makerLogo && <StoredImage src={makerLogo} alt="" className={styles.makerLogo} />}
                 {makerProfilePath ? (
                   <Link to={makerProfilePath} aria-label={t('productCard.viewMakerProfileAria', { maker: chocolatierMatch?.name || makerName })}>
                     {chocolatierMatch?.name || makerName}

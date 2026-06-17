@@ -7,6 +7,7 @@ import type { Product } from '../../components/cards/ProductCard';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import StoredImage from '../../components/ui/StoredImage';
 import FadeIn from '../../components/animations/FadeIn';
 import styles from './SellerProductsPage.module.css';
 
@@ -108,7 +109,7 @@ const SellerProductsPage = () => {
               {products.map((product) => (
                 <Card key={product.id} className={styles.productCard}>
                   {product.image_url && (
-                    <img src={product.image_url} alt={product.name} className={styles.image} />
+                    <StoredImage src={product.image_url} alt={product.name} className={styles.image} />
                   )}
                   <div className={styles.content}>
                     <h3 className={styles.productName}>{product.name}</h3>

@@ -895,6 +895,7 @@
     "fileTooLarge": "Afbeelding is te groot. Maximale grootte: {{size}} MB.",
     "invalidType": "Alleen JPG-, PNG- en WebP-afbeeldingen zijn toegestaan.",
     "uploadFailed": "Afbeelding kon niet worden geüpload. Probeer opnieuw.",
-    "publicUrlFailed": "URL van geüploade afbeelding kon niet worden opgehaald."
+    "publicUrlFailed": "URL van geüploade afbeelding kon niet worden opgehaald.",
+    "storageLimitReached": "Opslaglimiet bereikt. Verwijder enkele afbeeldingen of gebruik kleinere beeldbestanden."
   }
 }

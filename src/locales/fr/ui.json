@@ -896,6 +896,7 @@
     "fileTooLarge": "L’image est trop grande. Taille maximale : {{size}} Mo.",
     "invalidType": "Seules les images JPG, PNG et WebP sont autorisées.",
     "uploadFailed": "Impossible de téléverser l’image. Réessayez.",
-    "publicUrlFailed": "Impossible de récupérer l’URL de l’image téléversée."
+    "publicUrlFailed": "Impossible de récupérer l’URL de l’image téléversée.",
+    "storageLimitReached": "Limite de stockage atteinte. Veuillez supprimer quelques images ou utiliser des fichiers plus petits."
   }
 }

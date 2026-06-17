@@ -5,6 +5,7 @@ import type { RootState } from '../../store';
 import { removeItem, updateQuantity } from '../../store/slices/cartSlice';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
+import StoredImage from '../../components/ui/StoredImage';
 import FadeIn from '../../components/animations/FadeIn';
 import styles from './CartPage.module.css';
 
@@ -48,7 +49,7 @@ const CartPage = () => {
               <Card key={item.id} className={styles.item}>
                 <div className={styles.itemContent}>
                   {item.imageUrl && (
-                    <img src={item.imageUrl} alt={item.name} className={styles.itemImage} />
+                    <StoredImage src={item.imageUrl} alt={item.name} className={styles.itemImage} />
                   )}
                   <div className={styles.itemDetails}>
                     <h3 className={styles.itemName}>{item.name}</h3>

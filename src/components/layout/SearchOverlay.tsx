@@ -6,6 +6,7 @@ import { supabase } from '../../lib/supabaseClient';
 import type { Product } from '../../components/cards/ProductCard';
 import { demoProducts } from '../../data/demoCatalog';
 import { translateLabel } from '../../lib/translationLabels';
+import StoredImage from '../ui/StoredImage';
 import styles from './SearchOverlay.module.css';
 
 interface SearchOverlayProps {
@@ -128,7 +129,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
                   className={styles.resultItem}
                 >
                   {product.image_url && (
-                    <img src={product.image_url} alt={product.name} className={styles.resultImage} />
+                    <StoredImage src={product.image_url} alt={product.name} className={styles.resultImage} />
                   )}
                   <div className={styles.resultContent}>
                     <h4 className={styles.resultName}>{product.name}</h4>

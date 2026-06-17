@@ -895,6 +895,7 @@
     "fileTooLarge": "Kuva on liian suuri. Enimmäiskoko: {{size}} MB.",
     "invalidType": "Vain JPG-, PNG- ja WebP-kuvat ovat sallittuja.",
     "uploadFailed": "Kuvan lataus epäonnistui. Yritä uudelleen.",
-    "publicUrlFailed": "Ladatun kuvan URL-osoitetta ei voitu hakea."
+    "publicUrlFailed": "Ladatun kuvan URL-osoitetta ei voitu hakea.",
+    "storageLimitReached": "Tallennustilan raja on saavutettu. Poista muutamia kuvia tai käytä pienempiä kuvatiedostoja."
   }
 }

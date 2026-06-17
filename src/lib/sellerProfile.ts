@@ -1,5 +1,6 @@
 import type { Chocolatier } from '../data/chocolatiers';
 import { demoProducts } from '../data/demoCatalog';
+import { isInlineImageData } from './browserImageStore';
 import type { ShippingPackagingInfo } from './shippingPackaging';
 
 export const DEMO_SELLER_PROFILE_SLUG = 'test-chocolatier';
@@ -65,8 +66,27 @@ export const loadSellerStoreProfile = (): SellerStoreProfile => {
   }
 };
 
+const isQuotaError = (error: unknown) =>
+  error instanceof DOMException && (
+    error.name === 'QuotaExceededError' ||
+    error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+  );
+
+const stripInlineProfileImages = (profile: SellerStoreProfile): SellerStoreProfile => ({
+  ...profile,
+  logoImage: isInlineImageData(profile.logoImage) ? '' : profile.logoImage,
+  coverImage: isInlineImageData(profile.coverImage) ? '' : profile.coverImage,
+  galleryImages: profile.galleryImages.filter((image) => !isInlineImageData(image)),
+});
+
 export const saveSellerStoreProfile = (profile: SellerStoreProfile) => {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...profile, slug: DEMO_SELLER_PROFILE_SLUG }));
+  const nextProfile = { ...profile, slug: DEMO_SELLER_PROFILE_SLUG };
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextProfile));
+  } catch (error) {
+    if (!isQuotaError(error)) throw error;
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stripInlineProfileImages(nextProfile)));
+  }
 };
 
 export const isSellerProfileLive = (profile: SellerStoreProfile = loadSellerStoreProfile()) =>

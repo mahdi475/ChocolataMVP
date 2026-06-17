@@ -895,6 +895,7 @@
     "fileTooLarge": "La imagen es demasiado grande. Tamaño máximo: {{size}} MB.",
     "invalidType": "Solo se permiten imágenes JPG, PNG y WebP.",
     "uploadFailed": "No se pudo subir la imagen. Inténtalo de nuevo.",
-    "publicUrlFailed": "No se pudo obtener la URL de la imagen subida."
+    "publicUrlFailed": "No se pudo obtener la URL de la imagen subida.",
+    "storageLimitReached": "Se alcanzó el límite de almacenamiento. Elimina algunas imágenes o usa archivos más pequeños."
   }
 }

@@ -6,6 +6,7 @@ import {
   isSellerProfileLive,
   loadSellerStoreProfile,
 } from './sellerProfile';
+import { isInlineImageData } from './browserImageStore';
 
 const DEMO_PRODUCTS_KEY = 'chocolata:demo-products';
 
@@ -63,8 +64,26 @@ export const readDemoSellerProducts = (): Product[] => {
 export const readPublicDemoSellerProducts = (): Product[] =>
   isSellerProfileLive() ? readDemoSellerProducts().filter(isPublicSellerProduct) : [];
 
+const stripInlineProductImages = (product: Product): Product => ({
+  ...product,
+  image_url: isInlineImageData(product.image_url) ? '' : product.image_url,
+  gallery_images: (product.gallery_images || []).filter((image) => !isInlineImageData(image)),
+});
+
+const isQuotaError = (error: unknown) =>
+  error instanceof DOMException && (
+    error.name === 'QuotaExceededError' ||
+    error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+  );
+
 export const writeDemoSellerProducts = (products: Product[]) => {
-  window.localStorage.setItem(DEMO_PRODUCTS_KEY, JSON.stringify(products.map(normalizeSellerProduct)));
+  const normalizedProducts = products.map(normalizeSellerProduct);
+  try {
+    window.localStorage.setItem(DEMO_PRODUCTS_KEY, JSON.stringify(normalizedProducts));
+  } catch (error) {
+    if (!isQuotaError(error)) throw error;
+    window.localStorage.setItem(DEMO_PRODUCTS_KEY, JSON.stringify(normalizedProducts.map(stripInlineProductImages)));
+  }
 };
 
 export const upsertDemoSellerProduct = (product: Partial<Product> & { id?: string; seller_id?: string }) => {
