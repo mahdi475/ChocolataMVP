@@ -58,12 +58,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           throw new Error(`Failed to fetch role: ${error.message}`);
         }
         
-        const role = data?.role || 'buyer';
+        const metadataRole = user.user_metadata?.role;
+        const role = data?.role || (metadataRole === 'seller' ? 'seller' : 'buyer');
         console.log(`[Auth] Role fetched from DB: ${role}`);
         dispatch(setRole(role));
       } catch (error) {
         console.error('[Auth] Error fetching user role:', error);
-        dispatch(setRole('buyer')); // Default to buyer on error
+        const metadataRole = user.user_metadata?.role;
+        dispatch(setRole(metadataRole === 'seller' ? 'seller' : 'buyer'));
       }
     };
 

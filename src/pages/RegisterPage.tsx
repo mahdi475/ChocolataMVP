@@ -1,100 +1,97 @@
-import React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import RegisterForm from '../components/forms/RegisterForm';
 
-const RegisterPage: React.FC = () => {
+const RegisterPage = () => {
+  const { t } = useTranslation('auth');
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      padding: '20px'
-    }}>
-      <h1 style={{ marginBottom: '20px' }}>Skapa Konto</h1>
-      
-      <form style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '15px',
-        width: '100%',
-        maxWidth: '400px'
-      }}>
-        <input 
-          type="text" 
-          placeholder="Förnamn"
+    <main
+      style={{
+        minHeight: '72vh',
+        display: 'grid',
+        placeItems: 'center',
+        padding: '48px 20px',
+        background: '#fff8ef',
+      }}
+    >
+      <section
+        style={{
+          width: '100%',
+          maxWidth: '460px',
+          background: '#fff',
+          border: '1px solid rgba(90, 48, 24, 0.14)',
+          borderRadius: '8px',
+          boxShadow: '0 18px 44px rgba(60, 34, 18, 0.12)',
+          padding: '28px',
+        }}
+      >
+        <p
           style={{
-            padding: '12px',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            fontSize: '16px'
-          }}
-        />
-        <input 
-          type="text" 
-          placeholder="Efternamn"
-          style={{
-            padding: '12px',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            fontSize: '16px'
-          }}
-        />
-        <input 
-          type="email" 
-          placeholder="E-post"
-          style={{
-            padding: '12px',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            fontSize: '16px'
-          }}
-        />
-        <input 
-          type="password" 
-          placeholder="Lösenord"
-          style={{
-            padding: '12px',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            fontSize: '16px'
-          }}
-        />
-        <input 
-          type="password" 
-          placeholder="Bekräfta lösenord"
-          style={{
-            padding: '12px',
-            border: '1px solid #ddd',
-            borderRadius: '5px',
-            fontSize: '16px'
-          }}
-        />
-        <button 
-          type="submit"
-          style={{
-            padding: '12px',
-            backgroundColor: '#28a745',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            fontSize: '16px',
-            cursor: 'pointer'
+            margin: '0 0 8px',
+            color: '#a26b2d',
+            fontSize: '0.78rem',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
           }}
         >
-          Skapa Konto
-        </button>
-      </form>
-      
-      <div style={{ marginTop: '20px' }}>
-        <a href="/login" style={{ color: '#007bff' }}>Har du redan ett konto? Logga in</a>
-      </div>
-      
-      <div style={{ marginTop: '20px' }}>
-        <a href="/" style={{ color: '#007bff' }}>← Tillbaka till startsidan</a>
-      </div>
-    </div>
+          Chocolata
+        </p>
+        <h1 style={{ margin: '0 0 22px', color: '#3a2116' }}>{t('register.title')}</h1>
+
+        {message && (
+          <p
+            role="status"
+            style={{
+              margin: '0 0 16px',
+              padding: '12px',
+              borderRadius: '6px',
+              background: '#ecfdf3',
+              color: '#166534',
+            }}
+          >
+            {message}
+          </p>
+        )}
+        {error && (
+          <p
+            role="alert"
+            style={{
+              margin: '0 0 16px',
+              padding: '12px',
+              borderRadius: '6px',
+              background: '#fef2f2',
+              color: '#991b1b',
+            }}
+          >
+            {error}
+          </p>
+        )}
+
+        <RegisterForm
+          onSuccess={() => {
+            setError(null);
+            setMessage(t('register.success'));
+          }}
+          onError={(nextError) => {
+            setMessage(null);
+            setError(nextError);
+          }}
+        />
+
+        <p style={{ margin: '18px 0 0', color: '#5d4033', textAlign: 'center' }}>
+          {t('register.hasAccount')}{' '}
+          <Link to="/login" style={{ color: '#8b5a2b', fontWeight: 700 }}>
+            {t('register.loginLink')}
+          </Link>
+        </p>
+      </section>
+    </main>
   );
 };
 
 export default RegisterPage;
-

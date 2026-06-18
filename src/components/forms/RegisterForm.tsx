@@ -95,7 +95,7 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
       // If trigger didn't create it, this will create it (if RLS allows)
       const { error: userError } = await supabase
         .from('users')
-        .insert({
+        .upsert({
           id: authData.user.id,
           email: data.email,
           full_name: data.fullName,
@@ -108,11 +108,8 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
           console.log('✅ User record already exists (created by database trigger)');
         } else if (userError.message.includes('relation "public.users" does not exist')) {
           throw new Error('Database tables not set up. Please run supabase-setup.sql in Supabase SQL editor.');
-        } else if (userError.message.includes('new row violates row-level security policy') || userError.message.includes('RLS')) {
-          throw new Error('Database trigger not set up or RLS policy blocking insert. Please run fix-users-policy-v2.sql in Supabase SQL editor to set up the automatic user creation trigger.');
         } else {
-          console.error('❌ Failed to create user record:', userError);
-          throw new Error(`Failed to create user profile: ${userError.message}`);
+          console.warn('Profile row was not written from the browser. Continuing after auth signup.', userError);
         }
       } else {
         console.log('✅ User record created successfully');
