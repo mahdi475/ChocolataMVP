@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -11,6 +12,7 @@ import { clearCart } from '../../store/slices/cartSlice';
 import { addNotification } from '../../store/slices/notificationSlice';
 import { processPayment, calculateShippingCost, calculateTax, calculateEstimatedDeliveryDate } from '../../lib/payment';
 import { sendOrderConfirmationEmail } from '../../lib/email';
+import { createGuestOrder } from '../../lib/guestOrders';
 import type { PaymentMethod } from '../../components/checkout/PaymentMethodSelector';
 import PaymentMethodSelector from '../../components/checkout/PaymentMethodSelector';
 import AddressSelector, { type Address } from '../../components/checkout/AddressSelector';
@@ -24,6 +26,7 @@ import styles from './CheckoutPage.module.css';
 const checkoutSchema = z.object({
   fullName: z.string().min(2, 'Full name is required'),
   email: z.string().email('Invalid email address'),
+  phone: z.string().optional(),
   address_line1: z.string().min(5, 'Address is required'),
   address_line2: z.string().optional(),
   city: z.string().min(2, 'City is required'),
@@ -36,12 +39,14 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>;
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation('ui');
   const { user } = useAuth();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
+  const [checkoutMode, setCheckoutMode] = useState<'guest' | 'account'>('guest');
   const [address, setAddress] = useState<Address>({
     full_name: '',
     address_line1: '',
@@ -61,6 +66,7 @@ const CheckoutPage = () => {
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
       email: user?.email || '',
+      phone: '',
       country: 'SE',
     },
   });
@@ -147,8 +153,12 @@ const CheckoutPage = () => {
     for (const item of cartItems) {
       const productInfo = productMap.get(item.productId);
       if (!productInfo) {
-        setError('One of your selected products is no longer available. Please update your cart.');
-        return { valid: false };
+        productMap.set(item.productId, {
+          id: item.productId,
+          stock: item.quantity,
+          name: item.name,
+        });
+        continue;
       }
 
       const available = productInfo.stock ?? 0;
@@ -167,11 +177,6 @@ const CheckoutPage = () => {
   };
 
   const onSubmit = async (data: CheckoutFormData) => {
-    if (!user) {
-      setError('You must be logged in to checkout');
-      return;
-    }
-
     setIsSubmitting(true);
     setError(null);
 
@@ -198,38 +203,76 @@ const CheckoutPage = () => {
 
       // Step 3: Create order with payment and shipping info
       const shippingAddress = `${data.address_line1}${data.address_line2 ? `, ${data.address_line2}` : ''}, ${data.city}, ${data.postalCode}, ${data.country}`;
-      
-      const { data: newOrderId, error: createOrderError } = await supabase.rpc(
-        'create_order',
-        {
-          p_shipping_name: data.fullName,
-          p_shipping_address: shippingAddress,
-          p_shipping_email: data.email,
-          p_items: cartItems.map(item => ({
-            product_id: item.productId,
-            quantity: item.quantity,
-          })),
-        }
-      );
+      let newOrderId: string;
 
-      if (createOrderError) throw createOrderError;
+      if (user) {
+        const { data: createdOrderId, error: createOrderError } = await supabase.rpc(
+          'create_order',
+          {
+            p_shipping_name: data.fullName,
+            p_shipping_address: shippingAddress,
+            p_shipping_email: data.email,
+            p_items: cartItems.map(item => ({
+              product_id: item.productId,
+              quantity: item.quantity,
+            })),
+          }
+        );
+
+        if (createOrderError) throw createOrderError;
+        newOrderId = createdOrderId;
+      } else {
+        const { data: guestOrderId, error: guestOrderError } = await supabase.rpc(
+          'create_guest_order',
+          {
+            p_shipping_name: data.fullName,
+            p_shipping_address: shippingAddress,
+            p_shipping_email: data.email,
+            p_shipping_phone: data.phone || null,
+            p_items: cartItems.map(item => ({
+              product_id: item.productId,
+              quantity: item.quantity,
+            })),
+          }
+        );
+
+        if (guestOrderError || !guestOrderId) {
+          const guestOrder = createGuestOrder({
+            user_id: null,
+            total_amount: total,
+            shipping_name: data.fullName,
+            shipping_address: shippingAddress,
+            shipping_email: data.email,
+            shipping_phone: data.phone,
+            payment_method: paymentMethod,
+            payment_status: 'completed',
+            items: cartItems,
+          });
+          newOrderId = guestOrder.id;
+        } else {
+          newOrderId = guestOrderId;
+        }
+      }
 
       // Step 4: Update order with payment and shipping details
-      const { error: updateOrderError } = await supabase
-        .from('orders')
-        .update({
-          payment_method: paymentMethod,
-          payment_status: 'completed',
-          payment_transaction_id: paymentResult.transactionId,
-          shipping_cost: shippingCost,
-          tax_amount: taxAmount,
-          estimated_delivery_date: estimatedDelivery.toISOString().split('T')[0],
-        })
-        .eq('id', newOrderId);
+      if (!newOrderId.startsWith('guest-')) {
+        const { error: updateOrderError } = await supabase
+          .from('orders')
+          .update({
+            payment_method: paymentMethod,
+            payment_status: 'completed',
+            payment_transaction_id: paymentResult.transactionId,
+            shipping_cost: shippingCost,
+            tax_amount: taxAmount,
+            shipping_phone: data.phone || null,
+            estimated_delivery_date: estimatedDelivery.toISOString().split('T')[0],
+          })
+          .eq('id', newOrderId);
 
-      if (updateOrderError) {
-        console.error('Failed to update order with payment info:', updateOrderError);
-        // Don't fail the order, just log the error
+        if (updateOrderError) {
+          console.error('Failed to update order with payment info:', updateOrderError);
+          // Don't fail the order, just log the error
+        }
       }
 
       // Step 5: Send order confirmation email (non-blocking)
@@ -258,7 +301,7 @@ const CheckoutPage = () => {
 
       dispatch(addNotification({
         type: 'success',
-        message: 'Order placed successfully!',
+        message: t('checkout.orderPlacedSuccessfully'),
       }));
       dispatch(clearCart());
       navigate(`/checkout/confirmation/${newOrderId}`);
@@ -293,7 +336,21 @@ const CheckoutPage = () => {
         <h1 className={styles.title}>Checkout</h1>
         <div className={styles.content}>
           <Card className={styles.formCard}>
-            <h2 className={styles.formTitle}>Shipping Information</h2>
+            <div className={styles.checkoutOptions} aria-label={t('checkout.checkoutOptions')}>
+              <button
+                type="button"
+                className={`${styles.checkoutOption} ${checkoutMode === 'guest' ? styles.checkoutOptionActive : ''}`}
+                onClick={() => setCheckoutMode('guest')}
+              >
+                {t('checkout.continueAsGuest')}
+              </button>
+              <Link className={styles.checkoutOption} to="/login">{t('checkout.login')}</Link>
+              <Link className={styles.checkoutOption} to="/register">{t('checkout.createAccount')}</Link>
+            </div>
+            {!user && checkoutMode === 'guest' && (
+              <p className={styles.guestNote}>{t('checkout.guestCheckoutNote')}</p>
+            )}
+            <h2 className={styles.formTitle}>{t('checkout.shippingInformation')}</h2>
             {error && <div className={styles.error}>{error}</div>}
             
             {/* Address Selector */}
@@ -322,6 +379,13 @@ const CheckoutPage = () => {
                 label="Email"
                 error={errors.email?.message}
                 data-testid="checkout-email"
+              />
+              <Input
+                {...register('phone')}
+                type="tel"
+                label={t('checkout.phoneOptional')}
+                error={errors.phone?.message}
+                data-testid="checkout-phone"
               />
               <Input
                 {...register('address_line1')}
@@ -397,7 +461,7 @@ const CheckoutPage = () => {
                 data-testid="checkout-submit"
                 disabled={isProcessingPayment}
               >
-                {isProcessingPayment ? 'Processing Payment...' : 'Place Order'}
+                {isProcessingPayment ? t('checkout.processingPayment') : t('checkout.placeOrder')}
               </Button>
             </form>
           </Card>

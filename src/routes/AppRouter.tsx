@@ -159,11 +159,11 @@ const AppRouter = () => {
       />
       <Route
         path="/checkout"
-        element={<MainLayout><ProtectedRoute requiredRole="buyer"><CheckoutPage /></ProtectedRoute></MainLayout>}
+        element={<MainLayout><CheckoutPage /></MainLayout>}
       />
       <Route
         path="/checkout/confirmation/:id"
-        element={<MainLayout><ProtectedRoute requiredRole="buyer"><CheckoutConfirmationPage /></ProtectedRoute></MainLayout>}
+        element={<MainLayout><CheckoutConfirmationPage /></MainLayout>}
       />
       <Route
         path="/orders"

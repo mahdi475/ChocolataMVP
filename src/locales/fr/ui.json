@@ -456,7 +456,17 @@
     "defaultAddress": "Par défaut",
     "useSavedAddress": "Utiliser une adresse enregistrée",
     "saveForFuture": "Enregistrer cette adresse pour les prochaines commandes",
-    "saveAddress": "Enregistrer l’adresse"
+    "saveAddress": "Enregistrer l’adresse",
+    "checkoutOptions": "Options de paiement",
+    "continueAsGuest": "Continuer en invité",
+    "login": "Se connecter",
+    "createAccount": "Créer un compte",
+    "guestCheckoutNote": "Aucun compte nécessaire. Nous enverrons le reçu et les mises à jour de livraison à votre e-mail.",
+    "shippingInformation": "Informations de livraison",
+    "phoneOptional": "Téléphone (facultatif)",
+    "processingPayment": "Paiement en cours...",
+    "placeOrder": "Passer la commande",
+    "orderPlacedSuccessfully": "Commande passée avec succès !"
   },
   "chocolatierData": {
     "maison-deluxe": {

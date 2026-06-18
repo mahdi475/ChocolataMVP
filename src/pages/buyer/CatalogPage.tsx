@@ -13,6 +13,7 @@ import FadeIn from '../../components/animations/FadeIn';
 import { translateLabel } from '../../lib/translationLabels';
 import { readPublicDemoSellerProducts } from '../../lib/marketplaceData';
 import { findSellerStoreProfileBySlug, isPublicSellerProduct } from '../../lib/sellerProfile';
+import { isProductPublished } from '../../lib/sellerVisibility';
 import styles from './CatalogPage.module.css';
 
 interface Category {
@@ -36,7 +37,7 @@ const normalize = (value?: string) => (value || '').toLowerCase().replace(/[^a-z
 const isPublicCatalogProduct = (product: Product) => {
   const sellerProfile = findSellerStoreProfileBySlug(product.maker_slug);
   if (sellerProfile) return isPublicSellerProduct(product, sellerProfile);
-  return product.is_active !== false && product.status !== 'draft' && product.status !== 'archived';
+  return product.is_active !== false && isProductPublished(product);
 };
 
 const productSearchText = (product: Product) => {

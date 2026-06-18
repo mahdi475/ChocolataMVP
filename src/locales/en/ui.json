@@ -452,7 +452,17 @@
     "defaultAddress": "Default",
     "useSavedAddress": "Use Saved Address",
     "saveForFuture": "Save this address for future orders",
-    "saveAddress": "Save Address"
+    "saveAddress": "Save Address",
+    "checkoutOptions": "Checkout options",
+    "continueAsGuest": "Continue as Guest",
+    "login": "Login",
+    "createAccount": "Create Account",
+    "guestCheckoutNote": "No account needed. We will send the receipt and delivery updates to your email.",
+    "shippingInformation": "Shipping Information",
+    "phoneOptional": "Phone (optional)",
+    "processingPayment": "Processing payment...",
+    "placeOrder": "Place Order",
+    "orderPlacedSuccessfully": "Order placed successfully!"
   },
   "chocolatierData": {
     "maison-deluxe": {

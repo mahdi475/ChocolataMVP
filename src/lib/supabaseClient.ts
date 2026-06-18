@@ -114,10 +114,15 @@ const notifyDemoAuthListeners = (event: string) => {
 
 const createDemoQuery = (table: string) => {
   let filters: Array<{ column: string; value: any }> = [];
+  let inFilters: Array<{ column: string; values: any[] }> = [];
   const query: any = {
     select: () => query,
     eq: (column: string, value: any) => {
       filters.push({ column, value });
+      return query;
+    },
+    in: (column: string, values: any[]) => {
+      inFilters.push({ column, values });
       return query;
     },
     neq: () => query,
@@ -202,7 +207,7 @@ const createDemoQuery = (table: string) => {
           if (filter.column === 'is_active') return item.is_active === filter.value;
           if (filter.column === 'status') return item.status === filter.value;
           return item[filter.column] === filter.value;
-        }));
+        })).filter((item: any) => inFilters.every((filter) => filter.values.includes(item[filter.column])));
         return Promise.resolve({ data: products, error: null, count: products.length }).then(resolve);
       }
       if (table === 'seller_verifications') {

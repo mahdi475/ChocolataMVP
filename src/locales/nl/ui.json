@@ -455,7 +455,17 @@
     "defaultAddress": "Standaard",
     "useSavedAddress": "Opgeslagen adres gebruiken",
     "saveForFuture": "Dit adres bewaren voor toekomstige bestellingen",
-    "saveAddress": "Adres opslaan"
+    "saveAddress": "Adres opslaan",
+    "checkoutOptions": "Checkout-opties",
+    "continueAsGuest": "Doorgaan als gast",
+    "login": "Inloggen",
+    "createAccount": "Account maken",
+    "guestCheckoutNote": "Geen account nodig. We sturen de bon en bezorgupdates naar je e-mail.",
+    "shippingInformation": "Verzendinformatie",
+    "phoneOptional": "Telefoon (optioneel)",
+    "processingPayment": "Betaling verwerken...",
+    "placeOrder": "Bestelling plaatsen",
+    "orderPlacedSuccessfully": "Bestelling succesvol geplaatst!"
   },
   "chocolatierData": {
     "maison-deluxe": {

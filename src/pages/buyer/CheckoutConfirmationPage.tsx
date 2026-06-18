@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
+import { findGuestOrder } from '../../lib/guestOrders';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
@@ -13,6 +14,8 @@ interface Order {
   status: string;
   shipping_name: string;
   shipping_address: string;
+  shipping_email?: string;
+  shipping_phone?: string;
   created_at: string;
 }
 
@@ -31,6 +34,13 @@ const CheckoutConfirmationPage = () => {
       }
 
       try {
+        const guestOrder = findGuestOrder(id);
+        if (guestOrder) {
+          setOrder(guestOrder);
+          setLoading(false);
+          return;
+        }
+
         const { data, error: fetchError } = await supabase
           .from('orders')
           .select('*')
@@ -40,7 +50,13 @@ const CheckoutConfirmationPage = () => {
         if (fetchError) throw fetchError;
         setOrder(data);
       } catch (err: any) {
-        setError(err.message || 'Failed to load order');
+        const guestOrder = findGuestOrder(id);
+        if (guestOrder) {
+          setOrder(guestOrder);
+          setError(null);
+        } else {
+          setError(err.message || 'Failed to load order');
+        }
       } finally {
         setLoading(false);
       }
@@ -100,6 +116,12 @@ const CheckoutConfirmationPage = () => {
               <span className={styles.label}>Address:</span>
               <span className={styles.value}>{order.shipping_address}</span>
             </div>
+            {order.shipping_email && (
+              <div className={styles.detailRow}>
+                <span className={styles.label}>Email:</span>
+                <span className={styles.value}>{order.shipping_email}</span>
+              </div>
+            )}
             <div className={styles.detailRow}>
               <span className={styles.label}>Order Date:</span>
               <span className={styles.value}>
@@ -108,9 +130,11 @@ const CheckoutConfirmationPage = () => {
             </div>
           </div>
           <div className={styles.actions}>
-            <Link to={`/orders/${order.id}`}>
-              <Button variant="outline">View Order Details</Button>
-            </Link>
+            {!order.id.startsWith('guest-') && (
+              <Link to={`/orders/${order.id}`}>
+                <Button variant="outline">View Order Details</Button>
+              </Link>
+            )}
             <Link to="/catalog">
               <Button>Continue Shopping</Button>
             </Link>

@@ -29,6 +29,7 @@ import {
   loadSellerStoreProfile,
 } from '../../lib/sellerProfile';
 import { translateLabel } from '../../lib/translationLabels';
+import { isProductPublished } from '../../lib/sellerVisibility';
 import styles from './ProductDetailPage.module.css';
 
 interface Seller {
@@ -106,7 +107,7 @@ const ProductDetailPage = () => {
         const isSellerProduct = Boolean(sellerProfile);
         const canShowSellerProduct = sellerProfile
           ? isPreviewMode || isPublicSellerProduct(normalized, sellerProfile)
-          : normalized.is_active !== false && normalized.status !== 'draft' && normalized.status !== 'archived';
+          : normalized.is_active !== false && isProductPublished(normalized);
         if (isSellerProduct && !canShowSellerProduct) {
           throw new Error(t('productDetail.notFound'));
         }
@@ -169,7 +170,7 @@ const ProductDetailPage = () => {
 
         const canShowRelatedProduct = (item: Product) => {
           const profile = findSellerStoreProfileBySlug(item.maker_slug);
-          return profile ? isPublicSellerProduct(item, profile) : item.is_active !== false && item.status !== 'draft' && item.status !== 'archived';
+          return profile ? isPublicSellerProduct(item, profile) : item.is_active !== false && isProductPublished(item);
         };
         const sellerProducts = (sameSellerResult.data || []).filter(canShowRelatedProduct);
         const categoryProducts = (sameCategoryResult.data || []).filter(canShowRelatedProduct);

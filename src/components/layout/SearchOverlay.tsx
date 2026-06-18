@@ -8,6 +8,7 @@ import { demoProducts } from '../../data/demoCatalog';
 import { translateLabel } from '../../lib/translationLabels';
 import { readPublicDemoSellerProducts } from '../../lib/marketplaceData';
 import { findSellerStoreProfileBySlug, isPublicSellerProduct } from '../../lib/sellerProfile';
+import { isProductPublished } from '../../lib/sellerVisibility';
 import StoredImage from '../ui/StoredImage';
 import styles from './SearchOverlay.module.css';
 
@@ -19,7 +20,7 @@ interface SearchOverlayProps {
 const isPublicSearchProduct = (product: Product) => {
   const sellerProfile = findSellerStoreProfileBySlug(product.maker_slug);
   if (sellerProfile) return isPublicSellerProduct(product, sellerProfile);
-  return product.is_active !== false && product.status !== 'draft' && product.status !== 'archived';
+  return product.is_active !== false && isProductPublished(product);
 };
 
 const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {

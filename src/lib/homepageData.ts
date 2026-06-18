@@ -3,6 +3,7 @@ import { demoCategories, demoProducts } from '../data/demoCatalog';
 import type { Product } from '../components/cards/ProductCard';
 import { readPublicDemoSellerProducts } from './marketplaceData';
 import { findSellerStoreProfileBySlug, isPublicSellerProduct } from './sellerProfile';
+import { isProductPublished } from './sellerVisibility';
 
 interface Category {
   id: string;
@@ -26,7 +27,7 @@ export const invalidateHomepageDataCache = () => {
 const isPublicHomepageProduct = (product: Product) => {
   const sellerProfile = findSellerStoreProfileBySlug(product.maker_slug);
   if (sellerProfile) return isPublicSellerProduct(product, sellerProfile);
-  return product.is_active !== false && product.status !== 'draft' && product.status !== 'archived';
+  return product.is_active !== false && isProductPublished(product);
 };
 
 export const getCachedHomepageData = () => homepageDataCache;

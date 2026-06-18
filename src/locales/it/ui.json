@@ -455,7 +455,17 @@
     "defaultAddress": "Predefinito",
     "useSavedAddress": "Usa indirizzo salvato",
     "saveForFuture": "Salva questo indirizzo per ordini futuri",
-    "saveAddress": "Salva indirizzo"
+    "saveAddress": "Salva indirizzo",
+    "checkoutOptions": "Opzioni checkout",
+    "continueAsGuest": "Continua come ospite",
+    "login": "Accedi",
+    "createAccount": "Crea account",
+    "guestCheckoutNote": "Nessun account necessario. Invieremo ricevuta e aggiornamenti di consegna alla tua email.",
+    "shippingInformation": "Informazioni di spedizione",
+    "phoneOptional": "Telefono (opzionale)",
+    "processingPayment": "Pagamento in elaborazione...",
+    "placeOrder": "Effettua ordine",
+    "orderPlacedSuccessfully": "Ordine effettuato con successo!"
   },
   "chocolatierData": {
     "maison-deluxe": {

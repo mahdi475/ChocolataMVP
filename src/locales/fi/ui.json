@@ -455,7 +455,17 @@
     "defaultAddress": "Oletus",
     "useSavedAddress": "Käytä tallennettua osoitetta",
     "saveForFuture": "Tallenna tämä osoite tulevia tilauksia varten",
-    "saveAddress": "Tallenna osoite"
+    "saveAddress": "Tallenna osoite",
+    "checkoutOptions": "Kassan vaihtoehdot",
+    "continueAsGuest": "Jatka vieraana",
+    "login": "Kirjaudu",
+    "createAccount": "Luo tili",
+    "guestCheckoutNote": "Tiliä ei tarvita. Lähetämme kuitin ja toimituspäivitykset sähköpostiisi.",
+    "shippingInformation": "Toimitustiedot",
+    "phoneOptional": "Puhelin (valinnainen)",
+    "processingPayment": "Maksua käsitellään...",
+    "placeOrder": "Tee tilaus",
+    "orderPlacedSuccessfully": "Tilaus tehty onnistuneesti!"
   },
   "chocolatierData": {
     "maison-deluxe": {

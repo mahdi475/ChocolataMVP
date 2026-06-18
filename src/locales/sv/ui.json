@@ -457,7 +457,17 @@
     "defaultAddress": "Standard",
     "useSavedAddress": "Använd sparad adress",
     "saveForFuture": "Spara adressen för framtida beställningar",
-    "saveAddress": "Spara adress"
+    "saveAddress": "Spara adress",
+    "checkoutOptions": "Checkoutalternativ",
+    "continueAsGuest": "Fortsätt som gäst",
+    "login": "Logga in",
+    "createAccount": "Skapa konto",
+    "guestCheckoutNote": "Inget konto behövs. Vi skickar kvitto och leveransuppdateringar till din e-post.",
+    "shippingInformation": "Leveransinformation",
+    "phoneOptional": "Telefon (valfritt)",
+    "processingPayment": "Betalning behandlas...",
+    "placeOrder": "Lägg order",
+    "orderPlacedSuccessfully": "Ordern har lagts!"
   },
   "chocolatierData": {
     "maison-deluxe": {

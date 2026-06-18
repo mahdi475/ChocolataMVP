@@ -455,7 +455,17 @@
     "defaultAddress": "Standard",
     "useSavedAddress": "Brug gemt adresse",
     "saveForFuture": "Gem denne adresse til fremtidige ordrer",
-    "saveAddress": "Gem adresse"
+    "saveAddress": "Gem adresse",
+    "checkoutOptions": "Checkoutmuligheder",
+    "continueAsGuest": "Fortsæt som gæst",
+    "login": "Log ind",
+    "createAccount": "Opret konto",
+    "guestCheckoutNote": "Ingen konto nødvendig. Vi sender kvittering og leveringsopdateringer til din e-mail.",
+    "shippingInformation": "Leveringsoplysninger",
+    "phoneOptional": "Telefon (valgfri)",
+    "processingPayment": "Behandler betaling...",
+    "placeOrder": "Afgiv ordre",
+    "orderPlacedSuccessfully": "Ordren er gennemført!"
   },
   "chocolatierData": {
     "maison-deluxe": {
