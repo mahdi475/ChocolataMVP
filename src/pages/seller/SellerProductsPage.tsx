@@ -9,6 +9,7 @@ import Card from '../../components/ui/Card';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import StoredImage from '../../components/ui/StoredImage';
 import FadeIn from '../../components/animations/FadeIn';
+import { normalizeProductStatus, normalizeSellerVerificationStatus } from '../../lib/sellerVisibility';
 import styles from './SellerProductsPage.module.css';
 
 const SellerProductsPage = () => {
@@ -31,7 +32,7 @@ const SellerProductsPage = () => {
           .eq('user_id', user.id)
           .single();
 
-        setIsVerified(verification?.status === 'approved');
+        setIsVerified(normalizeSellerVerificationStatus(verification?.status) === 'verified');
 
         const { data, error: fetchError } = await supabase
           .from('products')
@@ -120,9 +121,10 @@ const SellerProductsPage = () => {
                       }).format(product.price)}
                     </p>
                     <span className={styles.statusBadge}>
-                      {product.status === 'draft' || product.is_active === false
-                        ? t('sellerProductForm.saveAsDraft')
-                        : t('sellerProductForm.publishProduct')}
+                      {normalizeProductStatus(product) === 'published' && t('sellerProductForm.publishProduct')}
+                      {normalizeProductStatus(product) === 'draft' && t('sellerProductForm.saveAsDraft')}
+                      {normalizeProductStatus(product) === 'out_of_stock' && t('sellerProductForm.outOfStock')}
+                      {normalizeProductStatus(product) === 'archived' && t('sellerProductForm.archived')}
                     </span>
                     <div className={styles.actions}>
                       <Link to={`/seller/products/${product.id}/edit`}>

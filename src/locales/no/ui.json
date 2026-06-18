@@ -835,7 +835,15 @@
     "photoAlbumHelper": "Legg til bilder av fasade, interiør, team, verksted, produksjon, emballasje og produkter.",
     "savedSuccessfully": "Profilen ble lagret.",
     "saveFailed": "Profilen kunne ikke lagres. Prøv igjen.",
-    "saving": "Lagrer..."
+    "saving": "Lagrer...",
+    "shortIntro": "Kort intro",
+    "pendingVerificationMessage": "Profilen din venter på adminverifisering.",
+    "verifiedMessage": "Profilen din er verifisert. Gå live når du er klar for kunder.",
+    "offlineMessage": "Kunder kan ikke se profilen din.",
+    "liveMessage": "Kunder kan se profilen og produktene dine.",
+    "rejectedMessage": "Selgerverifiseringen din ble avvist.",
+    "suspendedMessage": "Selgerprofilen din er suspendert.",
+    "previewModeNotPublic": "Forhåndsvisning - ikke offentlig ennå"
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighet",
@@ -870,7 +878,14 @@
     "viewProductAsCustomer": "Se produkt som kunde",
     "savedDescription": "Kunder kan se dette produktet når det er publisert og profilen er live.",
     "goToShop": "Gå til butikk",
-    "backToProducts": "Tilbake til produkter"
+    "backToProducts": "Tilbake til produkter",
+    "outOfStock": "Utsolgt",
+    "archived": "Arkivert",
+    "ingredientsAndAllergens": "Ingredienser og allergener",
+    "ingredientsAndAllergensHelper": "Legg til ingredienser og allergener adskilt med komma, slik at kunder kan kjøpe trygt.",
+    "ingredients": "Ingredienser",
+    "allergens": "Allergener",
+    "commaSeparatedHelper": "Skill elementer med komma."
   },
   "upload": {
     "upToImages": "Du kan laste opp opptil {{count}} bilder.",

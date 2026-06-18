@@ -11,6 +11,8 @@ import Button from '../../components/ui/Button';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
 import { translateLabel } from '../../lib/translationLabels';
+import { readPublicDemoSellerProducts } from '../../lib/marketplaceData';
+import { findSellerStoreProfileBySlug, isPublicSellerProduct } from '../../lib/sellerProfile';
 import styles from './CatalogPage.module.css';
 
 interface Category {
@@ -30,6 +32,12 @@ const OCCASION_OPTIONS = ['Gift Box', 'Celebration', 'Corporate', 'Tasting', 'Se
 const ADVANCED_FILTERS = ['Award Winning', 'Bean-to-Bar', 'Handmade', 'Small Batch', 'Organic', 'Sustainable', 'Limited Edition'];
 
 const normalize = (value?: string) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+const isPublicCatalogProduct = (product: Product) => {
+  const sellerProfile = findSellerStoreProfileBySlug(product.maker_slug);
+  if (sellerProfile) return isPublicSellerProduct(product, sellerProfile);
+  return product.is_active !== false && product.status !== 'draft' && product.status !== 'archived';
+};
 
 const productSearchText = (product: Product) => {
   const richProduct = product as Product & { ingredients?: string[]; story?: string };
@@ -159,12 +167,15 @@ const CatalogPage = () => {
           throw productsResult.error;
         }
 
-        const loadedProducts = productsResult.data || [];
-        setProducts(loadedProducts.length > 0 ? loadedProducts : demoProducts);
+        const loadedProducts = (productsResult.data || []).filter(isPublicCatalogProduct);
+        const sellerProducts = readPublicDemoSellerProducts();
+        const nextProducts = [...sellerProducts, ...loadedProducts.filter((product) => !sellerProducts.some((sellerProduct) => sellerProduct.id === product.id))];
+        setProducts(nextProducts.length > 0 ? nextProducts : demoProducts);
         setCategories(categoriesResult.data?.length ? categoriesResult.data : demoCategories);
       } catch (err) {
         console.error('Catalog fetch error:', err);
-        setProducts(demoProducts);
+        const sellerProducts = readPublicDemoSellerProducts();
+        setProducts(sellerProducts.length > 0 ? [...sellerProducts, ...demoProducts] : demoProducts);
         setCategories(demoCategories);
       } finally {
         setLoading(false);

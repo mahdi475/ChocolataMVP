@@ -7,7 +7,7 @@ import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import StoredImage from '../components/ui/StoredImage';
 import { CHOCOLATIERS } from '../data/chocolatiers';
-import { isSellerProfileLive, loadSellerStoreProfile, sellerProfileToChocolatier } from '../lib/sellerProfile';
+import { isSellerStorePublic, listSellerStoreProfiles, sellerProfileToChocolatier } from '../lib/sellerProfile';
 import { translateLabel } from '../lib/translationLabels';
 import heroBg from '../assets/collections/hero-truffles.png';
 import styles from './ChocolatiersPage.module.css';
@@ -18,11 +18,12 @@ const ChocolatiersPage = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const chocolatiers = useMemo(() => {
-    const sellerProfile = loadSellerStoreProfile();
-    const demoSeller = sellerProfileToChocolatier(sellerProfile);
+    const sellerProfiles = listSellerStoreProfiles().filter(isSellerStorePublic);
+    const sellerChocolatiers = sellerProfiles.map((profile) => sellerProfileToChocolatier(profile));
+    const sellerSlugs = new Set(sellerChocolatiers.map((item) => item.slug));
     return [
-      ...(isSellerProfileLive(sellerProfile) ? [demoSeller] : []),
-      ...CHOCOLATIERS.filter((item) => item.slug !== demoSeller.slug),
+      ...sellerChocolatiers,
+      ...CHOCOLATIERS.filter((item) => !sellerSlugs.has(item.slug)),
     ];
   }, []);
 

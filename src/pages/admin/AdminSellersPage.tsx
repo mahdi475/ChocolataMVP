@@ -6,12 +6,13 @@ import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import FadeIn from '../../components/animations/FadeIn';
+import { normalizeSellerVerificationStatus } from '../../lib/sellerVisibility';
 import styles from './AdminSellersPage.module.css';
 
 interface SellerVerification {
   id: string;
   user_id: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: 'pending' | 'approved' | 'pending_verification' | 'verified' | 'rejected' | 'suspended';
   document_url?: string;
   created_at: string;
   user?: {
@@ -101,6 +102,30 @@ const AdminSellersPage = () => {
     }
   };
 
+  const handleSuspend = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('seller_verifications')
+        .update({ status: 'suspended' })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setVerifications(
+        verifications.map((v) => (v.id === id ? { ...v, status: 'suspended' as const } : v)),
+      );
+      dispatch(addNotification({
+        type: 'info',
+        message: 'Seller suspended',
+      }));
+    } catch (err: any) {
+      dispatch(addNotification({
+        type: 'error',
+        message: err.message || 'Failed to suspend seller',
+      }));
+    }
+  };
+
   if (loading) {
     return (
       <div className={styles.container}>
@@ -109,7 +134,7 @@ const AdminSellersPage = () => {
     );
   }
 
-  const pendingVerifications = verifications.filter((v) => v.status === 'pending');
+  const pendingVerifications = verifications.filter((v) => normalizeSellerVerificationStatus(v.status) === 'pending_verification');
 
   return (
     <div className={styles.container}>
@@ -172,6 +197,13 @@ const AdminSellersPage = () => {
                     data-testid={`reject-seller-${verification.id}`}
                   >
                     Reject
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleSuspend(verification.id)}
+                    data-testid={`suspend-seller-${verification.id}`}
+                  >
+                    Suspend
                   </Button>
                 </div>
               </Card>

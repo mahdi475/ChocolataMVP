@@ -2,11 +2,12 @@ import type { Product } from '../components/cards/ProductCard';
 import {
   DEFAULT_SELLER_PROFILE,
   DEMO_SELLER_PROFILE_SLUG,
+  isSellerStorePublic,
   isPublicSellerProduct,
-  isSellerProfileLive,
   loadSellerStoreProfile,
 } from './sellerProfile';
 import { isInlineImageData } from './browserImageStore';
+import { normalizeProductStatus } from './sellerVisibility';
 
 const DEMO_PRODUCTS_KEY = 'chocolata:demo-products';
 
@@ -43,8 +44,10 @@ export const normalizeSellerProduct = (product: Partial<Product> & { id?: string
     maker_slug: product.maker_slug || DEMO_SELLER_PROFILE_SLUG,
     badges: tags,
     tags,
-    is_active: product.is_active ?? true,
-    status: product.status || 'published',
+    ingredients: product.ingredients || [],
+    allergens: product.allergens || [],
+    is_active: normalizeProductStatus(product) === 'published',
+    status: normalizeProductStatus(product),
     is_gift_box: product.is_gift_box || tags.some((tag) => tag.toLowerCase().includes('gift')),
     is_organic: product.is_organic || tags.some((tag) => tag.toLowerCase() === 'organic'),
     is_vegan: product.is_vegan || tags.some((tag) => tag.toLowerCase() === 'vegan'),
@@ -62,7 +65,7 @@ export const readDemoSellerProducts = (): Product[] => {
 };
 
 export const readPublicDemoSellerProducts = (): Product[] =>
-  isSellerProfileLive() ? readDemoSellerProducts().filter(isPublicSellerProduct) : [];
+  isSellerStorePublic() ? readDemoSellerProducts().filter((product) => isPublicSellerProduct(product)) : [];
 
 const stripInlineProductImages = (product: Product): Product => ({
   ...product,

@@ -832,7 +832,15 @@
     "photoAlbumHelper": "Add store exterior, interior, team, workshop, production, packaging, and product showcase photos.",
     "savedSuccessfully": "Profile saved successfully.",
     "saveFailed": "Profile could not be saved. Please try again.",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "shortIntro": "Short intro",
+    "pendingVerificationMessage": "Your profile is pending admin verification.",
+    "verifiedMessage": "Your profile is verified. Go live when you are ready for customers.",
+    "offlineMessage": "Customers cannot see your profile.",
+    "liveMessage": "Customers can see your profile and products.",
+    "rejectedMessage": "Your seller verification was rejected.",
+    "suspendedMessage": "Your seller profile is suspended.",
+    "previewModeNotPublic": "Preview mode - not public yet"
   },
   "sellerProductForm": {
     "visibility": "Product visibility",
@@ -867,7 +875,14 @@
     "viewProductAsCustomer": "View product as customer",
     "savedDescription": "Customers can see this product when it is published and your profile is live.",
     "goToShop": "Go to shop",
-    "backToProducts": "Back to products"
+    "backToProducts": "Back to products",
+    "outOfStock": "Out of stock",
+    "archived": "Archived",
+    "ingredientsAndAllergens": "Ingredients and allergens",
+    "ingredientsAndAllergensHelper": "Add comma-separated ingredients and allergens so customers can buy with confidence.",
+    "ingredients": "Ingredients",
+    "allergens": "Allergens",
+    "commaSeparatedHelper": "Separate items with commas."
   },
   "upload": {
     "upToImages": "You can upload up to {{count}} images.",

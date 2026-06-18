@@ -39,7 +39,9 @@ export interface Product {
   is_gift_box?: boolean;
   is_popular?: boolean;
   is_active?: boolean;
-  status?: 'draft' | 'published';
+  status?: 'draft' | 'published' | 'archived' | 'out_of_stock';
+  ingredients?: string[];
+  allergens?: string[];
 }
 
 interface ProductCardProps {
@@ -53,7 +55,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const isLowStock = !isSoldOut && product.stock !== undefined && product.stock > 0 && product.stock < 5;
   const makerName = product.maker_name || 'Chocolata maker';
   const chocolatierMatch = findChocolatierForProduct(product);
-  const makerProfilePath = chocolatierMatch ? getChocolatierProfilePath(chocolatierMatch.slug) : null;
+  const makerProfilePath = chocolatierMatch
+    ? getChocolatierProfilePath(chocolatierMatch.slug)
+    : product.maker_slug
+      ? getChocolatierProfilePath(product.maker_slug)
+      : null;
   const origin = formatLocalizedLocation(t, product.city, product.country);
   const productDescription = product.description
     ? t(`ui:productData.${product.id}.description`, { defaultValue: product.description })

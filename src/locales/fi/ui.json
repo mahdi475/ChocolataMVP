@@ -835,7 +835,15 @@
     "photoAlbumHelper": "Lisää kuvia myymälästä, tiimistä, työpajasta, tuotannosta, pakkauksista ja tuotteista.",
     "savedSuccessfully": "Profiili tallennettu onnistuneesti.",
     "saveFailed": "Profiilia ei voitu tallentaa. Yritä uudelleen.",
-    "saving": "Tallennetaan..."
+    "saving": "Tallennetaan...",
+    "shortIntro": "Lyhyt esittely",
+    "pendingVerificationMessage": "Profiilisi odottaa ylläpitäjän vahvistusta.",
+    "verifiedMessage": "Profiilisi on vahvistettu. Julkaise se, kun olet valmis asiakkaille.",
+    "offlineMessage": "Asiakkaat eivät näe profiiliasi.",
+    "liveMessage": "Asiakkaat voivat nähdä profiilisi ja tuotteesi.",
+    "rejectedMessage": "Myyjän vahvistuksesi hylättiin.",
+    "suspendedMessage": "Myyjäprofiilisi on jäädytetty.",
+    "previewModeNotPublic": "Esikatselutila - ei vielä julkinen"
   },
   "sellerProductForm": {
     "visibility": "Tuotteen näkyvyys",
@@ -870,7 +878,14 @@
     "viewProductAsCustomer": "Näytä tuote asiakkaana",
     "savedDescription": "Asiakkaat näkevät tämän tuotteen, kun se on julkaistu ja profiilisi on live.",
     "goToShop": "Siirry kauppaan",
-    "backToProducts": "Takaisin tuotteisiin"
+    "backToProducts": "Takaisin tuotteisiin",
+    "outOfStock": "Loppu varastosta",
+    "archived": "Arkistoitu",
+    "ingredientsAndAllergens": "Ainesosat ja allergeenit",
+    "ingredientsAndAllergensHelper": "Lisää ainesosat ja allergeenit pilkuilla erotettuina, jotta asiakkaat voivat ostaa luottavaisin mielin.",
+    "ingredients": "Ainesosat",
+    "allergens": "Allergeenit",
+    "commaSeparatedHelper": "Erota kohdat pilkuilla."
   },
   "upload": {
     "upToImages": "Voit ladata enintään {{count}} kuvaa.",

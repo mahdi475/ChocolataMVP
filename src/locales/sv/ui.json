@@ -837,7 +837,15 @@
     "photoAlbumHelper": "Lägg till bilder på butikens utsida, interiör, team, verkstad, produktion, förpackning och produktpresentation.",
     "savedSuccessfully": "Profilen sparades.",
     "saveFailed": "Profilen kunde inte sparas. Försök igen.",
-    "saving": "Sparar..."
+    "saving": "Sparar...",
+    "shortIntro": "Kort intro",
+    "pendingVerificationMessage": "Din profil väntar på adminverifiering.",
+    "verifiedMessage": "Din profil är verifierad. Gå live när du är redo för kunder.",
+    "offlineMessage": "Kunder kan inte se din profil.",
+    "liveMessage": "Kunder kan se din profil och dina produkter.",
+    "rejectedMessage": "Din säljarverifiering avvisades.",
+    "suspendedMessage": "Din säljarprofil är avstängd.",
+    "previewModeNotPublic": "Förhandsvisning - inte publik ännu"
   },
   "sellerProductForm": {
     "visibility": "Produktsynlighet",
@@ -872,7 +880,14 @@
     "viewProductAsCustomer": "Visa produkt som kund",
     "savedDescription": "Kunder kan se produkten när den är publicerad och din profil är live.",
     "goToShop": "Gå till butiken",
-    "backToProducts": "Tillbaka till produkter"
+    "backToProducts": "Tillbaka till produkter",
+    "outOfStock": "Slut i lager",
+    "archived": "Arkiverad",
+    "ingredientsAndAllergens": "Ingredienser och allergener",
+    "ingredientsAndAllergensHelper": "Lägg till ingredienser och allergener separerade med kommatecken så kunder kan köpa tryggt.",
+    "ingredients": "Ingredienser",
+    "allergens": "Allergener",
+    "commaSeparatedHelper": "Separera med kommatecken."
   },
   "upload": {
     "upToImages": "Du kan ladda upp upp till {{count}} bilder.",

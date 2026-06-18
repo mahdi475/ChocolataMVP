@@ -4,6 +4,18 @@
   background: var(--color-background, #fffbf0);
 }
 
+.previewBanner {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 0.75rem 1rem;
+  background: #fff7e0;
+  border-bottom: 1px solid rgba(171, 122, 44, 0.28);
+  color: var(--color-chocolate-dark);
+  font-weight: 700;
+  text-align: center;
+}
+
 /* ---------- Hero ---------- */
 .hero {
   position: relative;

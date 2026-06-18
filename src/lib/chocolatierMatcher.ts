@@ -1,6 +1,6 @@
 import { CHOCOLATIERS } from '../data/chocolatiers';
 import type { Product } from '../components/cards/ProductCard';
-import { DEMO_SELLER_PROFILE_SLUG, sellerProfileToChocolatier } from './sellerProfile';
+import { DEMO_SELLER_PROFILE_SLUG, listSellerStoreProfiles, sellerProfileToChocolatier } from './sellerProfile';
 
 const normalize = (value?: string | null) =>
   (value || '')
@@ -14,10 +14,18 @@ export const getChocolatierProfilePath = (slug: string) => `/chocolatiers/${slug
 export const findChocolatierMatch = (...values: Array<string | null | undefined>) => {
   const candidates = values.filter(Boolean) as string[];
   if (candidates.length === 0) return undefined;
-  const demoSeller = sellerProfileToChocolatier();
+  const sellerChocolatiers = listSellerStoreProfiles().map((profile) => sellerProfileToChocolatier(profile));
+  const demoSeller = sellerChocolatiers.find((seller) => seller.slug === DEMO_SELLER_PROFILE_SLUG) || sellerProfileToChocolatier();
 
   if (candidates.some((value) => normalize(value) === normalize(DEMO_SELLER_PROFILE_SLUG) || normalize(value) === normalize(demoSeller.name))) {
     return demoSeller;
+  }
+
+  for (const value of candidates) {
+    const exactSeller = sellerChocolatiers.find(
+      (chocolatier) => chocolatier.name === value || chocolatier.slug === value
+    );
+    if (exactSeller) return exactSeller;
   }
 
   for (const value of candidates) {
@@ -30,7 +38,7 @@ export const findChocolatierMatch = (...values: Array<string | null | undefined>
   const normalizedCandidates = candidates.map(normalize).filter(Boolean);
 
   for (const candidate of normalizedCandidates) {
-    const normalized = CHOCOLATIERS.find((chocolatier) => {
+    const normalized = [...sellerChocolatiers, ...CHOCOLATIERS].find((chocolatier) => {
       const normalizedName = normalize(chocolatier.name);
       const normalizedSlug = normalize(chocolatier.slug);
 

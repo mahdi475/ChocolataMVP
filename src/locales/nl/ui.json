@@ -835,7 +835,15 @@
     "photoAlbumHelper": "Voeg foto’s toe van buitenkant, interieur, team, werkplaats, productie, verpakking en producten.",
     "savedSuccessfully": "Profiel succesvol opgeslagen.",
     "saveFailed": "Profiel kon niet worden opgeslagen. Probeer opnieuw.",
-    "saving": "Opslaan..."
+    "saving": "Opslaan...",
+    "shortIntro": "Korte intro",
+    "pendingVerificationMessage": "Je profiel wacht op adminverificatie.",
+    "verifiedMessage": "Je profiel is geverifieerd. Ga live wanneer je klaar bent voor klanten.",
+    "offlineMessage": "Klanten kunnen je profiel niet zien.",
+    "liveMessage": "Klanten kunnen je profiel en producten zien.",
+    "rejectedMessage": "Je verkopersverificatie is afgewezen.",
+    "suspendedMessage": "Je verkopersprofiel is geschorst.",
+    "previewModeNotPublic": "Voorbeeldmodus - nog niet openbaar"
   },
   "sellerProductForm": {
     "visibility": "Productzichtbaarheid",
@@ -870,7 +878,14 @@
     "viewProductAsCustomer": "Product als klant bekijken",
     "savedDescription": "Klanten kunnen dit product zien wanneer het gepubliceerd is en je profiel live is.",
     "goToShop": "Naar winkel",
-    "backToProducts": "Terug naar producten"
+    "backToProducts": "Terug naar producten",
+    "outOfStock": "Niet op voorraad",
+    "archived": "Gearchiveerd",
+    "ingredientsAndAllergens": "Ingrediënten en allergenen",
+    "ingredientsAndAllergensHelper": "Voeg ingrediënten en allergenen toe, gescheiden door komma’s, zodat klanten met vertrouwen kopen.",
+    "ingredients": "Ingrediënten",
+    "allergens": "Allergenen",
+    "commaSeparatedHelper": "Scheid items met komma’s."
   },
   "upload": {
     "upToImages": "Je kunt maximaal {{count}} afbeeldingen uploaden.",

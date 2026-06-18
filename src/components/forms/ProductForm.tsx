@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { supabase } from '../../lib/supabaseClient';
 import { countrySelectOptions } from '../../lib/marketplaceCountries';
 import { PRODUCT_TAG_OPTIONS, uniqueProductTags } from '../../lib/productTags';
-import { DEMO_SELLER_PROFILE_SLUG, loadSellerStoreProfile } from '../../lib/sellerProfile';
+import { loadSellerStoreProfile, saveSellerStoreProfile } from '../../lib/sellerProfile';
 import { addNotification } from '../../store/slices/notificationSlice';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
@@ -16,6 +16,7 @@ import ImageUpload from '../ui/ImageUpload';
 import StoredImage from '../ui/StoredImage';
 import { BrowserImageStoreError, saveBrowserImage } from '../../lib/browserImageStore';
 import { IMAGE_MAX_SIZE_MB, isAcceptedImageSize, isAcceptedImageType } from '../../lib/imageUploadLimits';
+import { invalidateHomepageDataCache } from '../../lib/homepageData';
 import styles from './ProductForm.module.css';
 
 const MAX_PRODUCT_IMAGES = 10;
@@ -29,18 +30,22 @@ const createProductSchema = (t: ReturnType<typeof useTranslation>['t']) => z.obj
   country: z.string().optional(),
   stock: z.number().int().min(0, t('ui:sellerProductForm.validationStock')),
   tags: z.array(z.string()).optional(),
-  status: z.enum(['published', 'draft']).default('published'),
+  ingredients: z.string().optional(),
+  allergens: z.string().optional(),
+  status: z.enum(['published', 'draft', 'out_of_stock', 'archived']).default('published'),
 });
 
 type ProductFormData = z.infer<ReturnType<typeof createProductSchema>>;
 
-export interface ProductFormValues extends ProductFormData {
+export interface ProductFormValues extends Omit<ProductFormData, 'ingredients' | 'allergens'> {
   id?: string;
   image_url?: string | null;
   gallery_images?: string[];
   tags?: string[];
   badges?: string[];
-  status: 'draft' | 'published';
+  ingredients?: string[] | string;
+  allergens?: string[] | string;
+  status: 'draft' | 'published' | 'out_of_stock' | 'archived';
   is_active?: boolean;
 }
 
@@ -75,6 +80,8 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       ...initialValues,
       country: initialValues?.country || '',
       tags: initialValues?.tags || initialValues?.badges || [],
+      ingredients: Array.isArray(initialValues?.ingredients) ? initialValues.ingredients.join(', ') : initialValues?.ingredients || '',
+      allergens: Array.isArray(initialValues?.allergens) ? initialValues.allergens.join(', ') : initialValues?.allergens || '',
       status: initialValues?.status || (initialValues?.is_active === false ? 'draft' : 'published'),
     },
   });
@@ -146,22 +153,31 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       if (!user) throw new Error(t('ui:sellerProductForm.notAuthenticated'));
 
       let finalImageUrl = uploadedImageUrl;
+      const sellerProfile = loadSellerStoreProfile(user.id);
+      saveSellerStoreProfile(sellerProfile, user.id);
+      const splitTextList = (value?: string) =>
+        (value || '').split(',').map((item) => item.trim()).filter(Boolean);
+      const productId = initialValues?.id || crypto.randomUUID();
 
       const productData = {
         ...data,
+        id: productId,
         tags: selectedTags,
         badges: selectedTags,
         seller_id: user.id,
-        maker_id: DEMO_SELLER_PROFILE_SLUG,
-        maker_slug: DEMO_SELLER_PROFILE_SLUG,
-        maker_name: loadSellerStoreProfile().storeName,
+        maker_id: sellerProfile.slug,
+        maker_slug: sellerProfile.slug,
+        maker_name: sellerProfile.storeName,
         image_url: finalImageUrl,
         gallery_images: galleryImages,
         country: data.country && data.country.trim() !== '' ? data.country : null,
+        city: sellerProfile.city,
+        ingredients: splitTextList(data.ingredients),
+        allergens: splitTextList(data.allergens),
         is_active: data.status === 'published',
         status: data.status,
       };
-      let savedProductId = initialValues?.id;
+      let savedProductId = productId;
 
       if (initialValues?.id) {
         const { data: updated, error } = await supabase
@@ -177,7 +193,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       } else {
         const { data: inserted, error } = await supabase.from('products').insert(productData);
         if (error) throw error;
-        savedProductId = (inserted as { id?: string } | null)?.id;
+        savedProductId = (inserted as { id?: string } | null)?.id || productId;
         dispatch(addNotification({
           type: 'success',
           message: t('ui:sellerProductForm.savedSuccessfully'),
@@ -185,6 +201,7 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
       }
 
       setSaveFeedback(t('ui:sellerProductForm.savedSuccessfully'));
+      invalidateHomepageDataCache();
       window.setTimeout(() => setSaveFeedback(''), 3500);
       onSuccess?.(savedProductId);
     } catch (error: any) {
@@ -255,9 +272,33 @@ const ProductForm = ({ initialValues, onSuccess, onError }: ProductFormProps) =>
           options={[
             { value: 'published', label: t('ui:sellerProductForm.publishProduct') },
             { value: 'draft', label: t('ui:sellerProductForm.saveAsDraft') },
+            { value: 'out_of_stock', label: t('ui:sellerProductForm.outOfStock') },
+            { value: 'archived', label: t('ui:sellerProductForm.archived') },
           ]}
           data-testid="product-status"
         />
+      </section>
+      <section className={styles.tagSection}>
+        <div className={styles.tagHeader}>
+          <div>
+            <h3>{t('ui:sellerProductForm.ingredientsAndAllergens')}</h3>
+            <p>{t('ui:sellerProductForm.ingredientsAndAllergensHelper')}</p>
+          </div>
+        </div>
+        <div className={styles.row}>
+          <Input
+            {...register('ingredients')}
+            label={t('ui:sellerProductForm.ingredients')}
+            helperText={t('ui:sellerProductForm.commaSeparatedHelper')}
+            error={errors.ingredients?.message}
+          />
+          <Input
+            {...register('allergens')}
+            label={t('ui:sellerProductForm.allergens')}
+            helperText={t('ui:sellerProductForm.commaSeparatedHelper')}
+            error={errors.allergens?.message}
+          />
+        </div>
       </section>
       <section className={styles.tagSection}>
         <div className={styles.tagHeader}>

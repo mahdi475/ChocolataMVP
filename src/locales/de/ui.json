@@ -836,7 +836,15 @@
     "photoAlbumHelper": "Füge Fotos von Außenansicht, Innenraum, Team, Werkstatt, Produktion, Verpackung und Produkten hinzu.",
     "savedSuccessfully": "Profil erfolgreich gespeichert.",
     "saveFailed": "Profil konnte nicht gespeichert werden. Bitte erneut versuchen.",
-    "saving": "Speichern..."
+    "saving": "Speichern...",
+    "shortIntro": "Kurze Einführung",
+    "pendingVerificationMessage": "Dein Profil wartet auf die Admin-Verifizierung.",
+    "verifiedMessage": "Dein Profil ist verifiziert. Gehe live, wenn du bereit für Kunden bist.",
+    "offlineMessage": "Kunden können dein Profil nicht sehen.",
+    "liveMessage": "Kunden können dein Profil und deine Produkte sehen.",
+    "rejectedMessage": "Deine Verkäuferverifizierung wurde abgelehnt.",
+    "suspendedMessage": "Dein Verkäuferprofil ist gesperrt.",
+    "previewModeNotPublic": "Vorschaumodus - noch nicht öffentlich"
   },
   "sellerProductForm": {
     "visibility": "Produktsichtbarkeit",
@@ -871,7 +879,14 @@
     "viewProductAsCustomer": "Produkt als Kunde ansehen",
     "savedDescription": "Kunden sehen dieses Produkt, wenn es veröffentlicht ist und dein Profil live ist.",
     "goToShop": "Zum Shop",
-    "backToProducts": "Zurück zu Produkten"
+    "backToProducts": "Zurück zu Produkten",
+    "outOfStock": "Nicht auf Lager",
+    "archived": "Archiviert",
+    "ingredientsAndAllergens": "Zutaten und Allergene",
+    "ingredientsAndAllergensHelper": "Füge Zutaten und Allergene kommagetrennt hinzu, damit Kunden sicher kaufen können.",
+    "ingredients": "Zutaten",
+    "allergens": "Allergene",
+    "commaSeparatedHelper": "Mit Kommas trennen."
   },
   "upload": {
     "upToImages": "Du kannst bis zu {{count}} Bilder hochladen.",

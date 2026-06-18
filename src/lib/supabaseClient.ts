@@ -6,6 +6,7 @@ import {
   upsertDemoSellerProduct,
   writeDemoSellerProducts,
 } from './marketplaceData';
+import { normalizeSellerVerificationStatus, sellerVerificationStatusForStorage } from './sellerVisibility';
 
 console.log('--- DEBUG: supabaseClient.ts START ---');
 
@@ -26,6 +27,7 @@ const DEMO_CUSTOMER_ID = '00000000-0000-4000-8000-000000000001';
 const DEMO_SELLER_EMAIL = 'seller@test.com';
 const DEMO_SELLER_PASSWORD = 'Test1234!';
 const DEMO_SELLER_ID = '00000000-0000-4000-8000-000000000002';
+const DEMO_SELLER_VERIFICATION_KEY = 'chocolata:demo-seller-verification-status';
 
 type DemoAccount = {
   id: string;
@@ -62,6 +64,15 @@ const getDemoAccountBySession = () => {
 
 const getDemoAccountByCredentials = (email: string, password: string) =>
   demoAccounts.find((account) => account.email === email.toLowerCase() && account.password === password) || null;
+
+const getDemoSellerVerificationStatus = () => {
+  const stored = window.localStorage.getItem(DEMO_SELLER_VERIFICATION_KEY);
+  return sellerVerificationStatusForStorage(normalizeSellerVerificationStatus(stored || 'approved'));
+};
+
+const setDemoSellerVerificationStatus = (status: string) => {
+  window.localStorage.setItem(DEMO_SELLER_VERIFICATION_KEY, status);
+};
 
 const demoUser = (account: DemoAccount): User => ({
   id: account.id,
@@ -120,12 +131,17 @@ const createDemoQuery = (table: string) => {
       }
       return { data: null, error: null };
     },
+    upsert: async (payload: any) => ({ data: payload, error: null }),
     update: (payload: any) => ({
       eq: async (column: string, value: any) => {
         if (table === 'products') {
           const current = readDemoSellerProducts().find((product: any) => product[column] === value);
           const updated = current ? upsertDemoSellerProduct({ ...current, ...payload }) : null;
           return { data: updated, error: null };
+        }
+        if (table === 'seller_verifications') {
+          setDemoSellerVerificationStatus(payload.status);
+          return { data: { id: value, user_id: DEMO_SELLER_ID, status: payload.status }, error: null };
         }
         return { data: null, error: null };
       },
@@ -166,7 +182,7 @@ const createDemoQuery = (table: string) => {
             data: {
               id: 'demo-seller-verification',
               user_id: account.id,
-              status: 'approved',
+              status: getDemoSellerVerificationStatus(),
               document_url: null,
               admin_notes: null,
               created_at: new Date().toISOString(),
@@ -188,6 +204,22 @@ const createDemoQuery = (table: string) => {
           return item[filter.column] === filter.value;
         }));
         return Promise.resolve({ data: products, error: null, count: products.length }).then(resolve);
+      }
+      if (table === 'seller_verifications') {
+        return Promise.resolve({
+          data: [{
+            id: 'demo-seller-verification',
+            user_id: DEMO_SELLER_ID,
+            status: getDemoSellerVerificationStatus(),
+            document_url: null,
+            admin_notes: null,
+            created_at: new Date().toISOString(),
+            reviewed_at: new Date().toISOString(),
+            user: { email: DEMO_SELLER_EMAIL, full_name: 'Test Chocolatier' },
+          }],
+          error: null,
+          count: 1,
+        }).then(resolve);
       }
       const empty = { data: [], error: null, count: 0 };
       return Promise.resolve(empty).then(resolve);

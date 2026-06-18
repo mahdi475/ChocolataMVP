@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Gift, Leaf, Minus, PackageCheck, Plus, ShieldCheck, Star, ThermometerSun, Truck } from 'lucide-react';
 import { useDispatch } from 'react-redux';
@@ -23,8 +23,9 @@ import { findChocolatierMatch, getChocolatierProfilePath } from '../../lib/choco
 import { getShippingPackaging, type ShippingPackagingInfo } from '../../lib/shippingPackaging';
 import {
   DEMO_SELLER_PROFILE_SLUG,
+  findSellerStoreProfileBySlug,
   isPublicSellerProduct,
-  isSellerProfileLive,
+  isSellerStorePublic,
   loadSellerStoreProfile,
 } from '../../lib/sellerProfile';
 import { translateLabel } from '../../lib/translationLabels';
@@ -49,8 +50,8 @@ const asPremiumProduct = (product: Product): ProductWithSeller => ({
   rating: product.rating || 0,
   reviews: product.reviews || 0,
   badges: product.badges || [],
-  ingredients: [],
-  allergens: [],
+  ingredients: Array.isArray(product.ingredients) ? product.ingredients : [],
+  allergens: Array.isArray(product.allergens) ? product.allergens : [],
   weight: '',
   shipping_info: '',
   shippingPackaging: undefined,
@@ -61,6 +62,8 @@ const asPremiumProduct = (product: Product): ProductWithSeller => ({
 const ProductDetailPage = () => {
   const { t } = useTranslation('ui');
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const isPreviewMode = searchParams.get('preview') === '1';
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [product, setProduct] = useState<ProductWithSeller | null>(null);
@@ -99,7 +102,12 @@ const ProductDetailPage = () => {
         }
 
         const normalized = asPremiumProduct(data as Product);
-        if (normalized.maker_slug === DEMO_SELLER_PROFILE_SLUG && (!isSellerProfileLive() || !isPublicSellerProduct(normalized))) {
+        const sellerProfile = findSellerStoreProfileBySlug(normalized.maker_slug);
+        const isSellerProduct = Boolean(sellerProfile);
+        const canShowSellerProduct = sellerProfile
+          ? isPreviewMode || isPublicSellerProduct(normalized, sellerProfile)
+          : normalized.is_active !== false && normalized.status !== 'draft' && normalized.status !== 'archived';
+        if (isSellerProduct && !canShowSellerProduct) {
           throw new Error(t('productDetail.notFound'));
         }
         normalized.seller = data?.seller as Seller | undefined;
@@ -133,7 +141,7 @@ const ProductDetailPage = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, isPreviewMode, t]);
 
   useEffect(() => {
     const fetchRelatedProducts = async () => {
@@ -159,8 +167,12 @@ const ProductDetailPage = () => {
             : Promise.resolve({ data: [], error: null }),
         ]);
 
-        const sellerProducts = sameSellerResult.data || [];
-        const categoryProducts = sameCategoryResult.data || [];
+        const canShowRelatedProduct = (item: Product) => {
+          const profile = findSellerStoreProfileBySlug(item.maker_slug);
+          return profile ? isPublicSellerProduct(item, profile) : item.is_active !== false && item.status !== 'draft' && item.status !== 'archived';
+        };
+        const sellerProducts = (sameSellerResult.data || []).filter(canShowRelatedProduct);
+        const categoryProducts = (sameCategoryResult.data || []).filter(canShowRelatedProduct);
         const combined = [...sellerProducts, ...categoryProducts].filter(
           (item, index, self) => index === self.findIndex((candidate) => candidate.id === item.id)
         );
@@ -231,9 +243,14 @@ const ProductDetailPage = () => {
     product.seller?.full_name,
     product.seller_id
   );
-  const makerProfilePath = chocolatierMatch ? getChocolatierProfilePath(chocolatierMatch.slug) : undefined;
-  const sellerProfile = chocolatierMatch?.slug === DEMO_SELLER_PROFILE_SLUG ? loadSellerStoreProfile() : null;
+  const makerSlug = chocolatierMatch?.slug || product.maker_slug;
+  const makerProfilePath = makerSlug
+    ? `${getChocolatierProfilePath(makerSlug)}${isPreviewMode ? '?preview=1' : ''}`
+    : undefined;
+  const sellerProfile = findSellerStoreProfileBySlug(makerSlug) ||
+    (chocolatierMatch?.slug === DEMO_SELLER_PROFILE_SLUG ? loadSellerStoreProfile() : null);
   const makerLogo = sellerProfile?.logoImage || chocolatierMatch?.logoImage;
+  const isPreviewOnly = Boolean(sellerProfile && isPreviewMode && (!isSellerStorePublic(sellerProfile) || !isPublicSellerProduct(product, sellerProfile)));
   const isSoldOut = product.stock !== undefined && product.stock <= 0;
   const shippingPackaging = getShippingPackaging(product.shippingPackaging as ShippingPackagingInfo | undefined, {
     shipsFromCountry: product.country,
@@ -281,6 +298,9 @@ const ProductDetailPage = () => {
   return (
     <div className={styles.container}>
       <FadeIn>
+        {isPreviewOnly && (
+          <div className={styles.previewBanner}>{t('sellerProfile.previewModeNotPublic')}</div>
+        )}
         <div className={styles.breadcrumbs}>
           <Link to="/catalog">{t('nav.shop')}</Link>
           <span>/</span>

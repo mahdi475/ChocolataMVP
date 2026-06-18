@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { useParams, Navigate, Link } from 'react-router-dom';
+import { useEffect, useState, useMemo } from 'react';
+import { useParams, Navigate, Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import {
@@ -20,15 +20,18 @@ import {
 } from 'lucide-react';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import StoredImage, { useResolvedImageUrl } from '../components/ui/StoredImage';
 import { useCart } from '../contexts/CartContext';
 import { getChocolatierBySlug, type Product, type ProductTag } from '../data/chocolatiers';
+import { supabase } from '../lib/supabaseClient';
 import { getShippingPackaging } from '../lib/shippingPackaging';
 import {
-  DEMO_SELLER_PROFILE_SLUG,
-  isSellerProfileLive,
-  loadSellerStoreProfile,
+  findSellerStoreProfileBySlug,
+  isSellerStorePublic,
+  sellerProfileFromRow,
   sellerProfileToChocolatier,
+  type SellerStoreProfile,
 } from '../lib/sellerProfile';
 import { translateLabel } from '../lib/translationLabels';
 import styles from './ChocolatierProfilePage.module.css';
@@ -49,9 +52,11 @@ const VALUE_ICONS = [Leaf, Heart, Users, Hammer];
 const ProductCard = ({
   product,
   chocolatierName,
+  isPreviewMode = false,
 }: {
   product: Product;
   chocolatierName: string;
+  isPreviewMode?: boolean;
 }) => {
   const { t } = useTranslation('ui');
   const { addToCart, setIsCartOpen } = useCart();
@@ -70,6 +75,8 @@ const ProductCard = ({
     setIsCartOpen(true);
   };
 
+  const productPath = `/product/${product.id}${isPreviewMode ? '?preview=1' : ''}`;
+
   return (
     <motion.div
       className={styles.productCard}
@@ -79,11 +86,11 @@ const ProductCard = ({
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
     >
-      <Link to={`/product/${product.id}`} className={styles.productImageWrap}>
+      <Link to={productPath} className={styles.productImageWrap}>
         <StoredImage src={product.image} alt={product.name} className={styles.productImage} loading="lazy" />
       </Link>
       <div className={styles.productBody}>
-        <Link to={`/product/${product.id}`} className={styles.productNameLink}>
+        <Link to={productPath} className={styles.productNameLink}>
           <h3 className={styles.productName}>{product.name}</h3>
         </Link>
         <p className={styles.productDescription}>{t(`chocolatierProducts.${product.id}.description`, { defaultValue: product.description })}</p>
@@ -136,9 +143,37 @@ const ProductCard = ({
 const ChocolatierProfilePage = () => {
   const { t } = useTranslation('ui');
   const { slug } = useParams<{ slug: string }>();
-  const sellerProfile = slug === DEMO_SELLER_PROFILE_SLUG ? loadSellerStoreProfile() : null;
-  const chocolatier = slug === DEMO_SELLER_PROFILE_SLUG
-    ? (sellerProfile && isSellerProfileLive(sellerProfile) ? sellerProfileToChocolatier(sellerProfile) : undefined)
+  const [searchParams] = useSearchParams();
+  const isPreviewMode = searchParams.get('preview') === '1';
+  const [remoteSellerProfile, setRemoteSellerProfile] = useState<SellerStoreProfile | null>(null);
+  const [isRemoteProfileLoading, setIsRemoteProfileLoading] = useState(true);
+  const sellerProfile = findSellerStoreProfileBySlug(slug) || remoteSellerProfile;
+
+  useEffect(() => {
+    const fetchSellerProfile = async () => {
+      if (!slug || findSellerStoreProfileBySlug(slug)) {
+        setIsRemoteProfileLoading(false);
+        return;
+      }
+      setIsRemoteProfileLoading(true);
+      try {
+        const { data } = await supabase.from('seller_profiles').select('*').eq('slug', slug).single();
+        if (data) {
+          const profile = sellerProfileFromRow(data);
+          setRemoteSellerProfile(profile);
+        }
+      } catch {
+        setRemoteSellerProfile(null);
+      } finally {
+        setIsRemoteProfileLoading(false);
+      }
+    };
+
+    fetchSellerProfile();
+  }, [slug]);
+  const sellerProfileCanRender = Boolean(sellerProfile && (isPreviewMode || isSellerStorePublic(sellerProfile)));
+  const chocolatier = sellerProfileCanRender && sellerProfile
+    ? sellerProfileToChocolatier(sellerProfile, { includePrivateProducts: isPreviewMode })
     : getChocolatierBySlug(slug);
   const [activeFilter, setActiveFilter] = useState<ProductTag | 'all'>('all');
   const coverSource = chocolatier?.coverImage || chocolatier?.portrait || '';
@@ -150,6 +185,10 @@ const ChocolatierProfilePage = () => {
     if (activeFilter === 'all') return chocolatier.products;
     return chocolatier.products.filter((p) => p.tags.includes(activeFilter));
   }, [chocolatier, activeFilter]);
+
+  if (!chocolatier && isRemoteProfileLoading) {
+    return <div className={styles.container}><LoadingSpinner /></div>;
+  }
 
   if (!chocolatier) {
     return <Navigate to="/chocolatiers" replace />;
@@ -217,6 +256,9 @@ const ChocolatierProfilePage = () => {
 
   return (
     <div className={styles.container} data-testid="chocolatier-profile-page">
+      {sellerProfile && isPreviewMode && !isSellerStorePublic(sellerProfile) && (
+        <div className={styles.previewBanner}>{t('sellerProfile.previewModeNotPublic')}</div>
+      )}
       {/* Hero */}
       <motion.section
         className={styles.hero}
@@ -290,7 +332,7 @@ const ChocolatierProfilePage = () => {
         {filteredProducts.length > 0 ? (
           <div className={styles.productsGrid}>
             {filteredProducts.map((p) => (
-              <ProductCard key={p.id} product={p} chocolatierName={chocolatier.name} />
+              <ProductCard key={p.id} product={p} chocolatierName={chocolatier.name} isPreviewMode={isPreviewMode} />
             ))}
           </div>
         ) : (

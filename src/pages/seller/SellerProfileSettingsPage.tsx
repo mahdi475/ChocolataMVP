@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Eye, Home, Save } from 'lucide-react';
@@ -6,14 +6,19 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
 import StoredImage from '../../components/ui/StoredImage';
+import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../lib/supabaseClient';
 import { countrySelectOptions } from '../../lib/marketplaceCountries';
 import {
   DEFAULT_SELLER_PROFILE,
-  DEMO_SELLER_PROFILE_SLUG,
   SellerStoreProfile,
   loadSellerStoreProfile,
   saveSellerStoreProfile,
+  sellerProfileFromRow,
+  sellerProfileToRow,
 } from '../../lib/sellerProfile';
+import { normalizeSellerVerificationStatus, sellerStatusMessageKey } from '../../lib/sellerVisibility';
+import { invalidateHomepageDataCache } from '../../lib/homepageData';
 import { BrowserImageStoreError, saveBrowserImage } from '../../lib/browserImageStore';
 import { IMAGE_MAX_SIZE_MB, isAcceptedImageSize, isAcceptedImageType } from '../../lib/imageUploadLimits';
 import styles from './SellerProfileSettingsPage.module.css';
@@ -47,13 +52,41 @@ const readImageFile = async (file: File, onLoad: (url: string) => void, onError:
 
 const SellerProfileSettingsPage = () => {
   const { t } = useTranslation('ui');
-  const [profile, setProfile] = useState<SellerStoreProfile>(() => loadSellerStoreProfile());
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<SellerStoreProfile>(() => loadSellerStoreProfile(user?.id));
   const [saveMessage, setSaveMessage] = useState('');
   const [saveError, setSaveError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [galleryError, setGalleryError] = useState('');
 
-  const publicProfilePath = `/chocolatiers/${DEMO_SELLER_PROFILE_SLUG}`;
+  const publicProfilePath = `/chocolatiers/${profile.slug}?preview=1`;
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const localProfile = loadSellerStoreProfile(user?.id);
+      setProfile(localProfile);
+      if (!user?.id) return;
+
+      try {
+        const [{ data: remoteProfile }, { data: verification }] = await Promise.all([
+          supabase.from('seller_profiles').select('*').eq('seller_id', user.id).single(),
+          supabase.from('seller_verifications').select('status').eq('user_id', user.id).single(),
+        ]);
+        const verificationStatus = normalizeSellerVerificationStatus(verification?.status);
+        if (remoteProfile) {
+          const nextProfile = { ...sellerProfileFromRow(remoteProfile), verificationStatus };
+          setProfile(nextProfile);
+          saveSellerStoreProfile(nextProfile, user.id);
+        } else {
+          setProfile({ ...localProfile, verificationStatus });
+        }
+      } catch {
+        // The prototype still works if the seller_profiles table has not been migrated yet.
+      }
+    };
+
+    loadProfile();
+  }, [user?.id]);
 
   const completionItems = useMemo(
     () => [
@@ -92,11 +125,16 @@ const SellerProfileSettingsPage = () => {
     updateField('status', status);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsSaving(true);
     try {
-      saveSellerStoreProfile(profile);
+      saveSellerStoreProfile(profile, user?.id);
+      if (user?.id) {
+        const { error } = await supabase.from('seller_profiles').upsert(sellerProfileToRow(profile, user.id));
+        if (error && !String(error.message || '').includes('seller_profiles')) throw error;
+      }
+      invalidateHomepageDataCache();
       setSaveMessage(t('sellerProfile.savedSuccessfully'));
       setSaveError('');
       window.setTimeout(() => setSaveMessage(''), 3500);
@@ -111,7 +149,8 @@ const SellerProfileSettingsPage = () => {
   const resetDemo = () => {
     setProfile(DEFAULT_SELLER_PROFILE);
     try {
-      saveSellerStoreProfile(DEFAULT_SELLER_PROFILE);
+      saveSellerStoreProfile(DEFAULT_SELLER_PROFILE, user?.id);
+      invalidateHomepageDataCache();
       setSaveMessage(t('sellerProfile.savedSuccessfully'));
       setSaveError('');
     } catch {
@@ -144,7 +183,7 @@ const SellerProfileSettingsPage = () => {
         <div>
           <p className={styles.eyebrow}>{t('sellerProfile.publicVisibility')}</p>
           <h2>{t('sellerProfile.profileStatus')}: {profile.status === 'live' ? t('sellerProfile.live') : t('sellerProfile.offline')}</h2>
-          <p>{profile.status === 'live' ? t('sellerProfile.liveHelp') : t('sellerProfile.offlineHelp')}</p>
+          <p>{t(sellerStatusMessageKey(profile))}</p>
         </div>
         <div className={styles.statusActions}>
           <Button type="button" variant={profile.status === 'live' ? 'gold' : 'outline'} onClick={() => setProfileStatus('live')}>
@@ -164,6 +203,7 @@ const SellerProfileSettingsPage = () => {
           </div>
           <Input label={t('sellerProfile.storeName')} value={profile.storeName} onChange={(event) => updateField('storeName', event.target.value)} />
           <Input label={t('sellerProfile.tagline')} value={profile.tagline} onChange={(event) => updateField('tagline', event.target.value)} />
+          <Input label={t('sellerProfile.shortIntro')} value={profile.shortIntro} onChange={(event) => updateField('shortIntro', event.target.value)} />
           <div className={styles.row}>
             <Select
               label={t('sellerProfile.country')}

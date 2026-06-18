@@ -6,6 +6,17 @@
   color: #2d1811;
 }
 
+.previewBanner {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff7e0;
+  border: 1px solid rgba(171, 122, 44, 0.28);
+  border-radius: 8px;
+  color: #4a2d1f;
+  font-weight: 700;
+  text-align: center;
+}
+
 .breadcrumbs {
   display: flex;
   flex-wrap: wrap;

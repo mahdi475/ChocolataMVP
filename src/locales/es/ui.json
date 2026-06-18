@@ -835,7 +835,15 @@
     "photoAlbumHelper": "Añade fotos de exterior, interior, equipo, taller, producción, embalaje y productos.",
     "savedSuccessfully": "Perfil guardado correctamente.",
     "saveFailed": "No se pudo guardar el perfil. Inténtalo de nuevo.",
-    "saving": "Guardando..."
+    "saving": "Guardando...",
+    "shortIntro": "Introducción breve",
+    "pendingVerificationMessage": "Tu perfil está pendiente de verificación administrativa.",
+    "verifiedMessage": "Tu perfil está verificado. Actívalo cuando estés listo para los clientes.",
+    "offlineMessage": "Los clientes no pueden ver tu perfil.",
+    "liveMessage": "Los clientes pueden ver tu perfil y tus productos.",
+    "rejectedMessage": "Tu verificación de vendedor fue rechazada.",
+    "suspendedMessage": "Tu perfil de vendedor está suspendido.",
+    "previewModeNotPublic": "Modo vista previa - aún no público"
   },
   "sellerProductForm": {
     "visibility": "Visibilidad del producto",
@@ -870,7 +878,14 @@
     "viewProductAsCustomer": "Ver producto como cliente",
     "savedDescription": "Los clientes pueden ver este producto cuando está publicado y tu perfil está en vivo.",
     "goToShop": "Ir a la tienda",
-    "backToProducts": "Volver a productos"
+    "backToProducts": "Volver a productos",
+    "outOfStock": "Sin existencias",
+    "archived": "Archivado",
+    "ingredientsAndAllergens": "Ingredientes y alérgenos",
+    "ingredientsAndAllergensHelper": "Añade ingredientes y alérgenos separados por comas para que los clientes compren con confianza.",
+    "ingredients": "Ingredientes",
+    "allergens": "Alérgenos",
+    "commaSeparatedHelper": "Separa los elementos con comas."
   },
   "upload": {
     "upToImages": "Puedes subir hasta {{count}} imágenes.",

@@ -6,6 +6,8 @@ import { supabase } from '../../lib/supabaseClient';
 import type { Product } from '../../components/cards/ProductCard';
 import { demoProducts } from '../../data/demoCatalog';
 import { translateLabel } from '../../lib/translationLabels';
+import { readPublicDemoSellerProducts } from '../../lib/marketplaceData';
+import { findSellerStoreProfileBySlug, isPublicSellerProduct } from '../../lib/sellerProfile';
 import StoredImage from '../ui/StoredImage';
 import styles from './SearchOverlay.module.css';
 
@@ -13,6 +15,12 @@ interface SearchOverlayProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const isPublicSearchProduct = (product: Product) => {
+  const sellerProfile = findSellerStoreProfileBySlug(product.maker_slug);
+  if (sellerProfile) return isPublicSellerProduct(product, sellerProfile);
+  return product.is_active !== false && product.status !== 'draft' && product.status !== 'archived';
+};
 
 const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
   const { t } = useTranslation('ui');
@@ -33,11 +41,19 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
           .limit(4);
 
         if (!error && data?.length) {
-          setResults(data);
+          const normalizedQuery = query.toLowerCase();
+          const sellerProducts = readPublicDemoSellerProducts().filter((product) =>
+            [product.name, product.category || '', product.description || '']
+              .join(' ')
+              .toLowerCase()
+              .includes(normalizedQuery)
+          );
+          const publicResults = (data as Product[]).filter(isPublicSearchProduct);
+          setResults([...sellerProducts, ...publicResults].slice(0, 4));
         } else {
           const normalizedQuery = query.toLowerCase();
           setResults(
-            demoProducts
+            [...readPublicDemoSellerProducts(), ...demoProducts]
               .filter((product) =>
                 [product.name, product.category || '', product.description || '']
                   .join(' ')
