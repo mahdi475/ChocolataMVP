@@ -465,7 +465,25 @@
     "phoneOptional": "Telefon (valgfri)",
     "processingPayment": "Behandler betaling...",
     "placeOrder": "Afgiv ordre",
-    "orderPlacedSuccessfully": "Ordren er gennemført!"
+    "orderPlacedSuccessfully": "Ordren er gennemført!",
+    "title": "Checkout",
+    "cartEmpty": "Din kurv er tom",
+    "loginToContinue": "Log ind for at fortsætte",
+    "checkingSession": "Kontrollerer din session...",
+    "loggedInCheckout": "Du betaler med din konto.",
+    "guestCheckoutActive": "Du betaler som gæst. Ingen konto kræves.",
+    "fullName": "Fulde navn",
+    "email": "E-mail",
+    "addressLine1": "Adresselinje 1",
+    "addressLine2Optional": "Adresselinje 2 (valgfri)",
+    "city": "By",
+    "postalCode": "Postnummer",
+    "country": "Land",
+    "orderSummary": "Ordreoversigt",
+    "shipping": "Levering",
+    "free": "GRATIS",
+    "taxVat": "Moms",
+    "estimatedDelivery": "Forventet levering:"
   },
   "chocolatierData": {
     "maison-deluxe": {

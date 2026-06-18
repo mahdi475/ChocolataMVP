@@ -462,7 +462,25 @@
     "phoneOptional": "Phone (optional)",
     "processingPayment": "Processing payment...",
     "placeOrder": "Place Order",
-    "orderPlacedSuccessfully": "Order placed successfully!"
+    "orderPlacedSuccessfully": "Order placed successfully!",
+    "title": "Checkout",
+    "cartEmpty": "Your cart is empty",
+    "loginToContinue": "Login to continue",
+    "checkingSession": "Checking your session...",
+    "loggedInCheckout": "You are checking out with your account.",
+    "guestCheckoutActive": "You are checking out as a guest. No account is required.",
+    "fullName": "Full Name",
+    "email": "Email",
+    "addressLine1": "Address Line 1",
+    "addressLine2Optional": "Address Line 2 (Optional)",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "country": "Country",
+    "orderSummary": "Order Summary",
+    "shipping": "Shipping",
+    "free": "FREE",
+    "taxVat": "Tax (VAT)",
+    "estimatedDelivery": "Estimated Delivery:"
   },
   "chocolatierData": {
     "maison-deluxe": {

@@ -465,7 +465,25 @@
     "phoneOptional": "Telefon (valgfritt)",
     "processingPayment": "Behandler betaling...",
     "placeOrder": "Legg inn ordre",
-    "orderPlacedSuccessfully": "Ordren er lagt inn!"
+    "orderPlacedSuccessfully": "Ordren er lagt inn!",
+    "title": "Checkout",
+    "cartEmpty": "Handlekurven din er tom",
+    "loginToContinue": "Logg inn for å fortsette",
+    "checkingSession": "Kontrollerer økten din...",
+    "loggedInCheckout": "Du betaler med kontoen din.",
+    "guestCheckoutActive": "Du betaler som gjest. Ingen konto kreves.",
+    "fullName": "Fullt navn",
+    "email": "E-post",
+    "addressLine1": "Adresselinje 1",
+    "addressLine2Optional": "Adresselinje 2 (valgfritt)",
+    "city": "By",
+    "postalCode": "Postnummer",
+    "country": "Land",
+    "orderSummary": "Ordresammendrag",
+    "shipping": "Frakt",
+    "free": "GRATIS",
+    "taxVat": "MVA",
+    "estimatedDelivery": "Estimert levering:"
   },
   "chocolatierData": {
     "maison-deluxe": {

@@ -466,7 +466,25 @@
     "phoneOptional": "Telefon (optional)",
     "processingPayment": "Zahlung wird verarbeitet...",
     "placeOrder": "Bestellung aufgeben",
-    "orderPlacedSuccessfully": "Bestellung erfolgreich aufgegeben!"
+    "orderPlacedSuccessfully": "Bestellung erfolgreich aufgegeben!",
+    "title": "Kasse",
+    "cartEmpty": "Dein Warenkorb ist leer",
+    "loginToContinue": "Zum Fortfahren anmelden",
+    "checkingSession": "Sitzung wird geprüft...",
+    "loggedInCheckout": "Du bezahlst mit deinem Konto.",
+    "guestCheckoutActive": "Du bezahlst als Gast. Kein Konto erforderlich.",
+    "fullName": "Vollständiger Name",
+    "email": "E-Mail",
+    "addressLine1": "Adresszeile 1",
+    "addressLine2Optional": "Adresszeile 2 (optional)",
+    "city": "Stadt",
+    "postalCode": "Postleitzahl",
+    "country": "Land",
+    "orderSummary": "Bestellübersicht",
+    "shipping": "Versand",
+    "free": "KOSTENLOS",
+    "taxVat": "MwSt.",
+    "estimatedDelivery": "Voraussichtliche Lieferung:"
   },
   "chocolatierData": {
     "maison-deluxe": {

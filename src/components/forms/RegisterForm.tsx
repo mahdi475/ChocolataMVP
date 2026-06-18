@@ -23,7 +23,7 @@ const registerSchema = z
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 interface RegisterFormProps {
-  onSuccess?: () => void;
+  onSuccess?: (email: string) => void;
   onError?: (error: string) => void;
 }
 
@@ -55,7 +55,7 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
         email: data.email,
         password: data.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/login`,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             full_name: data.fullName,
             role: data.role,
@@ -123,7 +123,7 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
       });
       
       // Registration successful
-      onSuccess?.();
+      onSuccess?.(data.email);
       
     } catch (error: any) {
       console.error('❌ Registration error:', error);

@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RegisterForm from '../components/forms/RegisterForm';
+import Button from '../components/ui/Button';
 
 const RegisterPage = () => {
   const { t } = useTranslation('auth');
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [confirmationEmail, setConfirmationEmail] = useState<string | null>(null);
 
   return (
     <main
@@ -41,7 +43,31 @@ const RegisterPage = () => {
         >
           Chocolata
         </p>
-        <h1 style={{ margin: '0 0 22px', color: '#3a2116' }}>{t('register.title')}</h1>
+        <h1 style={{ margin: '0 0 22px', color: '#3a2116' }}>
+          {confirmationEmail ? t('register.checkEmailTitle') : t('register.title')}
+        </h1>
+
+        {confirmationEmail ? (
+          <div>
+            <p style={{ margin: '0 0 16px', color: '#5d4033', lineHeight: 1.6 }}>
+              {t('register.checkEmailMessage', { email: confirmationEmail })}
+            </p>
+            <p style={{ margin: '0 0 22px', color: '#7b6253', fontSize: '0.95rem' }}>
+              {t('register.checkSpam')}
+            </p>
+            <div style={{ display: 'grid', gap: '12px' }}>
+              <Link to="/login" style={{ textDecoration: 'none' }}>
+                <Button type="button" variant="gold" style={{ width: '100%' }}>
+                  {t('register.openLogin')}
+                </Button>
+              </Link>
+              <Link to="/" style={{ color: '#8b5a2b', fontWeight: 700, textAlign: 'center' }}>
+                {t('register.backToMarketplace')}
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
 
         {message && (
           <p
@@ -73,9 +99,10 @@ const RegisterPage = () => {
         )}
 
         <RegisterForm
-          onSuccess={() => {
+          onSuccess={(email) => {
             setError(null);
             setMessage(t('register.success'));
+            setConfirmationEmail(email);
           }}
           onError={(nextError) => {
             setMessage(null);
@@ -89,6 +116,8 @@ const RegisterPage = () => {
             {t('register.loginLink')}
           </Link>
         </p>
+          </>
+        )}
       </section>
     </main>
   );

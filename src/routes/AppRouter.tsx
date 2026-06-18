@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import MainLayout from '../components/layout/MainLayout';
@@ -10,6 +10,7 @@ import HomePage from '../pages/HomePage';
 import AboutPage from '../pages/About';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
+import AuthCallbackPage from '../pages/AuthCallbackPage';
 import ChocolatePassportPage from '../pages/ChocolatePassportPage';
 import SurpriseMePage from '../pages/SurpriseMePage';
 import CorporatePortalPage from '../pages/CorporatePortalPage';
@@ -54,6 +55,7 @@ const ProtectedRoute = ({
   requiredRole?: 'buyer' | 'seller' | 'admin';
 }) => {
   const { user, role, loading } = useAuth();
+  const location = useLocation();
 
   console.log('🛡️ ProtectedRoute check:', {
     hasUser: !!user,
@@ -69,7 +71,7 @@ const ProtectedRoute = ({
 
   if (!user) {
     console.log('🛡️ ProtectedRoute: No user, redirecting to login');
-    return <Navigate to="/login" replace />;
+    return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname)}`} state={{ from: location.pathname }} replace />;
   }
 
   if (requiredRole && role !== requiredRole) {
@@ -102,6 +104,10 @@ const AppRouter = () => {
       <Route
         path="/register"
         element={<MainLayout><RegisterPage /></MainLayout>}
+      />
+      <Route
+        path="/auth/callback"
+        element={<MainLayout><AuthCallbackPage /></MainLayout>}
       />
       <Route
         path="/about"

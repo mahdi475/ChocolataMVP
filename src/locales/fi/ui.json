@@ -465,7 +465,25 @@
     "phoneOptional": "Puhelin (valinnainen)",
     "processingPayment": "Maksua käsitellään...",
     "placeOrder": "Tee tilaus",
-    "orderPlacedSuccessfully": "Tilaus tehty onnistuneesti!"
+    "orderPlacedSuccessfully": "Tilaus tehty onnistuneesti!",
+    "title": "Kassa",
+    "cartEmpty": "Ostoskorisi on tyhjä",
+    "loginToContinue": "Kirjaudu jatkaaksesi",
+    "checkingSession": "Tarkistetaan istuntoa...",
+    "loggedInCheckout": "Maksat tililläsi.",
+    "guestCheckoutActive": "Maksat vieraana. Tiliä ei tarvita.",
+    "fullName": "Koko nimi",
+    "email": "Sähköposti",
+    "addressLine1": "Osoiterivi 1",
+    "addressLine2Optional": "Osoiterivi 2 (valinnainen)",
+    "city": "Kaupunki",
+    "postalCode": "Postinumero",
+    "country": "Maa",
+    "orderSummary": "Tilauksen yhteenveto",
+    "shipping": "Toimitus",
+    "free": "ILMAINEN",
+    "taxVat": "ALV",
+    "estimatedDelivery": "Arvioitu toimitus:"
   },
   "chocolatierData": {
     "maison-deluxe": {

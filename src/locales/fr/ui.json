@@ -466,7 +466,25 @@
     "phoneOptional": "Téléphone (facultatif)",
     "processingPayment": "Paiement en cours...",
     "placeOrder": "Passer la commande",
-    "orderPlacedSuccessfully": "Commande passée avec succès !"
+    "orderPlacedSuccessfully": "Commande passée avec succès !",
+    "title": "Paiement",
+    "cartEmpty": "Votre panier est vide",
+    "loginToContinue": "Connectez-vous pour continuer",
+    "checkingSession": "Vérification de votre session...",
+    "loggedInCheckout": "Vous payez avec votre compte.",
+    "guestCheckoutActive": "Vous payez en tant qu’invité. Aucun compte n’est requis.",
+    "fullName": "Nom complet",
+    "email": "E-mail",
+    "addressLine1": "Adresse ligne 1",
+    "addressLine2Optional": "Adresse ligne 2 (facultatif)",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "country": "Pays",
+    "orderSummary": "Résumé de commande",
+    "shipping": "Livraison",
+    "free": "GRATUIT",
+    "taxVat": "TVA",
+    "estimatedDelivery": "Livraison estimée :"
   },
   "chocolatierData": {
     "maison-deluxe": {

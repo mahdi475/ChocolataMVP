@@ -467,7 +467,25 @@
     "phoneOptional": "Telefon (valfritt)",
     "processingPayment": "Betalning behandlas...",
     "placeOrder": "Lägg order",
-    "orderPlacedSuccessfully": "Ordern har lagts!"
+    "orderPlacedSuccessfully": "Ordern har lagts!",
+    "title": "Kassa",
+    "cartEmpty": "Din varukorg är tom",
+    "loginToContinue": "Logga in för att fortsätta",
+    "checkingSession": "Kontrollerar din session...",
+    "loggedInCheckout": "Du betalar med ditt konto.",
+    "guestCheckoutActive": "Du betalar som gäst. Inget konto krävs.",
+    "fullName": "Fullständigt namn",
+    "email": "E-post",
+    "addressLine1": "Adressrad 1",
+    "addressLine2Optional": "Adressrad 2 (valfritt)",
+    "city": "Stad",
+    "postalCode": "Postnummer",
+    "country": "Land",
+    "orderSummary": "Ordersammanfattning",
+    "shipping": "Frakt",
+    "free": "GRATIS",
+    "taxVat": "Moms",
+    "estimatedDelivery": "Beräknad leverans:"
   },
   "chocolatierData": {
     "maison-deluxe": {

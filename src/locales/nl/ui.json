@@ -465,7 +465,25 @@
     "phoneOptional": "Telefoon (optioneel)",
     "processingPayment": "Betaling verwerken...",
     "placeOrder": "Bestelling plaatsen",
-    "orderPlacedSuccessfully": "Bestelling succesvol geplaatst!"
+    "orderPlacedSuccessfully": "Bestelling succesvol geplaatst!",
+    "title": "Afrekenen",
+    "cartEmpty": "Je winkelwagen is leeg",
+    "loginToContinue": "Log in om door te gaan",
+    "checkingSession": "Je sessie controleren...",
+    "loggedInCheckout": "Je rekent af met je account.",
+    "guestCheckoutActive": "Je rekent af als gast. Geen account nodig.",
+    "fullName": "Volledige naam",
+    "email": "E-mail",
+    "addressLine1": "Adresregel 1",
+    "addressLine2Optional": "Adresregel 2 (optioneel)",
+    "city": "Stad",
+    "postalCode": "Postcode",
+    "country": "Land",
+    "orderSummary": "Besteloverzicht",
+    "shipping": "Verzending",
+    "free": "GRATIS",
+    "taxVat": "Btw",
+    "estimatedDelivery": "Geschatte levering:"
   },
   "chocolatierData": {
     "maison-deluxe": {

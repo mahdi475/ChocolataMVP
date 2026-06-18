@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import LoginForm from '../components/forms/LoginForm';
@@ -10,8 +10,12 @@ import styles from './LoginPage.module.css';
 const LoginPage = () => {
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
+  const location = useLocation();
   const { role } = useAuth();
   const [error, setError] = useState<string | null>(null);
+  const redirectParam = new URLSearchParams(location.search).get('redirect');
+  const stateRedirect = (location.state as { from?: string } | null)?.from;
+  const redirectTo = redirectParam || stateRedirect;
 
   useEffect(() => {
     // If already logged in, redirect based on role
@@ -21,15 +25,15 @@ const LoginPage = () => {
           navigate('/admin/dashboard', { replace: true });
           break;
         case 'seller':
-          navigate('/seller/dashboard', { replace: true });
+          navigate(redirectTo?.startsWith('/seller') ? redirectTo : '/seller/dashboard', { replace: true });
           break;
         case 'buyer':
         default:
-          navigate('/catalog', { replace: true });
+          navigate(redirectTo && redirectTo.startsWith('/') ? redirectTo : '/catalog', { replace: true });
           break;
       }
     }
-  }, [role, navigate]);
+  }, [role, navigate, redirectTo]);
 
   const handleSuccess = () => {
     // Don't navigate here - let the useEffect handle it after role is set
