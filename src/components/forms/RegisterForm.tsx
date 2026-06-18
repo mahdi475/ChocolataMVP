@@ -55,6 +55,7 @@ const RegisterForm = ({ onSuccess, onError }: RegisterFormProps) => {
         email: data.email,
         password: data.password,
         options: {
+          emailRedirectTo: `${window.location.origin}/login`,
           data: {
             full_name: data.fullName,
             role: data.role,
