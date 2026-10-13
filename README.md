@@ -2,6 +2,13 @@
 
 A scalable, accessible, and testable e-commerce platform for chocolate products with role-based flows for buyers, sellers, and admins.
 
+**Live demo:** [chocolata-mvp-ksrb.vercel.app](https://chocolata-mvp-ksrb.vercel.app/catalog)
+
+![Chocolata home page](docs/screenshots/home.jpg)
+
+![Admin dashboard](docs/screenshots/admin-dashboard.jpg)
+<sub>Admin dashboard (early version, from before the project was renamed to Chocolata)</sub>
+
 ## 🚀 Tech Stack
 
 - **Frontend**: React 18 + Vite + TypeScript
